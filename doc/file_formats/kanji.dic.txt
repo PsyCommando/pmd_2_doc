@@ -1,0 +1,23 @@
+"/FONT/kanji.dic"
+
+This file seems linked with the kanji.dat file. 
+The "character value" fields seems to match in-between both files!
+
+===========
+Overview:
+===========
+
+Offset:            Length:             Type:           Description:
+-------            -------             -------         -----------------------------------
+0x0 NbEntries      4                   uint32           Nb of entries in the file.
+0x4 DataBlockA     (NbEntries * 8)                      Block that contains all the data in the file.
+[
+    Entry          8                                    An entry.
+    [
+        XPos       2                    uint16          Possibly the X position of the upper corner of the character in the image?
+        YPos       2                    uint16          Possibly the Y position of the upper corner of the character in the image?
+        CharVal    2                    uint16          Possibly the value of the character to be mapped to the image.
+        Flag       2                    uint16          Possibly a flag.
+    ]
+    ...
+]

@@ -1,0 +1,47 @@
+Format info on the 
+---------------------------------------------
+"/FONT/unknown.dat" file
+"/FONT/kanji.dat" file
+
+This file is wrapped in a SIR0 container.
+
+===========
+Overview:
+===========
+
+Offset:            Length:             Type:           Description:
+-------            -------             -------         -----------------------------------
+0x00               4                   char[4]         Magic Number "SIR0" (0x53 0x49 0x52 0x30)
+0x04               4                   uint32          (PTR_A) to Content's Header
+0x08               4                   uint32          (PTR_B) to Pointer Offset List
+0x0C               4                   -               Zeros
+DataBlockA         224                                 Block containing 72 bytes long entries. First entry is Null.
+[
+    CharImg        72                                  Contains a 4bpp, 12x12 pixel, linear image of a character.
+    [
+    ]
+    ...
+]
+PaddingBytes        0-15                -              Padding bytes to align the next block on 16 bytes.
+TableOfContent      -                                  Contains pointers to entries in DataBlockA, with some extra data.
+[
+    ToCEntry        12                                 Points to a location in DataBlockA, and contains extra data.
+    [
+        DataPtr     4                   uint32         Points to 72 bytes entry within DataBlockA.
+        CharValue   2                   uint16         Used to map character values to something. Character sequences of up to
+                                                        two bytes may be used here.
+        Unk#1       2                   uint16         Possibly a flag.
+        Unk#2       2                   uint16         Null.
+        Unk#3       2                   uint16         Is always -254..
+    ]
+    ...
+]
+SubHeader           8                                  Data specific to the unknown.dat file's content.
+[
+    NbOfEntries     4                   uint32         Nb of entries in the TableOfContent.
+    PtrToC          4                   uint32         Pointer to the beginning of the TableOfContent.
+]
+PaddingBytes        0-15                -              Padding bytes to align the next block on 16 bytes.
+SIR0PtrOffsetLst    varies                             Encoded list of the offset of all pointers in the file.
+[]
+PaddingBytes        0-15                -              Padding bytes to align the end of the file on 16 bytes.

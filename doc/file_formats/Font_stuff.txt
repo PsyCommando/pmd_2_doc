@@ -1,0 +1,91 @@
+==========================================================================
+markfont.dat and markfont.pal
+==========================================================================
+Font for button icons, arrows, bullets, and a few more icons.
+
+-------------------------------
+Overview "/FONT/markfont.dat"
+-------------------------------
+
+
+Offset:            Length:             Type:           Description:
+-------            -------             -------         -----------------------------------
+0x0 ToC            (NbEntries * 4)                     The table of content referring to all the image data in the file. 
+                                                        In markfont.dat, the table has 128 entries.
+[
+    Entry           4
+    [
+        0x0 Width   1                  int8            Width of the image in pixel (or maybe bytes ???)
+        0x0 Height  1                  int8            Height of the image in pixel (or maybe bytes ???)
+        0x0 PtrImg  2                  int16           File offset within the "FontImgData" block where the image data for the character begins.
+                                                        Is -1 if there is no image data for ToC entry.
+    ]
+    ...
+]
+FontImgData        varies                              The actual image data for all the characters in the file.
+[
+    Image          (Img's Width * Height)              A single image for a single character. Images appears to be 8 bpp, linear, indexed. 
+                                                        The palette is the .pal file with the same name as the .dat file!
+    [
+        ...
+    ]
+]
+-------            -------             -------         -----------------------------------
+
+-------------------------------
+Overview "/FONT/markfont.pal"
+-------------------------------
+Apparently a RGBA, 32 bits color palette..
+
+
+==========================================================================
+kanji_rd.dat and kanji.dic
+==========================================================================
+File containing the 1 bit font used in most text and dialogs in the game!
+
+------------------------
+Overview "kanji_rd.dat"
+------------------------
+
+CharCodes:
+65 = 'A'
+97 = 'a' 
+
+Offset:            Length:             Type:           Description:
+-------            -------             -------         -----------------------------------
+0x0 NbEntries      4                   uint32           Nb of char in the file.
+0x4 DataBlockA     (NbEntries * 28)                     Block that contains all the data in the file.
+[
+    Entry          28
+    [
+        CharCode   2                   uint16           The code tied to this particular character.
+        Unk#1      2                   uint16           Unknown
+        CharData   24                  -                The 16x12 pixels (192 pixels total), 1 bpp, linear image data for the character.
+        [
+        ]
+    ]
+    ...
+]
+-------            -------             -------         -----------------------------------
+
+------------------------
+Overview "kanji.dic"
+------------------------
+
+Offset:            Length:             Type:           Description:
+-------            -------             -------         -----------------------------------
+0x0 NbEntries      4                   uint32           Nb of entries in the file.
+0x4 DataBlockA     (NbEntries * 8)                      Contains all the entries in the file.
+[
+    Entry          8                                    Entry for a single character.
+    [
+        XCoord?    2                   uint16           Possibly some X coordinates to assemble the character sheet in memory.
+                                                         Increments by 12, values always between 12 and 492.
+        YCoord?    2                   uint16           Possibly some Y coordinates to assemble the character sheet in memory.
+                                                         Increments by 12, values always between 12 and 492 ?
+        CharCode   2                   uint16           The code that is tied to a particular character.
+        BitFlag?   2                   uint16           Unknown, possibly a bit flag?
+    ]
+    ...
+]
+-------            -------             -------         -----------------------------------

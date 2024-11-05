@@ -1,0 +1,34 @@
+/FONT/kanji_rd.dat
+/FONT/unkno_rd.dat
+/FONT/markfont.dat
+rom0:FONT/frame0.wte
+/FONT/frame_b0.chr
+/FONT/text_pal.pal
+/FONT/markfont.pal
+/FONT/frame_b0.pal
+rom0:FONT/cursor.wan
+rom0:FONT/cursor16.wan
+rom0:FONT/alert.wan
+BACK/n_logo.bgp
+BACK/w_esrb.bgp
+
+//As Nintendo logo pops on screen
+rom0:/BALANCE/monster.md
+rom0:/BALANCE/st_n2m_j.bin
+rom0:/BALANCE/st_m2n_j.bin
+rom0:/BALANCE/waza_p.bin
+rom0:/BALANCE/item_p.bin
+rom0:/BALANCE/item_s_p.bin
+rom0:/BALANCE/st_i2n_j.bin
+rom0:RESCUE/rescue.bin
+
+//After the logo fades out, the screen is completely white
+rom0:/MAP_BG/S05P01A.bpl
+rom0:/MAP_BG/S05P01A.bpc
+rom0:/MAP_BG/S05P01A.bma
+
+//After screen goes black again
+S13 maps
+
+GROUND/s13p02a2.wan
+GROUND/s13p02a3.wan

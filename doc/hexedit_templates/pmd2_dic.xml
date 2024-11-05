@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE binary_file_format SYSTEM "BinaryFileFormat.dtd">
+<binary_file_format name="PMD2_dic" type_name="" comment="" expr="">
+	<define_struct type_name="CharEntry" comment="" expr="({this.XOffset}, {this.YOffset}) = {this.Character;hex} &quot;{this.Character;%c}&quot; ({this.unk4})"><data type="int" name="XOffset" format="unsigned" len="2" display="{dec}"/><data type="int" name="YOffset" format="unsigned" len="2" display="{dec}"/><data type="char" name="Character" format="unicode" display=""/><data type="int" name="unk4" len="2" format="unsigned" display=""/></define_struct><data type="int" name="NbEntries" format="unsigned" len="4" display="{dec}"/><for name="Entrie" count="NbEntries" stop_test="" type_name="" comment=""><use_struct name="" expr="" type_name="CharEntry" comment=""/></for><data type="none" name="none"/>
+</binary_file_format>

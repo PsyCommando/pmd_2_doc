@@ -1,0 +1,48 @@
+
+Important notes : 
+    - The compression sliding window seems to be 4096 bytes.
+    - The longest sequence copied from the window is 18 bytes;
+
+
+What each control flag indexes corresponds to:
+    0 : Copy low nybble 4 times, and make 2 bytes with those
+    1 : Copy low nybble 4 times, increment the 4 nybbles by 1, subtract 1 from nybble#0,
+        and make 2 bytes with those.
+    2 : Copy low nybble 4 times, subtract 1 from nybble#1, and make 2 bytes with those.
+    3 : Copy low nybble 4 times, subtract 1 from nybble#2, and make 2 bytes with those.
+    4 : Copy low nybble 4 times, subtract 1 from nybble#3, and make 2 bytes with those.
+    5 : Copy low nybble 4 times, decrement the 4 nybbles by 1, add 1 to nybble#0,
+        and make 2 bytes with those.
+    6 : Copy low nybble 4 times, add 1 to nybble#1, and make 2 bytes with those.
+    7 : Copy low nybble 4 times, add 1 to nybble#2, and make 2 bytes with those.
+    8 : Copy low nybble 4 times, add 1 to nybble#3, and make 2 bytes with those.
+
+
+1st pass:
+Try to find matching sequences of bytes, beginning from the end of the data being compressed, 
+from 0x3 to 0xF bytes. 
+
+Keep a list of the length of all matching sequences found in the data, so we can later on determine
+optimal control flags, by allowing only the less common matching sequence lengths as control flags 
+values.
+Also keep a list of the 4 largest matching sequences for each sequences we looked up. So we don't
+have to do that all over again.
+
+NOTE: We don't want to check all possible sizes, given we'd be checking 5 different lengths of 
+      sequences..
+      Also, There has to be a "sliding window" of some kind here.. I can't believe they'd scan the 
+      whole file for matches each times...
+
+
+2nd pass:
+1. Go from the end to the start of the data to compress. Handle data to compress in groups of 8 bytes.
+
+2. Try to find the best method of compressing those bytes.
+    - Try to find if a 3 to 8 bytes sequence contained in the range we're handling is repeated 
+      elsewhere. Keep only the closest and longest matching sequence.
+    - Try 
+    
+    
+3. Compare the cost in term of space of the methods we can use, and pick what would result in the 
+   smallest filesize.
+

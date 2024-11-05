@@ -1,0 +1,60 @@
+==========================================================================================
+                                    SIR0+WTE:
+==========================================================================================
+This is a file format found mainly within a SIR0 container. The SIR0's header pointer points
+to the header below, which is located at the end of the file, right after all the data.
+
+This format seems to hold a raw 4bpp LINEAR/Un-tiled images, along with one color palette.
+The extra zeros at the end suggest that it might be possible to add more images and palettes..
+
+WTE Sub-Header( is pointed to by the SIR0 header ):
+----------------------------------------------------
+
+Offset:            Length:            Endian:      Description:
+-------            -------            -------      -----------------------------------
+0x00               4                  big          Magic Number "WTE\0" {0x57, 0x54, 0x45, 0x0}
+0x04               4                  little       Pointer to beginning image.
+0x08               4                  little       Length of image.
+0x0C               4                  little       Unknown, seems to be some kind of ID to regroup files together.
+0x10               4                  little       Always 0x00000000 this far!
+0x14               2                  little       Image width in pixels.
+0x16               2                  little       Image height in pixels.
+0x18               4                  little       Pointer to palette.
+0x1C               4                  little       Nb colors in color palette.
+0x20               varies             -            Null bytes
+EoFPadding         varies             -            Padding bytes 0xAA, to align on 16 bytes.
+SIR0PtrOffsetList  varies             -            See SIR0 file for details.
+-------            -------            -------      -----------------------------------
+Total:             
+
+
+Here's the overall WTE file structure (SIR0 header included):
+-------------------------------------------------------------
+
+Offset:            Length:            Endian:      Description:
+-------            -------            -------      -----------------------------------
+0x00               4                  Big           Magic Number "SIR0" (0x53 0x49 0x52 0x30)
+0x04               4                  Little        PTR_A: to WTE Header
+0x08               4                  Little        PTR_B: to end of file block 
+0x0C               4                  -             Zeros
+(*PTR_IMG)         (IMG_LEN)          -             IMG_DATA: This is where the image data is stored. 4bpp, linear.
+[
+    ...
+]
+(*PTR_PAL)         (PAL_NB_COL * 4)   -             PALETTE: This is where the color palette is stored. RGBX 32 bits.
+[
+    ...
+]
+(*PTR_A)           4                  big          Magic Number "WTE\0" {0x57, 0x54, 0x45, 0x0}
+0x04               4                  little       PTR_IMG: to beginning image.
+0x08               4                  little       IMG_LEN: Length of image.
+0x0C               4                  little       Unknown, seems to be some kind of ID to regroup files together.
+0x10               4                  little       Always 0x00000000 this far!
+0x14               2                  little       IMG_WIDTH: Image width in pixels.
+0x16               2                  little       IMG_HEIGHT: Image height in pixels.
+0x18               4                  little       PTR_PAL: Pointer to palette.
+0x1C               4                  little       PAL_NB_COL: Nb colors in color palette.
+0x20               varies             -            Null bytes
+EoFPadding         varies             -            Padding bytes 0xAA, to align on 16 bytes.
+SIR0PtrOffsetList  varies             -            See SIR0 file for details.
+-------            -------            -------      -----------------------------------

@@ -1,0 +1,40 @@
+==========================================================================================
+                                        WTU:
+==========================================================================================
+This file format seems to "complete" a WTE file when present.
+It only appears alongside a WTE file with the same name.
+
+It seems to be linked to whole screen animations. With names like, "c_wipe.wte/wtu"
+
+----------------------------------------------------
+WTU Header:
+----------------------------------------------------
+
+Offset:            Length:            Endian:      Description:
+-------            -------            -------      -----------------------------------
+0x00               4                  big          Magic Number "WTU\0" {0x57, 0x54, 0x55, 0x0}
+0x04               4                  little       NB_ENTRIES: Nb of entries in the file.
+0x08               4                  little       The Unknown / ID found at 0xC in the accompanying WTE file header.
+0x0C               4                  little       Unknown..
+-------            -------            -------      -----------------------------------
+Total:             16 bytes
+
+
+----------------------------------------------------
+WTU Content:
+----------------------------------------------------
+
+Offset:            Length:            Endian:      Description:
+-------            -------            -------      -----------------------------------
+WTUHeader          16                 -            The header above.
+Table              NB_ENTRIES         -            A table with an unknown purpose.
+[
+    Entry          8                  -            A single entry in the table.
+    [
+        Unk#0      2                  little       Unknown.
+        Unk#1      2                  little       Unknown.
+        Unk#2      2                  little       Unknown.
+        Unk#3      2                  little       Unknown.
+    ]
+    ...
+]

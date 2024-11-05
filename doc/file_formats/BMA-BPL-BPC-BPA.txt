@@ -1,0 +1,415 @@
+==========================================================================================
+BMA, BPL, BPC, BPA
+==========================================================================================
+All those files types come together to assemble what looks like a map tileset !
+
+
+The code that seems to load those files seems to be tightly coupled with the script engine.
+It appears to be in overlay_0011, which is loaded at offset 0x022DC240 in the 
+north american version of explorers of sky.
+
+Some interesting strings from overlay_0011, and their location in RAM :
+2320C44 - "MAP_BG/bg_list.dat"
+2320C58 - "rom0:/MAP_BG/%s.bpl"
+2320C6C - "rom0:/MAP_BG/%s.bpc"
+2320C80 - "rom0:/MAP_BG/%s.bma"
+2320C94 - "rom0:/MAP_BG/%s.bpa"
+2320CC8 - "ground_map.c"
+
+It seems like the code handling map bg is also called when the upper screen BG image is changed!
+It seems some maps have a type? And it changes how they get loaded slightly.
+
+==========================================================================================
+bg_list.dat
+==========================================================================================
+Contains the filenames of the level tileset files to load for a given level index from the 
+level id table.
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+LevelList
+[
+    LevelEntry                      88
+    [
+        0x00    BPLName             8               const char[8]   8 character string. Never null.
+        0x08    BPCName             8               const char[8]   8 character string. Never null.
+        0x10    BMAName             8               const char[8]   8 character string. Never null.
+        ExtraNames                  64              const char[8][8] Contains 8 extra strings of 8 characters each. Those can be completely null.
+        [
+            BPAName                 8               const char[8]   8 character string.
+            ...
+        ]
+    ]
+    ...
+]
+
+==========================================================================================
+BPC
+==========================================================================================
+BPC contains 2 layers of the lower screen background as compressed tiles data.
+
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+Header                              4
+[
+    0x00    ptruplayer              2               uint16          Pointer in bytes to UpperLayerData. May be 0. If 0, there is only one entry in the "SizeTable".
+    0x02    ptrlowlayer             2               uint16          Pointer in bytes to LowerLayerData. May be 0. If 0, there is only one entry in the "SizeTable".
+]
+SizeTable                           vary                            Contains the decompressed sizes of the image data, and the data table following.
+[
+    ScreenEntry                     12
+    [
+        0x00 nbtiles                2               uint16          The nb of 4bpp, 64 pixels tiles. Appears to be the decompressed length divided by 32, of the image referred to by this entry. Is multiplied by 32(see 0x22EC628). (Note that this counts the 32 bytes of zeros dumped at the beginning of all tilesets by the game engine. So to export you need to subtract 32 from the product.)
+        0x02 unk2                   2               uint16          May indicate tiles to read from the BPA matching this slot (There can be up to 4 BPAs per tileset!)
+        0x04 unk3                   2               uint16          May indicate tiles to read from the BPA matching this slot (There can be up to 4 BPAs per tileset!)
+        0x06 unk4                   2               uint16          May indicate tiles to read from the BPA matching this slot (There can be up to 4 BPAs per tileset!)
+        0x08 unk5                   2               uint16          May indicate tiles to read from the BPA matching this slot (There can be up to 4 BPAs per tileset!)
+        0x0A tmaplen                2               uint16          Loaded on line 0x022EC7F0. 
+                                                                    To obtain the decompressed byte length of the second entry we do : 
+                                                                        ((tmaplen - 1) + ((tmaplen - 1) * 8)) * 2 
+    ]
+    ...
+]
+UpperLayerData                     vary
+[
+    CmpImage                    vary                              Compressed image data. The size is in the "nbtiles" of the SizeTable entry corresponding to this image!
+    [
+    ...                                                           (See below "CmpImage" section!)
+    ]
+    Padding                     (0-1)                              Align the next section on 2 bytes if needed.
+    [
+    ...
+    ]
+    TileMappingData             vary                              Compressed data. The size once decompressed is stored in the "tmaplen" field of the corresponding SizeTable entry.
+    [
+        CmpHighBytesTable       vary                              (See below "TileMappingData" section!)
+        [
+            Entry               vary                              (See below "TileMappingData" section!)
+            [
+                cmdbyte         1
+                Params          0+
+                [
+                    (optparam) (1)
+                    ...
+                ]
+            ]
+            ...
+        ]
+        CmpLowBytesTable        vary                              (See below "TileMappingData" section!)
+        [
+            Entry               vary                              (See below "TileMappingData" section!)
+            [
+                cmdbyte         1
+                Params          0+
+                [
+                    (optparam) (1)
+                    ...
+                ]
+            ]
+            ...
+        ]
+    ]
+]
+LowerLayerData                  vary
+[
+    //Exactly the same format as "UpperLayerData"
+]
+
+----------------------------------------
+CmpImage
+----------------------------------------
+This section contains compressed 4bpp pixel data.
+
+The compression is a bit akin to a fancier form of RLE.
+It revolves around a command byte which indicates how to process the following data.
+We also do not know the length of the compressed data before processing it, and need to 
+keep track of the nb of pixels output so far to know when we decompressed the whole image.
+
+First, we defined some important variables to keep track of the state:
+    - LeftoverVal1 : Stores a byte that will be used to assemble the leftover word later. 
+    - LeftoverVal2 : Stores a byte that will be used to assemble either patterns, or some leftover bytes later.
+    - LeftoverBuf  : Keeps the previous value of LeftoverVal2. And allows to alternate between the two values.
+    - HasLeftover  : When this boolean is 1, a leftover word will be assembled and written at the end of the last sequence that was written.
+
+    **NOTE** : "nbbytestocopy" MUST be signed, and values < 0 are to be expected as part of normal processing! 
+                The subtraction we do when there's a leftover byte may result in the "nbbytestocopy" to be -1.
+                In which case, the extra processing done whether the "nbbytestocopy" was even or odd doesn't happen.
+                So its critical to let subtraction happen even if the value was 0 before it takes place.
+    
+    
+The command byte is interpreted this way:
+    * If cmdbyte < 0x80
+    {
+        * If cmdbyte == 0x7F
+            -> "nbbytestocopy" is stored as the next little endian 16 bits integer right after the command byte.
+        * Else If cmdbyte == 0x7E
+            -> "nbbytestocopy" is stored as the next byte right after the command byte.
+        * Else
+            -> "nbbytestocopy" is the value of the cmdbyte itself.
+            
+        * If HasLeftover == true
+            -> We load the next byte after either the cmdbyte or the length. Shift it 8 bits left, and bitwise OR to the value of "LeftoverVal1" to make a 16 bits word.
+            -> We write the word we just got to the output.
+            -> We set "HasLeftover" to false.
+            -> We subtract one from the "nbbytestocopy" we got so far.
+            
+        -> Then we copy the bytes from our current read position for the nb indicated.
+            ***(IMPORTANT)*** : The loop that copies must always copy 2 bytes at a time, as a 16 bits word, even if "nbbytestocopy" is odd!!!
+                                The reason for that is that the "nbbytestocopy" being odd or even is used to trigger additional processing!
+        
+        * If the amount of bytes copied is equal to 0, OR to "nbbytestocopy" (since we increment the counter by 2 each turns of the loop, it comes down to whether the "nbbytestocopy" is even or odd)
+            -> Read the next byte from the read position, and put it into "LeftoverVal1"
+            -> Set "HasLeftover" to true!
+    }
+    *Else ( cmdbyte >= 0x80 )
+    {
+        * If cmdbyte >= 0x80 AND cmdbyte < 0xC0
+            * If cmdbyte == 0xBF
+                -> "nbbytestocopy" is stored as the next byte right after the command byte.
+            * Else
+                -> "nbbytestocopy" is (cmdbyte - 0x80)
+            -> We put the value of "LeftoverVal2" into "LeftoverBuf".
+            -> We read the next byte into "LeftoverVal2".
+            
+        * Else If cmdbyte >= 0xC0 AND cmdbyte < 0xE0
+            * If cmdbyte == 0xDF
+                -> "nbbytestocopy" is stored as the next byte right after the command byte.
+            * Else
+                -> "nbbytestocopy" is (cmdbyte - 0xC0)
+                
+        * Else If cmdbyte >= 0xE0
+            * If curdbbbyte == 0xFF
+                -> "nbbytestocopy" is stored as the next byte right after the command byte.
+            * Else
+                -> "nbbytestocopy" is (cmdbyte - 0xE0)  
+            -> We swap the values of "LeftoverBuf" and "LeftoverVal2"
+            
+        *If HasLeftover == true
+            -> Assemble the leftover word by shifting "LeftoverVal2" by 8bits left, and applying a bitwise OR with "LeftoverVal1".
+            -> We write the word we just got to the output.
+            -> We set "HasLeftover" to false.
+            -> We subtract one from the "nbbytestocopy" we got so far.
+            
+        -> We assemble a word from shifting "LeftoverVal2" by 8bits left, and applying a bitwise OR with the value of "LeftoverVal2".
+        -> We then copy the word we got 2 bytes per loop iteration, incrementing the counter by 2, while counter < "nbbytestocopy".
+            ***(IMPORTANT)*** : The loop that copies must always copy 2 bytes at a time, as a 16 bits word, even if "nbbytestocopy" is odd!!!
+                                The reason for that is that the "nbbytestocopy" being odd or even is used to trigger additional processing!
+        
+        * If the amount of bytes copied is equal to 0, OR to "nbbytestocopy" (since we increment the counter by 2 each turns of the loop, it comes down to whether the "nbbytestocopy" is even or odd)
+            -> Copy the value of "LeftoverVal2" into "LeftoverVal1"
+            -> Set "HasLeftover" to true!
+    }
+            
+We run this in a loop until the amount of bytes written to the output matches (nbtiles * 32 bytes, as there are 64, 4 bits pixels in a tile. ).
+Immediately after, without padding or anything the "TileMappingData" begins. 
+We can only know where "TileMappingData" begins after decompressing the image data!
+    
+----------------------------------------
+TileMappingData
+----------------------------------------
+This section is divided into 2 tables. 
+ - CmpHighBytesTable
+ - CmpLowBytesTable
+ 
+Those two sections are used to assemble the amount of 
+words specified in the "tmaplen" value of the corresponding DBA entry! 
+    * "tmaplen" is interpreted this way :
+        NbWordsToOutput = (((tmaplen - 1) * 9)) * 2 
+
+First, we insert 18 bytes of zeros before the decompressed table.
+        
+Then, the "CmpHighBytesTable" is parsed byte by byte. And depending on the value of the byte,
+the following operations are executed:
+    * If byte < 0x80:
+        -> We interpret the value of the byte as the number of NULL 16 bits words to write.
+    * If byte > 0x80 AND byte < 0xC0:
+        -> We read the next byte.(We'll refer to it as "parambyte")
+        -> We shift "parambyte" by 8 left, and make it an unsigned word (parambyte << 8)
+        -> We then use (byte - 0x80) to get the nb of words to write. 
+        -> We write the word we calculated the specified amount of times.
+    * If byte > 0xC0:
+        -> We use (byte - 0xC0) as the nb of words to write, and the nb of bytes to read.
+        -> We read read each bytes shift them by 8 to the left, and write the result 
+            as a signed word to the output!
+        
+Next, we move the write position to the beginning of the output we obtained from processing the
+"CmpHighBytesTable" table. And then the "CmpLowBytesTable" which is right after "CmpHighBytesTable" 
+is parsed byte by byte. Each of the operations in this table affect the low byte of some specific
+words out of all those we wrote earlier.
+Here are how the command bytes are processed:
+    * If byte < 0x80:
+        -> We multiply the value of ("byte" + 1) by 2.
+        -> Then we add the product to the write position.
+           (Essentially this seek to a particular word)
+    * If byte > 0x80 AND byte < 0xC0: 
+        -> We read the next byte from "CmpHighBytesTable".(We'll refer to it as "parambyte")
+        -> We use (byte - 0x80) to get the nb of words to append the parambyte to.
+        -> We bitwise OR parambyte to the word at the current write position.
+    * If byte > 0xC0:
+        -> We use (byte - 0xC0) as the nb of words to modify, and the nb of bytes to read.
+        -> We read the next byte from the "CmpHighBytesTable".
+        -> We bitwise OR the byte we just read with the word at the current write position.
+        
+Once the table is decoded, each words represents a tile of the screen, and follows this structure:
+
+--------------------
+Tile Entry
+--------------------
+The tile entry is a little endian, 16 bit value made up of 4 parts.
+
+    0000 0011 1111 1111
+           |__________|
+    The tile data index.
+    The index of the image tile to place.
+    
+    
+    0000 0100 0000 0000
+          |
+    The X axis flip bit
+    Whether the tile is flipped on the X axis or not. (1 = yes, 0 = no)
+    
+    
+    0000 1000 0000 0000
+         |
+    The Y axis flip bit
+    Whether the tile is flipped on the Y axis or not. (1 = yes, 0 = no)
+    
+    
+    1111 0000 0000 0000
+    |__|
+    The palette index.
+    The index in the Palette table of the 16 color palette to use for the 
+    tile specified in the tile data index!
+
+==========================================================================================
+BPL
+==========================================================================================
+A set of 16 colors or less palettes.
+It seems like the very first color of the first palette is omitted.
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+0x00        nbpal                   2               uint8*          The nb of palettes in the file. Usually 16, but I've seen 1.. (w03a.bpl)
+0x02        unk2                    2               uint8*          Unknown. Usually 0. (see d32p44.bpl) (If non-zero, it seems to indicate that there is a ColorIndexTbl and ColorTable2!)
+
+Palettes                            (15 * 60)        -              The actual palette data.
+[
+    Palette                         60                              A single palette. 15 colors. But is parsed to a 16 color palette, with the first color always null!
+    [
+        color                       4               RGBX32          A single color in the palette.
+        ...
+    ]
+    ...
+]
+ColorIndexTbl                    0-(nbpal * 4)                      May be omitted under unknown circumstances. Located at ((nbpal * 15) * 4)
+[
+    Entry                           4
+    [
+        0x00 unk3                   2               int16           unk
+        0x02 colorindex             2               int16           Index within ColorTable2 of the last color in the color list assigned to this entry. 
+    ]
+    ...
+]
+ColorTable2                         0-?                             May be omitted under unknown circumstances. Located at ((nbpal * 15) * 4) + (nbpal * 4)
+[
+    color                           4               RGBX32          A single color.
+    ...
+]
+
+
+==========================================================================================
+BMA
+==========================================================================================
+The header of this file contains data that is used throughout the tileset parsing process!
+
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+Header                              12
+[
+    0x00    mapw                    1               int8            The width of the map(in tiles). 
+    0x01    maph                    1               int8            The height of the map(in tiles). 
+    0x02    unk1                    1               int8            Unknown. Tilemap tiling width. Usually 3. Tilemaps are tiled 3x3.
+    0x03    unk2                    1               int8            Unknown. Tilemap tiling height. Usually 3. Tilemaps are tiled 3x3.
+    0x04    unk3                    1               int8            Unknown. Messes with tiles.
+    0x05    unk4                    1               int8            Unknown. Messes with tiles.
+    0x06    unk5                    2               int8*
+    0x08    unk6                    2               int8*
+    0x0A    unk7                    2               int8*
+]
+DataBlockA                                                          Compressed data. Is always 0x1F00 bytes decompressed!
+[
+    ...
+]
+DataBlockB                                                          Compressed data. Is always 0x1F00 bytes decompressed! 
+[
+    ...
+]
+DataBlockC                                                          Compressed data. Max size is 0xBA00 bytes decompressed! Possibly level collision!
+[
+    ...
+]
+
+--------------------------------------
+DataBlockA compression
+--------------------------------------
+
+
+==========================================================================================
+BPA
+==========================================================================================
+Animated overlay?
+It contains raw 4bpp tiles which put together form an animated part of the background.
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+Header
+[
+    0x00    unk1                    2               uint16          Unknown. Seems this number is also found in the corresponding bpc, inside the IndexTable
+    0x02    nbentries               2               uint16          NbEntries in DatablockA!
+    
+]
+DatablockA
+[
+    unk3                            4               uint32          unk
+    ...
+]
+DatablockB
+[
+    ...
+]
+
+
+==========================================================================================
+Hardcoded Data
+==========================================================================================
+A significant part of the map/tileset constants are hard-coded. Which makes adding new levels 
+impossible without modifying the hard-coded data.
+
+This hard-coded data defines how the maps will me parsed and interpreted!
+
+Hard-Coded Components
+--------------------------------------
+    - Level list    : Contains a list of all levels, names, map id, map type, and etc..
+    - unktbl_2320D2C: Contains a lot of levelids, and a few other values used when changing map.
+    - Fun 0x22EFD5C : A function also checks for certain level ids and do extra processing for some specific levels!
+
+Level list entry:
+    struct entry
+    {
+        uint16_t mapty;
+        uint16_t unk2;
+        uint16_t mapid;
+        uint16_t unk4;
+        uint32_t namestrptr;
+    };
+    
+unktbl_2320D2C entry:
+    {
+        uint16_t levelid;
+        uint8_t  unk1;
+        uint8_t  unk2;
+        uint32_t unk3;
+    };
+    

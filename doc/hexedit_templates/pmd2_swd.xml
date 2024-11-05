@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE binary_file_format SYSTEM "BinaryFileFormat.dtd">
+<binary_file_format name="swd" type_name="" comment="" expr="">
+	<struct name="swdl_chunk" type_name="" comment="" expr=""><data type="string" name="magicn" format="ascii" len="4" domain="this == &quot;swdl&quot;" display=""/><data type="none" name="null" len="4"/><data type="int" name="total_file_length" len="4" format="unsigned" display="dec"/><data type="int" name="version" len="4" format="unsigned" display="dec"/></struct><data type="none" name="none"/>
+</binary_file_format>

@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<!DOCTYPE binary_file_format SYSTEM "BinaryFileFormat.dtd">
+<binary_file_format name="WAN" type_name="" comment="" expr="">
+	<define_struct type_name="ImageCmpEntry" comment="" expr="Copy {this.PixelSrc; hex}, {this.lengthToCopy} time(s)">
+		<data type="int" name="PixelSrc" format="unsigned" len="4" display="hex"/>
+		<data type="int" name="lengthToCopy" format="unsigned" len="2" display=""/>
+		<data type="int" name="unk14" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="unk2" format="unsigned" len="4" display="hex"/>
+	</define_struct>
+	<define_struct type_name="FramePart_Attr0" comment="" expr="">
+		<data type="int" name="YOffs" format="unsigned" len="2" display="" domain="this &lt; 256" bits="8" direction="up"/>
+		<data type="int" name="rotnscale" format="unsigned" len="2" display="hex" bits="1" direction="up"/>
+		<data type="int" name="HideObj" format="unsigned" len="2" display="hex" bits="1" direction="up"/>
+		<data type="int" name="ObjMode" format="unsigned" len="2" display="hex" bits="2" direction="up" domain="{Normal, Blended, Windowed, BMP}"/>
+		<data type="int" name="Mosaic" format="unsigned" len="2" display="hex" bits="1" direction="up"/>
+		<data type="int" name="PaletteMode" format="unsigned" len="2" display="hex" bits="1" direction="up" domain="{Pal16Col, Pal256Col}"/>
+		<data type="int" name="ObjShape" format="unsigned" len="2" display="" bits="2" direction="up" domain="{Square, Wide, Tall, Undefined}"/>
+	</define_struct>
+	<define_struct type_name="FramePart_Attr0_rns" comment="" expr="">
+		<data type="int" name="YOffs" format="unsigned" len="2" display="" domain="this &lt; 256" bits="8" direction="up"/>
+		<data type="int" name="rotnscale" format="unsigned" len="2" display="hex" bits="1" direction="up"/>
+		<data type="int" name="dblsize" format="unsigned" len="2" display="hex" bits="1" direction="up"/>
+		<data type="int" name="ObjMode" format="unsigned" len="2" display="hex" bits="2" direction="up" domain="{Normal, Blended, Windowed, BMP}"/>
+		<data type="int" name="Mosaic" format="unsigned" len="2" display="hex" bits="1" direction="up"/>
+		<data type="int" name="PaletteMode" format="unsigned" len="2" display="hex" bits="1" direction="up" domain="{Pal16Col, Pal256Col}"/>
+		<data type="int" name="ObjShape" format="unsigned" len="2" display="" bits="2" direction="up" domain="{Square, Wide, Tall, Undefined}"/>
+	</define_struct>
+	<define_struct type_name="FramePart_Attr1" comment="" expr="">
+		<data type="int" name="XOffs" format="unsigned" len="2" domain="this &lt; 512" display="" bits="9" direction="up"/>
+		<data type="int" name="Unused" format="unsigned" len="2" display="hex" bits="2" direction="up"/>
+		<data type="int" name="isLast" format="unsigned" len="2" display="hex" bits="1" direction="up"/>
+		<data type="int" name="hFlip" format="unsigned" len="2" display="hex" bits="1" direction="up"/>
+		<data type="int" name="VFlip" format="unsigned" len="2" display="hex" bits="1" direction="up"/>
+		<data type="int" name="MajorResolution" format="unsigned" len="2" domain="{Res8, Res16, Res32, Res64}" display="hex" bits="2" direction="up"/>
+		<eval expr="IsLastState = isLast" display_error="false" display_result="false" comment=""/>
+	</define_struct>
+	<define_struct type_name="FramePart_Attr1_rns" comment="" expr="">
+		<data type="int" name="XOffs" format="unsigned" len="2" domain="this &lt; 512" display="" bits="9" direction="up"/>
+		<data type="int" name="RotNScaleParam" format="unsigned" len="2" domain="this &lt; 32" display="hex" bits="5" direction="up"/>
+		<data type="int" name="MajorResolution" format="unsigned" len="2" domain="{Res8, Res16, Res32, Res64}" display="hex" bits="2" direction="up"/>
+		<eval expr="IsLastState = RotNScaleParam &amp; 4" display_error="false" display_result="false" comment=""/>
+	</define_struct>
+	<define_struct type_name="FramePart" comment="" expr="">
+		<eval expr="CurFrmIsLast = 0" display_error="false" display_result="false" comment=""/>
+		<eval expr="IsLastState = 0" display_error="false" display_result="false" comment=""/>
+		<data type="int" name="ImgIndex" format="signed" len="2" display=""/>
+		<data type="int" name="unk0" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="dummyYOffs" format="unsigned" len="2" display="hex" domain="this &lt; 256" bits="8" direction="up"/>
+		<data type="int" name="rotnscale" format="unsigned" len="2" display="hex" bits="1" direction="up"/>
+		<jump offset="-2" comment="" origin="current">
+			<if test="rotnscale != 0" comment="">
+				<use_struct name="FramePart_Attr0_rns" expr="" type_name="FramePart_Attr0_rns" comment=""/>
+				<else/>
+				<use_struct name="FramePart_Attr0" expr="" type_name="FramePart_Attr0" comment=""/>
+			</if>
+		</jump>
+		<if test="rotnscale != 0" comment="">
+			<use_struct name="FramePart_Attr1_rns" expr="" type_name="FramePart_Attr1_rns" comment=""/>
+			<else/>
+			<use_struct name="FramePart_Attr1" expr="" type_name="FramePart_Attr1" comment=""/>
+		</if>
+		<struct name="FramePart_Attr2" type_name="" comment="" expr="">
+			<data type="int" name="TileID" format="unsigned" len="2" domain="this &lt; 1024" display="hex" bits="10" direction="up"/>
+			<data type="int" name="Priority" format="unsigned" len="2" domain="this &lt; 4" display="hex" bits="2" direction="up"/>
+			<data type="int" name="PalNum" format="unsigned" len="2" domain="this &lt; 16" display="hex" bits="4" direction="up"/>
+		</struct>
+		<eval expr="CurFrmIsLast =  (rotnscale &gt; 0)? (rotnscale &amp; 4)  : IsLastState" display_error="false" display_result="false" comment=""/>
+	</define_struct>
+	<define_struct type_name="AnimSequence" comment="" expr="">
+		<for name="AnimFrms" count="" stop_test="this.FrameDur == 0 &amp;&amp; this.FrameIndex == 0 &amp;&amp; this.XOffs == 0 &amp;&amp; this.YOffs == 0 &amp;&amp; this.ShadowXOffs == 0 &amp;&amp; this.ShadowYOffs == 0" type_name="" comment="">
+			<struct name="AnimFrm" type_name="" comment="" expr="">
+				<data type="int" name="FrameDur" format="unsigned" len="2" display="hex"/>
+				<data type="int" name="FrameIndex" format="unsigned" len="2" display="hex"/>
+				<data type="int" name="XOffs" format="signed" len="2" display=""/>
+				<data type="int" name="YOffs" format="signed" len="2" display=""/>
+				<data type="int" name="ShadowXOffs" format="signed" len="2" display=""/>
+				<data type="int" name="ShadowYOffs" format="signed" len="2" display=""/>
+			</struct>
+		</for>
+	</define_struct>
+	<define_struct type_name="ImageInfo" comment="" expr="">
+		<data type="int" name="ptrImagesTbl" format="unsigned" len="4" display="hex"/>
+		<data type="int" name="ptrPaletteChunk" format="unsigned" len="4" display="hex"/>
+		<data type="int" name="unk13" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="colorFmt" format="unsigned" len="2" display="hex" domain="{Col16, Col256}"/>
+		<data type="int" name="unk11" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="nbImages" format="unsigned" len="2" display=""/>
+	</define_struct>
+	<define_struct type_name="AnimInfo" comment="" expr="">
+		<data type="int" name="ptrFramesTbl" format="unsigned" len="4" display="hex"/>
+		<data type="int" name="ptrOffsTbl" format="unsigned" len="4" display="hex"/>
+		<data type="int" name="ptrAnimTbl" format="unsigned" len="4" display="hex"/>
+		<data type="int" name="nbAnim" format="unsigned" len="2" display=""/>
+		<data type="int" name="unk6" format="unsigned" len="2" display=""/>
+		<data type="int" name="unk7" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="unk8" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="unk9" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="unk10" format="unsigned" len="2" display="hex"/>
+	</define_struct>
+	<struct name="SIR0_Header" type_name="" comment="" expr="">
+		<data type="string" name="MagicN" format="ascii" display="" len="4" byte_order="big" domain="this==&quot;SIR0&quot;"/>
+		<data type="int" name="PointerA" format="unsigned" display="hex" byte_order="little" len="4"/>
+		<data type="int" name="PointerB" format="signed" byte_order="little" len="4" display="hex"/>
+		<data type="int" name="Null" format="signed" len="4" domain="this == 0" display=""/>
+	</struct>
+	<jump offset="SIR0_Header.PointerA" comment="" origin="start">
+		<struct name="WanHDR" type_name="" comment="" expr="Type : {this.spriteType}">
+			<data type="int" name="ptrAnimInfo" format="unsigned" len="4" display="hex"/>
+			<data type="int" name="ptrImgInfo" format="unsigned" len="4" display="hex"/>
+			<data type="int" name="spriteType" format="unsigned" len="2" display="" domain="{PropMsic_0, Character_1, Effect_2, Wat_3}"/>
+			<data type="int" name="unk12" format="unsigned" len="2" display="hex"/>
+		</struct>
+	</jump>
+	<if test="WanHDR.ptrAnimInfo != 0" comment="">
+		<jump offset="WanHDR.ptrAnimInfo" comment="" origin="start">
+			<use_struct name="AnimInfoObj" expr="" type_name="AnimInfo" comment=""/>
+		</jump>
+	</if>
+	<if test="WanHDR.ptrImgInfo != 0" comment="">
+		<jump offset="WanHDR.ptrImgInfo" comment="" origin="start">
+			<use_struct name="imginfobj" expr="" type_name="ImageInfo" comment=""/>
+		</jump>
+	</if>
+	<eval expr="FrameRefTableEnd = SIR0_Header.PointerB" display_error="false" display_result="false" comment="Set to the highest possible value so we can find the lowest pointer in the anim grp table!"/>
+	<eval expr="AnimSequenceTblBeg = SIR0_Header.PointerB" display_error="false" display_result="false" comment=""/>
+	<eval expr="ParticleOffsetTblBeg = (AnimInfoObj.ptrOffsTbl != 0)? AnimInfoObj.ptrOffsTbl : 0" display_error="false" display_result="false" comment=""/>
+	<if test="WanHDR.ptrAnimInfo != 0 &amp;&amp; AnimInfoObj.ptrAnimTbl != 0" comment="">
+		<jump offset="AnimInfoObj.ptrAnimTbl" comment="" origin="start">
+			<for name="AnimEntrie" count="AnimInfoObj.nbAnim" stop_test="" type_name="" comment="">
+				<struct name="AnimEntry" type_name="" comment="" expr="Length : {this.len}">
+					<data type="int" name="ptrAnimLst" format="unsigned" len="4" display="hex"/>
+					<data type="int" name="len" format="unsigned" len="2" display=""/>
+					<data type="int" name="unk16" format="unsigned" len="2" display="hex"/>
+					<eval expr="AnimSequenceTblBeg = (AnimSequenceTblBeg &gt; ptrAnimLst)? ptrAnimLst : AnimSequenceTblBeg" display_error="false" display_result="false" comment=""/>
+					<if test="ptrAnimLst != 0" comment="">
+						<jump offset="ptrAnimLst" comment="" origin="start">
+							<for name="Sequences" count="len" stop_test="" type_name="" comment="">
+								<struct name="SequenceRef" type_name="" comment="" expr="">
+									<data type="int" name="ptrSequence" format="unsigned" len="4" display="hex"/>
+									<jump offset="ptrSequence" comment="" origin="start">
+										<use_struct name="aseqs" expr="" type_name="AnimSequence" comment=""/>
+									</jump>
+								</struct>
+							</for>
+						</jump>
+					</if>
+				</struct>
+			</for>
+		</jump>
+	</if>
+	<eval expr="FrameRefTableEnd = (ParticleOffsetTblBeg != 0)? ParticleOffsetTblBeg : AnimSequenceTblBeg" display_error="false" display_result="false" comment=""/>
+	<jump offset="AnimInfoObj.ptrFramesTbl" comment="" origin="start">
+		<for name="Frms" count="(FrameRefTableEnd - AnimInfoObj.ptrFramesTbl) / 4" stop_test="" type_name="" comment="">
+			<struct name="FramePtr" type_name="" comment="" expr="">
+				<data type="int" name="ptrFrame" format="unsigned" len="4" display="hex"/>
+				<jump offset="ptrFrame" comment="" origin="start">
+					<for name="frmPart" count="" stop_test="CurFrmIsLast &gt; 0" type_name="" comment="">
+						<use_struct name="frmParts" expr="" type_name="FramePart" comment=""/>
+					</for>
+				</jump>
+			</struct>
+		</for>
+	</jump>
+	<if test="WanHDR.ptrImgInfo != 0 &amp;&amp; imginfobj.ptrImagesTbl != 0" comment="">
+		<jump offset="imginfobj.ptrImagesTbl" comment="" origin="start">
+			<for name="ImgPtr" count="imginfobj.nbImages" stop_test="" type_name="" comment="">
+				<struct name="AImgPtr" type_name="" comment="" expr="">
+					<data type="int" name="ptrImage" format="unsigned" len="4" display="hex"/>
+					<jump offset="ptrImage" comment="" origin="start">
+						<for name="CmpTable" count="" stop_test="this.PixelSrc == 0 &amp;&amp; this.lengthToCopy == 0" type_name="" comment="">
+							<use_struct name="cmpentry" expr="" type_name="ImageCmpEntry" comment=""/>
+						</for>
+					</jump>
+				</struct>
+			</for>
+		</jump>
+	</if>
+	<if test="WanHDR.ptrImgInfo != 0 &amp;&amp; imginfobj.ptrPaletteChunk != 0" comment="">
+		<jump offset="imginfobj.ptrPaletteChunk" comment="" origin="start">
+			<struct name="PaletteInforChunk" type_name="" comment="" expr="">
+				<data type="int" name="ptrPalBeg" format="unsigned" len="4" display="hex"/>
+				<data type="int" name="unk3" format="unsigned" len="2" display="hex"/>
+				<data type="int" name="NbColorsPerRow" format="unsigned" len="2" display=""/>
+				<data type="int" name="unk4" format="unsigned" len="2" display="hex"/>
+				<data type="int" name="unk5" format="unsigned" len="2" display="hex"/>
+				<data type="int" name="nullBytes" format="unsigned" len="4" display="hex" domain="this == 0"/>
+				<jump offset="ptrPalBeg" comment="" origin="start">
+					<data type="none" name="PaletteBegin" len="4"/>
+				</jump>
+			</struct>
+		</jump>
+	</if>
+	<data type="none" name="none"/>
+</binary_file_format>

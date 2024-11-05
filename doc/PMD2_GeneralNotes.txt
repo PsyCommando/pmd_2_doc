@@ -1,0 +1,427 @@
+====================
+PMD2_General_Notes
+====================
+
+=====================
+Function Offsets:
+=====================
+
+- ARM9 Bin
+	* 208729Ch memcpy(byte *dest,byte *src,int len)
+	* 207C314h memsetWords(dword value,dword *addr,int words)
+
+    * 200C33Ch LookupPackFileSubFiles 200C33Ch (r0 = fileid (0 to 5), r1 = subfileindex )
+    * 2008204h FStreamCtor(r0 = PtrFStreamStruct)
+    * 2008210h FStreamFOpen(r0 = PtrFStreamStruct, r1 = PtrFPath)
+    * 2008254h FStreamRead(r0 = PtrFStreamStruct, r1 = PtrOutBuffer, r2 = BegOffset, r3 = EndOffset )
+    * 20082A8h FStreamSeek( r0 = PtrFStreamStruct, r1 = OffsetToSeekTo, r2 = unknown?(usually 0)  ) 
+    * 2001170h MemAlloc Possibly CAlloc( size_t sizeelement, size_t nbelements ) 
+    * 200C2DCh LoadPackFiles 
+    * 201F4B4h HandleSir0Translation(R0=OutPtrToSIR0Data, R1=filebuffer)
+    
+=====================
+Constant Offsets
+=====================
+
+- ARM9 Bin
+    * 20AF6A0h PackFilesPathsTable char *[6]
+    
+const char * Table_20AF6A0h[6] =
+{
+    0x02094B78, //"MONSTER/monster.bin"
+    0x02094BB4, //"MONSTER/m_attack.bin"
+    0x02094BCC, //"MONSTER/m_ground.bin"
+    0x02094B64, //"EFFECT/effect.bin"
+    0x02094BA0, //"DUNGEON/dungeon.bin"
+    0x02094B8C, //"BALANCE/m_level.bin"
+};
+
+
+=====================
+Static Variables Offsets
+=====================    
+
+    
+=====================
+=====================
+
+NDS RAM Ends at : 0x023E7830
+
+Overlays:
+---------
+- overlay_0011 : 0x022DC240
+- overlay_0013 : 0x0238A140
+
+
+Names:
+------
+Here are the events associated with the names used in-game.
+
+TOWN:
+    T00P01  : (Debug)Pokemon Square
+    T00P02  : (Debug)Treasure Town, Town Square
+    T00P03  : (Debug)Treasure Town, Kangaskhan Storage + Shop Area
+    T00P04A : (Debug)Treasure Town, Wigglytuff Guild Entrance, Gate Closed
+    T00P04B : (Debug)Treasure Town, Wigglytuff Guild Entrance, Gate Opened
+
+    T01P01A : Treasure Town, Town Square.(duskull, electabuzz, etc..)
+    T01P02A : Treasure Town, Market. (Kecleon, kangaskhan, etc..)
+    T01P03A : Treasure Town, Inside Marrowak's dojo.
+    T01P03A2: Treasure Town, Inside Marrowak's dojo, with new hole in the back.
+    T01P04A : Treasure Town, Inisde tiny cave with orb of light in the middle.
+    
+DUNGEON:
+    D00P01  : Beach Cave
+    D00P02  : Beach Cave, unused save station to 2nd half
+    
+    D01P11A : Treasure Town, Beach, Day
+    D01P11B : Treasure Town, Beach, Dusk
+    D01P41A : Beach Cave Pit
+    D02P11A : Access to cave
+    D02P31A : Mt. Bristle, where spoink's pearl is.
+    D03P11A : Access to dungeon. (Rocky not sure which one)
+    D03P41A : Tope of dungeon where Drowzee and Azurill are.
+    D04P11A : Waterfall, entry to waterfall cave.
+    D04P12A : Waterfall cave, right behind the waterfall.
+    D04P31A : Waterfall cave, gemstones spot.
+    D05P11A : Applewood, entrance.
+    D05P31A : Applewood, perfect apple tree.
+    D06P11A : Access to craggy coast.
+    
+GUILD :
+    G01P01A : Wigglytuff Guild, Entrance, day, gate opened.
+    G01P01A2: Wigglytuff Guild, Entrance, day, gate closed.
+    G01P01B : Wigglytuff Guild, Entrance, dusk, gate opened.
+    G01P01B2: Wigglytuff Guild, Entrance, dusk, gate closed.
+    G01P01C : Wigglytuff Guild, Entrance, night, gate opened.
+    G01P01C2: Wigglytuff Guild, Entrance, night, gate closed.
+    G01P02A : Wigglytuff Guild, inside entrance.
+    G01P03A : Wigglytuff Guild, job board floor.
+    G01P04A : Wigglytuff Guild, day, main floor, guildmaster door opened. (Dorms, mess hall, guild master office)
+    G01P04A2: Wigglytuff Guild, day, main floor, guildmaster door closed. (Dorms, mess hall, guild master office)
+    G01P04C : Wigglytuff Guild, night, main floor, guildmaster door opened. (Dorms, mess hall, guild master office)
+    G01P04C2: Wigglytuff Guild, night, main floor, guildmaster door closed. (Dorms, mess hall, guild master office)
+    G01P05A : Wigglytuff Guild, day, guildmaster office.
+    G01P05C : Wigglytuff Guild, night, guildmaster office.
+    G01P06A : Wigglytuff Guild, day, mess hall.
+    G01P06B : Wigglytuff Guild, night, mess hall.
+    G01P07A : Wigglytuff Guild, day, player team's room.
+    G01P07C : Wigglytuff Guild, night, player team's room.
+    G01P08A : Wigglytuff Guild, day, dormitory hallway.
+    G01P09A : Wigglytuff Guild, day, sunflora's room.
+    G01P10A : Wigglytuff Guild, day, bidoof's room.
+    
+HOME:
+    H01P99A : Sharpedo Bluff Outside, day, stairs revealed.
+    H01P99C : Sharpedo Bluff Outside, night, stairs revealed.
+    H01P99D : Sharpedo Bluff Outside, night, stairs revealed, distant sea not shimmering.
+    H01P99E : Sharpedo Bluff Outside, dawn, stairs revealed.
+    H02P99A : Sharpedo Bluff Inside, day.
+    H02P99C : Sharpedo Bluff Inside, night.
+    
+PLACE? :
+    P01P01A : Treasure Town, Crossing, day, no spinda bar stairs, no chimecho sign.
+    P01P02A : Treasure Town, path to beach, day.
+    P02P01A : Hot Springs.
+    P03P01A : 
+    
+SYSTEM :
+    S01P01A : Worldmap.
+    S01P01B : Worldmap, Future.
+    S01P02A : Pelipper island.
+    S01P03A : Pelipper island.
+    S01P04A : Pelipper island top screen.
+    S02P01A : Personality test BG.
+    S03P01A : Green BG
+    S04P01A : Black slide down to white.
+    S05P01A : Nintendo Logo
+    S05P02A : Blue Pokemon Mystery Dungeon logo, on black BG.
+    S05P02B : Red Pokemon Mysteru Dungeon logo, on black BG.
+    S05P03A : PMD2 intro treasure chest cave.
+    S05P04A : Time Gear fade-in.
+    S05P05A : Blue Pokemon Mystery Dungeon logo, fade-in, on white BG.
+    S05P05B : Red Pokemon Mystery Dungeon logo, fade-in, on white BG.
+    S06P01A : Black slide down to white.
+    S07P01A : Same
+    S07P02A : Same
+    S08P01A : Mini-Game BG.
+    S11P01A : Marking from the rainbow stoneship on red BG.
+    S11P02A : Marking from the rainbow stoneship on red BG. With "The Pokemon Company CHUNSOFT PRESENTS", Explorer of time logo on the right.
+    S11P02B : Marking from the rainbow stoneship on red BG. With "The Pokemon Company CHUNSOFT PRESENTS", Explorer of darkness logo on the right.
+    
+    S99P01A : Seizure warning.
+    S99P02A : ESRB rating.
+    S99P03A : Marking from the rainbow stoneship on red BG. "Touch here to start". (Possibly the 2 frames of the flashing touch to start screen !)
+    
+    
+    
+
+VISUALS:
+    V00P01_M01A01A = Raging sea side scrolling animation.
+    V00P01_M01A02A = Loop scroll test clouds 
+                     2. Loop lapras in sea, 
+                     3A. loop escaping temporal tower,
+                     3B. loop going towards temporal tower,
+                     
+    V00P02_M01A01A = Raging storm at night, sharpedo buff
+    
+    V01P01A : Raging sea, cloudy, no storm, still camera.
+    V01P02A : Sharpedo buff seen from sea, cloudy, no storm.
+    V01P03A : Top screen view of the sea, from the beach, day.
+    V01P03B : Top screen view of the sea, from the beach, sunrise?
+    V01P03C : Top screen view of the sea, from the beach, sunset?
+    V01P04B : Krabbies on beach top view.
+    V01P05B : Krabbies on rock pillars right of screen.
+    V01P05B : Krabbies on rock pillars right of screen.
+    V01P06B : Relic fragment close up.
+    V01P07B : Raging sea, storm, pulsating light.
+    V02P01A : Morning sky with clouds. Probably above Guild.
+    V02P02A : Close up on Guild's grate.
+    V02P03A : Vertical tunnel under guild grate. When Diglett analyzes the player and partner.
+    
+    V02P06A : Night sky, full moon.
+    V02P07A : Bulletin board close up.
+
+    V03P01A : Outlaw board close up.
+    V03P02A : Empty/bare outlaw board close up.
+    V03P03A : Side cutaway view of the outlaw board and the tunnel behind. When explain how dugtrio updates the notices.
+    V03P04A : Close up Drowzee wanted poster.
+    V03P05C : Sky with dark clouds.
+    V03P06A : Forest, location of first time gear.
+    V03P06B : Forest, location of first time gear, low saturation, time stopped.
+    V03P07A : Cave, location of third time gear.
+    V03P08A : Cave magma, with small rock formation, for time gear?
+    V03P09A : Close up glowing time gear surrounded by dark rock.
+    V03P11A : Forest path, side view where grovyle's silhoutte is seen running along during the cutscene.
+    V03P12A : Closeup Grovyle, lit + shaded. (The two images are side to side.)
+    V03P13A : Closeup outlaw board with huge wanted poster.
+    V04P01A : Side cutaway view of tunnel system beneath the guild.
+    V04P02A : View from beneath of the guild's entrance's grate.
+    V04P03A : Closeup on the grate from beneath, but with branches and leaves. (Probably for minigame)
+    V05P01A : Time stopped forest clearing.
+    V05P02A : Time stopped leaves close up.
+    V05P03A : View of the geyser near the hot springs, when the hero/partners are blown outside of it.
+    V05P05A : Personality quizz background. Green tint.
+    V09P01A : Close up, stone tablet on stone wall, with runes.
+    V09P04A : Cup shaped plateau of fogbound lake.
+    V10P01C : View fogbound lake at night, glow in the middle of the lake.
+    V10P03C : View fogbound lake at night, fountain.
+    V12P01A : Clear sky with lens flare.
+    V13P01A : Grovyle wanted poster.
+    V14P01A : Underground cave lake with glow in the middle.
+    V14P03A : Underground cave scrolling side view.
+    V14P04A : Underground cave scrolling side view.
+    V15P01A : Close up crystal.
+    V15P02A : Underground crystal cave lake, with glow in the middle.
+    V15P03A : Same as V15P02A
+    V16P02A : Travelling to the future !
+    V17P01A : Dark stormy sky.
+    V17P02A : Remains of temporal tower.
+    V17P03A : Side scrolling view, paralyzed future.
+    V19P01A : Dialga's red eyes piercing darkness, 3 frames left to right.
+    V19P02A : Rock Dialga roars from.
+    V19P03A : Rock Dialga roars from. Animated red wave effect, left to right, top to bottom, 9 frames.
+    V19P04A : Closeup on dialga's tail glowing 3 frams, last is animated.
+    V19P05A : Single red glow in darkness.
+    
+    
+    
+=================================================================================
+ARM9.bin 
+=================================================================================
+(Offsets are for US EoS)
+0xA6910 = Entity table Strings
+0xA7FF0 = Entity table (NPCs, Players, etc..)
+0xA46E0 = Level/Event names Strings
+0xA5490 = Level/Event names LUT
+
+
+0xAFB4C = "SOUND/BGM/bgm.swd"
+
+
+-------------------------------- Tables: ------------------------------------
+
+0x000A7FF0 = Global actor lookup table. 386 entries. Each entries is 12 bytes, 2 shorts, 1 pointer, 2 shorts.
+[
+    Entry
+    [
+        type            2           int16           An enum value of 1 to 6, indicating the type of entity it is.
+        entityindex     2           int16           The index of the entity in the monster.md file corresponding to this entity.
+        ptrstring       4           uint32          A pointer to a string, the symbol of this entity.
+        unk3            2           int16           Unknown, usually 0, except is the type is == 6.
+        unk4            2           int16           
+    ]
+    ...
+]
+
+0x00A5488 = Level list Table (Actual pointer to the table)
+[
+    Entry
+    [
+        mapty           2           int16           A value from 0 to 11 that seems to affect the map tiles ordering in a way. Most common type is 6. 6 Seems to contain animated parts.
+        unk2            2           int16           Changing this value appears to not have any impact on anything immediately.
+        mapid           2           int16           This is the ID of the map the game will load for this event on the lower screen?
+        unk4            2           int16           unknown.. Often -1/0xFFFF
+        ptrstring       4           uint32          A pointer to a string, the symbol of this event. Is used to load associated resources by name, such as scripts, levels, and possibly more.
+    ]
+    ...
+]
+
+
+=================================================================================
+OVERLAY_0013.bin
+=================================================================================
+/*1F4C:*/ Starter table
+    1,      Bulbasaur   m
+    4,      Charmander  m
+    7,      Squirtle    m
+    25,     Pikachu     m
+    752,    Chikorita   f
+    155,    Cyndaquil   m
+    158,    Totodile    m
+    280,    Treecko     m
+    883,    Torchic     f
+    286,    Mudkip      m
+    422,    Turtwig     m
+    425,    Chimchar    m
+    428,    Piplup      m
+    733,    Eevee       f
+    438,    Shinx       m
+    489,    Riolu       m
+    258,    Phanpy      m
+    637,    Vulpix      f
+    928,    Skitty      f
+    52,     Meowth      m
+    488,    Munchlax    m
+    0,      Dummy       m
+  
+    283,    Torchic     m
+    880,    Treecko     f
+    4,      Charmander  m
+    601,    Bulbasaur   f
+    25,     Pikachu     m
+    604,    Charmander  f
+    158,    Totodile    m
+    733,    Eevee       f
+    428,    Piplup      m
+    1025,   Chimchar    f
+    425,    Chimchar    m
+    928,    Skitty      f
+    155,    Cyndaquil   m
+    1022,   Turtwig     f
+    438,    Shinx       m
+    625,    Pikachu     f
+    489,    Riolu       m
+    758,    Totodile    f
+    152,    Chikorita   m
+    755,    Cyndaquil   f
+    258,    Phanpy      m
+    637,    Vulpix      f
+    1,      Bulbasaur   m
+    886,    Mudkip      f
+    7,      Squirtle    m
+    1028,   Piplup      f
+    280,    Treecko     m
+    752,    Chikorita   f
+    286,    Mudkip      m
+    883,    Torchic     f
+    422,    Turtwig     m
+    607,    Squirtle    f
+
+
+
+0x0001, 
+0x0004, 
+0x0007, 
+0x0019, 
+0x02F0, 
+0x009B, 
+0x009E, 
+0x0118, 
+0x0373, 
+0x011E, 
+0x01A6, 
+0x01A9, 
+0x01AC, 
+0x02DD, 
+0x01B6, 
+0x01E9, 
+0x0102, 
+0x027D, 
+0x03A0, 
+0x0034, 
+0x01E8, 
+0x0000, 
+
+0x011B, 
+0x0370, 
+0x0004, 
+0x0259, 
+0x0019, 
+0x025C, 
+0x009E, 
+0x02DD, 
+0x01AC, 
+0x0401, 
+0x01A9, 
+0x03A0, 
+0x009B, 
+0x03FE, 
+0x01B6, 
+0x0271, 
+0x01E9, 
+0x02F6, 
+0x0098, 
+0x02F3, 
+0x0102, 
+0x027D, 
+0x0001, 
+0x0376, 
+0x0007, 
+0x0404, 
+0x0118, 
+0x02F0, 
+0x011E, 
+0x0373, 
+0x01A6, 
+0x025F, 
+0x0000
+
+
+/*200C:*/  String ID table for starter selection messages. 96 bytes long. Each entry is grouped per nature. 3 values are 3 uint16! ( NatureStr, PokemonStrMale, PokemonStrFemale )
+ 1661,  1662,  1663   //hardy   - Torchic    - Treecko
+ 1664,  1665,  1666   //docile  - Charmander - Bulbasaur
+ 1667,  1668,  1669,  //brave   - Pikachu    - Charmander
+ 1670,  1671,  1672,  //jolly   - Totodile   - Eevee
+ 1673,  1674,  1675,  //impish  - Piplup     - Chimchar
+ 1676,  1677,  1678,  //naive   - Chimchar   - Skitty
+ 1679,  1680,  1681,  //gentle  - Cyndaquil  - Turtwig
+ 1682,  1683,  1684,  //hasty   - Shinx      - Pikachu
+ 1685,  1686,  1687,  //sassy   - Riolu      - Totodile
+ 1688,  1689,  1690,  //calm    - Chikorita  - Cyndaquil
+ 1691,  1692,  1693,  //relaxed - Phanpy     - Vulpix
+ 1694,  1695,  1696,  //lonely  - Bulbasaur  - Mudkip
+ 1697,  1698,  1699,  //quirky  - Squirtle   - Piplup
+ 1700,  1701,  1702,  //quiet   - Treecko    - Chikorita
+ 1703,  1704,  1705,  //rash    - Mudkip     - Torchic
+ 1706,  1707,  1708,  //bold    - Turtwig    - Squirtle
+16 natures. 32 possible pokemon slots. 16 males, 16 females.
+ 
+/*206C*/ Quizz Questions table. 132 bytes long. uint16 with string id.
+/*20F0*/ Quizz Answers table. 350 bytes long. uint16 with string id.
+
+
+
+============================================
+Misc Functions in RAM
+============================================
+02019B28 = DSE Engine Init!!
+02008C3C = LoadFile from rom! R1 is file path, R0 is probably target buffer!
+
+
+============================================
+In-Dungeon Play Stuff
+============================================
+020AF69C : address pointer to a table of data entries tied to dungeons.
+020AF6A0 : Beginning of table of strings pointers containing filepaths to some of the in-dungeon play files, like "dungeon.bin" and etc..
+0200C2DC : Function accessing that table of string and the pointer to the data entries!

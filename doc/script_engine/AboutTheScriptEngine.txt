@@ -1,0 +1,260 @@
+Technicalities:
+---------------
+    - Uses mostly 15 bits signed integers.
+    
+
+The Instructions:
+-----------------
+
+    The instructions in the script for pmd2 are very basic. They're simple codes with a fixed or variable number of parameters.
+    Each code executes a corresponding function within the game's program at runtime, with the parameters specified.
+    
+    The method for controlling the code flow is simple jumps and conditional jumps. 
+    The conditional structures are typical switch + case statements which come in different flavors. Most of the case
+    statements are conditional jumps, while some are more specialized and do not actually trigger a jump.
+    
+    Some instructions have something close to return values. Its possible to place case statements after
+    those instructions, and conditionally jump based on the return value.
+    Its possible that entity accessors actually work this way.
+    
+    They tend to fall into those categories:
+        - Conditionals      : Those include switch statements, and branch statements. 
+        - Entity accessors  : Those are either of the 3 : "lives", "object", "performer". They return an entity on which the next appropriate instruction may be executed upon.
+        - Attribute         : They're functions that get or set attributes for an entity picked by an entity accessor.
+        - Method            : They're functions that act upon an entity picked by and entity accessor.
+        - Single Instruction: Basically the typical instruction.
+        - Closing Statement : Those mark the end of a function/routine. So far, "End", "Return", and possibly "Null" seems to be used to terminate a routine. 
+                              "Hold" was also used in a similar way sometimes, but its unclear what it does, since its sometimes used in the middle of a script,
+                              and the script would simply continue past the "Hold". 
+    
+    More categories could be made however. But a lot of instructions aren't yet fully understood.
+    
+    * No way to create variables.
+    
+    * Most aren't blocking. Except "Wait" instructions and a few others.
+    * Some may "return" a value. And the value can only be accessed via subsequent "case" instructions.
+      It can't be stored or used in any other way.
+      The "switch" instructions works this way.
+      
+    * The script engine seems to support a sort of call stack. 
+      So when using commands to execute another script, after that script is
+      executed, execution will resume right where it left off in the calling
+      routine.
+      The exception to this is "jump" instructions. Those just move the execution 
+      completely to that position.
+      
+    * All parameters are 16 bits integers.
+    
+    * Some command parameter specialization exists. So that some commands have two 
+      versions. One that takes a fixed amount of parameters, or a variable amount of
+      parameters.(-1 nb parameters means variable parameters)
+
+
+The Accessors:
+--------------
+
+    Accessors are instructions that specify what the next instruction will act upon. They're never found on their own.
+    They can be seen as the dot operator common in a lot of object oriented programming languages for accessing an
+    instance's members functions and attributes.
+    
+    They come in 3 shapes:
+    - "lives"     : For actors instances. Instances are accessed by their global id, not the id of their definition in the script data file.
+    - "performer" : Unknown this far. They're referred by their ID in their definition in the script data file.
+    - "object"    : For props.
+
+    Its worth noting that, its also possible to execute a long series of instructions for a single entity 
+    by running them in a type 3 or 4 routine, one after the other, by using the "ExecuteCommon" instruction
+    for the entity chosen.
+    
+    
+The Routines:
+-------------
+
+    General info:
+    --------------
+        Routines are simply a group of instructions to be executed.
+        There's also a basic concept of scope, as routines may take a "parameter".
+        
+        The END and RETURN instructions usually mark the end of a routine.
+        However sometimes other instructions are used to terminate a routine..
+
+    Routine Types:
+    --------------
+        * 1 : Main routine / entry point
+        * 2 : Unused
+        * 3 : Actor routine
+        * 4 : Object routine
+        * 5 : Performer routine
+        (6,7 and 8 are unused)
+        * 9 : Used exclusively in unionall.ssb
+        
+        *Main routine:
+        -----------------
+            There's only one per SSB file at most. And its never used in unionall.ssb.
+            This routine is executed when the ssb file of the same name is executed.
+            It accepts no parameter.
+        
+        *Actor routine, Object routine, Performer routine:
+        --------------------------------------------------
+            These routines are executed by a specific entity.
+            The ID/index of the entity is passed as parameter. 
+            Commands that requires an accessor in other types of routines does not
+            require any here. They all assume the accessor affects the entity the routine belongs to!
+            There can be several per ssb file, but those are never used in unionall.ssb.
+        
+        *Common routine:
+        ----------------
+            Common routines are confined to unionall.ssb. 
+            They're used for frequently used code, and for running the levels and general game 
+            flow/logic.
+            Doesn't accepts a parameter.
+    
+    
+    
+     Routine #111 in unionall.ssb runs the game intro!
+     
+     
+Script Files Types:
+--------------------
+
+    - "enter"  : Are triggers, or most entities that can be interacted with. Each playable map needs at least to have a enter.sse and a enter00.ssb files.
+                  Each individual triggerable entity has its own numbered script file. aka enter06.ssb, enter01.ssb, etc..
+                  
+    - "acting" : Are a set of actors and objects performing a scene.
+    
+    - "station": Are often used along with enter to represent part of a scene at different points in time.
+                 For instance, there can be one "station" for treasure time at the beginning of the game which will be loaded by
+                 the enter.ssb for treasure town. Then later in the game, another "station" will be loaded and the entities and 
+                 interactions on the map will be changed to what is in this station!
+                 
+    
+Script Execution:
+-----------------
+
+    For each level, there are possibly up to 2 possible entry points. The enter.sse, or one of the .ssa. 
+    At least one of these 2 has to be present.
+    Which one will be used depends on the command used to load the map.
+    
+    - EnterGround will load a map in playable mode, and run the enter.sse/enter.ssb script.
+    - ExecuteActing will load a map in a non-playable mode, and run the .ssa and .ssb that were specified.
+    
+    From there, the main routine of the appropriate script will be ran. And those might run a 
+    "station" or "acting" script if needed.
+    
+    
+Script Events:
+-----------------
+    
+    Inside the script data, there are entries listing the initial position and parameters of all the entities this 
+    scripts spawns. 
+    In these parameters, a sub-script to run when the entity is triggered can be specified optionally.
+    
+    So, say we assigned the script id 3 to an entity, if that entity is activated using A, the script named enter03.ssb
+    will be executed. If it was a "station" script instead of a "enter" script, its the same thing, 
+    except STATIONNAME03.ssb would be run instead.
+    
+        
+Interesting Common Routines:
+-----------------------------
+    Common routines are routines inside unionall.ssb.
+
+    * CommonRoutine #69 - EVENT_DIVIDE_SPECIAL_EPISODE : This calls all the common routines that run the scenes for the special episodes!
+    * CommonRoutine #60 - EVENT_DIVIDE                 : This calls the correct routine with the correct scenes to run depending on the current scenario!
+        
+        
+On the script engine:
+----------------------
+
+    Each sub-directories in the /SCRIPT directory correspond to a scene/map/tileset. Except /SCRIPT/COMMON.
+    The COMMON folder houses the master script, unionall.ssb. It contains repetitive functions that are called often
+    throughout the game from various scripts, and also executes the game's levels and scenes in order.
+    
+    Level/Scene Directory Naming:
+    ----------------
+    Each folder is named depending on the kind of level it is. 
+        * D usually refers to a level/scene right before a dungeon. Or a dungeon hub/entrance.
+        * V usually refers to a full screen visual. Such the ones with the large background sceneries.
+        * T usually refers to towns, like T01P01 is Treasure town. 
+        * G usually refers to the guild, and its interior.
+        * S are a bit all over the place. They seem to often refer to side-episodes, but some of the main game events also happen in those.
+        * H is Sharpedo Bluff. "Home"?
+        * P are usually places that don't fit in the previous categories. They're mainly for the scenes that happens on the road to somewhere this far.
+        
+    The second set of digits + letters refers to the sub-level. 
+    So for example, treasure town's market, T01P02A, has a higher value in its second set of digits than the town square, T01P01A.
+    The very last letter seems to indicate variations of a level. So D01P11A, the beach during day, has a variation D01P11B, the beach at dusk!
+    
+    Now, back to the content of the sub-directories. The script data file defines the behavior and purpose of its 
+    accompanying *.ssb script file(s).
+    
+    Naming:
+    ----------------
+    Script files follow a similar naming rule as to the levels/scenes directory names. However, there are a lot more possible letters.
+    The first number right after the first letter is usually the chapter, then the next set of digits is usually the "step"/scene# within that chapter, but not always.
+    
+        * m     : Usually a main plot scene.
+        * um    : Usually a "station" for a main plot scene. ("Station" explained in the *.sss file section below)
+        * s     : Usually, the same kind of things as "m". The differences are unclear.
+        * us    : Usually, the same kind of things as "um". The differences are unclear.
+        * n     : Usually a side story scene.
+        * un    : Usually a side story "station". ("Station" explained in the *.sss file section below)
+        * c     : Unknown.
+        * t     : Apparently title screen scenes.
+    
+    Of course, since "sss" and "ssa" data files can be named anything for the most part, there are a lot of instances where
+    the naming diverges from those rules. enter.sse files are always named enter.
+    
+    enter files
+    ----------------
+    The enter.sse + enter##.ssb pair defines the content and logic of the playable level.
+    enter.sse instantiate actors and objects at the specified position, and associate action script to them. It also 
+    regroups them by layers, so that several actors/objects can be displayed or hidden simply by hiding or showing a layer.
+    The enter00.ssb file is always run when entering the level.
+    The subsequent numbered enter##.ssb files are action scripts, and their number correspond to the ID in the action script id attribute
+    that an object or actor may have in the enter.sse file.
+    
+    *.sss files
+    ----------------
+    The *.sss + *##.ssb files are what they refer to as "Station" by the devs. They're like entire or partial enter.sse + enter##.ssb pair in a way.
+    They're merged with the current state of the level pretty often.
+    They're loaded depending on context, aka the current chapter flag, to populate a playable map with actors, objects and etc.
+    Often, they're picked and loaded by the enter00.ssb script when the level is first entered. But, its not always the case.
+    
+    *.ssa files
+    ----------------
+    The *.ssa files are referred to as "Acting" files by the devs. They're mostly used for scripted dialog/cutscenes.
+    They always have at most a single *.ssb script file. The entity data they contain seems to override any enter.sss's. 
+    However, sometimes, "Acting" sequences are used for playable/interactive scenes too. They can also load "Station".
+    Several debug scripts are "Acting" sequences for example.
+    
+    *.lsd files
+    ----------------
+    There is always at most a single *.lsd file per directory, and its name is the name of the level/scene in lower case.
+    The *.lsd files seems to list only "Acting" sequences present in the directory. Their exact purpose isn't very clear.
+    Its possible that one of the functions in the script refers to indices in the directory's *.lsd file to load local
+    "Acting" sequences.
+    
+    *.ssb files
+    ----------------
+    SSB files are plain script data.
+    Script instructions are grouped into routines/functions. There are 5 types of routines:
+    
+        - Common Routines(type id 9) : 
+            Found only within the unionall.ssb file. Those are basically a fusion of all 4 types of routine below.
+            They can be either of those, depending on the Instruction used to invoke them.
+                            
+        - Actor Function(type id 3), Object Function(type id 4), Performer Function(type id 5) : 
+            They're function that are run by an entity specified in the static parameter of the routine, in the SSB's routine table.
+            Upon the main function of the script being executed, the entities referred by each of the routines will execute the instructions 
+            within them. 
+            Another thing to note is that, "entity attributes" instructions, or any instruction that needs to have a 
+            specific entity picked as target through a preceding "entity accessors", such as "lives", "performer" or "objet",
+            does not need to have a target specified within one of these routines! The target will always be the routine's 
+            target entity. 
+
+        - Function(type id 1) : 
+            For a lack of better term, function denote what is both the main and first routine of a script file.(Except in unionall.ssb)
+            Its this routine that's run first usually. It never takes any parameters, and its the most common form of routine.
+    
+    
+    

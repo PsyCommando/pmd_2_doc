@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE binary_file_format SYSTEM "BinaryFileFormat.dtd">
+<binary_file_format name="item_p_ExplorersOfTD" type_name="" comment="A template mainly for analysing generic SIR0 files, and automatically decoding the pointer offset list." expr="" default_byte_order="little" default_read_only="false" default_char_set="ansi" web_site="http://projectpokemon.org/wiki/Pmd2_SIR0">
+	<define_struct type_name="PtrOffsetRecursiveCalc" comment="A recursive structure used to decode the encoded pointer offsets stored at the end of the SIR0 format." expr="">
+		<data type="int" name="curbyte" format="unsigned" len="1" display="hex" comment="The byte currently being decoded" hide="true"/>
+		<eval expr="CurPtrValue = (CurPtrValue &lt;&lt; 7) | ( 0x7F &amp; curbyte )" display_error="false" display_result="false" comment=""/>
+		<if test="(curbyte &amp; 0x80) &gt; 0" comment="">
+			<use_struct name="NextByte" expr="" type_name="PtrOffsetRecursiveCalc" comment=""/>
+			<else/>
+			<if test="curbyte != 0" comment=""><eval expr="Result = Result  + CurPtrValue" display_error="false" display_result="false" comment=""/>
+				<else/>
+				<eval expr="ReachedEndOfList = true" display_error="false" display_result="false" comment=""/>
+			</if>
+		</if>
+	</define_struct>
+	<struct name="Header" type_name="" comment="" expr="">
+		<data type="string" name="magic" format="ascii" byte_order="big" len="4" domain="this==&quot;SIR0&quot;" display=""/>
+		<data type="int" name="ptrSubHeader" format="unsigned" len="4" display="hex"/>
+		<data type="int" name="ptrSIR0PtrOffsetList" format="unsigned" len="4" display="hex"/>
+		<data type="none" name="nullint" len="4"/>
+	</struct>
+	<data type="none" name="FileDataBefPtr" len="Header.ptrSubHeader - sizeof(Header)" comment="Used to highlight the data before the offset pointed to by the SIR0 subheader ptr. Sometimes this pointer points directly to data, so this allows to see it immediately."/>
+	<data type="none" name="FileDataAfterPtr" len="(Header.ptrSIR0PtrOffsetList - Header.ptrSubHeader)"/>
+	<struct name="SIR0PtrOffsetsList" type_name="" comment="" expr="">
+		<eval expr="AccumulatedOffset = 0" display_error="false" display_result="false" comment=""/>
+		<eval expr="ReachedEndOfList = false" display_error="false" display_result="false" comment=""/>
+		<for name="DecodedOffset" count="" stop_test="ReachedEndOfList" type_name="" comment="">
+			<struct name="DecodeOffset" type_name="" comment="Handle the first byte read from an encoded pointer offset." expr=" {Result;hex}">
+				<data type="int" name="curbyte" format="unsigned" len="1" hide="true" display="hex"/>
+				<eval expr="CurPtrValue = 0x7F &amp; curbyte" display_error="false" display_result="false" comment="Initialize the temporary buffer to append all bytes together and decode the offset. Set it to the value of the initial byte."/>
+				<eval expr="Result = AccumulatedOffset" display_error="false" display_result="false" comment="Since every encoded offset is relative to the previous encoded offset, we need to do this to add up each offsets as we go. "/>
+				<if test="(curbyte &amp; 0x80) &gt; 0x0" comment="Checks if we just get the byte value, or we need to append the next bytes and do some bit shifting.">
+					<use_struct name="AppendByte" expr="" type_name="PtrOffsetRecursiveCalc" comment=""/>
+					<else/>
+					<if test="curbyte != 0" comment="">
+						<eval expr="Result = Result  + curbyte" display_error="false" display_result="false" comment=""/>
+						<else/>
+						<eval expr="ReachedEndOfList = true" display_error="false" display_result="false" comment=""/>
+					</if>
+				</if>
+				<eval expr="AccumulatedOffset = Result" display_error="false" display_result="false" comment="Set the new accumulated offset to the value we've calculated so far"/>
+				<jump offset="Result" comment="After calculating the value of the pointer, this jumps to its location in the file." origin="start">
+					<data type="int" name="ptrAtDecodedOffset" format="unsigned" len="4" display="hex" comment="The location and value of the decoded pointer offset"/></jump>
+			</struct>
+		</for>
+		<for name="Padding" count="" stop_test="addressof(this) == eof" type_name="" comment="">
+			<data type="int" name="paddingbyte" format="unsigned" byte_order="big" len="1" domain="this == 0xAA" display="hex"/>
+		</for>
+	</struct>
+</binary_file_format>

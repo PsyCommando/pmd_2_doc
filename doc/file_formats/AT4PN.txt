@@ -1,0 +1,20 @@
+==========================================================================================
+                                    AT4PN:
+==========================================================================================
+The AT4PN container seem somehow linked to the ATPX container. 
+It seem to be compressed as well, but its header is much shorter, and it doesn't seem to contain any 
+info on the decompressed size or on the control flags..
+
+
+Offset:            Length:            Endian:      Description:
+-------            -------            -------      -----------------------------------
+0x00               5                  big          Magic Number "AT4PN" {0x41, 0x54, 0x34, 0x50, 0x4E}
+0x05               2                  little       (DATALEN)Compressed data length
+0x7               (DATALEN)                        Compressed data.
+[
+    0x0                                             Compressed data here.
+    ...
+]
+-------            -------            -------      -----------------------------------
+Total:             (DATALEN + 7)
+

@@ -1,0 +1,506 @@
+http://projectpokemon.org/wiki/Pmd2_SSA
+http://projectpokemon.org/wiki/Pmd2_SSB
+http://projectpokemon.org/wiki/Table_of_PMD2_Scripting_Commands
+
+Thanks to: 
+ - Nerketur Kamashi for all his help with the script engine and notes!
+ - Aissurteivos for helping out with the meaning of some of the fields!
+
+
+===========================================================================
+Structure
+===========================================================================
+The scripts are organized into folders named after maps and events.
+
+Some folders have a .lsd file that lists every .ssa + .ssb pairs in the folder.
+
+
+
+
+Breakpoints(Explorers of Sky):
+-> 022BBE40 : Loads level resource files?
+-> 022E5D94 : Break on read SSB header.
+->
+
+===========================================================================
+LSD
+===========================================================================
+LSD files contains a list of names that matches usually all SSA + SSB pairs in a level's directory.
+SSS and SSE sets are never mentioned in this!
+
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+0x0         nbentries               2               uint16          The nb of filenames in the LSD's string table.
+0x2         strtbl                  vary            const char*[]   
+[
+    string                          8               const char[8]   A 8 character max string of characters. Unused characters are filled with 0. 
+                                                                     Each entry correspond to a ssa+ssb pair
+    ...
+]
+
+
+===========================================================================
+SSA/SSS/SSE
+===========================================================================
+Scene informations.
+SSA == "Acting"
+SSE == "Enter"
+SSS == "Sub"
+
+Enter seems to be script that runs as soon as the map is run. Acting is apparently loaded for playing out cutscenes and conversations. Sub are apparently sorts of subroutines invoked by one of the enter scripts usually.
+
+*** All offsets/pointers must be multiplied by 2, since they're counting 16 bits words and not bytes! ****
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+Header
+[
+    0x00    nblayers                2               uint16          The amount of layers in LayerList.
+    0x02    layersptr               2               uint16          Offset to LayerList, counted in int16.
+    0x04    triggersptr             2               uint16          Pos beginning of TriggersTable.
+    0x06    actorsptr               2               uint16          Pointer to "Lives"/Actor block beg.
+    0x08    objectsptr              2               uint16          Pointer to the objects data.
+    0x0A    performersptr           2               uint16          Pointer to the background position data.
+    0x0C    eventsptr               2               uint16          Pointer to the events datablock.
+    0x0E    posmarkersptr           2               uint16          Pointer to UnkBlock2.
+    0x10    blka10ptr               2               uint16          unknown
+]
+TriggersTable                                                       List of triggers for the map. 
+[
+    Entry                           8
+    [
+    0x00 croutineid                 2               int16           A common routine callback to execute first when triggering the trigger.
+    0x02 unk2                       2               int16           Unknown, is often 1.
+    0x04 unk3                       2               int16           Unknown is often 0.
+    0x06 scriptid                   2               int16           In a enter data file, is the ## id of the enter##.ssb script file. That script file is run when the trigger is stepped on.
+    ]
+    ...
+]
+ActorsBlock                                                         List of "Lives" NPC Actors to be added to the map.
+[
+    ActorEntry                      16
+    [
+    0x00 actorid                    2               int16           Probably the NPC Actor ID (lives id) from the actor table!
+    0x02 direction                  2               int8*           Direction the actor is facing on spawn. 1 is subtracted from this at runtime. (1-8) (1==down, 5==up)
+    0x04 xoffset                    2               int8*           Offset from the top left corner of the map?
+    0x06 yoffset                    2               int8*           Offset from the top left corner of the map?
+    0x08 actunk0x08                 2               int8*           0000 0100(4) if on, ignore xoffset. If bit off then use (xoffset << 11). 0000 0010(2) if bit is on, add 0x400 to (xoffset << 11).
+    0x0A actunk0x0A                 2               int8*           0000 0100(4) if on, ignore yoffset. If bit off then use (yoffset << 11). 0000 0010(2) if bit is on, add 0x400 to (yoffset << 11).
+    0x0C scriptid                   2               int16           Script ID. The script enterDD.ssb or nameNNDD.ssb(where DD is a decimal number) where DD matches this value will be run when this entity is interacted with! It may be -1 when non applicable (AKA Player/Partner entities)
+    0x0E Padding?                   2               -               Ignored?
+    ]
+    ...
+]
+ObjectsBlock                                                        Possibly a list of "Object" entities to place on map!
+[
+    ObjectEntry                     20
+    [
+    0x00 objectid                   2               int16           Probably the objectid, from the object table!
+    0x02 direction                  2               int8*           Direction the actor is facing on spawn. 1 is subtracted from this at runtime. (1-8) (1==down, 5==up)
+    0x04 objunk0x04                 2               int8*           unk
+    0x06 objunk0x06                 2               int8*           unk
+    0x08 xoffset                    2               int8*           Offset from the top left corner of the map?
+    0x0A yoffset                    2               int8*           Offset from the top left corner of the map?
+    0x0C objunk0x0C                 2               int8*           0000 0100(4) if on, ignore xoffset. If bit off then use (xoffset << 11). 0000 0010(2) if bit is on, add 0x400 to (xoffset << 11).
+    0x0E objunk0x0E                 2               int8*           0000 0100(4) if on, ignore yoffset. If bit off then use (yoffset << 11). 0000 0010(2) if bit is on, add 0x400 to (yoffset << 11).
+    0x10 scriptid                   2               int16           Script ID. The script enterDD.ssb or nameNNDD.ssb(where DD is a decimal number) where DD matches this value will be run when this entity is interacted with! It may be -1 when non applicable.
+    0x12 padding                    2               -               0xFFFF
+    ]
+    ...
+]
+PerformersBlock                                                 Possibly a list of "Performer" entities to place on the map.
+[
+    PerfEntry                   20
+    [
+    0x00 perftype               2               int16           An enum value from 0 to 5 that dictates what entity will be picked to be this performer.
+    0x02 direction              2               int8*           Probably direction the performer faces. (1-8) (1==down, 5==up)
+    0x04 perfunk0x04            2               int8*           Unknown. If is 0, the game will pick a default value from the performer type table for this field and perfunk0x06! 
+                                                                 If non-zero, the value of this field and perfunk0x06 will be used!
+    0x06 perfunk0x06            2               int8*           Unknown.
+    0x08 xoffset                2               int8*           Offset from the top left corner of the map?
+    0x0A yoffset                2               int8*           Offset from the top left corner of the map? 
+    0x0C perfunk0x0C            2               int8*           0000 0100(4) if on, ignore xoffset. If bit off then use (xoffset << 11). 0000 0010(2) if bit is on, add 0x400 to (xoffset << 11).
+    0x0E perfunk0x0E            2               int8*           0000 0100(4) if on, ignore yoffset. If bit off then use (yoffset << 11). 0000 0010(2) if bit is on, add 0x400 to (yoffset << 11).
+    0x10 Padding1               2               -               0xFFFF
+    0x12 Padding2               2               -               0xFFFF
+    ]
+    ...
+]
+EventsBlock                                                         Possibly a list of events to be placed on the map.
+[
+    Entry                       16
+    [
+    0x00 evntunk0x00            2               int8*               Trigger width. Is shifted by 11 bits left.(evntunk0x00 << 11)
+    0x02 evntunk0x02            2               int8*               Trigger height. Is shifted by 11 bits left.(evntunk0x02 << 11)
+    0x04 xoffset                2               int8*               
+    0x06 yoffset                2               int8*              
+    0x08 evntunk0x08            2               int8*               0000 0100(4) if on, ignore xoffset. If bit off then use (xoffset << 11). 0000 0010(2) if bit is on, add 0x400 to (xoffset << 11). 
+    0x0A evntunk0x0A            2               int8*               0000 0100(4) if on, ignore yoffset. if bit off then use (yoffset << 11). 0000 0010(2) if bit is on, add 0x400 to (yoffset << 11).
+    0x0C triggerptr             2               int16               File offset in words of TriggerTable entry this event refers to!
+    0x0E Padding?               2               int16               Ignored?
+    ]
+    ...
+]
+PosMarkerBlock?                 ?                                   Possibly for storing position markers used by cameras and move commands?
+[
+    Marker                      16
+    [
+    0x00 xoffset?               2               int16               Seems like it could be the X offset of the marker.  
+    0x02 yoffset?               2               int16               Seems like it could be the Y offset of the marker.
+    0x04
+    0x06
+    0x08
+    0x0A
+    0x0C
+    0x0E
+    ]
+    ...
+]
+UnkBlock3                       0-8                                 Always referred to only by the first layer!
+[
+    Entry                       8
+    [
+    0x00 unk0                   2                   int16           Is always 9, or the offset of the end of the header.
+    0x02 unk1                   2                   -               
+    0x04 unk2                   2                   -               
+    0x06 unk3                   2                   -               
+    ]
+    ...
+]
+LayerList                          ?                                
+[
+    Layer                           20              -               (All pointers in this list are multiplied by 2, then added to header beginning offset.)
+    [
+    0x00 nbactors                   2               uint16          value compared against 0.
+    0x02 ptractors                  2               uint16          
+    0x04 nbobjects                  2               uint16          value compared against 0.
+    0x06 ptrobjects                 2               uint16           
+    0x08 nbperf                     2               uint16          value compared against 0.
+    0x0A ptrperf                    2               uint16          
+    0x0C nbevents                   2               uint16          Nb of event entries in the EventsBlock for this layer!
+    0x0E ptrevents                  2               uint16          Points to a list of entries in EventsBlock. If nbevents is 0, it points to BegEventBlock - 1 word.
+    0x10 nbunkblk3entries           2               uint16          ***Only first layer has more than 0 entries!*** Nb of unkblk3 entries for this layer at ptrunkblk3.
+    0x12 ptrunkblk3                 2               uint16          ***Only the first layer has an entry here!*** Its probably more of a sort of end marker than anything else. Points to UnkBlock3, or the last word of the entry/block before, is nbunkblk3entries == 0.
+    ]
+    ...
+]
+
+*** If a layer has no entries for a particular list, the pointer to it must be non-null and point to the last word of 
+    the last entry in the list. ***
+
+
+
+===========================================================================
+SSB
+===========================================================================
+-------
+Header
+-------
+The header varies between regions:
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+SSBHeaderNorthAmerica               12                              
+[
+    0x00    nbconsts                2               uint16          The amount of constants in the ConstTable
+    0x02    nbstrs                  2               uint16          The amount of strings in the StringTable.
+    0x04    scriptdatlen            2               uint16          Size of the ScriptData section in 16bits words.//This is probably actually the beginning of the constant strings!
+    0x06    consttblsz              2               uint16          Size of the ConstTbl, in 16 bits words.
+    0x08    strtblsz                2               uint16          Size of the StringData, in 16 bits words.
+    0x0A    unk1                    2               uint16          The nb of strings multiplied by 1.5, rounded up. (Ex: 3.5 -> 4)
+]
+
+SSBHeaderEurope                     18                              
+[
+    0x00    nbconsts                2               uint16          The amount of constants in the ConstTable
+    0x02    nbstrs                  2               uint16          The amount of strings in the StringTable.
+    0x04    scriptdatlen            2               uint16          Size of the ScriptData section in 16bits words.
+    0x06    consttblsz              2               uint16          Size of the ConstTbl, in 16 bits words.
+    0x08    strenglen               2               uint16          Size of the StringData for english text, in 16 bits words.
+    0x0A    strfrelen               2               uint16          Size of the StringData for french text, in 16 bits words.
+    0x0C    strgerlen               2               uint16          Size of the StringData for german text, in 16 bits words.
+    0x0E    stritalen               2               uint16          Size of the StringData for italian text, in 16 bits words.
+    0x0F    strspalen               2               uint16          Size of the StringData for spanish text, in 16 bits words.
+]
+
+----------
+DATA
+----------
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+ScriptData                         (scriptdatlen*2)                 Contains the RoutineList and the Script op codes.
+[
+    0x0C constofftbl                2               uint16          Possibly the offset relative to the end of the header, to the offset table for the constants! (All the offsets in that table need to be added 4 bytes, but otherwise match perfectly)
+    0x0E nbgrps                     2               uint16          The nb of routines in the RoutineList.
+    RoutineList                    (nbgrps * 6)
+    [
+        RoutineInfo                 6
+        [
+            rtnstart                2               uint16          The offset, in 16bits words, from the beginning of the ScriptData, of the sequence of opcodes associated to this routine.
+            type                    2               uint16          The type of the routine ( 1= Generic Function, 3 = Actor function, 4 = Object function, 5 = Performer function, 9 = Common Routine )
+            param                   2               uint16          Variable parameter. (if type : 3,4,5 = the id of the entity its linked to. If type is 1 or 9, is 0. )
+        ]
+        ...
+    ]
+    ScriptOpCodes 
+    [
+        ...
+    ]
+    ConstOffsetTable
+    [
+        constoffs                   2               uint16              Offset of the constant's value. Relative to the beginning of the ConstOffsetTable + the length of the StrOffsetTable in bytes. 
+                                                                        To get the actual const offset: 
+                                                                            BegConstOffsetTbl + constoffs - StrOffsetTableLen.
+                                                                        Its probably done this way because the two ptr tables are put one after the other in memory, and the strings right after. 
+        ...
+    ]
+]
+ConstData                           0 to (consttblsz * 2)     
+[
+    ConstTbl                        vary
+    [
+        String                      vary            const char*     A zero terminated string of characters. 
+        ...
+    ]
+    Padding                         0-1             -               If the ConstTbl's strings don't end on an offset divisible by 2, an extra 0 byte is appended!
+]
+StringData                          0 to (strtblsz * 2)   
+[
+    StrOffsetTable                 (nbstrs*2)                       Offsets of each strings in the table.
+    [
+        StrOffset                   2               uint16          The offset in bytes of a string relative to the beginning of ConstOffsetTable, or StrOffsetTable if there are no constants! In the european game, the offset doesn't counts the length of other "StringData" blocks. In bytes.
+        ...
+    ]
+    StrTbl                          vary
+    [
+        String                      vary            const char*     A zero terminated string of characters.
+        ...
+    ]
+    Padding                         0-1             -               If the StrTbl's strings don't end on an offset divisible by 2, an extra 0 byte is appended!
+]
+
+Note : the ssb header for the japanese and european version of the game differs.
+Japanese header has:
+{
+    uint16 nbconst;
+    uint16 dummy;
+    uint16 scriptdatlen;
+    uint16 consttblsz;
+    uint16 dummy2;
+    uint16 dummy3;
+}
+
+
+
+==================================================================================
+Script Naming Scheme
+==================================================================================
+
+There are several major way script files are identified.
+* There are static names that are expected by the script engine.
+* "Custom" ssa/ssb pair names of up to 8 characters that are listed in the .lsd files.
+* sss files that may have matching numbered ssbs or not.
+
+
+First, "static" names:
+    There are a few types of naming scheme used in there:
+    - unionall.ssb           => Unique name used for the master script.
+    - enter.sse, enterYY.ssb => Name for level entry points. Only used on playable levels.
+
+Then SSS with or without matching numbered SSB:
+    - dus.sss, dusYY.ssb     => Name for possibly dungeon entering data/scripts?
+    - hus.sss, husYY.ssb     => Unknown, seen under /SCRIPT/D41P41A
+    - mus.sss, musYY.ssb     => Unknown, seen under /SCRIPT/D41P41A
+    - (.*)\\.sss, (.*)(\\d\\d)\\.ssb => 
+
+Then "custom" names from the LSD file:
+    Those are usually very flexible. Most are a combination of digits and letters commonly use as resource names 
+    throughout the game files. Always 8 character or less. Since their names must fit within the 8 character strings
+    contained within the LSD file.
+    - #XX@YYZZ.ssa, #XX@YYZZ.ssb => A common resource prefix letter '#', followed by a number XX, 
+        or                          followed by another letter '@', followed by another number YY, 
+      #XX@YYL.ssa,  #XX@YYL.ssb     and finally another number ZZ, OR a letter L, most often "a". 
+                                    regex: "[abdghmnpstuv]{1}\d\d[abdghmnpstuv]{1}\d\d\d\d.ss[ab]{1}"
+                                           "[abdghmnpstuv]{1}\d\d[abdghmnpstuv]{1}\d\d[ab]{1}.ss[ab]{1}"
+      
+    - Any 8 character name       => Just like the above, with a non-resource related name.
+                                    SCRIPT/S08P01A/quiz01.ssa and SCRIPT/S08P01A/quiz01.ssb
+                                    SCRIPT/S01P03A/conquest.ssa, SCRIPT/S01P03A/dead.ssa, SCRIPT/S01P03A/first.ssa, SCRIPT/S01P03A/return.ssa
+                                    SCRIPT/S00P01A/dopen.ssa, SCRIPT/S00P01A/partner.ssa, SCRIPT/S00P01A/partner2.ssa
+
+
+
+
+
+/***********************OBSOLETE*********************/
+And there's the 'u' prefix which is prefixed to the first set of a letter + number of a "custom name" from the lsd file.
+
+First, "static" names:
+    There are a few types of naming scheme used in there:
+    - unionall.ssb           => Unique name used for the master script.
+    - enter.sse, enterYY.ssb => Name for level entry points. Only used on playable levels.
+    
+Then SSS/Numbered SSB pairs
+    - dus.sss, dusYY.ssb     => Name for possibly dungeon entering data/scripts?
+    - hus.sss, husYY.ssb     => Unknown, seen under /SCRIPT/D41P41A
+    - mus.sss, musYY.ssb     => Unknown, seen under /SCRIPT/D41P41A
+    
+Then "custom" names from the LSD file:
+    Those are usually very flexible. Most are a combination of digits and letters commonly use as resource names 
+    throughout the game files. Always 8 character or less. Since their names must fit within the 8 character strings
+    contained within the LSD file.
+    - #XX@YYZZ.ssa, #XX@YYZZ.ssb => A common resource prefix letter '#', followed by a number XX, 
+        or                          followed by another letter '@', followed by another number YY, 
+      #XX@YYL.ssa,  #XX@YYL.ssb     and finally another number ZZ, OR a letter L, most often "a". 
+                                    regex: "[abcdghmnpstuv]{1}\d\d[abcdghmnpstuv]{1}\d\d\d\d.ss[ab]{1}"
+                                           "[abcdghmnpstuv]{1}\d\d[abcdghmnpstuv]{1}\d\d[ab]{1}.ss[ab]{1}"
+      
+    - Any 8 character name       => Just like the above, with a non-resource related name.
+                                    SCRIPT/S08P01A/quiz01.ssa and SCRIPT/S08P01A/quiz01.ssb
+                                    SCRIPT/S01P03A/conquest.ssa, SCRIPT/S01P03A/dead.ssa, SCRIPT/S01P03A/first.ssa, SCRIPT/S01P03A/return.ssa
+                                    SCRIPT/S00P01A/dopen.ssa, SCRIPT/S00P01A/partner.ssa, SCRIPT/S00P01A/partner2.ssa
+           
+Lone SSS:
+    Not much is known about those. They seems to be named after part of a ssa/ssb pair, or another event directory identifier.
+    - #XX@YY.sss                => A common resource prefix letter '#', followed by a number XX, 
+                                   followed by another letter '@', followed by another number YY.
+                                   regex: "[abcdghmnpstuv]{1}\d\d[abcdghmnpstuv]{1}\d\d.sss"
+    **Lone sss were encountered mostly in /SCRIPT/T00P01**
+           
+And then in-between both:
+    - uLXX.sss, uLXXYY.ssb   => 'u' prefixed to a common resource prefix letter, like s, n, m, etc, 
+                                followed with a decimal number XX. The SSB name is suffixed with a decimal number YY.
+                                It seems that the common resource prefix letter is usually the first letter and 2 digits of
+                                a "custom" named script pair.
+                                regex: "u[abcdghmnpstuv]{1}\d\d.sss"
+                                       "u[abcdghmnpstuv]{1}\d\d\d\d.ssb"
+                                       
+/***********************END OBSOLETE*********************/
+Other notes:
+    - SSB file names have a sequential number suffixed to them when matching a sse, or sss file.
+    - SSB file names DON'T have a sequential number suffixed to them when matching a ssa file!
+                                    
+Interestingly D79P21A/ contains only enter.sse and enter.ssb files.
+              SCRIPT/D07P11A contains only 2 numbered entered.ssb, one is 00, and the other is 05.. So the numbers don't 
+              really need to be in perfect sequence.
+     
+             
+==================================================================================
+Common Script Prefixes
+==================================================================================
+a
+b
+c
+d
+g
+h
+m
+n
+p
+s
+t
+u
+v
+dus
+enter
+unionall
+
+
+Script Naming Conventions:
+    M  = Main game cutscene/dialog/scripted sequence
+    UM = Sets for main game chapters. The Number appended is the chapter.
+    US = Sets for side episodes chapters. The Number appended is linked to the episode.
+
+
+
+==================================================================================
+Script Directory Content
+==================================================================================
+So, in general the content of script directories follow those rules:
+    - 0 to 1 lsd file, named after the directory.
+    - 0 to 1 enter.sse file, WITH 0 or more matching numbered ssb.
+    - 0 to 1 dus.sss file, WITH 0 or more matching numbered ssb.
+    - 0 to several ssb, WITH 0 to 1 matching ssa for each ssb.
+    - 0 to several u prefixed sss, and 1 or more matching numbered ssb files.
+    - A lsd is required as soon as a single ssa file, or a non-unique ssb file is present.
+    - Cutscenes don't have enter.sse.
+
+==================================================================================
+Script OpCodes:
+==================================================================================
+Everything including parameters is a 16 bits integer.
+    *** The string ids in the instructions include the length of the const table if there's one! ***
+
+Explorers of Sky:
+=================
+
+
+#0x073 - "ExecuteCommon"
+-------------------------------------------------
+*Param:
+    - 
+*Description:
+    Seems to let a "lives" execute a series of commands with as target itself.
+    
+
+#0x087 - "Jump"
+-------------------------------------------------
+*Param:
+    - JumpOffset : The offset in bytes from the beginning of the group table of the instruction to jump to.
+*Description:
+    Make the program execute the instruction from the position specified.
+
+
+
+    
+#0x9F - "message_Narration"
+-------------------------------------------------
+*Param:
+    - Param1   : Delay/duration possibly?
+    - StringId : Index of the string to display.
+*Description:
+    Write a string to the screen as narrative text.
+    
+
+#0xAE - "message_Talk"
+-------------------------------------------------
+*Param:
+    - StringId : Index of the string to display.
+*Description:
+    Write a string to the screen as a speech box.
+    
+    
+#0x133 - "supervision_ExecuteStationSub" 
+-------------------------------------------------
+*Param:
+    - IndexOfEvent      : The index, in the event lookup table, of the parent event which contains the subroutine.
+    - IndexConstSubName : The index, in the constant table of the current ssb file, of the string containing the name of the subroutine file!
+    - Param3            : Unknown, is usually 0.
+*Description:
+    Execute the subroutine specified?
+
+
+	
+//============================================================
+//	Process Special
+//============================================================
+This command is special in that it allows the script to call some hard-coded processes using an index number, and specifying parameters, and even obtaining a return value.
+
+Known processs special indices:
+
+=========================================================================================================
+| Proc Index	| Parameters		| Return Value				| Description							|
+=========================================================================================================
+---------------------------------------------------------------------------------------------------------
+|	0x20		| 1: (int)Item id	| Nb items found			| Checks in the player's bag for 
+|				| 2: null			|							| the specified item, and returns
+|				|					|							| the number if matching items found!
+---------------------------------------------------------------------------------------------------------
+
+//
+//
+//
+To run the debug screen, put this in common routine #111
+<JumpCommon croutineid="EVENT_M00A_01" />

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<!DOCTYPE binary_file_format SYSTEM "BinaryFileFormat.dtd">
+<binary_file_format name="pokemon_lvlup_list" type_name="" comment="" expr="">
+	<for name="lvl" count="100" stop_test="" type_name="" comment=""><struct name="leveldata" type_name="" comment="" expr="{this.experience}, {this.hp}, {this.unk1},{this.unk2},{this.unk3},{this.unk4}"><data type="int" name="experience" format="unsigned" len="4" display="d"/><data type="int" name="hp" format="unsigned" len="2" display="d"/><data type="int" name="unk1" format="unsigned" len="1" display="d"/><data type="int" name="unk2" format="unsigned" len="1" display="d"/><data type="int" name="unk3" format="unsigned" len="1" display="d"/><data type="int" name="unk4" format="unsigned" len="1" display="d"/><data type="int" name="endzeros" format="unsigned" len="2" display="d"/></struct></for></binary_file_format>

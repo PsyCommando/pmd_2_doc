@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<!DOCTYPE binary_file_format SYSTEM "BinaryFileFormat.dtd">
+<binary_file_format name="SSA" type_name="" comment="" expr="">
+    <define_struct type_name="PosMarkerEntry" comment="" expr="" >
+        <data type="int" name="unk0" format="signed" len="2" display=""/>
+        <data type="int" name="unk1" format="signed" len="2" display=""/>
+        <data type="int" name="unk2" format="signed" len="2" display=""/>
+        <data type="int" name="unk3" format="signed" len="2" display=""/>
+        <data type="int" name="unk4" format="signed" len="2" display=""/>
+        <data type="int" name="unk5" format="signed" len="2" display=""/>
+        <data type="int" name="unk6" format="signed" len="2" display=""/>
+        <data type="int" name="unk7" format="signed" len="2" display=""/>
+    </define_struct>
+    <define_struct type_name="UnkBlk3Entry" comment="" expr="">
+        <data type="int" name="unk0" format="signed" len="2" display=""/>
+        <data type="int" name="unk1" format="signed" len="2" display=""/>
+        <data type="int" name="unk2" format="signed" len="2" display=""/>
+        <data type="int" name="unk3" format="signed" len="2" display=""/>
+    </define_struct>
+    <define_struct type_name="UnkBlk1Entry" comment="" expr="">
+        <data type="int" name="unk0" format="signed" len="2" display=""/>
+        <data type="int" name="unk1" format="signed" len="2" display=""/>
+        <data type="int" name="unk2" format="signed" len="2" display=""/>
+        <data type="int" name="unk3" format="signed" len="2" display=""/>
+    </define_struct>
+	<define_struct type_name="EventEntry" comment="" expr="">
+        <data type="int" name="lde0" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lde1" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lde2" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lde3" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lde4" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lde5" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lde6" format="signed" len="2" display="{dec}"/>
+        <data type="none" name="lde7" len="2"/>
+    </define_struct>
+    <define_struct type_name="PerformerEntry" comment="" expr="">
+        <data type="int" name="lce1" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lce2" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lce3" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lce4" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lce5" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lce6" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lce7" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lce8" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lce9" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lce10" format="signed" len="2" display="{dec}"/>
+    </define_struct>
+    <define_struct type_name="ActorEntry" comment="" expr="">
+        <data type="int" name="la0" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="la1" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="la2" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="la3" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="la4" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="la5" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="la6" format="signed" len="2" display="{dec}"/>
+        <data type="none" name="la7" len="2"/>
+    </define_struct>
+    <define_struct type_name="ObjectEntry" comment="" expr="">
+        <data type="int" name="lbe0" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lbe1" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lbe2" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lbe3" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lbe4" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lbe5" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lbe6" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lbe7" format="signed" len="2" display="{dec}"/>
+        <data type="int" name="lbe8" format="signed" len="2" display="{dec}"/>
+        <data type="none" name="lbe9" len="2"/>
+    </define_struct>
+    <define_struct type_name="LayerEntry" comment="" expr="">
+        <data type="int" name="NbActors" format="signed" len="2" display="{hex}"/>
+        <data type="int" name="ActorsPtr" format="signed" len="2" display="{hex}"/>
+        <data type="int" name="NbObjects" format="signed" len="2" display="{hex}"/>
+        <data type="int" name="ObjectsPtr" format="signed" len="2" display="{hex}"/>
+        <data type="int" name="NbPerformers" format="signed" len="2" display="{hex}"/>
+        <data type="int" name="PerformersPtr" format="signed" len="2" display="{hex}"/>
+        <data type="int" name="NbEvents" format="signed" len="2" display="{hex}"/>
+        <data type="int" name="EventsPtr" format="signed" len="2" display="{hex}"/>
+        <data type="int" name="NbUnkBlk3Entries" format="signed" len="2" display="{hex}"/>
+        <data type="int" name="UnkBlk3Ptr" format="signed" len="2" display="{hex}"/>
+        <jump offset="ActorsPtr * 2" comment="" origin="start">
+            <for name="ActorEntrie" count="NbActors" stop_test="" type_name="" comment="">
+                <use_struct name="" expr="id={this.la0} ({this.la2},{this.la3})" type_name="ActorEntry" comment=""/>
+            </for>
+        </jump>
+        <jump offset="ObjectsPtr * 2" comment="" origin="start">
+            <for name="ObjectEntrie" count="NbObjects" stop_test="" type_name="" comment="">
+                <use_struct name="" expr="id={this.lbe0} ({this.lbe4},{this.lbe5})" type_name="ObjectEntry" comment=""/>
+            </for>
+        </jump>
+        <jump offset="PerformersPtr * 2" comment="" origin="start">
+            <for name="PerformerEntrie" count="NbPerformers" stop_test="" type_name="" comment="">
+                <use_struct name="" expr="" type_name="PerformerEntry" comment=""/>
+            </for>
+        </jump>
+        <jump offset="EventsPtr * 2" comment="" origin="start">
+            <for name="EventEntrie" count="NbEvents" stop_test="" type_name="" comment="">
+                <use_struct name="" expr="" type_name="EventEntry" comment=""/>
+            </for>
+        </jump>
+        <jump offset="UnkBlk3Ptr * 2" comment="" origin="start">
+            <for name="UnkBlk3Entrie" count="NbUnkBlk3Entries" stop_test="" type_name="" comment="">
+                <use_struct name="" expr="" type_name="UnkBlk3Entry" comment=""/>
+            </for>
+        </jump>
+    </define_struct>
+    <struct name="Header" type_name="" comment="" expr="">
+		<data type="int" name="nblayers" format="unsigned" len="2" display=""/>
+		<data type="int" name="ptrlayerstbl" format="unsigned" len="2" display="%X"/>
+		<data type="int" name="unkblk1ptr" format="unsigned" len="2" display="%X"/>
+		<data type="int" name="actorsptr" format="unsigned" len="2" display="%X"/>
+		<data type="int" name="objectsptr" format="unsigned" len="2" display="%X"/>
+		<data type="int" name="performersptr" format="unsigned" len="2" display="%X"/>
+		<data type="int" name="eventsptr" format="unsigned" len="2" display="%X"/>
+        <data type="int" name="posmarksptr" format="unsigned" len="2" display="%X"/>
+		<data type="int" name="unkblk3ptr" format="unsigned" len="2" display="%X"/>
+	</struct>
+    <for name="UnkBlock1Entrie" count="((Header.actorsptr - Header.unkblk1ptr)*2) / 8" stop_test="" type_name="" comment="">
+        <use_struct name="" expr="" type_name="UnkBlk1Entry" comment=""/>
+    </for>
+	<jump offset="Header.ptrlayerstbl * 2" comment="" origin="start">
+        <for name="Layer" count="Header.nblayers" stop_test="" type_name="" comment="">
+            <use_struct name="" expr="" type_name="LayerEntry" comment=""/>
+        </for>
+    </jump>
+    <jump offset="Header.posmarksptr * 2" comment="" origin="start">
+        <for name="PosMarkerEntrie" count="((Header.unkblk3ptr - Header.posmarksptr)*2) / 16" stop_test="" type_name="" comment="">
+            <use_struct name="" expr="({this.unk0},{this.unk1})" type_name="PosMarkerEntry" comment=""/>
+        </for>
+    </jump>
+    <data type="none" name="none"/>
+</binary_file_format>

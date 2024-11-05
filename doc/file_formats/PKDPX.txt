@@ -1,0 +1,29 @@
+====================================================================================================
+                                            PKDPX:
+====================================================================================================
+Generic compressed data container. 
+Uses "PX" compression, just like the AT4PX format, except that PKDPX can contain another
+file/container as its compressed data.
+Identical to AT4PX besides the magic number, and the extra 2 bytes for the header!
+
+
+Offset:            Length:            Endian:      Description:
+-------            -------            -------      -----------------------------------
+0x0                5                  big          Magic Number {0x50, 0x4B, 0x44, 0x50, 0x58} "PKDPX"
+0x05               2                  little       (FLEN)Total compressed file length, including header!
+0x07               9                  -            List of control flags (more on these below)
+0x10               4                  little       Byte size of the decompressed data.
+0x14               (FLEN - 0x14)                   Compressed image data.
+[
+    0x0                                             "PX" compressed data here.
+    ...
+]
+-------            -------            -------      -----------------------------------
+Total:             (FLEN)
+
+Control Flags:
+---------------
+Those tend to change with each files. They're 4 bits values stored in the lower nybble of each 
+individual 9 bytes that are used to handle some special cases while decoding some "Command Byte".
+The high nybble is always 0.
+They're picked on a per-file basis.

@@ -1,0 +1,513 @@
+==========================================================================================
+                                    SIR0 + Sprite: 
+==========================================================================================
+
+Those can have various file extensions. Most loose files containing this structure have a ".wan"
+file extension.
+
+Credits:
+--------
+- True Pikachu: For several things about the format.
+- irdkwia: For figuring out how offsets are matched to frames and used.
+
+------------------------
+Legend
+------------------------
+[]  : This indicates a data structure model, like an array or a struct. Basically a bunch of variables 
+      together. If there nothing in between, content is either unknown or obvious, or described later 
+      on in detail.
+       
+... : This means that there is a gap filled with data between the element above and below this symbol. 
+      When used inside square brackets, it implies that elements based on the model of the element
+      above the symbol are repeated for the length of the data structure containing it. Or, if there 
+      is an element after this symbol, repeated until the element below the symbol!
+
+
+      
+------------------------
+Quick Overview
+------------------------
+A quick list of all the various blocks usually found in a file.
+
+Offset/Name:                 Length:                    Info:
+------------                 -------                    ---------------------
+0x0                          4                          Magic Number { 0x53, 0x49, 0x52, 0x30 }
+0x4                          4                          Pointer to WAN header.
+0x8                          4                          Pointer to SIR0 pointer offset list.
+0xC                          4                          Zeroes.
+MetaFrames                   Varies                     Where meta-frames are stored. 
+[]
+AnimationSequences           Varies                     Null frame terminated lists of animation frames. Pointed to by Animation sequence table.
+[]
+CompressedImages             Varies                     Contains the compressed image data. 
+[]
+PaletteBlock                 Varies                     Contains a palette, along with color information affecting the whole sprite.
+[]
+MetaFramesRefTable           Varies                     Table containing pointers to every meta-frames.
+[]
+ParticleOffsetsTable         Varies                     Offsets/attachements points for particles effects.(sweat drops, exclamation marks, etc..)
+[]
+AnimSequenceTable            Varies                     Contains lists of pointers to AnimationSequences. Its entries are pointed at by the AnimGroupTable.
+[]
+AnimGroupTable               Varies                     Animation groups. Pointers to entries in AnimSequenceTable.
+[]
+ImageDataTable               Varies                     Pointers to every compressed images in CompressedImages.
+[]
+AnimInfo                     24                         Contains info on the sprite's animation, and other elements.
+[]
+ImageDataInfo                16                         Contains information on the image data contained in the sprite.
+[]
+WAN header                   12                         Contains pointers to the AnimInfo, and ImageDataInfo blocks, along with info
+[]                                                       on what kind of sprite this is.
+0xAA Padding                 Varies                     Padding to align the next section on 16 bytes.
+[]
+SIR0PtrOffsetList            Varies                     See SIR0 doc for details.
+[]
+0xAA Padding                 Varies                     Some 0xAA padding bytes to align the end of the file on 16 bytes.
+------------                 -------                    ---------------------
+
+------------------------
+Detailed Overview
+------------------------
+
+Offset:            Length:            Type:                 Description:
+-------            -------            -------               -----------------------------------
+0x00                   4              char[4]               Magic Number "SIR0" (0x53 0x49 0x52 0x30)
+0x04                   4              uint32                Pointer to WAN header.
+0x08                   4              uint32                Pointer to SIR0 pointer offset list. 
+0x0C                   4                -                   Zeroes.
+MetaFrames             Varies                               List of metaframes, referring to the actual image data, with additional info.
+[
+    Frame              varies                               A group of steps to assemble together into a single frame, or a complete image!
+    [
+        FrameStep     10 bytes                              A step to assemble the parent frame. Almost identical to a NDS's OAM table object entry.
+        [   
+        Index          2                int16               Index in the image table, containing the pointer to the actual image data. 
+                                                             If is 0xFFFF its a reference frame. (more details below)
+        Unk#0          2                int16               Unknown. (possibly just part of the index!)
+        YOffset+Flags1 2                Special             (10 lowest bits)Frame offset on Y axis(0-255). (6 highest bits)Flags*(more details below under MetaFrames section)
+        XOffset+Flags2 2                Special             (9  lowest bits)Frame offset on X axis(0-511). (7 highest bits)Flags*(more details below under MetaFrames section)
+        objattr2       2                Special             (See below)
+        ]
+        ...
+    ]
+    ...
+]
+AnimationSequences                                          Contains null-entry terminated sequences of animation frames, back to back.
+[
+    Sequence            varies                              A single sequence pointed to by an entry in the AnimSequenceTable!
+    [
+        AnimationFrame  12 bytes                            A single frame of an animation sequence.
+        [
+            FrameDur    2               int16               (the high nybble is possibly a flag)The duration the frame is displayed. Higher is slower. 
+            FrameIndex  2               int16               The index (in the meta-frame table) of the frame to display.
+            SprOffX     2               int16               Offset of the frame relative to the center of the sprite, on the X axis.
+            SprOffY     2               int16               Offset of the frame relative to the center of the sprite, on the Y axis.
+            ShadowOffX  2               int16               Offset of the shadow relative to the center of the sprite, on the X axis.
+            ShadowOffY  2               int16               Offset of the shadow relative to the center of the sprite, on the Y axis.
+        ]
+        ...
+        NullFrame       12 bytes                            12 bytes of zeros. Indicates end of sequence.
+    ]
+    ...
+    Optional Padding bytes  varies                          Optionally, 0xAA padding bytes may be added here to align the 
+                                                             next block, the CompressedImages, on 4 bytes!
+]
+CompressedImages        Varies                              A block containing all the compressed image data.
+[
+    ImageData           Varies                              The data for a single image.
+    [
+        PixelStrips     Varies                              This contains strips of pixels from which useless zeroes were stripped.
+        [                                                    The original image can be rebuilt using the CompTable below! Data format varies.
+            ...
+        ]
+        CompTable       Varies                              Contains entries used to rebuild an image, from the compressed data. **More below.
+        [
+            Entry       12                                  Contain info on how to rebuild a strip of the image.
+            [
+                PixSrc  4               uint32              The source of the pixel. Either 0, or a file offset within "PixelStrips"!
+                Len     2               uint16              The amount of bytes to copy from that offset, or the amount of zeroes to copy.  (Always an even value, and minimum 32 bytes!)
+                Unk#14  2                                   (seen in GROUND/v10p01c3.wat) Unknown purpose.  
+                Unk#2   4               uint32              Possibly flags. Values from 0 to 4 so far. 1 usually in non-compressed sprites containers.
+                                                             It seems to indicate the Z priority possibly.. So far it appeared mostly on images that were
+                                                             "hovering" or towering over something else.
+                                                             Throughout most images and sprites it seems the image for the "getting hit" animation, 
+                                                             while facing right-bottom, right, right-up are usually set to 1 !
+            ]
+            ...
+            NullEntry   8-12                                 The table ends with 8 to 12 bytes of zeroes! Its better to check for 8, since some sprite types only put 8 zeros as last entry!
+        ]
+    ]
+    ...
+]
+PaletteBlock            Varies
+[
+    PaletteDataBlock    Varies                              Contains color data for the palette. Usually 4 bytes RGBX, ending with an unused 0x80 byte. In 4bpp mode there's up to 16, 16 colors palettes.
+    [
+        ...
+    ]
+    PaletteInfo         16                                  Contains details on the palette format, length and etc.
+    [
+        PtrPaletteBeg   4               uint32              Pointer to the first color in "PaletteDataBlock". 
+        Unk#3           2               uint16              If set to 1, write palette in "Main Ext Spr 0" runtime palette! Additionally, force sprite to be read to memory as 4 bpp!
+        NbColorsPerRow  2               uint16              0 to 16.. Changes the amount of colors loaded on a single row in the runtime palette sheet.
+        Unk#4           2               uint16              In extended palette mode, seems to change the location of the palette..
+        Unk#5           2               uint16              (1111 0000 0000 0000)If not 0xF or 0, makes the image data be written to memory as 8 bpp, from 4 bpp! Also seem to force palette as 256 colors extended pal?
+                                                             Otherwise, the image is loaded as-is? 
+                                                            (0000 1111 0000 0000) Set in which slot in a palette sheet in memory the palette will be drawn at!
+        NullBytes       4               -                   4 bytes of zeroes, indicating the end of the palette info?
+    ]
+]
+MetaFramesRefTable      Varies                              Pointer table to every meta-frames in MetaFrames!
+[
+    Pointer             4               uint32              Pointer to a list of FrameSteps detailing how to assemble a Frame.
+    ...
+]
+AttachmentOffsetsTable  0 or (NbMFrames * 16)               A list of offsets used by the game to position effects layered over a character sprite. 
+																Is used for displaying effects like exclamation marks, sweat drops and the like.
+																This block may be omitted in some sprite types.
+[
+    FrameOffsets        16                                  A list of 4 offsets for each of the attachment points for the frame with the corresponding index. 
+    {
+		Head			4				int16[2]			Pair of XY coordinates indicating where the "head" of the character on the frame is. 
+		RHand			4				int16[2]			Pair of XY coordinates indicating where the "right hand" of the character on the frame is.
+		LHand			4				int16[2]			Pair of XY coordinates indicating where the "left hand" of the character on the frame is.
+		Center			4				int16[2]			Pair of XY coordinates indicating where the "center" of the character on the frame is.
+	}
+    ...
+]
+AnimSequenceTable       Varies                              Contains pointers to several animation sequences.
+[
+    AnimSeqPtrList                                          A list of pointers to animation sequence corresponding to the "AnimGroupTable" 
+    [                                                        entry pointing to this! Length of list is in referring "AnimGroupTable" entry !
+        PtrAnimSeq      4               uint32              Pointer to an animation sequence, a null-entry terminated list of animation frames, 
+        ...                                                  in the "AnimationSequences" block. 
+                                                             ##A pointer can point to an already existing animation sequence !!!!##
+    ]     
+    !!! In case there are no animations for a group, you have to append 4 bytes 
+    of zero after the last valid entry for each empty groups, so if you have 2 empty groups, you write 8 bytes of zeros!!!
+    ...
+]
+AnimGroupTable          NbGrpsAniGrpTable * 8                   Animation groups.
+[
+    AnimGroup           8                                   A single entry in the table!
+    [
+    0x00 PtrAnimList     4               uint32              Pointer to an anim list in "AnimSequenceTable".
+    0x04 AnimListLen     2               uint16              The length of the list pointed to by PtrAnimList.
+    0x06 Unk#16          2                                   unknown 
+    ]
+    ...
+}
+ImageDataTable          NbImgs * 4                          Pointers to all compressed images !
+[
+    ImgPtr              4               uint32              Pointer to an image's "CompTable"'s first entry, in the "CompressedImages" block.
+    ...
+]
+AnimInfo                24                                   Contains info related to sprite animation !
+[
+0x00 PtrMFrmTable        4               uint32              Pointer to the MetaFramesRefTable block.
+0x04 PtrOffsetsTable     4               uint32              Pointer to the AttachmentOffsetsTable block. It can be null for sprite types of 0 and 2. But for sprite type 1 it has to be non-null, even if the table contains nothing!
+0x08 PtrAnimGrpTable     4               uint32              Pointer to the AnimGroupTable block.
+0x0C NbGrpsAniGrpTable   2               uint16              The nb of anim groups in the AnimGroupTable block.
+0x0E NbTilesUsed         2                                   (Unk#6) Nb of "blocks" the image takes up in tile memory. 
+                                                                    Calculated from the largest assembled Frame in the sprite.
+                                                                    The doc for the NDS I used seems off, so from experimentation
+                                                                    it seems like those blocks are 16x16 tiles with 1 byte per pixel (8bpp).
+0x10 Unk#7               2                                   unknown
+0x12 Unk#8               2                                   unknown
+0x14 Unk#9               2                                   unknown. Seems to be interpreted as a boolean. (binary offset 0201C24C)
+0x16 Unk#10              2                                   unknown
+]
+ImageDataInfo           16                                  Contains details on the actual image data format.
+[
+0x00 PtrImgDatTable      4               uint32              Pointer to the ImageDataTable block.
+0x04 PtrPalBlock         4               uint32              Pointer to PaletteBlock.
+0x08 Unk#13              2               uint16              VRAM Character Mapping. 0 = 2D Mapping(Tiles placed on a 32x32 matrix), 1 = 1D Mapping(Tiles loaded one after another). 
+                                                             (http://problemkaputt.de/gbatek.htm#lcdobjvramcharactertilemapping) 
+0x0A Is256ColorSpr       2               uint16              If 1, the game draw the sprite as a 8bpp 256 color sprite from memory!(You need to specify it in the palette info too for it to work!)
+                                                             If 0, images are drawn as 4bpp !
+0x0C Unk#11              2               uint16              This far 0, 1, 3(d79p41a1.wan), 4(as001.wan).. Seems to deal with the palette slot in-game.
+0x0E NbImgs              2               uint16              NB of pointers in the ImageDataTable block.
+]
+WAN header              12                                  First part of the sprite header. Points to 2 sub-parts.
+[
+0x00 PtrAnimInfo         4               uint32              Pointer to AnimInfo block.
+0x04 PtrImgDatInfo       4               uint32              Pointer to ImageDataInfo block. May be null.
+0x08 SpriteType          2               uint16              0 == non-character, 1 == character sprite, 2 == effects, 3 == WAT sprite. 
+                                                             This messes with what anim groups are used for!
+0x0A Unk#12              2                                   ?
+]
+EoFPadding             0-12 bytes        -                  Padding to align the next section on 
+                                                             16 bytes!(0xAAAA) *(About Padding)
+SIR0PtrOffsetList                                           See SIR0 file for details. Basically
+                                                             contains a list of the offset of 
+                                                             every single pointers in the whole 
+                                                             file, encoded, and followed with
+                                                             some 0xAA padding.
+-------            -------            -------               -----------------------------------
+
+----------------
+*MetaFrames
+----------------
+Meta-frames only tell the game what should be displayed when they're being referred to.
+If the index correspond to an actual image index, that image will be displayed, following the properties
+contained in the meta-frame. 
+
+When the index is set to 0xFFFF (or 65,535 / -1 in decimal), this meta-frame will not trigger image loading,
+and the game will instead use whatever data is at the sprite's reserved memory spot at the time and 
+apply the meta-frame's properties on it. (usually copies the last valid image in the frame group)
+
+When a meta frame is part of a group with more than a single meta frame, and the first meta-frame in the
+group has an actual image index as value, and the other meta-frames have 0xFFFF as their index value, 
+then all the other meta-frames in the group will be a copy of the first one. Its possible to repeat 
+an image multiple times that way for a specific frame, and use the offsets to position all copies.
+
+NOTE: Apparently that meta-frames are assembled in reverse, from the last image strip to the first. As some are 
+overlayed over some parts of the pokemon!
+
+(Bit order is from right to left, from the lowest to the highest here!)
+Was updated using data from gbatek since this is literally the content of the OAM bits for the object!
+http://problemkaputt.de/gbatek.htm#lcdobjoamattributes
+Also looked at libnds : https://github.com/devkitPro/libnds/blob/master/include/nds/arm9/sprite.h
+TONC is also a great source : https://www.coranac.com/tonc/text/regobj.htm#tbl-obj-size
+
+**YOffset flags** : bitflags used to tell the game how to read and display the frame. 6 bits are reserved for that purpose.
+    bits:
+    #14-15 (1100 0000 0000 0000) : "OBJ Shape" modifies the frame's resolution. (see below)
+        00 = Square
+        01 = Horizontal
+        10 = Vertical
+        11 = Undefined
+    #13 (0010 0000 0000 0000) : "Colors/Palettes"
+        0 = 16/16? "16 color in tile mode...16 bit in bitmap mode"
+        1 = 256/1?
+    #12 (0001 0000 0000 0000) : "OBJ Mosaic"
+        0 = Off
+        1 = On
+    #10-11 (0000 1100 0000 0000) : "OBJ Mode"
+        00 = Normal    	      "No special mode is on - Normal sprite state."
+        01 = Alpha Blending   "Alpha blending is on - Sprite can use HW blending features."
+        10 = Windowed         "Sprite can be seen only inside the sprite window."
+        11 = BMP              "Sprite is not using tiles - per pixel image data."
+    #9 (0000 0010 0000 0000) : "OBJ Disable" if bit 8 not set, "Double-Size Flag" if bit 8 set.
+        - If bit 8 set:
+            0 = Normal size 
+            1 = Double size "Sprite bounds is doubled (isRotoscale set)"
+        - If bit 8 unset:
+            0 = Object displayed
+            1 = Object hidden
+    #8 (0000 0001 0000 0000) : "Rotation/Scaling Flag" (determines what bit 9 does)
+        0 = Off
+        1 = On  "Sprite uses affine parameters if set."
+    #0-7 (0000 0000 1111 1111) : Y Offset 
+        0 to 255
+    
+
+**XOffset flags** : bitflags used to tell the game how to read and display the frame. 7 bits are reserved for that purpose.
+The way this value is interpreted changes drastically if the "Rotation/Scaling Flag" was set!
+
+WITH "Rotation/Scaling" FLAG OFF:
+    bits:
+    #14-15 (1100 0000 0000 0000) : indicate the frame's resolution.
+        00 =  8x8
+        01 = 16x16
+        10 = 32x32
+        11 = 64x64
+    #13 (0010 0000 0000 0000) : indicates whether the image should be flipped vertically.
+        0 = Normal
+        1 = Flipped vertically  "Flip sprite vertically (isRotoscale cleared)."
+    #12 (0001 0000 0000 0000) : indicates whether the image should be flipped horizontally.
+        0 = Normal
+        1 = Flipped horizontally "Flip sprite horizontally (isRotoscale cleared)."
+    #11 (0000 1000 0000 0000) : Seems to indicate that the meta-frame is the last of the current meta-frames group. (not 100% sure)
+        0 = not last frame
+        1 = is last of meta-frame list
+    #9-10 (0000 0110 0000 0000) :
+        Unused
+    #0-8 (0000 0001 1111 1111) : X Offset 
+        0 to 511
+        
+        !!************ NOTE:*************!!
+        The rotation and scaling flag seems to not be used the same way in the sprites.
+        And even if rot and scaling is on, the "islast" bit and the flips seems to still work!
+        !!************ NOTE:*************!!
+
+WITH "Rotation/Scaling" FLAG ON:
+    bits:
+    #14-15 (1100 0000 0000 0000) indicate the frame's resolution.
+        00 =  8x8
+        01 = 16x16
+        10 = 32x32
+        11 = 64x64
+    #9-13 (0011 1110 0000 0000) "Affine parameter number to use (isRotoscale set)."
+        (0-31) Sets the rotation/scaling parameter to use apparently. (Not sure how the last frame is indicated in those!!)
+    #0-8 (0000 0001 1111 1111) : X Offset 
+        0 to 511
+        
+        !!************ NOTE:*************!!
+        The rotation and scaling flag seems to not be used the same way in the sprites.
+        And even if rot and scaling is on, the "islast" bit and the flips seems to still work!
+        !!************ NOTE:*************!!
+        
+**objattr2 flags**: 
+    bits:
+    #12-15 (1111 0000 0000 0000): Palette Number
+        0 to 15
+    #10-11 (0000 1100 0000 0000): Priority relative to BG
+        0 to 3. 0 is highest.
+    #0-9 (0000 0011 1111 1111): "Character Name"? Tile number
+        0 to 1023 "Upper-left tile index."
+
+
+    
+    
+Values of bits 14-15 for the XOffset and YOffset can be combined to get non-square resolution:
+YOffset:    XOffset:     Resolution:
+00          00            8 x  8
+00          01           16 x 16
+00          10           32 x 32
+00          11           64 x 64
+
+01          00           16 x  8
+01          01           32 x  8
+01          10           32 x 16
+01          11           64 x 32
+
+10          00            8 x 16
+10          01            8 x 32
+10          10           16 x 32 
+10          11           32 x 64
+
+
+--------------------
+*AnimationSequences
+--------------------
+Contains null-entry terminated sequences of 12 bytes animation frames one after the other.
+Each sequences is pointed to by entries in the AnimSequenceTable.
+As mentioned above, each sequence ends with 12 bytes of zeroes.
+
+The animation frame itself is a reference, in the form of an index, to a meta-frame in the MetaFrames block, 
+along with a display duration and an offset, from the logical center of the sprite in the game world, 
+for the shadow and the actual image itself.
+
+This datablock may not be aligned on 4 bytes, just like the MetaFrames block, but, if the last sequence doesn't end 
+on an offset divisible by 4, some 0xAA padding is appended between the end of the last sequence, and the 
+beginning of the next datablock!
+
+----------------------
+*ParticleOffsetsTable
+----------------------
+Offsets from the center of the sprite for a plethora of particle effects attached to the sprite.
+They are divided in groups of 4 pairs of XY coordinates for the "head", "right hand", "left hand" and "center" of the character on the assembled frame.
+Each group match a Meta-Frame/Assembled frame in the sprite. So there's always one group of offsets per meta-frame.
+
+-------------------
+*AnimSequenceTable
+-------------------
+This table contains several arrays of pointers to animation sequences in the AnimationSequences.
+They each regroup sequences that match a same group in the AnimGroupTable. The length of those 
+array is defined by the entry in AnimGroupTable that points to it!
+
+----------------
+*AnimGroupTable
+----------------
+Every entry in this table regroups several animation sequences under a group or category.
+For example, with character sprites, the first group is the "run" animation group ! 
+It contains 8 animations sequences, one for every directions possible.
+ 
+-----------------
+*ImageDataTable
+-----------------
+A table with pointers to every compressed image stored in the sprite!
+
+-----------------------
+*CompressedImages
+-----------------------
+Each compressed image is a made of 2 things. A bunch of pixel strips, and a decompression table.
+The pixel strips are basically what remains after as much zero bytes as possible 
+were removed from the original image.
+
+The table is basically filled with entries to be read from the smallest offset to the biggest.
+Each entries indicate what to push_back into the resulting decompressed image. 
+For example, if "PixSrc" is 0, it means push back zeroes, if its an offset, it means push back bytes 
+starting there! The amount of bytes to push_back is stored in "Len", so, if its 0x60, then either
+push 0x60 0, or 0x60 bytes read at the offset specified!
+The last value has an unknown meaning.
+
+Consider this table for Eevee's first frame(converted to big endian):
+                                0x31D8, 0x0000, 0x0060, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0020, 0x0000, 0x0000, 0x0000, 
+0x3238, 0x0000, 0x0060, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
+0x0020, 0x0000, 0x0000, 0x0000, 0x3298, 0x0000, 0x0060, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x00A0, 0x0000, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000
+
+If we interpret each 12 bytes entries from the data, here's what we get:
++--------------------------------------------------------------------------------------------------+
+¦ Pixel Source ¦ Length    ¦ Unk Val ¦ Meaning                                                     ¦
++--------------+-----------+---------+-------------------------------------------------------------¦
+¦ 0x31D8       ¦ 0x60(96)  ¦ 0x0     ¦ Take 96 bytes from offset 0x31D8                            ¦
++--------------+-----------+---------+-------------------------------------------------------------¦
+¦ 0x0          ¦ 0x20(32)  ¦ 0x0     ¦ Add 32 bytes of null colored pixels.                        ¦
++--------------+-----------+---------+-------------------------------------------------------------¦
+¦ 0x3238       ¦ 0x60(96)  ¦ 0x0     ¦ Add 96 bytes from offset 0x3238                             ¦
++--------------+-----------+---------+-------------------------------------------------------------¦
+¦ 0x0          ¦ 0x20(32)  ¦ 0x0     ¦ Add 32 bytes of null colored pixels.                        ¦
++--------------+-----------+---------+-------------------------------------------------------------¦
+¦ 0x3298       ¦ 0x60(96)  ¦ 0x0     ¦ Add 96 bytes from offset 0x3298                             ¦
++--------------+-----------+---------+-------------------------------------------------------------¦
+¦ 0x0          ¦ 0xA0(160) ¦ 0x0     ¦ Add 160 bytes of null colored pixels.                       ¦
++--------------+-----------+---------+-------------------------------------------------------------¦
+¦ 0x0          ¦ 0x0       ¦ 0x0     ¦ Null entry. End of Image!                                   ¦
++--------------------------------------------------------------------------------------------------+
+
+About the resolution:
+---------------------
+Its hard to tell the resolution at this time. 
+In general, most images have a squared resolution, but many others do not.. And we can't just guess 
+reliably from the total amount of pixels, because some images can be either wider than higher, 
+or higher than wider.
+
+However, for images that have a meta-frame, its possible to read their meta-frame data, and determine their resolution!
+
+----------------------------------------
+*PaletteBlock
+----------------------------------------
+This block contains a list of colors used by the sprite. It contains a variable amount of bytes, and 
+each colors is usually 4 bytes, in the format RGBX - 8888, stored as big endian. 
+
+Color 0 is transparent!
+
+The length of the palette may vary.
+
+----------------
+*About Padding:
+----------------
+At the end of the WAN header:
+
+Example:
+
+-- With Padding --
+#       00 01 02 03  04 05 06 07  08 09 0A 0B  0C 0D 0E 0F
+---------------------------------------------------------------
+OFF_A   D4 41 00 00  EC 41 00 00  01 00 00 00  AA AA AA AA <- Here are the padding bytes
+OFF_B   04 04 9D 08  18 18 82 44  18 18 82 44  18 18 82 44 
+        ^
+        And here's where the next section begins. The padding ensures its aligned on an offset 
+        divisible by 16.
+
+    
+-- Where no padding is used because its already aligned (ASSUMING OFF_A = 0x8004) --
+#       00 01 02 03  04 05 06 07  08 09 0A 0B  0C 0D 0E 0F
+------------------------------------------------------------
+0x8000  00 00 00 00  D4 41 00 00  EC 41 00 00  01 00 00 00  <- Notice how not even one Byte of 
+OFF_B   04 04 9D 08  18 18 82 44  18 18 82 44  18 18 82 44     0xAA padding was used !
+        ^
+        Its because the next line starts exactly on an offset divisible by 16, thus no need for 
+        padding.
+    
+
+-----------------------    
+NOTES:
+-----------------------
+- Giratina's sprite (#433) in "/MONSTER/monster.bin" has a lot of extra zeros at the end of its sprite data for some reasons.

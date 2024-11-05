@@ -1,0 +1,527 @@
+/GROUND/
+------------
+a001  to a108  -> Footprints for the minigame
+as001 to as108 -> Footprints for the minigame (seems like a duplicate of the a--- series of sprites)
+
+== Mini-Game Footprints ==
+a001 
+a002
+a003
+a004
+a005
+a006
+a007
+a008
+a009
+a010
+a011
+a012
+a013
+a014
+a015
+a016
+a017
+a018
+a019
+a020
+a021
+a022
+a023
+a024
+a025
+a026
+a027
+a028
+a029
+a030
+a031
+a032
+a033
+a034
+a035
+a036
+a037
+a038
+a039
+a040
+a041
+a042
+a043
+a044
+a045
+a046
+a047
+a048
+a049
+a050
+a051
+a052
+a053
+a054
+a055
+a056
+a057
+a058
+a059
+a060
+a061
+a062
+a063
+a064
+a065
+a066
+a067
+a068
+a069
+a070
+a071
+a072
+a073
+a074
+a075
+a076
+a077
+a078
+a079
+a080
+a081
+a082
+a083
+a084
+a085
+a086
+a087
+a088
+a089
+a090
+a091
+a092
+a093
+a094
+a095
+a096
+a097
+a098
+a099
+a100
+a101
+a102
+a103
+a104
+a105
+a106
+a107
+a108
+as001
+as002
+as003
+as005
+as006
+as007
+as008
+as012
+as013
+as014
+as015
+as017
+as019
+as023
+as024
+as026
+as031
+as034
+as035
+as038
+as041
+as043
+as044
+as046
+as047
+as048
+as049
+as050
+as051
+as052
+as053
+as054
+as056
+as059
+as060
+as064
+as066
+as067
+as068
+as071
+as072
+as073
+as074
+as076
+as077
+as079
+as081
+as082
+as088
+as094
+as095
+as096
+as097
+as098
+as102
+as103
+as104
+as105
+as106
+as107
+as108
+
+== World Props ==
+
+== D ==
+d01p11a1 -> Bottle with a message in it prop!
+d01p11b1 -> Large glowing + Sparkling effect.
+d01p11b2 -> Tiny glowing yellow particle.
+d01p11b3 -> Same as d01p11b1, but more intense.
+d02p31a1 -> Spoink's pearl
+d04p11a1 -> A bubbly cloud that explodes into ice shards apparently..
+d05p31a1 -> The top of a tree, with some animations too.
+d08p11a1 -> A little red pyramidal gem with sparkling animations.
+d09p11a1 -> Big smoke cloud effect.
+d09p11a2 -> Small smoke cloud effect.
+d09p11a3 -> Bubbles effect.
+d12p41a1 -> Some kind of electric effect.
+d12p41a2
+d16p31a1
+d16p31a2
+d16p31a3
+d16p31a4
+d16p31a5
+d16p31a6
+d16p31a7
+d16p31a8
+d16p31a9
+d21p41a1
+d21p41a2
+d28p32a1
+d28p33a1
+d28p33a2
+d28p33a3
+d28p33a4
+d28p33a5
+d28p33a6
+d28p33a7
+d28p33a8
+d28p34a1
+d28p34a2
+d28p34a3
+d30p33a4
+d30p33a5
+d31p31a1
+d32p11a1
+d32p14a1
+d32p44a1
+d32p44a2
+d32p44a3
+d32p44a4
+d32p44a5
+d34p41a1
+d39p41a1
+d45p31a1
+d45p31a2
+d45p31a3
+d45p31a4
+d45p31a5
+d45p31a6
+d50p11a1
+d51p11a1
+d51p41a1
+d51p41a2
+d51p41a3
+d52p11a1
+d52p11a2
+d52p11a3
+d52p32a1
+d52p32a2
+d52p32a3
+d52p32a4
+d52p32a5
+d52p32a6
+d52p32a7
+d52p32a8
+d52p32a9
+d53p41a1
+d53p41c1
+d55p41a1
+d56p11a1
+d56p11a2
+d56p11a3
+d56p41a1
+d57p41a1
+d57p42a1
+d57p42a2
+d57p42a3
+d57p43a1
+d57p43a2
+d57p43a3
+d57p44a1
+d63p41a1
+d63p41a2
+d73p28a1
+d73p28a2
+d73p28a3
+d73p28a4
+d73p28a5
+d73p28a6
+d73p28a7
+d73p28a8
+d73p28a9
+d73p41a1
+d73p41a2
+d73p41a3
+d73p41a4
+d73p41a5
+d73p41a6
+d79p41a1
+
+== G ==
+g01p01a1 -> Relic Fragment
+g01p01a2 -> Paper note
+g01p01a3 -> Animated steel gate of the wigglytuff guild.
+g01p01c1 -> Totem Aipom + Duskull + Zigzagoon
+g01p01c2 -> Totem Horsea + Pidgeot? + Aron
+g01p01c3 -> Totem Hoothoot + Anorith + Noctowl
+g01p01c4 -> Totem Xatu + Tangela + Furret
+g01p03a1 -> Animated outlaw board.
+g01p03a2 -> Dark cloud
+g01p05a1 -> Small yellow chest opening.
+g01p05a2 -> Some sheet being carried by the wind.
+g01p06b1 -> Piles of berries. (interesting use of the 0xFFFF image index value. It seems it repeats the last meta-frame image possibly)
+g01p07a1 -> Woobly purple thing.
+g01p09a1 -> Red book + opening anim.
+g01p10a1 -> Blue book + opening anim.
+g01p10c1 -> Seashell ?
+
+== H ==
+h01p99d1 -> Top of a tree.
+h02p99a1 -> Hay pile(day)
+h02p99c1 -> Hay pile(night)
+h02p99c2 -> Burning campfire.
+h02p99c4 -> Small yellow glow that becomes very big
+h02p99c5 -> Same as above but with "lens flare" too
+h02p99c6 -> Big blue-yellow projectile going from small to huge.
+
+== P ==
+p01p01a1 -> Chimecho assembly sign with animated bell.
+p01p04a1 -> The entrance to the Wigglytuff guild and some random clutter. 
+p02p01a1 -> small animated white cloud of smoke.
+p03p01a1 -> Groudon statue with flashing heart animation.
+p03p02a1 -> Rolling apple
+p03p02a2 -> Static groudon statue
+p05p01a1 -> Dialga's dark silhouette ?
+p05p03a1 -> Ropes "cocoons" from the execution scene in the future with being cut animation.
+p05p03a2 -> Clawing effect + shiny yellow lens flare effect 
+p09p01a1 -> Some kind of bluish water portal
+p09p01a2
+p11p01a2
+p11p01a3
+p12p01a1
+p14p01a1
+p15p01a1
+p17p01a1
+p17p02c1
+p18p01a1
+p18p01a2
+p18p01a3
+p18p01a4
+p19p02a1
+p19p02a2
+p19p02a3
+p19p02a4
+p20p01a1
+p20p01a2
+p20p01a3
+p20p02a1
+p21p02a1
+p21p02a2
+p22p01a1
+p24p01a1
+p26p01a1
+p26p01a2
+p26p01a3
+p26p01a4
+
+== S ==
+s01p01a1
+s01p04a1
+s05p02a1
+s05p02a2
+s05p02a3
+s05p02a4
+s05p02b1
+s05p02c1
+s05p03a1
+s05p03a2
+s05p04a1
+s08p01a1
+s13p01a1
+s13p02a1
+s13p02a2
+s13p02a3
+s13p03a1
+s13p05a1
+s13p05a2
+s13p08a1
+s14p01a1
+s14p01a2
+s14p01a3
+s14p01a4
+s17p01a1
+s17p02a1
+s17p02a2
+s17p02a3
+s17p02a4
+s17p02a5
+s17p02a6
+s17p02a7
+s17p02a8
+s17p02a9
+s17p02b1
+s17p02b2
+s17p02b3
+s17p02b4
+s17p02b5
+s17p02b6
+s17p02b7
+s18p01a1
+s18p01a2
+s18p01a3
+s18p01a4
+
+== T ==
+t01p01a1
+t01p01a2
+t01p01a3
+t01p01a4
+t01p01a5
+t01p01a6
+t01p04a1
+
+== V ==
+v01p02a1
+v01p05b1
+v01p05b2
+v01p07b1
+v03p03a1
+v03p03a2
+v03p06a1
+v03p06a2
+v03p11a1
+v05p02a1
+v05p03a1
+v05p03a2
+v10p01c1
+v10p01c2
+v10p01c3
+v10p03c1
+v12p01a1
+v12p01a2
+v12p01a3
+v12p01a4
+v12p01a5
+v12p01a6
+v12p01a7
+v12p01a8
+v14p03a1
+v14p03a2
+v14p04a1
+v14p04a2
+v15p01a1
+v15p01a2
+v15p01a3
+v15p01a4
+v19p02a1
+v19p05a1
+v19p06a1
+v21p02a1
+v22p01a1
+v22p02a1
+v22p02a2
+v22p03a1
+v22p03a2
+v23p04a1
+v23p04a2
+v24p01a1
+v24p01a2
+v24p01a3
+v24p02a1
+v24p02a2
+v24p03a1
+v24p03a2
+v24p03a3
+v24p04a1
+v24p04a2
+v24p04a3
+v24p05a1
+v24p05a2
+v24p05a3
+v24p05a4
+v24p05a5
+v24p06a1
+v25p03a1
+v25p04a1
+v25p04a2
+v26p04a1
+v26p04a2
+v26p05a1
+v26p07a1
+v26p10a1
+v37p01a1
+v37p03a1
+v38p03a1
+v38p06a1
+v38p07a1
+v38p07b1
+v38p07c1
+v38p07c2
+v38p07c3
+v38p07c4
+v38p07c5
+v38p07d1
+v38p07d2
+v38p07d3
+v38p07d4
+v38p07d5
+v38p07d6
+v38p08a1
+v38p08b1
+v38p08b2
+v38p08c1
+v38p08c2
+v38p08c3
+v38p08c4
+v38p08c5
+v38p08c6
+v38p08d1
+v38p08d2
+v38p08d3
+v38p08d4
+v38p08d5
+v38p08d6
+v38p10a1
+v38p10a2
+v38p10a3
+v38p10a4
+v38p10a5
+v38p10a6
+v38p10a7
+v38p10a8
+v38p10a9
+v38p10b1
+v38p10b2
+v38p10b3
+v38p10b4
+v38p10b5
+v38p10b6
+v38p11a1
+v39p01a1
+v39p03a1
+v39p03a2

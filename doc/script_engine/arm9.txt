@@ -1,0 +1,1176 @@
+============================================================
+Entity Symbol List Table
+============================================================
+
+Index     Offset       Type   Entity Id  Unk3    Unk4    Symbol 
+--------------------------------------------------------------------------------------
+       0- 0x000A7FF0 ->     1,         0,    0x0,  0x102, "PLAYER"
+       1- 0x000A7FFC ->     1,         0,    0x0,  0x102, "PLAYER_HERO"
+       2- 0x000A8008 ->     1,         0,    0x0,  0x102, "PLAYER_PARTNER"
+       3- 0x000A8014 ->     1,         0,    0x0,  0x102, "PLAYER_PARTNER2"
+       4- 0x000A8020 ->     1,         0,    0x0,  0x102, "PLAYER_APPOINT"
+       5- 0x000A802C ->     1,       434,    0x0,  0x102, "PLAYER_BIPPA"
+       6- 0x000A8038 ->     1,       174,    0x0,  0x102, "PLAYER_PUPURIN"
+       7- 0x000A8044 ->     1,       192,    0x0,  0x102, "PLAYER_KIMAWARI"
+       8- 0x000A8050 ->     1,       576,    0x0,  0x103, "PLAYER_FUTURE"
+       9- 0x000A805C ->     1,      1070,    0x0,  0x102, "PLAYER_CHARMS"
+      10- 0x000A8068 ->     2,         0,    0x0,  0x102, "ATTENDANT1"
+      11- 0x000A8074 ->     2,         0,    0x0,  0x102, "ATTENDANT2"
+      12- 0x000A8080 ->     2,         0,    0x0,  0x102, "ATTENDANT_HERO"
+      13- 0x000A808C ->     2,         0,    0x0,  0x102, "ATTENDANT_PARTNER"
+      14- 0x000A8098 ->     2,         0,    0x0,  0x102, "ATTENDANT_PARTNER2"
+      15- 0x000A80A4 ->     2,         0,    0x0,  0x102, "ATTENDANT_APPOINT"
+      16- 0x000A80B0 ->     2,       434,    0x0,  0x102, "ATTENDANT_BIPPA"
+      17- 0x000A80BC ->     2,       174,    0x0,  0x102, "ATTENDANT_PUPURIN"
+      18- 0x000A80C8 ->     2,       192,    0x0,  0x102, "ATTENDANT_KIMAWARI"
+      19- 0x000A80D4 ->     2,       281,    0x0,  0x102, "ATTENDANT_FUTURE"
+      20- 0x000A80E0 ->     2,      1070,    0x0,  0x102, "ATTENDANT_CHARMS"
+      21- 0x000A80EC ->     2,       532,    0x0,  0x102, "ATTENDANT_MANAFI"
+      22- 0x000A80F8 ->     3,         0,    0x0,  0x102, "UNIT_NPC1"
+      23- 0x000A8104 ->     3,         0,    0x0,  0x102, "UNIT_NPC2"
+      24- 0x000A8110 ->     3,         0,    0x0,  0x102, "UNIT_NPC3"
+      25- 0x000A811C ->     3,         0,    0x0,  0x102, "UNIT_NPC4"
+      26- 0x000A8128 ->     3,         0,    0x0,  0x102, "ADVENTURE_NPC1"
+      27- 0x000A8134 ->     3,         0,    0x0,  0x102, "ADVENTURE_NPC2"
+      28- 0x000A8140 ->     3,         0,    0x0,  0x102, "ADVENTURE_NPC3"
+      29- 0x000A814C ->     3,         0,    0x0,  0x102, "ADVENTURE_NPC4"
+      30- 0x000A8158 ->     3,         0,    0x0,  0x102, "FRIEND_NPC1"
+      31- 0x000A8164 ->     3,         0,    0x0,  0x102, "FRIEND_NPC2"
+      32- 0x000A8170 ->     3,         0,    0x0,  0x102, "FRIEND_NPC3"
+      33- 0x000A817C ->     3,         0,    0x0,  0x102, "FRIEND_NPC4"
+      34- 0x000A8188 ->     3,         0,    0x0,  0x102, "FRIEND_NPC5"
+      35- 0x000A8194 ->     3,         0,    0x0,  0x102, "FRIEND_NPC6"
+      36- 0x000A81A0 ->     3,         0,    0x0,  0x102, "FRIEND_NPC7"
+      37- 0x000A81AC ->     3,         0,    0x0,  0x102, "FRIEND_NPC8"
+      38- 0x000A81B8 ->     3,         0,    0x0,  0x102, "FRIEND_NPC9"
+      39- 0x000A81C4 ->     3,         0,    0x0,  0x102, "FRIEND_NPC10"
+      40- 0x000A81D0 ->     3,         0,    0x0,  0x102, "FRIEND_NPC11"
+      41- 0x000A81DC ->     3,         0,    0x0,  0x102, "FRIEND_NPC12"
+      42- 0x000A81E8 ->     3,         0,    0x0,  0x102, "FRIEND_NPC13"
+      43- 0x000A81F4 ->     3,         0,    0x0,  0x102, "FRIEND_NPC14"
+      44- 0x000A8200 ->     3,         0,    0x0,  0x102, "FRIEND_NPC15"
+      45- 0x000A820C ->     3,         0,    0x0,  0x102, "FRIEND_NPC16"
+      46- 0x000A8218 ->     5,         0,    0x0,  0x102, "TALK_MAIN"
+      47- 0x000A8224 ->     5,         0,    0x0,  0x102, "TALK_SUB"
+      48- 0x000A8230 ->     5,         0,    0x0,  0x102, "EVENT_NPC_MAIN"
+      49- 0x000A823C ->     5,         0,    0x0,  0x102, "EVENT_NPC_SUB"
+      50- 0x000A8248 ->     5,         0,    0x0,  0x102, "RANDOM_REQUEST_NPC01"
+      51- 0x000A8254 ->     5,         0,    0x0,  0x102, "RANDOM_REQUEST_NPC02"
+      52- 0x000A8260 ->     5,         0,    0x0,  0x102, "RANDOM_REQUEST_NPC03"
+      53- 0x000A826C ->     5,         0,    0x0,  0x102, "EVENT_NPC01"
+      54- 0x000A8278 ->     5,         0,    0x0,  0x102, "EVENT_NPC02"
+      55- 0x000A8284 ->     5,         0,    0x0,  0x102, "EVENT_NPC03"
+      56- 0x000A8290 ->     5,         0,    0x0,  0x102, "EVENT_NPC04"
+      57- 0x000A829C ->     5,         0,    0x0,  0x102, "NPC_NEW_FRIEND"
+      58- 0x000A82A8 ->     5,         0,    0x0,  0x102, "NPC_DEMO_HERO"
+      59- 0x000A82B4 ->     5,         0,    0x0,  0x102, "NPC_DEMO_PARTNER"
+      60- 0x000A82C0 ->     5,         0,    0x0,  0x102, "NPC_HERO"
+      61- 0x000A82CC ->     5,         0,    0x0,  0x102, "NPC_PARTNER"
+      62- 0x000A82D8 ->     5,         0,    0x0,  0x102, "NPC_PARTNER2"
+      63- 0x000A82E4 ->     5,         0,    0x0,  0x102, "NPC_APPOINT"
+      64- 0x000A82F0 ->     5,         0,    0x0,  0x102, "NPC_HERO_REAL"
+      65- 0x000A82FC ->     5,         0,    0x0,  0x102, "NPC_PARTNER_REAL"
+      66- 0x000A8308 ->     5,         0,    0x0,  0x102, "NPC_HERO_FIRST"
+      67- 0x000A8314 ->     5,         0,    0x0,  0x102, "NPC_PARTNER_FIRST"
+      68- 0x000A8320 ->     5,       184,    0x0,  0x102, "NPC_DEBUG"
+      69- 0x000A832C ->     5,       383,    0x0,  0x102, "NPC_TEST001"
+      70- 0x000A8338 ->     5,       384,    0x0,  0x102, "NPC_TEST002"
+      71- 0x000A8344 ->     5,        53,    0x0,  0x102, "NPC_TEST003"
+      72- 0x000A8350 ->     5,       115,    0x0,  0x102, "NPC_TEST004"
+      73- 0x000A835C ->     6,       299, 0x4582,  0x102, "NPC_TEST005"
+      74- 0x000A8368 ->     5,       236,    0x0,  0x102, "NPC_TEST006"
+      75- 0x000A8374 ->     5,       237,    0x0,  0x102, "NPC_TEST007"
+      76- 0x000A8380 ->     5,       324,    0x0,  0x102, "NPC_TEST008"
+      77- 0x000A838C ->     5,        81,    0x0,  0x102, "NPC_TEST009"
+      78- 0x000A8398 ->     5,       189,    0x0,  0x102, "NPC_TEST010"
+      79- 0x000A83A4 ->     5,        40,    0x0,  0x102, "NPC_PUKURIN"
+      80- 0x000A83B0 ->     5,        41,    0x0,  0x102, "NPC_ZUBATTO"
+      81- 0x000A83BC ->     5,        50,    0x0,  0x102, "NPC_DIGUDA"
+      82- 0x000A83C8 ->     5,        51,    0x0,  0x102, "NPC_DAGUTORIO"
+      83- 0x000A83D4 ->     5,        56,    0x0,  0x102, "NPC_MANKII"
+      84- 0x000A83E0 ->     5,        57,    0x0,  0x102, "NPC_OKORIZARU"
+      85- 0x000A83EC ->     5,        81,    0x0,  0x102, "NPC_KOIRU"
+      86- 0x000A83F8 ->     5,        96,    0x0,  0x102, "NPC_SURIIPU"
+      87- 0x000A8404 ->     5,        98,    0x0,  0x102, "NPC_KURABU"
+      88- 0x000A8410 ->     5,       105,    0x0,  0x102, "NPC_GARAGARA"
+      89- 0x000A841C ->     5,       109,    0x0,  0x102, "NPC_DOGAASU"
+      90- 0x000A8428 ->     5,       113,    0x0,  0x102, "NPC_RAKKII"
+      91- 0x000A8434 ->     5,       115,    0x0,  0x102, "NPC_GARUURA"
+      92- 0x000A8440 ->     5,       130,    0x0,  0x102, "NPC_GYARADOSU"
+      93- 0x000A844C ->     5,       131,    0x0,  0x102, "NPC_RAPURASU"
+      94- 0x000A8458 ->     5,       139,    0x0,  0x102, "NPC_OMUSUTAA"
+      95- 0x000A8464 ->     5,       139,    0x0,  0x102, "NPC_OMUSUTAA2"
+      96- 0x000A8470 ->     5,       141,    0x0,  0x102, "NPC_KABUTOPUSU"
+      97- 0x000A847C ->     5,       178,    0x0,  0x102, "NPC_NEITYIO"
+      98- 0x000A8488 ->     5,       781,    0x0,  0x102, "NPC_DENRYUU"
+      99- 0x000A8494 ->     5,       183,    0x0,  0x102, "NPC_MARIRU"
+     100- 0x000A84A0 ->     5,       185,    0x0,  0x102, "NPC_USOKKII"
+     101- 0x000A84AC ->     5,       792,    0x0,  0x102, "NPC_KIMAWARI"
+     102- 0x000A84B8 ->     5,       843,    0x0,  0x102, "NPC_HIMEGUMA"
+     103- 0x000A84C4 ->     5,       244,    0x0,  0x102, "NPC_RINGUMA"
+     104- 0x000A84D0 ->     5,       279,    0x0,  0x102, "NPC_SEREBII"
+     105- 0x000A84DC ->     5,       281,    0x0,  0x102, "NPC_JUPUTORU"
+     106- 0x000A84E8 ->     5,       307,    0x0,  0x102, "NPC_PERIPPAA1"
+     107- 0x000A84F4 ->     5,       907,    0x0,  0x102, "NPC_PERIPPAA2"
+     108- 0x000A8500 ->     5,       316,    0x0,  0x102, "NPC_YARUKIMONO"
+     109- 0x000A850C ->     5,       322,    0x0,  0x102, "NPC_DOGOOMU"
+     110- 0x000A8518 ->     5,       326,    0x0,  0x102, "NPC_RURIRI"
+     111- 0x000A8524 ->     5,       330,    0x0,  0x102, "NPC_YAMIRAMI"
+     112- 0x000A8530 ->     5,       936,    0x0,  0x102, "NPC_CHAAREMU"
+     113- 0x000A853C ->     5,       352,    0x0,  0x102, "NPC_KOOTASU"
+     114- 0x000A8548 ->     5,       353,    0x0,  0x102, "NPC_BANEBUU"
+     115- 0x000A8554 ->     5,       369,    0x0,  0x102, "NPC_HEIGANI"
+     116- 0x000A8560 ->     5,       383,    0x0,  0x102, "NPC_KAKUREON1"
+     117- 0x000A856C ->     5,       384,    0x0,  0x102, "NPC_KAKUREON2"
+     118- 0x000A8578 ->     5,       387,    0x0,  0x102, "NPC_YOMAWARU"
+     119- 0x000A8584 ->     5,       990,    0x0,  0x102, "NPC_CHIRIIN"
+     120- 0x000A8590 ->     5,       409,    0x0,  0x102, "NPC_REJIROKKU"
+     121- 0x000A859C ->     5,       410,    0x0,  0x102, "NPC_REJIAISU"
+     122- 0x000A85A8 ->     5,       411,    0x0,  0x102, "NPC_REJISUCHIRU"
+     123- 0x000A85B4 ->     5,       415,    0x0,  0x102, "NPC_GURAADON"
+     124- 0x000A85C0 ->     5,       434,    0x0,  0x102, "NPC_BIPPA"
+     125- 0x000A85CC ->     5,       439,    0x0,  0x102, "NPC_RUKUSHIO1"
+     126- 0x000A85D8 ->     5,      1039,    0x0,  0x102, "NPC_RUKUSHIO2"
+     127- 0x000A85E4 ->     5,       440,    0x0,  0x102, "NPC_RENTORAA"
+     128- 0x000A85F0 ->     5,      1070,    0x0,  0x102, "NPC_MIMIROPPU"
+     129- 0x000A85FC ->     5,       477,    0x0,  0x102, "NPC_SUKATANKU"
+     130- 0x000A8608 ->     5,      1081,    0x0,  0x102, "NPC_MANENE"
+     131- 0x000A8614 ->     5,       483,    0x0,  0x102, "NPC_PERAPPU"
+     132- 0x000A8620 ->     5,       484,    0x0,  0x102, "NPC_MIKARUGE"
+     133- 0x000A862C ->     5,       495,    0x0,  0x102, "NPC_GUREGGURU"
+     134- 0x000A8638 ->     5,       504,    0x0,  0x102, "NPC_JIBAKOIRU"
+     135- 0x000A8644 ->     5,       508,    0x0,  0x102, "NPC_EREKIBURU"
+     136- 0x000A8650 ->     5,       519,    0x0,  0x102, "NPC_YONOWAARU"
+     137- 0x000A865C ->     5,       522,    0x0,  0x102, "NPC_YUKUSHII"
+     138- 0x000A8668 ->     5,       523,    0x0,  0x102, "NPC_EMURITTO"
+     139- 0x000A8674 ->     5,       524,    0x0,  0x102, "NPC_AGUNOMU"
+     140- 0x000A8680 ->     5,       525,    0x0,  0x102, "NPC_DIARUGA"
+     141- 0x000A868C ->     5,       526,    0x0,  0x102, "NPC_PARUKIA"
+     142- 0x000A8698 ->     5,       528,    0x0,  0x102, "NPC_REJIGIGASU"
+     143- 0x000A86A4 ->     5,       529,    0x0,  0x102, "NPC_GIRATYINA"
+     144- 0x000A86B0 ->     5,       530,    0x0,  0x102, "NPC_KURESERIA"
+     145- 0x000A86BC ->     5,       531,    0x0,  0x102, "NPC_FIONE1"
+     146- 0x000A86C8 ->     5,       531,    0x0,  0x102, "NPC_FIONE2"
+     147- 0x000A86D4 ->     5,       531,    0x0,  0x102, "NPC_FIONE3"
+     148- 0x000A86E0 ->     5,       531,    0x0,  0x102, "NPC_FIONE4"
+     149- 0x000A86EC ->     5,       531,    0x0,  0x102, "NPC_FIONE5"
+     150- 0x000A86F8 ->     5,       531,    0x0,  0x102, "NPC_FIONE6"
+     151- 0x000A8704 ->     5,       531,    0x0,  0x102, "NPC_FIONE7"
+     152- 0x000A8710 ->     5,       531,    0x0,  0x102, "NPC_FIONE8"
+     153- 0x000A871C ->     5,       532,    0x0,  0x102, "NPC_MANAFI"
+     154- 0x000A8728 ->     5,       533,    0x0,  0x102, "NPC_DAAKURAI"
+     155- 0x000A8734 ->     5,       554,    0x0,  0x102, "OBJECT001"
+     156- 0x000A8740 ->     5,       554,    0x0,  0x102, "OBJECT002"
+     157- 0x000A874C ->     5,        81,    0x0,  0x102, "NPC_KOIRU2"
+     158- 0x000A8758 ->     5,        16,    0x0,  0x102, "NPC_POPPO"
+     159- 0x000A8764 ->     5,       301,    0x0,  0x102, "NPC_TANEBOO"
+     160- 0x000A8770 ->     5,       305,    0x0,  0x102, "NPC_OOSUBAME"
+     161- 0x000A877C ->     5,       293,    0x0,  0x102, "NPC_KEMUSSO"
+     162- 0x000A8788 ->     5,       797,    0x0,  0x102, "NPC_BURAKKII"
+     163- 0x000A8794 ->     5,       985,    0x0,  0x102, "NPC_KAGEBOUZU"
+     164- 0x000A87A0 ->     5,       798,    0x0,  0x102, "NPC_YAMIKARASU"
+     165- 0x000A87AC ->     5,       289,    0x0,  0x102, "NPC_POCHIENA_A"
+     166- 0x000A87B8 ->     5,       289,    0x0,  0x102, "NPC_POCHIENA_B"
+     167- 0x000A87C4 ->     5,       289,    0x0,  0x102, "NPC_POCHIENA_C"
+     168- 0x000A87D0 ->     5,       363,    0x0,  0x102, "NPC_ZANGUUSU"
+     169- 0x000A87DC ->     5,       123,    0x0,  0x102, "NPC_SUTORAIKU"
+     170- 0x000A87E8 ->     5,        28,    0x0,  0x102, "NPC_SANDOPAN"
+     171- 0x000A87F4 ->     5,       677,    0x0,  0x102, "NPC_PONIITA"
+     172- 0x000A8800 ->     5,       951,    0x0,  0x102, "NPC_BAKUUDA"
+     173- 0x000A880C ->     5,        69,    0x0,  0x102, "NPC_MADATSUBOMI"
+     174- 0x000A8818 ->     5,       175,    0x0,  0x102, "NPC_TOGEPII"
+     175- 0x000A8824 ->     5,       186,    0x0,  0x102, "NPC_NYOROTONO"
+     176- 0x000A8830 ->     5,       165,    0x0,  0x102, "NPC_REDIBA"
+     177- 0x000A883C ->     5,        79,    0x0,  0x102, "NPC_YADON"
+     178- 0x000A8848 ->     5,       315,    0x0,  0x102, "NPC_NAMAKERO"
+     179- 0x000A8854 ->     5,       517,    0x0,  0x102, "NPC_ERUREIDO"
+     180- 0x000A8860 ->     5,       442,    0x0,  0x102, "NPC_ROZUREIDO"
+     181- 0x000A886C ->     5,       506,    0x0,  0x102, "NPC_DOSAIDON"
+     182- 0x000A8878 ->     5,      1103,    0x0,  0x102, "NPC_MANYUURA"
+     183- 0x000A8884 ->     5,        24,    0x0,  0x102, "NPC_AABOKKU"
+     184- 0x000A8890 ->     5,       494,    0x0,  0x102, "NPC_DORAPION"
+     185- 0x000A889C ->     5,       285,    0x0,  0x102, "NPC_BASHAAMO"
+     186- 0x000A88A8 ->     5,       430,    0x0,  0x102, "NPC_ENPERUTO"
+     187- 0x000A88B4 ->     5,       241,    0x0,  0x102, "NPC_HERAKUROSU"
+     188- 0x000A88C0 ->     5,       255,    0x0,  0x102, "NPC_DERUBIRU_A"
+     189- 0x000A88CC ->     5,       255,    0x0,  0x102, "NPC_DERUBIRU_B"
+     190- 0x000A88D8 ->     5,       255,    0x0,  0x102, "NPC_DERUBIRU_C"
+     191- 0x000A88E4 ->     5,       310,    0x0,  0x102, "NPC_SAANAITO"
+     192- 0x000A88F0 ->     5,       397,    0x0,  0x102, "NPC_TODOZERUGA"
+     193- 0x000A88FC ->     5,       239,    0x0,  0x102, "NPC_HASSAMU"
+     194- 0x000A8908 ->     5,       122,    0x0,  0x102, "NPC_BARIYAADO"
+     195- 0x000A8914 ->     5,       144,    0x0,  0x102, "NPC_FURIIZAA"
+     196- 0x000A8920 ->     5,       520,    0x0,  0x102, "NPC_YUKIMENOKO"
+     197- 0x000A892C ->     5,       844,    0x0,  0x102, "NPC_RINGUMA2"
+     198- 0x000A8938 ->     5,       330,    0x0,  0x102, "NPC_YAMIRAMI2"
+     199- 0x000A8944 ->     5,       330,    0x0,  0x102, "NPC_YAMIRAMI3"
+     200- 0x000A8950 ->     5,       330,    0x0,  0x102, "NPC_YAMIRAMI4"
+     201- 0x000A895C ->     5,       330,    0x0,  0x102, "NPC_YAMIRAMI5"
+     202- 0x000A8968 ->     5,       330,    0x0,  0x102, "NPC_YAMIRAMI6"
+     203- 0x000A8974 ->     5,       439,    0x0,  0x102, "NPC_RUKUSHIO3"
+     204- 0x000A8980 ->     5,       439,    0x0,  0x102, "NPC_RUKUSHIO4"
+     205- 0x000A898C ->     5,       439,    0x0,  0x102, "NPC_RUKUSHIO5"
+     206- 0x000A8998 ->     5,      1039,    0x0,  0x102, "NPC_RUKUSHIO6"
+     207- 0x000A89A4 ->     5,      1039,    0x0,  0x102, "NPC_RUKUSHIO7"
+     208- 0x000A89B0 ->     5,      1039,    0x0,  0x102, "NPC_RUKUSHIO8"
+     209- 0x000A89BC ->     5,       527,    0x0,  0x102, "NPC_HIIDORAN"
+     210- 0x000A89C8 ->     5,       276,    0x0,  0x102, "NPC_RUGIA"
+     211- 0x000A89D4 ->     5,       151,    0x0,  0x102, "NPC_MYUU"
+     212- 0x000A89E0 ->     5,       277,    0x0,  0x102, "NPC_HOUOU"
+     213- 0x000A89EC ->     5,       559,    0x0,  0x101, "NPC_S_CHIRIIN"
+     214- 0x000A89F8 ->     5,       560,    0x0,  0x101, "NPC_S_PUKURIN"
+     215- 0x000A8A04 ->     5,       561,    0x0,  0x101, "NPC_S_YUKUSHII"
+     216- 0x000A8A10 ->     5,       562,    0x0,  0x101, "NPC_S_AGUNOMU"
+     217- 0x000A8A1C ->     5,       563,    0x0,  0x101, "NPC_S_EMURITTO"
+     218- 0x000A8A28 ->     5,       564,    0x0,  0x101, "NPC_S_KIMAWARI"
+     219- 0x000A8A34 ->     5,       565,    0x0,  0x101, "NPC_S_DIGUDA"
+     220- 0x000A8A40 ->     5,       566,    0x0,  0x101, "NPC_S_DAGUTORIO"
+     221- 0x000A8A4C ->     5,       567,    0x0,  0x101, "NPC_S_HEIGANI"
+     222- 0x000A8A58 ->     5,       568,    0x0,  0x101, "NPC_S_DOGOOMU"
+     223- 0x000A8A64 ->     5,       569,    0x0,  0x101, "NPC_S_BIPPA"
+     224- 0x000A8A70 ->     5,       570,    0x0,  0x101, "NPC_S_PERAPPU"
+     225- 0x000A8A7C ->     5,       571,    0x0,  0x101, "NPC_S_JUPUTORU"
+     226- 0x000A8A88 ->     5,       572,    0x0,  0x101, "NPC_S_YONOWAARU"
+     227- 0x000A8A94 ->     5,       573,    0x0,  0x101, "NPC_S_YAMIRAMI1"
+     228- 0x000A8AA0 ->     5,       573,    0x0,  0x101, "NPC_S_YAMIRAMI2"
+     229- 0x000A8AAC ->     5,       555,    0x0,  0x101, "NPC_DARK_PUKURIN"
+     230- 0x000A8AB8 ->     5,       556,    0x0,  0x101, "OBJ_IMAGE_REJIGIGASU"
+     231- 0x000A8AC4 ->     5,       479,    0x0,  0x101, "NPC_DOOTAKUN1"
+     232- 0x000A8AD0 ->     5,       479,    0x0,  0x101, "NPC_DOOTAKUN2"
+     233- 0x000A8ADC ->     5,       479,    0x0,  0x101, "NPC_DOOTAKUN3"
+     234- 0x000A8AE8 ->     5,       479,    0x0,  0x101, "NPC_DOOTAKUN4"
+     235- 0x000A8AF4 ->     5,       479,    0x0,  0x101, "NPC_DOOTAKUN5"
+     236- 0x000A8B00 ->     5,       479,    0x0,  0x101, "NPC_DOOTAKUN6"
+     237- 0x000A8B0C ->     5,       557,    0x0,  0x101, "OBJ_IMAGE_DOOTAKUN"
+     238- 0x000A8B18 ->     5,       557,    0x0,  0x101, "OBJ_IMAGE_DOOTAKUN2"
+     239- 0x000A8B24 ->     5,       557,    0x0,  0x101, "OBJ_IMAGE_DOOTAKUN3"
+     240- 0x000A8B30 ->     5,       557,    0x0,  0x101, "OBJ_IMAGE_DOOTAKUN4"
+     241- 0x000A8B3C ->     5,       557,    0x0,  0x101, "OBJ_IMAGE_DOOTAKUN5"
+     242- 0x000A8B48 ->     5,       557,    0x0,  0x101, "OBJ_IMAGE_DOOTAKUN6"
+     243- 0x000A8B54 ->     5,       106,    0x0,  0x101, "NPC_SAWAMURAA1"
+     244- 0x000A8B60 ->     5,       106,    0x0,  0x101, "NPC_SAWAMURAA2"
+     245- 0x000A8B6C ->     5,       106,    0x0,  0x101, "NPC_SAWAMURAA3"
+     246- 0x000A8B78 ->     5,       106,    0x0,  0x101, "NPC_SAWAMURAA4"
+     247- 0x000A8B84 ->     5,       106,    0x0,  0x101, "NPC_SAWAMURAA5"
+     248- 0x000A8B90 ->     5,       106,    0x0,  0x101, "NPC_SAWAMURAA6"
+     249- 0x000A8B9C ->     5,       558,    0x0,  0x101, "OBJ_IMAGE_SAWAMURAA"
+     250- 0x000A8BA8 ->     5,       558,    0x0,  0x101, "OBJ_IMAGE_SAWAMURAA2"
+     251- 0x000A8BB4 ->     5,       558,    0x0,  0x101, "OBJ_IMAGE_SAWAMURAA3"
+     252- 0x000A8BC0 ->     5,       558,    0x0,  0x101, "OBJ_IMAGE_SAWAMURAA4"
+     253- 0x000A8BCC ->     5,       558,    0x0,  0x101, "OBJ_IMAGE_SAWAMURAA5"
+     254- 0x000A8BD8 ->     5,       558,    0x0,  0x101, "OBJ_IMAGE_SAWAMURAA6"
+     255- 0x000A8BE4 ->     5,       552,    0x0,  0x101, "NPC_DARK_DIARUGA"
+     256- 0x000A8BF0 ->     5,       574,    0x0,  0x101, "NPC_SHADOW_DAAKURAI"
+     257- 0x000A8BFC ->     5,       530,    0x0,  0x102, "NPC_KURESERIA2"
+     258- 0x000A8C08 ->     5,       334,    0x0,  0x102, "NPC_BOSUGODORA"
+     259- 0x000A8C14 ->     5,       246,    0x0,  0x102, "NPC_MAGUKARUGO"
+     260- 0x000A8C20 ->     5,       509,    0x0,  0x102, "NPC_BUUBAAN"
+     261- 0x000A8C2C ->     5,       471,    0x0,  0x102, "NPC_MUUMAAJI"
+     262- 0x000A8C38 ->     5,       341,    0x0,  0x102, "NPC_BARUBIITO1"
+     263- 0x000A8C44 ->     5,       341,    0x0,  0x102, "NPC_BARUBIITO2"
+     264- 0x000A8C50 ->     5,       341,    0x0,  0x102, "NPC_BARUBIITO3"
+     265- 0x000A8C5C ->     5,       341,    0x0,  0x102, "NPC_BARUBIITO4"
+     266- 0x000A8C68 ->     5,       342,    0x0,  0x102, "NPC_IRUMIIZE1"
+     267- 0x000A8C74 ->     5,       342,    0x0,  0x102, "NPC_IRUMIIZE2"
+     268- 0x000A8C80 ->     5,       342,    0x0,  0x102, "NPC_IRUMIIZE3"
+     269- 0x000A8C8C ->     5,       342,    0x0,  0x102, "NPC_IRUMIIZE4"
+     270- 0x000A8C98 ->     5,       486,    0x0,  0x102, "NPC_GABAITO"
+     271- 0x000A8CA4 ->     5,       416,    0x0,  0x101, "NPC_REKKUUZA"
+     272- 0x000A8CB0 ->     5,       414,    0x0,  0x101, "NPC_KAIOOGA"
+     273- 0x000A8CBC ->     5,       417,    0x0,  0x102, "NPC_JIRAACHI"
+     274- 0x000A8CC8 ->     6,      1035, 0x4583,  0x102, "NPC_BIIDARU"
+     275- 0x000A8CD4 ->     6,       434, 0x4585,  0x102, "NPC_BIPPA_BRO"
+     276- 0x000A8CE0 ->     6,      1034, 0x4584,  0x102, "NPC_BIPPA_SIS"
+     277- 0x000A8CEC ->     5,       234,    0x0,  0x102, "NPC_GURAIGAA"
+     278- 0x000A8CF8 ->     5,       403,    0x0,  0x102, "NPC_TATSUBEI"
+     279- 0x000A8D04 ->     5,       501,    0x0,  0x203, "NPC_YUKIKABURI"
+     280- 0x000A8D10 ->     5,       515,    0x0,  0x102, "NPC_MANMUU"
+     281- 0x000A8D1C ->     5,       394,    0x0,  0x102, "NPC_ONIGOORI"
+     282- 0x000A8D28 ->     5,       394,    0x0,  0x102, "NPC_ONIGOORI2"
+     283- 0x000A8D34 ->     5,       394,    0x0,  0x102, "NPC_ONIGOORI3"
+     284- 0x000A8D40 ->     5,       394,    0x0,  0x102, "NPC_ONIGOORI4"
+     285- 0x000A8D4C ->     5,       137,    0x0,  0x102, "NPC_PORIGON"
+     286- 0x000A8D58 ->     5,       137,    0x0,  0x102, "NPC_PORIGON2"
+     287- 0x000A8D64 ->     5,       393,    0x0,  0x102, "NPC_YUKIWARASHI"
+     288- 0x000A8D70 ->     5,       393,    0x0,  0x102, "NPC_YUKIWARASHI2"
+     289- 0x000A8D7C ->     5,       393,    0x0,  0x102, "NPC_YUKIWARASHI3"
+     290- 0x000A8D88 ->     5,       393,    0x0,  0x102, "NPC_YUKIWARASHI4"
+     291- 0x000A8D94 ->     5,       386,    0x0,  0x102, "NPC_JUPETTA"
+     292- 0x000A8DA0 ->     5,       493,    0x0,  0x102, "NPC_SUKORUPI"
+     293- 0x000A8DAC ->     5,       376,    0x0,  0x203, "NPC_AAMARUDO"
+     294- 0x000A8DB8 ->     6,        40, 0x4586,  0x202, "NPC_PUKURIN_PAPA"
+     295- 0x000A8DC4 ->     6,       575, 0x4587,  0x202, "NPC_PUKURIN_MAMA"
+     296- 0x000A8DD0 ->     5,       194,    0x0,  0x102, "NPC_UPAA"
+     297- 0x000A8DDC ->     5,       265,    0x0,  0x202, "NPC_MUCHUURU"
+     298- 0x000A8DE8 ->     5,      1041,    0x0,  0x102, "NPC_SUBOMII"
+     299- 0x000A8DF4 ->     5,        34,    0x0,  0x102, "NPC_NIDOKINGU"
+     300- 0x000A8E00 ->     5,       392,    0x0,  0x102, "NPC_SOONANO"
+     301- 0x000A8E0C ->     5,       829,    0x0,  0x102, "NPC_SOONANSU"
+     302- 0x000A8E18 ->     5,       355,    0x0,  0x102, "NPC_PATCHIIRU"
+     303- 0x000A8E24 ->     5,       251,    0x0,  0x102, "NPC_OKUTAN"
+     304- 0x000A8E30 ->     5,       240,    0x0,  0x102, "NPC_TSUBOTSUBO"
+     305- 0x000A8E3C ->     5,       300,    0x0,  0x102, "NPC_RUNPAPPA"
+     306- 0x000A8E48 ->     5,       300,    0x0,  0x102, "NPC_RUNPAPPA2"
+     307- 0x000A8E54 ->     5,       300,    0x0,  0x102, "NPC_RUNPAPPA3"
+     308- 0x000A8E60 ->     5,       300,    0x0,  0x102, "NPC_RUNPAPPA4"
+     309- 0x000A8E6C ->     5,       300,    0x0,  0x102, "NPC_RUNPAPPA5"
+     310- 0x000A8E78 ->     5,       103,    0x0,  0x102, "NPC_NASSHII"
+     311- 0x000A8E84 ->     5,       534,    0x0,  0x102, "NPC_SHEIMI"
+     312- 0x000A8E90 ->     5,       534,    0x0,  0x102, "NPC_SHEIMI1"
+     313- 0x000A8E9C ->     5,       534,    0x0,  0x102, "NPC_SHEIMI2"
+     314- 0x000A8EA8 ->     5,       534,    0x0,  0x102, "NPC_SHEIMI3"
+     315- 0x000A8EB4 ->     5,       534,    0x0,  0x102, "NPC_SHEIMI4"
+     316- 0x000A8EC0 ->     5,       534,    0x0,  0x102, "NPC_SHEIMI5"
+     317- 0x000A8ECC ->     5,        67,    0x0,  0x102, "NPC_GOORIKII"
+     318- 0x000A8ED8 ->     5,       314,    0x0,  0x102, "NPC_KINOGASSA"
+     319- 0x000A8EE4 ->     5,       331,    0x0,  0x102, "NPC_KUCHIITO"
+     320- 0x000A8EF0 ->     5,       242,    0x0,  0x102, "NPC_NYUURA"
+     321- 0x000A8EFC ->     5,       129,    0x0,  0x102, "NPC_KOIKINGU"
+     322- 0x000A8F08 ->     5,       377,    0x0,  0x102, "NPC_HINBASU"
+     323- 0x000A8F14 ->     5,       468,    0x0,  0x102, "NPC_FUWARAIDO"
+     324- 0x000A8F20 ->     5,       102,    0x0,  0x102, "NPC_TAMATAMA"
+     325- 0x000A8F2C ->     5,       291,    0x0,  0x102, "NPC_JIGUZAGUMA"
+     326- 0x000A8F38 ->     5,       497,    0x0,  0x102, "NPC_MASUKIPPA"
+     327- 0x000A8F44 ->     5,       497,    0x0,  0x102, "NPC_MASUKIPPA2"
+     328- 0x000A8F50 ->     5,       497,    0x0,  0x102, "NPC_MASUKIPPA3"
+     329- 0x000A8F5C ->     5,       497,    0x0,  0x102, "NPC_MASUKIPPA4"
+     330- 0x000A8F68 ->     5,       497,    0x0,  0x102, "NPC_MASUKIPPA5"
+     331- 0x000A8F74 ->     5,       497,    0x0,  0x102, "NPC_MASUKIPPA6"
+     332- 0x000A8F80 ->     5,        88,    0x0,  0x102, "NPC_BETOBETAA"
+     333- 0x000A8F8C ->     5,        88,    0x0,  0x102, "NPC_BETOBETAA2"
+     334- 0x000A8F98 ->     5,        88,    0x0,  0x102, "NPC_BETOBETAA3"
+     335- 0x000A8FA4 ->     5,        88,    0x0,  0x102, "NPC_BETOBETAA4"
+     336- 0x000A8FB0 ->     5,        88,    0x0,  0x102, "NPC_BETOBETAA5"
+     337- 0x000A8FBC ->     5,        89,    0x0,  0x102, "NPC_BETOBETON"
+     338- 0x000A8FC8 ->     5,        89,    0x0,  0x102, "NPC_BETOBETON2"
+     339- 0x000A8FD4 ->     5,        89,    0x0,  0x102, "NPC_BETOBETON3"
+     340- 0x000A8FE0 ->     5,       252,    0x0,  0x102, "NPC_DERIBAADO"
+     341- 0x000A8FEC ->     5,       179,    0x0,  0x102, "NPC_MERIIPU"
+     342- 0x000A8FF8 ->     5,       189,    0x0,  0x102, "NPC_WATAKKO"
+     343- 0x000A9004 ->     5,       350,    0x0,  0x102, "NPC_DONMERU"
+     344- 0x000A9010 ->     5,       456,    0x0,  0x102, "NPC_PACHIRISU"
+     345- 0x000A901C ->     5,       782,    0x0,  0x102, "NPC_KIREIHANA"
+     346- 0x000A9028 ->     5,       782,    0x0,  0x102, "NPC_KIREIHANA2"
+     347- 0x000A9034 ->     5,       782,    0x0,  0x102, "NPC_KIREIHANA3"
+     348- 0x000A9040 ->     5,       782,    0x0,  0x102, "NPC_KIREIHANA4"
+     349- 0x000A904C ->     5,       333,    0x0,  0x102, "NPC_KODORA"
+     350- 0x000A9058 ->     5,       333,    0x0,  0x102, "NPC_KODORA2"
+     351- 0x000A9064 ->     5,       333,    0x0,  0x102, "NPC_KODORA3"
+     352- 0x000A9070 ->     5,       333,    0x0,  0x102, "NPC_KODORA4"
+     353- 0x000A907C ->     5,       333,    0x0,  0x102, "NPC_KODORA5"
+     354- 0x000A9088 ->     5,       333,    0x0,  0x102, "NPC_KODORA6"
+     355- 0x000A9094 ->     5,       132,    0x0,  0x102, "NPC_METAMON"
+     356- 0x000A90A0 ->     5,        75,    0x0,  0x102, "NPC_GOROON"
+     357- 0x000A90AC ->     5,       161,    0x0,  0x102, "NPC_OTACHI"
+     358- 0x000A90B8 ->     5,       256,    0x0,  0x102, "NPC_HERUGAA"
+     359- 0x000A90C4 ->     5,       360,    0x0,  0x102, "NPC_NOKUTASU"
+     360- 0x000A90D0 ->     5,       233,    0x0,  0x102, "NPC_NOKOTCHI"
+     361- 0x000A90DC ->     5,        93,    0x0,  0x102, "NPC_GOOSUTO"
+     362- 0x000A90E8 ->     5,        93,    0x0,  0x102, "NPC_GOOSUTO2"
+     363- 0x000A90F4 ->     5,        93,    0x0,  0x102, "NPC_GOOSUTO3"
+     364- 0x000A9100 ->     5,       245,    0x0,  0x102, "NPC_MAGUMAGGU"
+     365- 0x000A910C ->     5,       245,    0x0,  0x102, "NPC_MAGUMAGGU2"
+     366- 0x000A9118 ->     5,       535,    0x0,  0x102, "NPC_SHEIMI_FC"
+     367- 0x000A9124 ->     5,       338,    0x0,  0x102, "NPC_RAIBORUTO"
+     368- 0x000A9130 ->     5,       337,    0x0,  0x102, "NPC_RAKURAI"
+     369- 0x000A913C ->     5,       337,    0x0,  0x102, "NPC_RAKURAI2"
+     370- 0x000A9148 ->     5,       337,    0x0,  0x102, "NPC_RAKURAI3"
+     371- 0x000A9154 ->     5,       337,    0x0,  0x102, "NPC_RAKURAI4"
+     372- 0x000A9160 ->     5,       337,    0x0,  0x102, "NPC_RAKURAI5"
+     373- 0x000A916C ->     5,       337,    0x0,  0x102, "NPC_RAKURAI6"
+     374- 0x000A9178 ->     5,       337,    0x0,  0x102, "NPC_RAKURAI7"
+     375- 0x000A9184 ->     5,       337,    0x0,  0x102, "NPC_RAKURAI8"
+     376- 0x000A9190 ->     5,       577,    0x0,  0x203, "NPC_YONOWAARU_N8"
+     377- 0x000A919C ->     5,       578,    0x0,  0x203, "NPC_YONOWAARU_N9"
+     378- 0x000A91A8 ->     5,       579,    0x0,  0x202, "NPC_METAMON_OTACHI"
+     379- 0x000A91B4 ->     5,       580,    0x0,  0x202, "NPC_METAMON_KIREIHANA"
+     380- 0x000A91C0 ->     5,       455,    0x0,  0x102, "NPC_BIIKUIN"
+     381- 0x000A91CC ->     5,       518,    0x0,  0x102, "NPC_DAINOOZU"
+     382- 0x000A91D8 ->     5,       323,    0x0,  0x102, "NPC_BAKUONGU"
+     383- 0x000A91E4 ->     5,       372,    0x0,  0x102, "NPC_NENDOORU"
+     384- 0x000A91F0 ->     5,       511,    0x0,  0x102, "NPC_MEGAYANMA"
+     385- 0x000A91FC ->     5,       482,    0x0,  0x102, "NPC_PINPUKU"
+
+Stats:
+------------
+Type      :(0 to 6 ) Avg : 4
+	Distribution with more than one match:
+		Val:        1 :       10 times
+		Val:        2 :       12 times
+		Val:        3 :       24 times
+		Val:        5 :      334 times
+		Val:        6 :        6 times
+
+Entity ID :(0 to 1103 ) Avg : 340
+	Distribution with more than one match:
+		Val:        0 :       57 times
+		Val:       40 :        2 times
+		Val:       81 :        3 times
+		Val:       88 :        5 times
+		Val:       89 :        3 times
+		Val:       93 :        3 times
+		Val:      106 :        6 times
+		Val:      115 :        2 times
+		Val:      137 :        2 times
+		Val:      139 :        2 times
+		Val:      174 :        2 times
+		Val:      189 :        2 times
+		Val:      192 :        2 times
+		Val:      245 :        2 times
+		Val:      255 :        3 times
+		Val:      281 :        2 times
+		Val:      289 :        3 times
+		Val:      300 :        5 times
+		Val:      330 :        6 times
+		Val:      333 :        6 times
+		Val:      337 :        8 times
+		Val:      341 :        4 times
+		Val:      342 :        4 times
+		Val:      383 :        2 times
+		Val:      384 :        2 times
+		Val:      393 :        4 times
+		Val:      394 :        4 times
+		Val:      434 :        4 times
+		Val:      439 :        4 times
+		Val:      479 :        6 times
+		Val:      497 :        6 times
+		Val:      530 :        2 times
+		Val:      531 :        8 times
+		Val:      532 :        2 times
+		Val:      534 :        6 times
+		Val:      554 :        2 times
+		Val:      557 :        6 times
+		Val:      558 :        6 times
+		Val:      573 :        2 times
+		Val:      782 :        4 times
+		Val:     1039 :        4 times
+		Val:     1070 :        3 times
+
+unk3      :(0 to 17799 ) Avg : 276
+	Distribution with more than one match:
+		Val:        0 :      380 times
+
+unk4      :(0 to 515 ) Avg : 263
+	Distribution with more than one match:
+		Val:      257 :       46 times
+		Val:      258 :      330 times
+		Val:      514 :        5 times
+		Val:      515 :        4 times
+
+
+============================================================
+Event List Table
+============================================================
+
+Index     Offset       Unk1   unk2   SomeId Unk4   Symbol 
+--------------------------------------------------------------------------------------
+       0- 0x000A5490 ->     1,     0,     1,     1, "S00P01A"
+       1- 0x000A549C ->     6,     0,     2,    -1, "T00P01"
+       2- 0x000A54A8 ->     6,     0,     3,    -1, "T00P02"
+       3- 0x000A54B4 ->     6,     0,     4,    -1, "T00P03"
+       4- 0x000A54C0 ->     6,     0,     5,    -1, "T00P04A"
+       5- 0x000A54CC ->    11,     1,     6,    -1, "T00P04A2"
+       6- 0x000A54D8 ->    10,     1,     7,    -1, "D00P01"
+       7- 0x000A54E4 ->     6,   186,     8,    -1, "D00P02"
+       8- 0x000A54F0 ->     6,   186,     9,    -1, "V00P01"
+       9- 0x000A54FC ->     9,   186,    10,    -1, "V00P02"
+      10- 0x000A5508 ->     6,   196,    11,    -1, "V00P03"
+      11- 0x000A5514 ->     6,   196,    12,    -1, "D01P11A"
+      12- 0x000A5520 ->     1,     2,    13,    -1, "D01P11B"
+      13- 0x000A552C ->     6,     4,    14,    -1, "D01P41A"
+      14- 0x000A5538 ->     6,     4,    15,    -1, "D02P11A"
+      15- 0x000A5544 ->     6,     5,    16,    -1, "D02P31A"
+      16- 0x000A5550 ->     1,     5,    17,    -1, "D03P11A"
+      17- 0x000A555C ->     6,     7,    18,    -1, "D03P41A"
+      18- 0x000A5568 ->     6,     7,    19,    -1, "D04P11A"
+      19- 0x000A5574 ->     6,     7,    20,    -1, "D04P12A"
+      20- 0x000A5580 ->     6,     8,    21,    -1, "D04P31A"
+      21- 0x000A558C ->     6,     8,    22,    -1, "D05P11A"
+      22- 0x000A5598 ->     6,   197,    23,    -1, "D05P31A"
+      23- 0x000A55A4 ->     6,   198,    24,    -1, "D06P11A"
+      24- 0x000A55B0 ->     6,   199,    25,     7, "D07P11A"
+      25- 0x000A55BC ->     6,   200,    26,    -1, "D08P11A"
+      26- 0x000A55C8 ->    10,   201,    27,    -1, "D09P11A"
+      27- 0x000A55D4 ->     1,    15,    28,    -1, "D10P21A"
+      28- 0x000A55E0 ->     6,    18,    29,    -1, "D10P41A"
+      29- 0x000A55EC ->    10,   202,    30,    -1, "D11P11A"
+      30- 0x000A55F8 ->     1,    18,    31,    -1, "D12P21A"
+      31- 0x000A5604 ->     6,    21,    32,    -1, "D12P41A"
+      32- 0x000A5610 ->     6,    22,    33,    -1, "D13P11A"
+      33- 0x000A561C ->     7,    22,    34,    -1, "D14P11A"
+      34- 0x000A5628 ->    10,   203,    35,    -1, "D14P12A"
+      35- 0x000A5634 ->     1,   188,    36,    -1, "D15P21A"
+      36- 0x000A5640 ->     6,    25,    37,    -1, "D15P41A"
+      37- 0x000A564C ->     6,   204,    38,    -1, "D16P11A"
+      38- 0x000A5658 ->     6,   189,    39,    -1, "D16P31A"
+      39- 0x000A5664 ->     6,   189,    40,    -1, "D17P11A"
+      40- 0x000A5670 ->     6,   189,    41,    -1, "D17P31A"
+      41- 0x000A567C ->     6,   189,    42,    -1, "D17P32A"
+      42- 0x000A5688 ->     6,   189,    43,    -1, "D17P33A"
+      43- 0x000A5694 ->     1,   189,    44,    -1, "D17P34A"
+      44- 0x000A56A0 ->     6,   205,    45,    -1, "D17P45A"
+      45- 0x000A56AC ->     6,   206,    46,    -1, "D18P11A"
+      46- 0x000A56B8 ->     6,   207,    47,    -1, "D19P11A"
+      47- 0x000A56C4 ->    10,   208,    48,    -1, "D20P11A"
+      48- 0x000A56D0 ->     1,    30,    49,    -1, "D21P21A"
+      49- 0x000A56DC ->     6,   209,    50,    -1, "D21P41A"
+      50- 0x000A56E8 ->     6,   211,    51,    -1, "D22P11A"
+      51- 0x000A56F4 ->     6,   212,    52,    -1, "D23P11A"
+      52- 0x000A5700 ->     7,    35,    53,    -1, "D24P11A"
+      53- 0x000A570C ->     7,    35,    54,    -1, "D24P31A"
+      54- 0x000A5718 ->     6,   213,    55,    -1, "D24P31B"
+      55- 0x000A5724 ->    10,   214,    56,    -1, "D25P11A"
+      56- 0x000A5730 ->     6,    36,    57,    -1, "D26P21A"
+      57- 0x000A573C ->     1,    36,    58,    -1, "D26P31A"
+      58- 0x000A5748 ->     6,   215,    59,    -1, "D26P43A"
+      59- 0x000A5754 ->    10,   216,    60,    -1, "D27P11A"
+      60- 0x000A5760 ->     6,   190,    61,    -1, "D28P21A"
+      61- 0x000A576C ->     6,   190,    62,    -1, "D28P31A"
+      62- 0x000A5778 ->     6,   190,    63,    -1, "D28P32A"
+      63- 0x000A5784 ->     6,   190,    64,    -1, "D28P33A"
+      64- 0x000A5790 ->     6,   190,    65,    -1, "D28P33C"
+      65- 0x000A579C ->     1,   190,    66,    -1, "D28P34A"
+      66- 0x000A57A8 ->     6,   217,    67,    -1, "D28P44A"
+      67- 0x000A57B4 ->    10,   218,    68,    -1, "D29P11A"
+      68- 0x000A57C0 ->     6,    42,    69,    -1, "D30P21A"
+      69- 0x000A57CC ->     6,    42,    70,    -1, "D30P32A"
+      70- 0x000A57D8 ->     6,    42,    71,    -1, "D30P33A"
+      71- 0x000A57E4 ->     1,    42,    72,    -1, "D30P34A"
+      72- 0x000A57F0 ->     1,    42,    73,    -1, "D30P41A"
+      73- 0x000A57FC ->     6,   219,    74,    -1, "D30P42A"
+      74- 0x000A5808 ->     6,    45,    75,    -1, "D31P11A"
+      75- 0x000A5814 ->     1,    45,    76,    -1, "D31P31A"
+      76- 0x000A5820 ->    10,   220,    77,    -1, "D31P41A"
+      77- 0x000A582C ->    10,   221,    78,    -1, "D32P11A"
+      78- 0x000A5838 ->    10,   222,    79,    -1, "D32P12A"
+      79- 0x000A5844 ->     7,    55,    80,    -1, "D32P13A"
+      80- 0x000A5850 ->    10,    55,    81,    -1, "D32P14A"
+      81- 0x000A585C ->    10,    55,    82,    -1, "D32P31A"
+      82- 0x000A5868 ->    10,    55,    83,    -1, "D32P32A"
+      83- 0x000A5874 ->    11,    55,    84,    -1, "D32P33A"
+      84- 0x000A5880 ->    11,    55,    85,    -1, "D32P41A"
+      85- 0x000A588C ->    11,    55,    86,    -1, "D32P42A"
+      86- 0x000A5898 ->     1,    55,    87,    -1, "D32P43A"
+      87- 0x000A58A4 ->    11,    71,    88,    -1, "D32P44A"
+      88- 0x000A58B0 ->    10,    51,    89,    -1, "D33P41A"
+      89- 0x000A58BC ->    10,   223,    90,    -1, "D34P41A"
+      90- 0x000A58C8 ->    11,    52,    91,    -1, "D35P21A"
+      91- 0x000A58D4 ->     1,    63,    92,    -1, "D35P41A"
+      92- 0x000A58E0 ->     6,    63,    93,    -1, "D36P11A"
+      93- 0x000A58EC ->    10,    64,    94,    -1, "D36P41A"
+      94- 0x000A58F8 ->    10,    64,    95,    -1, "D37P11A"
+      95- 0x000A5904 ->    10,    65,    96,    -1, "D37P41A"
+      96- 0x000A5910 ->    10,   224,    97,    -1, "D38P11A"
+      97- 0x000A591C ->    10,   225,    98,    -1, "D38P12A"
+      98- 0x000A5928 ->    10,    65,    99,    -1, "D39P21A"
+      99- 0x000A5934 ->    11,    65,   100,    -1, "D39P32A"
+     100- 0x000A5940 ->     6,    68,   101,    -1, "D39P41A"
+     101- 0x000A594C ->    10,   226,   102,    -1, "D40P11A"
+     102- 0x000A5958 ->     1,    68,   103,    -1, "D41P21A"
+     103- 0x000A5964 ->    10,   227,   104,    -1, "D41P41A"
+     104- 0x000A5970 ->     6,   228,   105,    -1, "D42P21A"
+     105- 0x000A597C ->     1,   229,   106,    -1, "D42P31A"
+     106- 0x000A5988 ->     1,   230,   107,    -1, "D42P41A"
+     107- 0x000A5994 ->     7,   124,   108,    -1, "D42P42A"
+     108- 0x000A59A0 ->     6,   124,   109,    -1, "D43P31A"
+     109- 0x000A59AC ->    10,   231,   110,    -1, "D44P31A"
+     110- 0x000A59B8 ->     6,   131,   111,    -1, "D45P21A"
+     111- 0x000A59C4 ->     1,   232,   112,    -1, "D45P31A"
+     112- 0x000A59D0 ->     6,   233,   113,    -1, "D45P42A"
+     113- 0x000A59DC ->    10,   234,   114,    -1, "D46P11A"
+     114- 0x000A59E8 ->     1,   235,   115,    -1, "D46P21A"
+     115- 0x000A59F4 ->     1,   236,   116,    -1, "D46P31A"
+     116- 0x000A5A00 ->     6,   237,   117,    -1, "D46P41A"
+     117- 0x000A5A0C ->     6,   238,   118,    -1, "D47P11A"
+     118- 0x000A5A18 ->    10,   239,   119,    -1, "D48P11A"
+     119- 0x000A5A24 ->     1,   240,   120,    -1, "D48P21A"
+     120- 0x000A5A30 ->     6,   241,   121,    -1, "D49P41A"
+     121- 0x000A5A3C ->     6,   242,   122,    -1, "D50P11A"
+     122- 0x000A5A48 ->    10,   243,   123,    -1, "D51P11A"
+     123- 0x000A5A54 ->     1,   244,   124,    -1, "D51P21A"
+     124- 0x000A5A60 ->     6,   245,   125,    -1, "D51P41A"
+     125- 0x000A5A6C ->     6,   245,   126,    -1, "D52P11A"
+     126- 0x000A5A78 ->     6,   246,   127,    -1, "D52P11C"
+     127- 0x000A5A84 ->     7,   247,   128,    -1, "D52P31A"
+     128- 0x000A5A90 ->     6,   248,   129,    -1, "D52P32A"
+     129- 0x000A5A9C ->     6,   248,   130,    -1, "D53P11A"
+     130- 0x000A5AA8 ->    10,   249,   131,    -1, "D53P11B"
+     131- 0x000A5AB4 ->     1,   250,   132,    -1, "D53P21A"
+     132- 0x000A5AC0 ->     1,   250,   133,    -1, "D53P41A"
+     133- 0x000A5ACC ->     1,   250,   134,    -1, "D53P41B"
+     134- 0x000A5AD8 ->     6,   251,   135,    -1, "D53P41C"
+     135- 0x000A5AE4 ->     6,   150,   136,    -1, "D54P11A"
+     136- 0x000A5AF0 ->     6,   150,   137,    -1, "D54P31A"
+     137- 0x000A5AFC ->     6,   252,   138,    -1, "D54P32A"
+     138- 0x000A5B08 ->    10,   253,   139,    -1, "D55P11A"
+     139- 0x000A5B14 ->     1,   254,   140,    -1, "D55P21A"
+     140- 0x000A5B20 ->     6,   255,   141,    -1, "D55P41A"
+     141- 0x000A5B2C ->     6,   156,   142,    -1, "D56P11A"
+     142- 0x000A5B38 ->    10,   256,   143,    -1, "D56P12A"
+     143- 0x000A5B44 ->     1,   257,   144,    -1, "D56P21A"
+     144- 0x000A5B50 ->    10,   258,   145,    -1, "D56P41A"
+     145- 0x000A5B5C ->     1,   259,   146,    -1, "D57P21A"
+     146- 0x000A5B68 ->     1,   260,   147,    -1, "D57P41A"
+     147- 0x000A5B74 ->     1,   261,   148,    -1, "D57P42A"
+     148- 0x000A5B80 ->     1,   262,   149,    -1, "D57P43A"
+     149- 0x000A5B8C ->    10,   104,   150,    -1, "D57P44A"
+     150- 0x000A5B98 ->    10,   108,   151,    -1, "D58P41A"
+     151- 0x000A5BA4 ->    10,   109,   152,    -1, "D59P41A"
+     152- 0x000A5BB0 ->    10,   110,   153,    -1, "D60P41A"
+     153- 0x000A5BBC ->    10,   111,   154,    -1, "D61P41A"
+     154- 0x000A5BC8 ->    10,   105,   155,    -1, "D62P41A"
+     155- 0x000A5BD4 ->     6,   263,   156,    -1, "D63P41A"
+     156- 0x000A5BE0 ->    10,   264,   157,    -1, "D73P11A"
+     157- 0x000A5BEC ->    10,   265,   158,    -1, "D73P21A"
+     158- 0x000A5BF8 ->    10,   266,   159,    -1, "D73P22A"
+     159- 0x000A5C04 ->    10,   267,   160,    -1, "D73P23A"
+     160- 0x000A5C10 ->    10,   268,   161,    -1, "D73P24A"
+     161- 0x000A5C1C ->    10,   269,   162,    -1, "D73P25A"
+     162- 0x000A5C28 ->    10,   270,   163,    -1, "D73P26A"
+     163- 0x000A5C34 ->     6,   271,   164,    -1, "D73P27A"
+     164- 0x000A5C40 ->    10,   272,   165,    -1, "D73P28A"
+     165- 0x000A5C4C ->     6,   273,   166,    -1, "D73P29A"
+     166- 0x000A5C58 ->     1,   274,   167,    -1, "D73P31A"
+     167- 0x000A5C64 ->    11,    81,   168,    -1, "D73P41A"
+     168- 0x000A5C70 ->    11,    77,   169,    -1, "D65P41A"
+     169- 0x000A5C7C ->    11,    79,   170,    -1, "D66P41A"
+     170- 0x000A5C88 ->    11,    75,   171,    -1, "D67P41A"
+     171- 0x000A5C94 ->    11,    83,   172,    -1, "D68P41A"
+     172- 0x000A5CA0 ->    11,    87,   173,    -1, "D69P41A"
+     173- 0x000A5CAC ->    11,    85,   174,    -1, "D70P41A"
+     174- 0x000A5CB8 ->    11,    73,   175,    -1, "D71P41A"
+     175- 0x000A5CC4 ->     6,   275,   176,    -1, "D72P41A"
+     176- 0x000A5CD0 ->    10,   276,   177,    -1, "D79P11A"
+     177- 0x000A5CDC ->    11,    48,   178,    -1, "D79P21A"
+     178- 0x000A5CE8 ->    11,    92,   179,    -1, "D79P41A"
+     179- 0x000A5CF4 ->    10,    94,   180,    -1, "D80P41A"
+     180- 0x000A5D00 ->    10,    95,   181,    -1, "D81P41A"
+     181- 0x000A5D0C ->    10,    96,   182,    -1, "D82P41A"
+     182- 0x000A5D18 ->    10,    97,   183,    -1, "D83P41A"
+     183- 0x000A5D24 ->    10,    98,   184,    -1, "D84P41A"
+     184- 0x000A5D30 ->    10,    99,   185,    -1, "D85P41A"
+     185- 0x000A5D3C ->    10,   100,   186,    -1, "D86P41A"
+     186- 0x000A5D48 ->    10,   101,   187,    -1, "D87P41A"
+     187- 0x000A5D54 ->    10,   102,   188,    -1, "D88P41A"
+     188- 0x000A5D60 ->    10,   103,   189,    -1, "D89P41A"
+     189- 0x000A5D6C ->    10,    88,   190,    -1, "D90P41A"
+     190- 0x000A5D78 ->    10,    89,   191,    -1, "D91P41A"
+     191- 0x000A5D84 ->    10,    90,   192,    -1, "D92P41A"
+     192- 0x000A5D90 ->    10,    91,   193,    -1, "D93P41A"
+     193- 0x000A5D9C ->    10,    92,   194,    -1, "D94P41A"
+     194- 0x000A5DA8 ->     6,   277,   195,    -1, "D95P41A"
+     195- 0x000A5DB4 ->     6,   277,   196,    -1, "G01P01A"
+     196- 0x000A5DC0 ->     6,   277,   197,    -1, "G01P01A2"
+     197- 0x000A5DCC ->     6,   277,   198,    -1, "G01P01B"
+     198- 0x000A5DD8 ->     6,   277,   199,    -1, "G01P01B2"
+     199- 0x000A5DE4 ->     6,   277,   200,    -1, "G01P01C"
+     200- 0x000A5DF0 ->     6,   278,   201,    -1, "G01P01C2"
+     201- 0x000A5DFC ->     6,   279,   202,    -1, "G01P02A"
+     202- 0x000A5E08 ->     6,   280,   203,    -1, "G01P03A"
+     203- 0x000A5E14 ->     6,   280,   204,    -1, "G01P04A"
+     204- 0x000A5E20 ->     6,   280,   205,    -1, "G01P04A2"
+     205- 0x000A5E2C ->     6,   280,   206,    -1, "G01P04C"
+     206- 0x000A5E38 ->     6,   281,   207,    -1, "G01P04C2"
+     207- 0x000A5E44 ->     6,   281,   208,    -1, "G01P05A"
+     208- 0x000A5E50 ->     6,   282,   209,    -1, "G01P05C"
+     209- 0x000A5E5C ->     6,   282,   210,    -1, "G01P06A"
+     210- 0x000A5E68 ->     2,   283,   211,    -1, "G01P06B"
+     211- 0x000A5E74 ->     2,   283,   212,    -1, "G01P07A"
+     212- 0x000A5E80 ->     2,   284,   213,    -1, "G01P07C"
+     213- 0x000A5E8C ->     2,   285,   214,    -1, "G01P08A"
+     214- 0x000A5E98 ->     2,   285,   215,    -1, "G01P09A"
+     215- 0x000A5EA4 ->     2,   286,   216,    -1, "G01P09C"
+     216- 0x000A5EB0 ->     2,   286,   217,    -1, "G01P10A"
+     217- 0x000A5EBC ->     6,   287,   218,    -1, "G01P10C"
+     218- 0x000A5EC8 ->     6,   287,   219,    -1, "H01P99A"
+     219- 0x000A5ED4 ->     6,   287,   220,    -1, "H01P99C"
+     220- 0x000A5EE0 ->     6,   287,   221,    -1, "H01P99D"
+     221- 0x000A5EEC ->     6,   288,   222,    -1, "H01P99E"
+     222- 0x000A5EF8 ->     6,   289,   223,    -1, "H02P99A"
+     223- 0x000A5F04 ->     6,   290,   224,    -1, "H02P99C"
+     224- 0x000A5F10 ->     6,   291,   225,    -1, "P01P01A"
+     225- 0x000A5F1C ->     6,   292,   226,    -1, "P01P02A"
+     226- 0x000A5F28 ->     6,   293,   227,    -1, "P01P03A"
+     227- 0x000A5F34 ->     6,   294,   228,    -1, "P01P04A"
+     228- 0x000A5F40 ->     7,   183,   229,     7, "P02P01A"
+     229- 0x000A5F4C ->     7,   183,   230,    -1, "P03P01A"
+     230- 0x000A5F58 ->     6,   183,   231,    -1, "P03P02A"
+     231- 0x000A5F64 ->     9,   183,   232,    -1, "P04P01C"
+     232- 0x000A5F70 ->     6,   295,   233,    -1, "P05P01A"
+     233- 0x000A5F7C ->     6,   295,   234,    -1, "P05P02A"
+     234- 0x000A5F88 ->     6,   183,   235,    -1, "P05P02A2"
+     235- 0x000A5F94 ->     6,   183,   236,    -1, "P05P03A"
+     236- 0x000A5FA0 ->     6,   183,   237,    -1, "P05P04A"
+     237- 0x000A5FAC ->     6,   183,   238,    -1, "P06P01A"
+     238- 0x000A5FB8 ->     6,   183,   239,    -1, "P07P01A"
+     239- 0x000A5FC4 ->     6,   183,   240,    -1, "P08P01A"
+     240- 0x000A5FD0 ->     6,   183,   241,    -1, "P09P01A"
+     241- 0x000A5FDC ->     6,   183,   242,    -1, "P10P01A"
+     242- 0x000A5FE8 ->     9,   183,   243,    -1, "P11P01A"
+     243- 0x000A5FF4 ->     6,   183,   244,    -1, "P12P01A"
+     244- 0x000A6000 ->     6,   183,   245,    -1, "P12P02A"
+     245- 0x000A600C ->     6,   183,   246,    -1, "P13P01A"
+     246- 0x000A6018 ->     6,   183,   247,    -1, "P14P01A"
+     247- 0x000A6024 ->     6,   183,   248,    -1, "P14P01A2"
+     248- 0x000A6030 ->     6,   296,   249,    -1, "P15P01A"
+     249- 0x000A603C ->     6,   297,   250,    -1, "P16P01A"
+     250- 0x000A6048 ->     6,   298,   251,    -1, "P17P01A"
+     251- 0x000A6054 ->     6,   298,   252,    -1, "P17P02A"
+     252- 0x000A6060 ->     6,   183,   253,    -1, "P17P02C"
+     253- 0x000A606C ->     7,   299,   254,    -1, "P18P01A"
+     254- 0x000A6078 ->     6,   300,   255,    -1, "P19P01A"
+     255- 0x000A6084 ->     6,   195,   256,    -1, "P19P02A"
+     256- 0x000A6090 ->     6,   195,   257,    -1, "P20P01A"
+     257- 0x000A609C ->     6,   195,   258,    -1, "P20P02A"
+     258- 0x000A60A8 ->     6,   183,   259,    -1, "P20P03A"
+     259- 0x000A60B4 ->     6,   183,   260,    -1, "P21P02A"
+     260- 0x000A60C0 ->     6,   183,   261,    -1, "P22P01A"
+     261- 0x000A60CC ->     6,   183,   262,    -1, "P23P01A"
+     262- 0x000A60D8 ->     6,   183,   263,    -1, "P23P02A"
+     263- 0x000A60E4 ->     6,   183,   264,    -1, "P24P01A"
+     264- 0x000A60F0 ->     6,   183,   265,    -1, "P25P01A"
+     265- 0x000A60FC ->     6,   183,   266,    -1, "P26P01A"
+     266- 0x000A6108 ->     6,   183,   267,    -1, "P27P01A"
+     267- 0x000A6114 ->     9,   185,   268,    -1, "P28P01A"
+     268- 0x000A6120 ->     4,   185,   269,    -1, "S01P01A"
+     269- 0x000A612C ->     6,   301,   270,    -1, "S01P01B"
+     270- 0x000A6138 ->     6,   302,   271,    -1, "S01P02A"
+     271- 0x000A6144 ->     6,   185,   272,    -1, "S01P03A"
+     272- 0x000A6150 ->     6,   185,   273,    -1, "S01P04A"
+     273- 0x000A615C ->     4,   185,   274,    -1, "S02P01A"
+     274- 0x000A6168 ->     4,   185,   276,    -1, "S03P01A"
+     275- 0x000A6174 ->     4,   185,   277,    -1, "S04P01A"
+     276- 0x000A6180 ->     9,   185,   278,    -1, "S05P01A"
+     277- 0x000A618C ->     4,   185,   279,    -1, "S05P02C"
+     278- 0x000A6198 ->     4,   185,   280,    -1, "S05P03A"
+     279- 0x000A61A4 ->     4,   185,   281,    -1, "S05P04A"
+     280- 0x000A61B0 ->     4,   185,   282,    -1, "S06P01A"
+     281- 0x000A61BC ->     4,   185,   283,    -1, "S07P01A"
+     282- 0x000A61C8 ->     4,   185,   284,    -1, "S07P02A"
+     283- 0x000A61D4 ->     4,   185,   285,    -1, "S08P01A"
+     284- 0x000A61E0 ->     9,   185,   286,    -1, "S11P01A"
+     285- 0x000A61EC ->     9,   185,   287,    -1, "S11P02C"
+     286- 0x000A61F8 ->     9,   185,   288,    -1, "S13P01A"
+     287- 0x000A6204 ->     9,   185,   289,    -1, "S13P01B"
+     288- 0x000A6210 ->     9,   185,   290,    -1, "S13P02A"
+     289- 0x000A621C ->     9,   185,   291,    -1, "S13P03A"
+     290- 0x000A6228 ->     9,   185,   292,    -1, "S13P04A"
+     291- 0x000A6234 ->     9,   185,   293,    -1, "S13P04B"
+     292- 0x000A6240 ->     9,   185,   294,    -1, "S13P05A"
+     293- 0x000A624C ->     9,   185,   295,    -1, "S13P06A"
+     294- 0x000A6258 ->     4,   185,   296,    -1, "S13P07A"
+     295- 0x000A6264 ->     9,   185,   297,    -1, "S13P08A"
+     296- 0x000A6270 ->     4,   185,   298,    -1, "S13P09A"
+     297- 0x000A627C ->     9,   185,   299,    -1, "S14P01A"
+     298- 0x000A6288 ->     9,   185,   300,    -1, "S15P01A"
+     299- 0x000A6294 ->     9,   185,   301,    -1, "S15P02A"
+     300- 0x000A62A0 ->     9,   185,   302,    -1, "S15P03A"
+     301- 0x000A62AC ->     4,   185,   303,    -1, "S15P04A"
+     302- 0x000A62B8 ->     4,   185,   304,    -1, "S15P05A"
+     303- 0x000A62C4 ->     9,   185,   305,    -1, "S15P05B"
+     304- 0x000A62D0 ->     1,   185,   306,    -1, "S17P01A"
+     305- 0x000A62DC ->     4,   185,   307,    -1, "S17P02A"
+     306- 0x000A62E8 ->     4,   185,   308,    -1, "S20P01A"
+     307- 0x000A62F4 ->     4,   185,   309,    -1, "S21P01A"
+     308- 0x000A6300 ->     4,   185,   310,    -1, "S99P01A"
+     309- 0x000A630C ->     9,   185,   311,    -1, "S99P02A"
+     310- 0x000A6318 ->     6,   303,   312,     3, "S99P03A"
+     311- 0x000A6324 ->     6,   304,   313,     3, "T01P01A"
+     312- 0x000A6330 ->     6,   305,   314,    -1, "T01P02A"
+     313- 0x000A633C ->     6,   305,   315,    -1, "T01P03A"
+     314- 0x000A6348 ->     6,   306,   316,    -1, "T01P03A2"
+     315- 0x000A6354 ->     6,   186,   317,    -1, "T01P04A"
+     316- 0x000A6360 ->     4,   186,   318,    -1, "V01P01A"
+     317- 0x000A636C ->     6,   186,   319,    -1, "V01P02A"
+     318- 0x000A6378 ->     6,   186,   320,    -1, "V01P03A"
+     319- 0x000A6384 ->     6,   186,   321,    -1, "V01P03B"
+     320- 0x000A6390 ->     6,   186,   322,    -1, "V01P03C"
+     321- 0x000A639C ->     6,   186,   323,    -1, "V01P04B"
+     322- 0x000A63A8 ->     9,   186,   324,    -1, "V01P05B"
+     323- 0x000A63B4 ->     7,   186,   325,    -1, "V01P06B"
+     324- 0x000A63C0 ->     9,   186,   326,    -1, "V01P07B"
+     325- 0x000A63CC ->     9,   186,   327,    -1, "V01P08B"
+     326- 0x000A63D8 ->     9,   186,   328,    -1, "V02P01A"
+     327- 0x000A63E4 ->     6,   186,   329,    -1, "V02P02A"
+     328- 0x000A63F0 ->     6,   186,   330,    -1, "V02P03A"
+     329- 0x000A63FC ->     9,   186,   331,    -1, "V02P06A"
+     330- 0x000A6408 ->     9,   186,   332,    -1, "V02P07A"
+     331- 0x000A6414 ->     9,   186,   333,    -1, "V02P08A"
+     332- 0x000A6420 ->     9,   186,   334,    -1, "V03P01A"
+     333- 0x000A642C ->     6,   186,   335,    -1, "V03P02A"
+     334- 0x000A6438 ->     9,   186,   336,    -1, "V03P03A"
+     335- 0x000A6444 ->     1,   186,   337,    -1, "V03P04A"
+     336- 0x000A6450 ->     6,   186,   338,    -1, "V03P05C"
+     337- 0x000A645C ->     6,   186,   339,    -1, "V03P06A"
+     338- 0x000A6468 ->     6,   186,   340,    -1, "V03P06B"
+     339- 0x000A6474 ->     6,   186,   341,    -1, "V03P07A"
+     340- 0x000A6480 ->     6,   186,   342,    -1, "V03P08A"
+     341- 0x000A648C ->     6,   186,   343,    -1, "V03P09A"
+     342- 0x000A6498 ->     9,   186,   344,    -1, "V03P11A"
+     343- 0x000A64A4 ->     9,   186,   345,    -1, "V03P12A"
+     344- 0x000A64B0 ->     6,   186,   346,    -1, "V03P13A"
+     345- 0x000A64BC ->     9,   186,   347,    -1, "V04P01A"
+     346- 0x000A64C8 ->     6,   186,   348,    -1, "V04P02A"
+     347- 0x000A64D4 ->     6,   186,   349,    -1, "V04P03A"
+     348- 0x000A64E0 ->     9,   186,   350,    -1, "V05P01A"
+     349- 0x000A64EC ->     9,   186,   351,    -1, "V05P02A"
+     350- 0x000A64F8 ->     9,   186,   352,    -1, "V05P03A"
+     351- 0x000A6504 ->     6,   186,   353,    -1, "V05P05A"
+     352- 0x000A6510 ->     6,   186,   354,    -1, "V09P01A"
+     353- 0x000A651C ->     6,   186,   355,    -1, "V09P04A"
+     354- 0x000A6528 ->     9,   186,   356,    -1, "V10P01C"
+     355- 0x000A6534 ->     9,   186,   357,    -1, "V10P03C"
+     356- 0x000A6540 ->     9,   186,   358,    -1, "V12P01A"
+     357- 0x000A654C ->     6,   186,   359,    -1, "V13P01A"
+     358- 0x000A6558 ->     6,   186,   360,    -1, "V14P01A"
+     359- 0x000A6564 ->     6,   186,   361,    -1, "V14P03A"
+     360- 0x000A6570 ->     9,   186,   362,    -1, "V14P04A"
+     361- 0x000A657C ->     6,   186,   363,    -1, "V15P01A"
+     362- 0x000A6588 ->     6,   186,   364,    -1, "V15P02A"
+     363- 0x000A6594 ->     9,   186,   365,    -1, "V15P03A"
+     364- 0x000A65A0 ->     4,   186,   366,    -1, "V16P02A"
+     365- 0x000A65AC ->     9,   186,   367,    -1, "V17P01A"
+     366- 0x000A65B8 ->     6,   186,   368,    -1, "V17P02A"
+     367- 0x000A65C4 ->     9,   186,   369,    -1, "V17P03A"
+     368- 0x000A65D0 ->     4,   186,   370,    -1, "V19P01A"
+     369- 0x000A65DC ->     9,   186,   371,    -1, "V19P02A"
+     370- 0x000A65E8 ->     9,   186,   372,    -1, "V19P03A"
+     371- 0x000A65F4 ->     9,   186,   373,    -1, "V19P04A"
+     372- 0x000A6600 ->     4,   186,   374,    -1, "V19P05A"
+     373- 0x000A660C ->     6,   186,   375,    -1, "V19P06A"
+     374- 0x000A6618 ->     7,   186,   376,    -1, "V21P01A"
+     375- 0x000A6624 ->     7,   186,   377,    -1, "V21P02A"
+     376- 0x000A6630 ->     6,   186,   378,    -1, "V21P02B"
+     377- 0x000A663C ->     6,   186,   379,    -1, "V22P01A"
+     378- 0x000A6648 ->     9,   186,   380,    -1, "V22P02A"
+     379- 0x000A6654 ->     9,   186,   381,    -1, "V22P03A"
+     380- 0x000A6660 ->     6,   186,   382,    -1, "V23P01A"
+     381- 0x000A666C ->     9,   186,   383,    -1, "V23P04A"
+     382- 0x000A6678 ->     6,   186,   384,    -1, "V23P05A"
+     383- 0x000A6684 ->     6,   186,   385,    -1, "V24P01A"
+     384- 0x000A6690 ->     9,   186,   386,    -1, "V24P02A"
+     385- 0x000A669C ->     6,   186,   387,    -1, "V24P03A"
+     386- 0x000A66A8 ->     9,   186,   388,    -1, "V24P04A"
+     387- 0x000A66B4 ->     6,   186,   389,    -1, "V24P05A"
+     388- 0x000A66C0 ->     9,   186,   390,    -1, "V24P06A"
+     389- 0x000A66CC ->     9,   186,   391,    -1, "V24P07A"
+     390- 0x000A66D8 ->     9,   186,   392,    -1, "V24P08A"
+     391- 0x000A66E4 ->     9,   186,   393,    -1, "V24P09A"
+     392- 0x000A66F0 ->     9,   186,   394,    -1, "V25P01A"
+     393- 0x000A66FC ->     4,   186,   395,    -1, "V25P02A"
+     394- 0x000A6708 ->     9,   186,   396,    -1, "V25P03A"
+     395- 0x000A6714 ->     9,   186,   397,    -1, "V25P04A"
+     396- 0x000A6720 ->     6,   186,   398,    -1, "V26P01A"
+     397- 0x000A672C ->     6,   186,   399,    -1, "V26P02A"
+     398- 0x000A6738 ->     9,   186,   400,    -1, "V26P03A"
+     399- 0x000A6744 ->     9,   186,   401,    -1, "V26P04A"
+     400- 0x000A6750 ->     9,   186,   402,    -1, "V26P05A"
+     401- 0x000A675C ->     1,   186,   403,    -1, "V26P06A"
+     402- 0x000A6768 ->     6,   186,   404,    -1, "V26P07A"
+     403- 0x000A6774 ->     9,   186,   405,    -1, "V26P09A"
+     404- 0x000A6780 ->     1,   186,   406,    -1, "V26P10A"
+     405- 0x000A678C ->     6,   186,   407,    -1, "V26P11A"
+     406- 0x000A6798 ->     6,   186,   408,    -1, "V28P01A"
+     407- 0x000A67A4 ->     4,   186,   409,    -1, "V31P01A"
+     408- 0x000A67B0 ->     6,   186,   410,    -1, "V31P02A"
+     409- 0x000A67BC ->     6,   186,   411,    -1, "V32P01A"
+     410- 0x000A67C8 ->     6,   186,   412,    -1, "V33P01A"
+     411- 0x000A67D4 ->     6,   186,   413,    -1, "V34P01A"
+     412- 0x000A67E0 ->     6,   186,   414,    -1, "V37P01A"
+     413- 0x000A67EC ->     6,   186,   415,    -1, "V37P02A"
+     414- 0x000A67F8 ->     6,   186,   416,    -1, "V37P03A"
+     415- 0x000A6804 ->     6,   186,   417,    -1, "V38P01A"
+     416- 0x000A6810 ->     6,   186,   418,    -1, "V38P02A"
+     417- 0x000A681C ->     6,   186,   419,    -1, "V38P03A"
+     418- 0x000A6828 ->     6,   186,   420,    -1, "V38P04A"
+     419- 0x000A6834 ->     6,   186,   421,    -1, "V38P05A"
+     420- 0x000A6840 ->     6,   186,   422,    -1, "V38P06A"
+     421- 0x000A684C ->     6,   186,   423,    -1, "V38P06C"
+     422- 0x000A6858 ->     6,   186,   424,    -1, "V38P06D"
+     423- 0x000A6864 ->     6,   186,   425,    -1, "V38P07A"
+     424- 0x000A6870 ->     6,   186,   426,    -1, "V38P08A"
+     425- 0x000A687C ->     9,   186,   427,    -1, "V38P09A"
+     426- 0x000A6888 ->     6,   186,   428,    -1, "V38P10A"
+     427- 0x000A6894 ->     9,   186,   429,    -1, "V38P11A"
+     428- 0x000A68A0 ->     6,   186,   430,    -1, "V39P01A"
+     429- 0x000A68AC ->     6,   186,   431,    -1, "V39P02A"
+     430- 0x000A68B8 ->    95,    34,    16,    19, "V39P03A"
+
+Stats:
+------------
+unk1   :(0 to 95 ) Avg : 6
+	Distribution with more than one match:
+		Val:        1 :       37 times
+		Val:        2 :        7 times
+		Val:        4 :       25 times
+		Val:        6 :      205 times
+		Val:        7 :       12 times
+		Val:        9 :       65 times
+		Val:       10 :       62 times
+		Val:       11 :       17 times
+
+unk2   :(0 to 306 ) Avg : 179
+	Distribution with more than one match:
+		Val:        0 :        5 times
+		Val:        1 :        2 times
+		Val:        4 :        2 times
+		Val:        5 :        2 times
+		Val:        7 :        3 times
+		Val:        8 :        2 times
+		Val:       18 :        2 times
+		Val:       22 :        2 times
+		Val:       35 :        2 times
+		Val:       36 :        2 times
+		Val:       42 :        5 times
+		Val:       45 :        2 times
+		Val:       55 :        8 times
+		Val:       63 :        2 times
+		Val:       64 :        2 times
+		Val:       65 :        3 times
+		Val:       68 :        2 times
+		Val:       92 :        2 times
+		Val:      124 :        2 times
+		Val:      150 :        2 times
+		Val:      183 :       28 times
+		Val:      185 :       41 times
+		Val:      186 :      118 times
+		Val:      189 :        6 times
+		Val:      190 :        6 times
+		Val:      195 :        3 times
+		Val:      196 :        2 times
+		Val:      245 :        2 times
+		Val:      248 :        2 times
+		Val:      250 :        3 times
+		Val:      277 :        6 times
+		Val:      280 :        4 times
+		Val:      281 :        2 times
+		Val:      282 :        2 times
+		Val:      283 :        2 times
+		Val:      285 :        2 times
+		Val:      286 :        2 times
+		Val:      287 :        4 times
+		Val:      295 :        2 times
+		Val:      298 :        2 times
+		Val:      305 :        2 times
+
+SomeId :(0 to 431 ) Avg : 215
+	Distribution with more than one match:
+		Val:       16 :        2 times
+
+unk4   :(-1 to 19 ) Avg : 0
+	Distribution with more than one match:
+		Val:       -1 :      425 times
+		Val:        3 :        2 times
+		Val:        7 :        2 times
+
+
+============================================================
+Script Variables Info
+============================================================
+
+Index     Offset       Type    Unk1    Offset  Unk2    Unk3    Unk4    Symbol  
+--------------------------------------------------------------------------------------
+       0- 0x0009D870 ->     8,    0x2,    0x0,    0x0,    0x1,    0x1, "VERSION"
+       1- 0x0009D880 ->     8,    0x2,    0x4,    0x0,    0x1,    0x0, "CONDITION"
+       2- 0x0009D890 ->     3,    0x6,   0xBA,    0x0,    0x2,    0x0, "SCENARIO_SELECT"
+       3- 0x0009D8A0 ->     3,    0x6,   0xBC,    0x0,    0x2,    0x0, "SCENARIO_MAIN"
+       4- 0x0009D8B0 ->     3,    0x6,   0xBE,    0x0,    0x2,    0x0, "SCENARIO_SIDE"
+       5- 0x0009D8C0 ->     3,    0x6,   0xC0,    0x0,    0x2,    0x0, "SCENARIO_SUB1"
+       6- 0x0009D8D0 ->     3,    0x6,   0xC2,    0x0,    0x2,    0x0, "SCENARIO_SUB2"
+       7- 0x0009D8E0 ->     3,    0x6,   0xC4,    0x0,    0x2,    0x0, "SCENARIO_SUB3"
+       8- 0x0009D8F0 ->     3,    0x6,   0xC6,    0x0,    0x2,    0x0, "SCENARIO_SUB4"
+       9- 0x0009D900 ->     3,    0x6,   0xC8,    0x0,    0x2,    0x0, "SCENARIO_SUB5"
+      10- 0x0009D910 ->     3,    0x6,   0xCA,    0x0,    0x2,    0x0, "SCENARIO_SUB6"
+      11- 0x0009D920 ->     3,    0x6,   0xCC,    0x0,    0x2,    0x0, "SCENARIO_SUB7"
+      12- 0x0009D930 ->     3,    0x6,   0xCE,    0x0,    0x2,    0x0, "SCENARIO_SUB8"
+      13- 0x0009D940 ->     1,    0x6,  0x11B,    0x0,    0x3,    0x0, "SIDE02_TALK"
+      14- 0x0009D950 ->     1,    0x6,  0x11B,    0x3,    0x3,    0x0, "SIDE06_ROOM"
+      15- 0x0009D960 ->     1,    0x6,  0x11B,    0x6,    0x1,    0x0, "SIDE08_BOSS2ND"
+      16- 0x0009D970 ->     1,    0x6,  0x11B,    0x7,    0x1,    0x0, "SIDE01_BOSS2ND"
+      17- 0x0009D980 ->     1,    0x6,  0x11C,    0x0,   0x80,    0x0, "SCENARIO_MAIN_BIT_FLAG"
+      18- 0x0009D990 ->     1,    0x6,  0x12C,    0x0,  0x100,    0x0, "SCENARIO_TALK_BIT_FLAG"
+      19- 0x0009D9A0 ->     4,    0x6,   0xB0,    0x0,    0x1,    0x0, "SCENARIO_BALANCE_FLAG"
+      20- 0x0009D9B0 ->     4,    0x6,   0xB1,    0x0,    0x1,    0x0, "SCENARIO_BALANCE_DEBUG"
+      21- 0x0009D9C0 ->     3,    0x6,   0xD0,    0x0,    0x1,    0x0, "CRYSTAL_COLOR_01"
+      22- 0x0009D9D0 ->     3,    0x6,   0xD1,    0x0,    0x1,    0x0, "CRYSTAL_COLOR_02"
+      23- 0x0009D9E0 ->     3,    0x6,   0xD2,    0x0,    0x1,    0x0, "CRYSTAL_COLOR_03"
+      24- 0x0009D9F0 ->     3,    0x6,   0xD3,    0x0,    0x1,    0x0, "COMPULSORY_SAVE_POINT"
+      25- 0x0009DA00 ->     3,    0x6,   0xD4,    0x0,    0x1,    0x0, "COMPULSORY_SAVE_POINT_SIDE"
+      26- 0x0009DA10 ->     3,    0x6,   0xD5,    0x0,    0x8,    0x0, "SCENARIO_SELECT_BACKUP"
+      27- 0x0009DA20 ->     1,    0x6,  0x14C,    0x0,  0x200,    0x0, "SCENARIO_MAIN_BIT_FLAG_BACKUP"
+      28- 0x0009DA30 ->     6,    0x2,   0x30,    0x0,    0x1,    0x0, "GROUND_ENTER"
+      29- 0x0009DA40 ->     3,    0x2,   0xDD,    0x0,    0x1,    0x0, "GROUND_ENTER_LINK"
+      30- 0x0009DA50 ->     6,    0x2,   0x32,    0x0,    0x1,    0x0, "GROUND_GETOUT"
+      31- 0x0009DA60 ->     6,    0x2,   0x34,    0x0,    0x1,    0x0, "GROUND_MAP"
+      32- 0x0009DA70 ->     6,    0x2,   0x36,    0x0,    0x1,    0x0, "GROUND_PLACE"
+      33- 0x0009DA80 ->     6,    0x2,   0x38,    0x0,    0x5,    0x0, "GROUND_ENTER_BACKUP"
+      34- 0x0009DA90 ->     3,    0x2,   0xDE,    0x0,    0x5,    0x0, "GROUND_ENTER_LINK_BACKUP"
+      35- 0x0009DAA0 ->     6,    0x2,   0x42,    0x0,    0x5,    0x0, "GROUND_GETOUT_BACKUP"
+      36- 0x0009DAB0 ->     6,    0x2,   0x4C,    0x0,    0x5,    0x0, "GROUND_MAP_BACKUP"
+      37- 0x0009DAC0 ->     6,    0x2,   0x56,    0x0,    0x5,    0x0, "GROUND_PLACE_BACKUP"
+      38- 0x0009DAD0 ->     6,    0x2,   0x60,    0x0,    0x1,    0x0, "DUNGEON_SELECT"
+      39- 0x0009DAE0 ->     6,    0x2,   0x62,    0x0,    0x1,    0x0, "DUNGEON_ENTER"
+      40- 0x0009DAF0 ->     6,    0x2,   0x64,    0x0,    0x1,    0x0, "DUNGEON_ENTER_MODE"
+      41- 0x0009DB00 ->     6,    0x2,   0x66,    0x0,    0x1,    0x0, "DUNGEON_ENTER_INDEX"
+      42- 0x0009DB10 ->     5,    0x2,   0xA4,    0x0,    0x1,    0x0, "DUNGEON_ENTER_FREQUENCY"
+      43- 0x0009DB20 ->     3,    0x2,   0xE3,    0x0,    0x1,    0x0, "DUNGEON_RESULT"
+      44- 0x0009DB30 ->     3,    0x2,   0xE4,    0x0,    0x1,    0x0, "GROUND_START_MODE"
+      45- 0x0009DB40 ->     6,    0x2,   0x68,    0x0,    0x5,    0x0, "DUNGEON_ENTER_BACKUP"
+      46- 0x0009DB50 ->     6,    0x2,   0x72,    0x0,    0x5,    0x0, "DUNGEON_ENTER_MODE_BACKUP"
+      47- 0x0009DB60 ->     6,    0x2,   0x7C,    0x0,    0x5,    0x0, "DUNGEON_ENTER_INDEX_BACKUP"
+      48- 0x0009DB70 ->     5,    0x2,   0xA6,    0x0,    0x5,    0x0, "DUNGEON_ENTER_FREQUENCY_BACKUP"
+      49- 0x0009DB80 ->     3,    0x2,   0xE5,    0x0,    0x5,    0x0, "DUNGEON_RESULT_BACKUP"
+      50- 0x0009DB90 ->     3,    0x2,   0xEA,    0x0,    0x5,    0x0, "GROUND_START_MODE_BACKUP"
+      51- 0x0009DBA0 ->     3,    0x2,   0xEF,    0x0,    0x1,    0x0, "REQUEST_CLEAR_COUNT"
+      52- 0x0009DBB0 ->     3,    0x2,   0xF0,    0x0,    0x1,    0x0, "PLAYER_KIND"
+      53- 0x0009DBC0 ->     3,    0x2,   0xF1,    0x0,    0x1,    0x0, "ATTENDANT1_KIND"
+      54- 0x0009DBD0 ->     3,    0x2,   0xF2,    0x0,    0x1,    0x0, "ATTENDANT2_KIND"
+      55- 0x0009DBE0 ->     3,    0x2,   0xF3,    0x0,    0x5,    0x0, "PLAYER_KIND_BACKUP"
+      56- 0x0009DBF0 ->     3,    0x2,   0xF8,    0x0,    0x5,    0x0, "ATTENDANT1_KIND_BACKUP"
+      57- 0x0009DC00 ->     3,    0x2,   0xFD,    0x0,    0x5,    0x0, "ATTENDANT2_KIND_BACKUP"
+      58- 0x0009DC10 ->     9,    0x2,    0x0,    0x0,    0x1,    0x0, "FRIEND_SUM"
+      59- 0x0009DC20 ->     9,    0x2,    0x0,    0x0,    0x1,    0x0, "UNIT_SUM"
+      60- 0x0009DC30 ->     9,    0x2,    0x0,    0x0,    0x1,    0x0, "CARRY_GOLD"
+      61- 0x0009DC40 ->     9,    0x2,    0x0,    0x0,    0x1,    0x0, "BANK_GOLD"
+      62- 0x0009DC50 ->     6,    0x2,   0x86,    0x0,    0x1,    0x0, "HERO_FIRST_KIND"
+      63- 0x0009DC60 ->     2,    0x2,  0x107,    0x0,    0xA,    0x0, "HERO_FIRST_NAME"
+      64- 0x0009DC70 ->     6,    0x2,   0x88,    0x0,    0x1,    0x0, "PARTNER_FIRST_KIND"
+      65- 0x0009DC80 ->     2,    0x2,  0x111,    0x0,    0xA,    0x0, "PARTNER_FIRST_NAME"
+      66- 0x0009DC90 ->     4,    0x2,   0xB2,    0x0,    0x1,    0x0, "HERO_TALK_KIND"
+      67- 0x0009DCA0 ->     4,    0x2,   0xB3,    0x0,    0x1,    0x0, "PARTNER_TALK_KIND"
+      68- 0x0009DCB0 ->     6,    0x2,   0x8A,    0x0,    0x1,    0x0, "RANDOM_REQUEST_NPC03_KIND"
+      69- 0x0009DCC0 ->     4,    0x2,   0xB4,    0x0,    0x1,    0x0, "CONFIG_COLOR_KIND"
+      70- 0x0009DCD0 ->     4,    0x2,   0xB5,    0x0,    0x1,    0x0, "ROM_VARIATION"
+      71- 0x0009DCE0 ->     9,    0x2,    0x0,    0x0,    0x1,    0x0, "LANGUAGE_TYPE"
+      72- 0x0009DCF0 ->     9,    0x2,    0x0,    0x0,    0x1,    0x0, "GAME_MODE"
+      73- 0x0009DD00 ->     9,    0x2,    0x0,    0x0,    0x1,    0x0, "EXECUTE_SPECIAL_EPISODE_TYPE"
+      74- 0x0009DD10 ->     4,    0x2,   0xB6,    0x0,    0x1,    0x0, "SPECIAL_EPISODE_TYPE"
+      75- 0x0009DD20 ->     1,    0x2,  0x18C,    0x0,    0x8,    0x0, "SPECIAL_EPISODE_OPEN"
+      76- 0x0009DD30 ->     1,    0x2,  0x18D,    0x0,    0x8,    0x0, "SPECIAL_EPISODE_OPEN_OLD"
+      77- 0x0009DD40 ->     1,    0x2,  0x18E,    0x0,    0x8,    0x0, "SPECIAL_EPISODE_CONQUEST"
+      78- 0x0009DD50 ->     1,    0x2,  0x18F,    0x0,   0x40,    0x0, "PERFORMANCE_PROGRESS_LIST"
+      79- 0x0009DD60 ->     1,    0x4,  0x197,    0x0,  0x100,    0x0, "DUNGEON_OPEN_LIST"
+      80- 0x0009DD70 ->     1,    0x4,  0x1B7,    0x0,  0x100,    0x0, "DUNGEON_ENTER_LIST"
+      81- 0x0009DD80 ->     1,    0x4,  0x1D7,    0x0,  0x100,    0x0, "DUNGEON_ARRIVE_LIST"
+      82- 0x0009DD90 ->     1,    0x4,  0x1F7,    0x0,  0x100,    0x0, "DUNGEON_CONQUEST_LIST"
+      83- 0x0009DDA0 ->     1,    0x4,  0x217,    0x0,  0x100,    0x0, "DUNGEON_PRESENT_LIST"
+      84- 0x0009DDB0 ->     1,    0x4,  0x237,    0x0,  0x100,    0x0, "DUNGEON_REQUEST_LIST"
+      85- 0x0009DDC0 ->     1,    0x5,  0x257,    0x0,  0x140,    0x0, "WORLD_MAP_MARK_LIST_NORMAL"
+      86- 0x0009DDD0 ->     1,    0x5,  0x27F,    0x0,  0x140,    0x0, "WORLD_MAP_MARK_LIST_SPECIAL"
+      87- 0x0009DDE0 ->     3,    0x5,  0x102,    0x0,    0x1,    0x0, "WORLD_MAP_LEVEL"
+      88- 0x0009DDF0 ->     7,    0x2,    0x8,    0x0,    0x3,    0x0, "POSITION_X"
+      89- 0x0009DE00 ->     7,    0x2,   0x14,    0x0,    0x3,    0x0, "POSITION_Y"
+      90- 0x0009DE10 ->     7,    0x2,   0x20,    0x0,    0x3,    0x0, "POSITION_HEIGHT"
+      91- 0x0009DE20 ->     4,    0x2,   0xB7,    0x0,    0x3,    0x0, "POSITION_DIRECTION"
+      92- 0x0009DE30 ->     6,    0x5,   0x8C,    0x0,    0x1,    0x0, "EVENT_LOCAL"
+      93- 0x0009DE40 ->     6,    0x4,   0x8E,    0x0,    0x1,    0x0, "DUNGEON_EVENT_LOCAL"
+      94- 0x0009DE50 ->     1,    0x5,  0x2A7,    0x0,   0x20,    0x0, "STATION_ITEM_STATIC"
+      95- 0x0009DE60 ->     1,    0x5,  0x2AB,    0x0,   0x20,    0x0, "STATION_ITEM_TEMP"
+      96- 0x0009DE70 ->     1,    0x5,  0x2AF,    0x0,   0x10,    0x0, "DELIVER_ITEM_STATIC"
+      97- 0x0009DE80 ->     1,    0x5,  0x2B1,    0x0,   0x10,    0x0, "DELIVER_ITEM_TEMP"
+      98- 0x0009DE90 ->     1,    0x6,  0x2B3,    0x0,    0x5,    0x0, "BIT_FUWARANTE_LOCAL"
+      99- 0x0009DEA0 ->     3,    0x6,  0x103,    0x0,    0x1,    0x0, "LOTTERY_RESULT"
+     100- 0x0009DEB0 ->     6,    0x2,   0x90,    0x0,    0x2,    0x0, "ITEM_BACKUP"
+     101- 0x0009DEC0 ->     6,    0x2,   0x94,    0x0,    0x2,    0x0, "ITEM_BACKUP_KUREKURE"
+     102- 0x0009DED0 ->     6,    0x2,   0x98,    0x0,    0x2,    0x0, "ITEM_BACKUP_TAKE"
+     103- 0x0009DEE0 ->     6,    0x2,   0x9C,    0x0,    0x2,    0x0, "ITEM_BACKUP_GET"
+     104- 0x0009DEF0 ->     6,    0x2,   0xA0,    0x0,    0x1,    0x0, "REQUEST_THANKS_RESULT_KIND"
+     105- 0x0009DF00 ->     6,    0x2,   0xA2,    0x0,    0x1,    0x0, "REQUEST_THANKS_RESULT_VARIATION"
+     106- 0x0009DF10 ->     1,    0x6,  0x2B3,    0x5,    0x1,    0x0, "SUB30_TREASURE_DISCOVER"
+     107- 0x0009DF20 ->     1,    0x6,  0x2B3,    0x6,    0x1,    0x0, "SUB30_SPOT_DISCOVER"
+     108- 0x0009DF30 ->     7,    0x2,   0x2C,    0x0,    0x1,    0x0, "RECYCLE_COUNT"
+     109- 0x0009DF40 ->     3,    0x2,  0x104,    0x0,    0x1,    0x0, "SUB30_SPOT_LEVEL"
+     110- 0x0009DF50 ->     3,    0x2,  0x105,    0x0,    0x1,    0x0, "TEAM_RANK_EVENT_LEVEL"
+     111- 0x0009DF60 ->     3,    0x2,  0x106,    0x0,    0x1,    0x0, "PLAY_OLD_GAME"
+     112- 0x0009DF70 ->     9,    0x2,    0x0,    0x0,    0x1,    0x0, "NOTE_MODIFY_FLAG"
+     113- 0x0009DF80 ->     1,    0x6,  0x2B3,    0x7,    0x1,    0x0, "SUB30_PROJECTP"
+     114- 0x0009DF90 ->     0,    0x0,  0x2B4,    0x0,    0x0,    0x0, "SUM"
+
+Stats:
+------------
+Type    : (0 to 9 ) Avg : 3
+	Distribution with more than one match:
+		Val:        1 :       27 times
+		Val:        2 :        2 times
+		Val:        3 :       35 times
+		Val:        4 :        8 times
+		Val:        5 :        2 times
+		Val:        6 :       26 times
+		Val:        7 :        4 times
+		Val:        8 :        2 times
+		Val:        9 :        8 times
+
+Unk1    : (0 to 6 ) Avg : 3
+	Distribution with more than one match:
+		Val:        2 :       68 times
+		Val:        4 :        7 times
+		Val:        5 :        8 times
+		Val:        6 :       31 times
+
+Offset  : (0 to 692 ) Avg : 235
+	Distribution with more than one match:
+		Val:        0 :        9 times
+		Val:      283 :        4 times
+		Val:      691 :        4 times
+
+Unk2    : (0 to 7 ) Avg : 0
+	Distribution with more than one match:
+		Val:        0 :      109 times
+		Val:        6 :        2 times
+		Val:        7 :        2 times
+
+Unk3    : (0 to 512 ) Avg : 30
+	Distribution with more than one match:
+		Val:        1 :       56 times
+		Val:        2 :       15 times
+		Val:        3 :        6 times
+		Val:        5 :       15 times
+		Val:        8 :        4 times
+		Val:       10 :        2 times
+		Val:       16 :        2 times
+		Val:       32 :        2 times
+		Val:      256 :        7 times
+		Val:      320 :        2 times
+
+Unk4    : (0 to 1 ) Avg : 0
+	Distribution with more than one match:
+		Val:        0 :      114 times
+
+
+============================================================
+Script Variables Locals Info
+============================================================
+
+Index     Offset       Type    Unk1    Offset  Unk2    Unk3    Unk4    Symbol  
+--------------------------------------------------------------------------------------
+       0- 0x0009CECC ->     6,    0x7,    0x0,    0x0,    0x1,    0x0, "LOCAL0"
+       1- 0x0009CEDC ->     6,    0x7,    0x2,    0x0,    0x1,    0x0, "LOCAL1"
+       2- 0x0009CEEC ->     6,    0x7,    0x4,    0x0,    0x1,    0x0, "LOCAL2"
+       3- 0x0009CEFC ->     6,    0x7,    0x6,    0x0,    0x1,    0x0, "LOCAL3"
+
+Stats:
+------------
+Type    : (0 to 6 ) Avg : 6
+	Distribution with more than one match:
+		Val:        6 :        4 times
+
+Unk1    : (0 to 7 ) Avg : 7
+	Distribution with more than one match:
+		Val:        7 :        4 times
+
+Offset  : (0 to 6 ) Avg : 3
+	Distribution with more than one match:
+
+Unk2    : (0 to 0 ) Avg : 0
+	Distribution with more than one match:
+		Val:        0 :        4 times
+
+Unk3    : (0 to 1 ) Avg : 1
+	Distribution with more than one match:
+		Val:        1 :        4 times
+
+Unk4    : (0 to 0 ) Avg : 0
+	Distribution with more than one match:
+		Val:        0 :        4 times
+
+

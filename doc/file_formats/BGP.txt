@@ -1,0 +1,133 @@
+==================================================
+    BGP File Format
+==================================================
+http://projectpokemon.org/wiki/Pmd2_BGP
+Thanks to EvanDixon for most of the BGP format's details.
+
+
+Contains large images made up of tiles.
+Its content is cut into 3 parts:
+ - A set of palettes.
+ - Placement data for tiles.
+ - Image tiles.
+ 
+BGP images are typically compressed into a AT4PX container.
+
+======================
+    Overview
+======================
+
+Offset      Name                    Size            Description
+----------  ----                    ----            -----------
+0x00        Header                  32              The BGP header.
+0x20        Palettes                vary            The main palettes for the BGP image.
+            TileMapping             vary            The tile placement data.
+            Tiles                   vary            The actual image tiles.
+
+
+======================
+    Header
+======================
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+0x00        palbeg                  4               uint32          A pointer to the beginning of the palette.
+0x04        pallen                  4               uint32          The length of the palettes.
+0x08        tilesptr                4               uint32          A pointer to the tile data.
+0x0C        tileslen                4               uint32          The length of the tile data.
+0x10        tmapdatptr              4               uint32          Pointer to begining of tile mapping data!
+0x14        tmapdatlen              4               uint32          Length of the tile mapping data.
+0x18        unk3                    4               uint32          Unknown. Usually 0x1.
+0x1C        unk4                    4               uint32          Unknown. Usually 0x0.
+----------  ----                    ----            ----            -----------
+Total:                              32
+
+======================
+    Palettes
+======================
+This section is made up of several smaller 16 color palettes ordered by index.
+
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+PaletteTbl                          vary            -               The table containing all the palettes.
+[
+    Palette                         64              -               A single 16 colors palette.
+    [
+        Color                       4               RGBX32          A single color from the palette.
+        [
+            red                     1               uint8           
+            green                   1               uint8
+            blue                    1               uint8
+            flagalpha               1               uint8       
+        ]
+        ...
+    ]
+    ...
+]
+
+
+======================
+  Tile Mapping Data
+======================
+Each 2 bytes entry in the list represents a tile in the resulting image.
+
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+TileMap                             vary            -               Contains tile mapping data.
+[
+    tilentry                        2               -               An entry for a single tile. See details below.               
+    ...
+]
+
+tileentry
+----------
+The tile entry is a little endian, 16 bit value made up of 4 parts.
+
+    0000 0011 1111 1111
+           |__________|
+    The tile data index.
+    The idex of the image tile to place.
+    
+    
+    0000 0100 0000 0000
+          |
+    The X axis flip byte
+    Whether the tile is flipped on the X axis or not. (1 = yes, 0 = no)
+    
+    
+    0000 1000 0000 0000
+         |
+    The Y axis flip byte
+    Whether the tile is flipped on the Y axis or not. (1 = yes, 0 = no)
+    
+    
+    1111 0000 0000 0000
+    |__|
+    The palette index.
+    The index in the Palette table of the 16 color palette to use for the 
+    tile specified in the tile data index!
+    
+
+           
+======================
+    Tile Data
+======================
+Those tiles are stitched together to make the final image, using the Tile Mapping Data.
+
+The pixel data in the tiles is usually 4 bits per pixel. And the tiles are
+usually 8x8.
+
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+TileData
+[
+    Tile
+    [
+        Pixel                       1/2             uint4           A number from 0 to 15 indicating a color index in a palette.
+        ...
+    ]
+    ...
+]

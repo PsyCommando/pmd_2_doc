@@ -1,0 +1,2314 @@
+[22811B1]?
+
+//
+//
+//
+    0x2291D88 = CurOctave (Track 5)
+
+//=================================================
+//  Event Handler Table
+//=================================================
+/*
+    Table for events codes that are higher than 0x90.
+    Just subtract 144 (0x90) from the event's code, and use
+    the result as index in the table !
+    0x20B0B90
+*/
+static const std::array<uint32_t, 240> EventHandlers
+{
+    0x02071928, 0x02071934, 0x0207194C, 0x0207195C, //Ev 0x90 - 0x93
+    0x02071978, 0x0207199C, 0x0207191C, 0x0207191C, //Ev 0x94 - 0x97
+    0x020719C8, 0x02071A14, 0x0207191C, 0x0207191C, //Ev 0x98 - 0x9B
+    0x02071A1C, 0x02071A5C, 0x02071A98, 0x0207191C, //Ev 0x9C - 0x9F
+    0x02071AC0, 0x02071ACC, 0x0207191C, 0x0207191C, //Ev 0xA0 - 0xA3
+    0x02071AE0, 0x02071B20, 0x0207191C, 0x0207191C, //Ev 0xA4 - 0xA7
+    0x02071B60, 0x02071B8C, 0x02071BBC, 0x02071BEC, //Ev 0xA8 - 0xAB
+    0x02071BF4, 0x0207191C, 0x0207191C, 0x02071C3C, //Ev 0xAC - 0xAF
+    0x02071CC8, 0x02071CE0, 0x02071D00, 0x02071D20, //Ev 0xB0 - 0xB3
+    0x02071D40, 0x02071D70, 0x02071D90, 0x0207191C, //Ev 0xB4 - 0xB7
+    0x0207191C, 0x0207191C, 0x0207191C, 0x0207191C, //Ev 0xB8 - 0xBB
+    0x02071DB0, 0x0207191C, 0x02071DBC, 0x02071DD8, //Ev 0xBC - 0xBF
+    0x02071E10, 0x0207191C, 0x0207191C, 0x02071E20, //Ev 0xC0 - 0xC3
+    0x0207191C, 0x0207191C, 0x0207191C, 0x0207191C, //Ev 0xC4 - 0xC7
+    0x0207191C, 0x0207191C, 0x0207191C, 0x02071E2C, //Ev 0xC8 - 0xCB
+    0x0207191C, 0x0207191C, 0x0207191C, 0x0207191C, //Ev 0xCC - 0xCF
+    0x02071E34, 0x02071EB4, 0x02071F3C, 0x02071FC4, //Ev 0xD0 - 0xD3
+    0x02072054, 0x02072144, 0x0207216C, 0x02072184, //Ev 0xD4 - 0xD7
+    0x020721B0, 0x0207191C, 0x0207191C, 0x020721C8, //Ev 0xD8 - 0xDB
+    0x020721D4, 0x0207222C, 0x0207191C, 0x02072254, //Ev 0xDC - 0xDF
+    0x0207227C, 0x02072310, 0x020723C0, 0x0207241C, //Ev 0xE0 - 0xE3
+    0x020724A8, 0x02072504, 0x0207191C, 0x0207252C, //Ev 0xE4 - 0xE7
+    0x02072554, 0x020725D4, 0x02072668, 0x0207191C, //Ev 0xE8 - 0xEB
+    0x020726C4, 0x02072720, 0x0207191C, 0x02072748, //Ev 0xEC - 0xEF
+    0x02072770, 0x020727C8, 0x020727FC, 0x02072938, //Ev 0xF0 - 0xF3
+    0x0207191C, 0x0207191C, 0x0207296C, 0x0207191C, //Ev 0xF4 - 0xF7
+    0x0207299C, 0x0207191C, 0x0207191C, 0x0207191C, //Ev 0xF8 - 0xFB
+    0x0207191C, 0x0207191C, 0x0207191C, 0x0207191C, //Ev 0xFC - 0xFF
+    0x02072D9C, 0x02072DDC, 0x00000000, 0x00000000, 
+    0x00000000, 0x02072DF4, 0x02072FA4, 0x02072E04, 
+    0x00000000, 0x00000000, 0x02072E90, 0x02072EE8, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x020731F4, 0x00000000, 0x00000000, 0x00000000, 
+    0x00000000, 0x020731FC, 0x02073200, 0x02073204, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x02072DBC, 0x00000000, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x02072F3C, 0x02072F64, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x02073094, 0x020730A8, 0x00000000, 0x020730BC, 
+    0x020730E4, 0x0207312C, 0x020731C4, 0x020730F8, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x02072F68, 0x020730A8, 0x020730BC, 0x020730D0, 
+    0x02073094, 0x020731DC, 0x0207311C, 0x02072F6C, 
+    0x00000000, 0x02072F70, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x02072F84, 0x02072F94, 
+    0x02072F74, 0x02072F74, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x02072F34, 0x02072FA8, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+    0x02072FAC, 0x02072FD8, 0x00000000, 0x02072FFC, 
+    0x00000000, 0x00000000, 0x0207307C, 0x02073088
+};
+
+//=================================================
+//  Data Structures in Memory
+//=================================================
+
+//mseq chunk (0x02291C70)
+0x00   magicn  4   "mseq"
+0x04   unk1    4   0x2
+0x08   unk2    4
+0x0C   unk3    4
+[  
+    
+    0x0F   totalnbtrk 1 nb of tracks to update
+
+    0x24   MDevChunkPtr 4 Pointer to the beginning of the mdev chunk, 16 bytes after the magic number
+    
+    0x34   cnt1        4 Counter incremented at a different rate than mtickscnt
+    0x38   mtickcnt    4 This is the master DSE ticks counter. Its incremented by one each times all tracks have been updated. The tick rate varies based on the BPM of the track!
+    0x3C   cnt3        4 This increased several times by cnt3incr. And after running the update loop, the mtickcnt is subtracted from the value.
+    0x40   cnt3incr    4 cnt3 is incremented by this value.
+    0x44   targetcnt3  4 cnt3 is compared against this.
+]
+tracks
+[
+    [
+    0x02   trkisplay  1 Whether the track is playing.
+    
+    0x06   
+    
+    0x0C 
+    ]
+]
+
+//mdev chunk (0x02292350)
+0x00   magicn  4   "mdev"
+0x04   unk1    4   0x2
+0x08   unk2    4
+0x0C   unk3    4
+0x10   entryA  16   The main mdev parameters ?
+[
+    0x08    somevol 1 A volume value ?
+]
+0x20   channels N/A  The entries for each channels ?
+[
+    Entry   0xC8    A channel
+    [
+        0x0C unk    1 
+    
+        0x50  unk4     1    A value seems to be 6C usually
+        0x51  unk5     1    A value seems to be 64 usually
+        
+        0xB4 ptrsmplinf 4 A pointer to a copy of the sample info
+        
+        0xC4 ptrmdeva  4 A pointer to entryA
+    ]
+    ...
+]
+
+//=================================================
+//  Track Update Loop
+//=================================================
+020713E8 E92D4FF8 push    r3-r11,r14
+020713EC E1B0A000 movs    r10,r0
+020713F0 135A0000 cmpne   r10,0h
+020713F4 08BD8FF8 popeq   r3-r11,r15
+020713F8 E1DA00D5 ldrsb   r0,[r10,5h]
+020713FC E3500001 cmp     r0,1h
+if( R0 != 1 )
+    02071400 1A0000D9 bne     207176Ch          ///GOTO LBL1
+02071404 E1DA01FA ldrsh   r0,[r10,1Ah]
+02071408 E3500000 cmp     r0,0h
+if( R0 == 0 )
+    0207140C 0A000002 beq     207141Ch          ///GOTO LBL2
+02071410 C2400001 subgt   r0,r0,1h
+02071414 C1CA01BA strgth  r0,[r10,1Ah]
+02071418 EA0000D3 b       207176Ch              ///GOTO LBL1
+///LBL2
+0207141C E59A0034 ldr     r0,[r10,34h]
+02071420 E2800001 add     r0,r0,1h
+02071424 E58A0034 str     r0,[r10,34h]
+02071428 E5DA000C ldrb    r0,[r10,0Ch]
+0207142C E3500000 cmp     r0,0h
+if( R0 == 0 )
+    02071430 0A000001 beq     207143Ch          ///GOTO LBL3
+02071434 E1A0000A mov     r0,r10
+02071438 EB0000D1 bl      2071784h              ///EXEC
+///LBL3
+0207143C E59A103C ldr     r1,[r10,3Ch]          //CurrentTimeValue?
+02071440 E59A0040 ldr     r0,[r10,40h]          //CurrentTimeValueIncrements? Always 0x75300
+02071444 E0811000 add     r1,r1,r0
+02071448 E58A103C str     r1,[r10,3Ch]
+0207144C E59A0044 ldr     r0,[r10,44h]
+02071450 E1510000 cmp     r1,r0
+if( R1 <= R0 ) 
+    02071454 DA000095 ble     20716B0h              ///GOTO LBL4
+02071458 E3A06000 mov     r6,0h
+0207145C E59F7318 ldr     r7,=4000208h              //Master interrupt ctrl
+02071460 E59FB318 ldr     r11,=82061029h
+02071464 E1A05006 mov     r5,r6
+02071468 E1A04006 mov     r4,r6
+///LBL6
+0207146C E1A0000A mov     r0,r10
+02071470 EBFFFF3A bl      2071160h                  ///EXEC
+02071474 E59A2024 ldr     r2,[r10,24h]              //MDevChunkPtr
+02071478 E5D20001 ldrb    r0,[r2,1h]
+0207147C E2821010 add     r1,r2,10h
+02071480 E3500000 cmp     r0,0h
+if( R0 == 0 )
+    02071484 0A000068 beq     207162Ch              ///GOTO LBL5
+02071488 E1D132B8 ldrh    r3,[r1,28h]
+0207148C E2400001 sub     r0,r0,1h
+02071490 E3530000 cmp     r3,0h
+02071494 0A00001C beq     207150Ch
+02071498 E2433001 sub     r3,r3,1h
+0207149C E1C132B8 strh    r3,[r1,28h]
+020714A0 E1D132B8 ldrh    r3,[r1,28h]
+020714A4 E3530000 cmp     r3,0h
+020714A8 05913024 ldreq   r3,[r1,24h]
+020714AC 0A000002 beq     20714BCh
+020714B0 E591801C ldr     r8,[r1,1Ch]
+020714B4 E5913020 ldr     r3,[r1,20h]
+020714B8 E0883003 add     r3,r8,r3
+020714BC E581301C str     r3,[r1,1Ch]
+020714C0 E1D135F4 ldrsh   r3,[r1,54h]
+020714C4 E591801C ldr     r8,[r1,1Ch]
+020714C8 E1D290F4 ldrsh   r9,[r2,4h]
+020714CC E0833848 add     r3,r3,r8,asr 10h
+020714D0 E0893003 add     r3,r9,r3
+020714D4 E1C131B6 strh    r3,[r1,16h]
+020714D8 E1D730B0 ldrh    r3,[r7]
+020714DC E1C760B0 strh    r6,[r7]
+020714E0 E59190B4 ldr     r9,[r1,0B4h]
+020714E4 E3590000 cmp     r9,0h
+020714E8 0A000005 beq     2071504h
+020714EC E1D980B6 ldrh    r8,[r9,6h]
+020714F0 E3888010 orr     r8,r8,10h
+020714F4 E1C980B6 strh    r8,[r9,6h]
+020714F8 E5999154 ldr     r9,[r9,154h]
+020714FC E3590000 cmp     r9,0h
+02071500 1AFFFFF9 bne     20714ECh
+02071504 E1D780B0 ldrh    r8,[r7]
+02071508 E1C730B0 strh    r3,[r7]
+0207150C E1D133B8 ldrh    r3,[r1,38h]
+02071510 E3530000 cmp     r3,0h
+02071514 0A000021 beq     20715A0h
+02071518 E2433001 sub     r3,r3,1h
+0207151C E1C133B8 strh    r3,[r1,38h]
+02071520 E1D133B8 ldrh    r3,[r1,38h]
+02071524 E3530000 cmp     r3,0h
+02071528 05913034 ldreq   r3,[r1,34h]
+0207152C 0A000002 beq     207153Ch
+02071530 E591802C ldr     r8,[r1,2Ch]
+02071534 E5913030 ldr     r3,[r1,30h]
+02071538 E0883003 add     r3,r8,r3
+0207153C E581302C str     r3,[r1,2Ch]
+02071540 E591802C ldr     r8,[r1,2Ch]
+02071544 E5D13050 ldrb    r3,[r1,50h]
+02071548 E1A08848 mov     r8,r8,asr 10h
+0207154C E1D290D8 ldrsb   r9,[r2,8h]
+02071550 E0030398 mul     r3,r8,r3
+02071554 E0080399 mul     r8,r9,r3
+02071558 E0C9389B smull   r3,r9,r11,r8
+0207155C E0889009 add     r9,r8,r9
+02071560 E1A03FA8 mov     r3,r8,lsr 1Fh
+02071564 E08396C9 add     r9,r3,r9,asr 0Dh
+02071568 E1C191B8 strh    r9,[r1,18h]
+0207156C E1D730B0 ldrh    r3,[r7]
+02071570 E1C750B0 strh    r5,[r7]
+02071574 E59190B4 ldr     r9,[r1,0B4h]
+02071578 E3590000 cmp     r9,0h
+0207157C 0A000005 beq     2071598h
+02071580 E1D980B6 ldrh    r8,[r9,6h]
+02071584 E3888020 orr     r8,r8,20h
+02071588 E1C980B6 strh    r8,[r9,6h]
+0207158C E5999154 ldr     r9,[r9,154h]
+02071590 E3590000 cmp     r9,0h
+02071594 1AFFFFF9 bne     2071580h
+02071598 E1D780B0 ldrh    r8,[r7]
+0207159C E1C730B0 strh    r3,[r7]
+020715A0 E1D134B8 ldrh    r3,[r1,48h]
+020715A4 E3530000 cmp     r3,0h
+020715A8 0A00001C beq     2071620h
+020715AC E2433001 sub     r3,r3,1h
+020715B0 E1C134B8 strh    r3,[r1,48h]
+020715B4 E1D134B8 ldrh    r3,[r1,48h]
+020715B8 E3530000 cmp     r3,0h
+020715BC 05913044 ldreq   r3,[r1,44h]
+020715C0 0A000002 beq     20715D0h
+020715C4 E591803C ldr     r8,[r1,3Ch]
+020715C8 E5913040 ldr     r3,[r1,40h]
+020715CC E0883003 add     r3,r8,r3
+020715D0 E581303C str     r3,[r1,3Ch]
+020715D4 E59130C4 ldr     r3,[r1,0C4h]
+020715D8 E591803C ldr     r8,[r1,3Ch]
+020715DC E1D330D7 ldrsb   r3,[r3,7h]
+020715E0 E2433040 sub     r3,r3,40h
+020715E4 E0833848 add     r3,r3,r8,asr 10h
+020715E8 E1C131BA strh    r3,[r1,1Ah]
+020715EC E1D730B0 ldrh    r3,[r7]
+020715F0 E1C740B0 strh    r4,[r7]
+020715F4 E59190B4 ldr     r9,[r1,0B4h]
+020715F8 E3590000 cmp     r9,0h
+020715FC 0A000005 beq     2071618h
+02071600 E1D980B6 ldrh    r8,[r9,6h]
+02071604 E3888040 orr     r8,r8,40h
+02071608 E1C980B6 strh    r8,[r9,6h]
+0207160C E5999154 ldr     r9,[r9,154h]
+02071610 E3590000 cmp     r9,0h
+02071614 1AFFFFF9 bne     2071600h
+02071618 E1D780B0 ldrh    r8,[r7]
+0207161C E1C730B0 strh    r3,[r7]
+02071620 E3500000 cmp     r0,0h
+02071624 E28110C8 add     r1,r1,0C8h
+02071628 1AFFFF96 bne     2071488h
+///LBL5
+0207162C E3A00000 mov     r0,0h
+02071630 E5CA000D strb    r0,[r10,0Dh]
+02071634 E5DA000F ldrb    r0,[r10,0Fh]      //R0 == TotalNbTracks
+02071638 E3A09000 mov     r9,0h
+0207163C E28A80A8 add     r8,r10,0A8h
+02071640 E3500000 cmp     r0,0h
+if( R0 <= 0 )//(signed)
+    02071644 DA00000F ble     2071688h      ///GOTO TrackParsingLoopEnd
+///TrackParsingLoopBeg
+02071648 E1D800D2 ldrsb   r0,[r8,2h]
+0207164C E3500001 cmp     r0,1h
+02071650 1A000007 bne     2071674h
+02071654 E1A0000A mov     r0,r10
+02071658 E1A01008 mov     r1,r8
+0207165C EBFFFEF0 bl      2071224h          //Update Track
+02071660 E1D800D2 ldrsb   r0,[r8,2h]
+02071664 E3500001 cmp     r0,1h
+02071668 05DA000D ldreqb  r0,[r10,0Dh]
+0207166C 02800001 addeq   r0,r0,1h
+02071670 05CA000D streqb  r0,[r10,0Dh]
+02071674 E5DA000F ldrb    r0,[r10,0Fh]      //Total nb of channels
+02071678 E2899001 add     r9,r9,1h
+0207167C E288805C add     r8,r8,5Ch
+02071680 E1590000 cmp     r9,r0
+02071684 BAFFFFEF blt     2071648h
+///TrackParsingLoopEnd
+02071688 E59A0038 ldr     r0,[r10,38h]      //Load the value of mtickscnt
+0207168C E2800001 add     r0,r0,1h          //Increment mtickscnt
+02071690 E58A0038 str     r0,[r10,38h]      //Put mtickscnt back in memory
+02071694 E59A103C ldr     r1,[r10,3Ch]      
+02071698 E59A0044 ldr     r0,[r10,44h]
+0207169C E0411000 sub     r1,r1,r0
+020716A0 E58A103C str     r1,[r10,3Ch]
+020716A4 E59A0044 ldr     r0,[r10,44h]
+020716A8 E1510000 cmp     r1,r0
+if( R1 > R0 ) //(signed)
+    020716AC CAFFFF6E bgt     207146Ch      ///GOTO LBL6
+///LBL4
+020716B0 E5DA000D ldrb    r0,[r10,0Dh]
+020716B4 E3500000 cmp     r0,0h
+020716B8 1A00000A bne     20716E8h
+020716BC E3A00000 mov     r0,0h
+020716C0 E58A0004 str     r0,[r10,4h]
+020716C4 E59A0024 ldr     r0,[r10,24h]
+020716C8 EB00073B bl      20733BCh
+020716CC E59A0028 ldr     r0,[r10,28h]
+020716D0 E59A30A0 ldr     r3,[r10,0A0h]
+020716D4 E59A409C ldr     r4,[r10,9Ch]
+020716D8 E3A01001 mov     r1,1h
+020716DC E3A02000 mov     r2,0h
+020716E0 E12FFF34 blx     r4
+020716E4 EA000020 b       207176Ch
+020716E8 E1DA10D7 ldrsb   r1,[r10,7h]
+020716EC E3510000 cmp     r1,0h
+020716F0 0A00001D beq     207176Ch
+020716F4 E59A0068 ldr     r0,[r10,68h]
+020716F8 E3500000 cmp     r0,0h
+020716FC 1A00001A bne     207176Ch
+02071700 E3510001 cmp     r1,1h
+02071704 1A00000E bne     2071744h
+02071708 E3A00000 mov     r0,0h
+0207170C E58A0004 str     r0,[r10,4h]
+02071710 E59A0024 ldr     r0,[r10,24h]
+02071714 EB000759 bl      2073480h
+02071718 E59A0028 ldr     r0,[r10,28h]
+0207171C E59A30A0 ldr     r3,[r10,0A0h]
+02071720 E59A409C ldr     r4,[r10,9Ch]
+02071724 E3A01002 mov     r1,2h
+02071728 E3A02000 mov     r2,0h
+0207172C E12FFF34 blx     r4
+02071730 E1DA00DA ldrsb   r0,[r10,0Ah]
+02071734 E3500001 cmp     r0,1h
+02071738 03A00000 moveq   r0,0h
+0207173C 05CA000D streqb  r0,[r10,0Dh]
+02071740 EA000009 b       207176Ch
+02071744 E3A01001 mov     r1,1h
+02071748 E5CA1006 strb    r1,[r10,6h]
+0207174C E59A0024 ldr     r0,[r10,24h]
+02071750 EB000755 bl      20734ACh
+02071754 E59A0028 ldr     r0,[r10,28h]
+02071758 E59A30A0 ldr     r3,[r10,0A0h]
+0207175C E59A409C ldr     r4,[r10,9Ch]
+02071760 E3A01003 mov     r1,3h
+02071764 E3A02000 mov     r2,0h
+02071768 E12FFF34 blx     r4
+///LBL1
+0207176C E59AA0A4 ldr     r10,[r10,0A4h]
+02071770 E35A0000 cmp     r10,0h
+02071774 1AFFFF1F bne     20713F8h
+02071778 E8BD8FF8 pop     r3-r11,r15
+
+//=================================================
+//  Track Events Parsing Loop
+//=================================================
+
+//--- Example Register State Before ---
+
+//For event 0xE3
+R0: 0227F39D
+R1: 02291C80 //(Within mseq)
+R2: 02291D28 //(Within mseq)
+R3: 02292370 //(Within mdev)
+R4: 02292370 //(Within mdev)
+R5: 0207241C
+R6: 02291D28 //(Within mseq)
+R7: 02291C80 //(Within mseq)
+R8: 02291D28 //(Within mseq)
+R9: 0
+R10:02291C80 //(Within mseq)
+R11:82061029
+R12:0
+R13:0229AAD8
+R14:02071660
+R15:0207127C
+
+//--- Some Context Breakpoints ---
+[02291D2A]! : See what changes [r6,2h]
+[2292388..2292389]!? : See what changes / read the 
+    Was hit at line: 0207428C
+
+//--- Some Context Variables ---
+
+//R6 - Cur Track Struct
+[r6,2h]  = bTrackIsPlaying
+[r6,4h]  = TrackOctave
+[r6,5h]  = NoteVolume
+[r6,6h]  = 
+[r6,7h]
+[r6,8h]
+[r6,0Ah]
+[r6,0Ch] = TicksToNextEvent
+[r6,10h] = LastPause
+[r6,14h] = NoteHoldDur
+[r6,1Ch] = TrackPosPtr
+[r6,20h] = loop pointer
+
+[r6,54h] = ChanStructPtr        //Ptr to the associated channel state
+
+//R4 - Cur Chan Struct
+[r4,4h]  = 
+
+[r4,1Ch] =
+
+[r4,2Ch] = //Some Volume << 16
+[r4,34h] = //Some Volume << 16
+[r4,38h] = //
+
+[R4,59h] = //Loaded at line 0x020740B0. Is a Byte.
+
+[r4,0B4h]= CurSmplInfoPtr       //Ptr to a struct containing the values from the sample's entry in the SWD's wavi chunk
+
+//
+02071224 E92D40F8 push    r3-r7,r14
+02071228 E24DD008 sub     r13,r13,8h
+0207122C E1A06001 mov     r6,r1
+02071230 E596100C ldr     r1,[r6,0Ch]       //R1 = TicksToNextEvent
+02071234 E1A07000 mov     r7,r0
+02071238 E3510000 cmp     r1,0h
+0207123C E596501C ldr     r5,[r6,1Ch]       //R5 = TrackPosPtr
+02071240 E5964054 ldr     r4,[r6,54h]       //R4 = ChanStructPtr
+if( TicksToNextEvent != 0 )
+    02071244 1A00005E bne     20713C4h      ///GOTO LBL9
+///LBL10
+02071248 E5D53000 ldrb    r3,[r5]           //Loads an event
+0207124C E2850001 add     r0,r5,1h          //Increment the track-reading pointer
+02071250 E1A05000 mov     r5,r0             
+02071254 E3530080 cmp     r3,80h
+if( Event < 0x80  )
+{
+    02071258 3A000010 bcc     20712A0h  ///GOTO LBL1
+}
+0207125C E3530090 cmp     r3,90h
+if( Event < 0x90 )
+{
+    02071260 3A000008 bcc     2071288h  ///GOTO LBL2
+}
+02071264 E59F2170 ldr     r2,=20B0B90h  //Event handler function table address
+02071268 E1A01007 mov     r1,r7
+0207126C E0822103 add     r2,r2,r3,lsl 2h
+02071270 E5125240 ldr     r5,[r2,-240h] //Get function pointer to handler for this event
+02071274 E1A02006 mov     r2,r6         
+02071278 E1A03004 mov     r3,r4
+0207127C E12FFF35 blx     r5            ///EXEC EventHandler Params( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+02071280 E1A05000 mov     r5,r0         //Update our read position with return value!
+02071284 EA000048 b       20713ACh      ///GOTO LBL3
+///LBL2
+02071288 E59F0150 ldr     r0,=20B0B7Ch   //Address of delay duration table in ticks for events 0x80 to 0x8F
+0207128C E0800003 add     r0,r0,r3
+02071290 E5500080 ldrb    r0,[r0,-80h]
+02071294 E5860010 str     r0,[r6,10h]   //Set last delay
+02071298 E586000C str     r0,[r6,0Ch]   //Set TicksToNextEvent
+0207129C EA000042 b       20713ACh      ///GOTO LBL3
+///LBL1
+020712A0 E5CD3003 strb    r3,[r13,3h]
+020712A4 E5D01000 ldrb    r1,[r0]           //Load note pitch byte (param1)
+020712A8 E5D65004 ldrb    r5,[r6,4h]        //Load TrackOctave value !
+020712AC E3A0300C mov     r3,0Ch
+020712B0 E1A02A01 mov     r2,r1,lsl 14h     //Shift note param1 20 bits to the left (pitch indicator)
+020712B4 E1A02C42 mov     r2,r2,asr 18h     //Shift it back left by 24 bits, keeping the sign bit ( Basically, same as applying this mask : 0xF0 )
+020712B8 E2022003 and     r2,r2,3h          //R2 = R2 & 3 (0011)
+020712BC E2422002 sub     r2,r2,2h          //R2 = R2 - 2
+020712C0 E1A02C02 mov     r2,r2,lsl 18h     //R2 = R2 << 24
+020712C4 E0852C42 add     r2,r5,r2,asr 18h  //R2 = R5 + ( R2 >> 24 ) (signed shift right) (Basically, if( (Param1 >> 4) & 0x1 > 0 )Then add 1 to TrackOctave! )
+020712C8 E1A02C02 mov     r2,r2,lsl 18h     //R2 = R2 << 24
+020712CC E1A05C42 mov     r5,r2,asr 18h     //R5 = R2 >> 24 (signed shift right)
+020712D0 E201200F and     r2,r1,0Fh         //R2 = Param1 & 0xF
+020712D4 E1022385 smlabb  r2,r5,r3,r2       //R2 = (R5 & 0x0000FFFF * R3 & 0x0000FFFF) + R2 (R3 is always 0xC here) => MidiNote = (TrackOctave * 12) + Param1 & 0xF
+020712D8 E5CD2002 strb    r2,[r13,2h]       //Put the note number on the stack at 0x229AADA (Track 5)
+020712DC E1A01341 mov     r1,r1,asr 6h      //R1 = Param1 >> 6 (signed shift right) (Basically keep the 2 highest bits)
+020712E0 E5C65004 strb    r5,[r6,4h]        //Overwrite TrackOctave with the newly calculated octave!
+020712E4 E21110FF ands    r1,r1,0FFh        //R1 = (Param1 >> 6) & 0xFF (Why would they do that ?)
+020712E8 E2805001 add     r5,r0,1h          //Increment track position pointer, and put it in R5
+020712EC 05963014 ldreq   r3,[r6,14h]       //If( (Param1 >> 6) == 0 ) Then load NoteHoldDur at 0x2291D98 into R3
+020712F0 0A000008 beq     2071318h      ///GOTO LBL4
+020712F4 E3510000 cmp     r1,0h             //If (Param1 >> 6) == 0
+020712F8 E3A03000 mov     r3,0h             
+020712FC 0A000004 beq     2071314h      ///GOTO LBL5
+///LBL6 - Basically a loop to append the hold duration bytes of the note
+02071300 E4D50001 ldrb    r0,[r5],1h        //Load next byte in the track, then increment the position pointer
+02071304 E2411001 sub     r1,r1,1h          //Subtract 1 from (Param1 >> 6)
+02071308 E21110FF ands    r1,r1,0FFh        //If (Param1 >> 6) != 0 then
+0207130C E0803403 add     r3,r0,r3,lsl 8h   //R3 = Param2 + (R3 << 8) 
+02071310 1AFFFFFA bne     2071300h      ///GOTO LBL6 - Loop if we still have duration bytes to append
+///LBL5
+02071314 E5863014 str     r3,[r6,14h]       //Store NoteHoldDur at 0x2291D98
+///LBL4
+02071318 E5D62005 ldrb    r2,[r6,5h]        //NoteVolume ?
+0207131C E3A01000 mov     r1,0h             
+02071320 E59F00BC ldr     r0,=2040811h
+02071324 E0020293 mul     r2,r3,r2          //R2 = NoteHoldDur * NoteVolume?
+02071328 E0830092 umull   r0,r3,r2,r0       //( R2 * 0x2040811 ) (Put the resulting 64bits integer into R0(low 32bits), and R3(high 32bits))
+0207132C E0420003 sub     r0,r2,r3          //R0 = R2 - R3
+02071330 E08330A0 add     r3,r3,r0,lsr 1h   //R3 = R3 + (R0 >> 1)
+02071334 E1A03323 mov     r3,r3,lsr 6h      //R3 = (R3 >> 6)
+02071338 E58D3004 str     r3,[r13,4h]       //
+0207133C E5CD1000 strb    r1,[r13]
+02071340 E1D600D8 ldrsb   r0,[r6,8h]
+02071344 E3500000 cmp     r0,0h
+02071348 1A000012 bne     2071398h      ///GOTO LBL7
+0207134C E5D40004 ldrb    r0,[r4,4h]
+02071350 E28D1000 add     r1,r13,0h
+02071354 E3100002 tst     r0,2h
+02071358 0A000003 beq     207136Ch      ///GOTO LBL8
+0207135C E5D62007 ldrb    r2,[r6,7h]
+02071360 E1A00004 mov     r0,r4
+02071364 EB000AA9 bl      2073E10h      ///EXEC Fun_02073E10
+02071368 EA00000A b       2071398h      ///GOTO LBL7
+///LBL8
+0207136C E1A00004 mov     r0,r4
+02071370 EB000ACA bl      2073EA0h      ///EXEC Fun_02073EA0
+02071374 E3A02000 mov     r2,0h
+02071378 E28D1000 add     r1,r13,0h
+0207137C E1A00004 mov     r0,r4
+02071380 E584201C str     r2,[r4,1Ch]
+02071384 EB000A53 bl      2073CD8h      ///EXEC Fun_02073CD8
+02071388 E1B01000 movs    r1,r0
+0207138C 0A000001 beq     2071398h      ///GOTO LBL7
+02071390 E1A00004 mov     r0,r4
+02071394 EB000AD0 bl      2073EDCh      ///EXEC Fun_02073EDC
+///LBL7
+02071398 E5DD0002 ldrb    r0,[r13,2h]
+0207139C E5C60007 strb    r0,[r6,7h]
+020713A0 E5D40004 ldrb    r0,[r4,4h]
+020713A4 E3C00002 bic     r0,r0,2h
+020713A8 E5C40004 strb    r0,[r4,4h]
+///LBL3
+020713AC E1D600D2 ldrsb   r0,[r6,2h]    //Load signed byte from 0x2291D86 (0x2291D84 + 2)
+020713B0 E3500000 cmp     r0,0h
+if( R0 == 0 )
+    020713B4 0A000002 beq     20713C4h      ///GOTO LBL9
+020713B8 E596000C ldr     r0,[r6,0Ch]       //R0 = TicksToNextEvent
+020713BC E3500000 cmp     r0,0h
+if( TicksToNextEvent == 0 )
+    020713C0 0AFFFFA0 beq     2071248h      ///GOTO LBL10 (Goes back to start of event parsing loop)
+///LBL9
+020713C4 E596000C ldr     r0,[r6,0Ch]       //R0 = TicksToNextEvent
+020713C8 E2400001 sub     r0,r0,1h          //R0 = TicksToNextEvent - 1
+020713CC E586000C str     r0,[r6,0Ch]       //Write new TicksToNextEvent back to memory
+020713D0 E586501C str     r5,[r6,1Ch]
+020713D4 E28DD008 add     r13,r13,8h
+020713D8 E8BD80F8 pop     r3-r7,r15
+
+
+
+//====================================================
+//  Event-Specific Handling Functions
+//====================================================
+
+// ---- Event 0x90 RepeatLastPause (Address 02071928) ----
+02071928 E5921010 ldr     r1,[r2,10h]       //Load last delay
+0207192C E582100C str     r1,[r2,0Ch]       //Set as current delay
+02071930 E12FFF1E bx      r14
+
+// ---- Event 0x91 ReapeatLastPauseAnAdd (Address 02071934) ----
+02071934 E0D010D1 ldrsb   r1,[r0],1h        //Increment read pos, and read next track byte into R1
+02071938 E5923010 ldr     r3,[r2,10h]       //Load last delay
+0207193C E0831001 add     r1,r3,r1          //Add last delay to the delay byte we read
+02071940 E5821010 str     r1,[r2,10h]       //Write last delay
+02071944 E582100C str     r1,[r2,0Ch]       //Set as current delay
+02071948 E12FFF1E bx      r14
+
+// ---- Event 0x92 Pause8bits (Address 0207194C) ----
+0207194C E4D01001 ldrb    r1,[r0],1h        //Increment read pos, and read next track byte into R1
+02071950 E5821010 str     r1,[r2,10h]       //Write last delay
+02071954 E582100C str     r1,[r2,0Ch]       //Set as current delay
+02071958 E12FFF1E bx      r14
+
+// ---- Event 0x93 Pause16bits (Address 0207195C) ----
+0207195C E5D03000 ldrb    r3,[r0]           //Read the next byte
+02071960 E5D01001 ldrb    r1,[r0,1h]        //Read the next byte
+02071964 E2800002 add     r0,r0,2h          //Increment read pos
+02071968 E0831401 add     r1,r3,r1,lsl 8h   //Assemble a int16 with the 2 bytes
+0207196C E5821010 str     r1,[r2,10h]       //Write last delay
+02071970 E582100C str     r1,[r2,0Ch]       //Set as current delay
+02071974 E12FFF1E bx      r14
+
+// ---- Event 0x94 Pause24bits (Address 02071978) ----
+02071978 E5D03000 ldrb    r3,[r0]           //Read the next byte
+0207197C E5D01001 ldrb    r1,[r0,1h]        //Read the next byte
+02071980 E5D0C002 ldrb    r12,[r0,2h]       //Read the next byte
+02071984 E2800003 add     r0,r0,3h          //Increment read pos
+02071988 E0831401 add     r1,r3,r1,lsl 8h   //Assemble a int16 with the 2 bytes
+0207198C E081180C add     r1,r1,r12,lsl 10h //Assemble a int32 with the 2 bytes
+02071990 E5821010 str     r1,[r2,10h]       //Write last delay
+02071994 E582100C str     r1,[r2,0Ch]       //Set as current delay
+02071998 E12FFF1E bx      r14
+
+// ---- Event 0x95 (Address 0207199C) ----
+//Looks like some kind of conditional pause. Depending on whether the count returned by Fun_02074A2C is greater than zero or not.
+// I think its actually a pause loop. It waits the duration indicated every turns, until all samples the track plays stop playing!
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+0207199C E92D4038 push    r3-r5,r14
+020719A0 E1A05000 mov     r5,r0             //R5 = TrackPosPtr
+020719A4 E1A00003 mov     r0,r3             //R0 = CurChanStruct
+020719A8 E1A04002 mov     r4,r2             //R4 = CurTrackStruct
+020719AC EB000C1E bl      2074A2Ch          ///EXEC Fun_02074A2C( R0 = CurChanStruct, R1=BegTrackStruct, R2=CurTrackStruct, R3=CurChanStruct, R4 = CurTrackStruct )
+                                            // We counted entry for which the 0x14C byte was non-null, and put the result in R0!
+020719B0 E3500000 cmp     r0,0h
+if( R0 > 0 )                                
+    020719B4 C4550001 ldrgtb  r0,[r5],-1h   //Read the Parameter byte, and decrease the TrackPosPtr.. R0 = [R5]; R5 = R5 - 1
+if( R0 <= 0 )
+    020719B8 D2855001 addle   r5,r5,1h      //Increment TrackPosPtr
+if( R0 > 0 )
+    020719BC C584000C strgt   r0,[r4,0Ch]   //Write R0 as TicksToNextEvent
+020719C0 E1A00005 mov     r0,r5             //Set R5 as the new TrackPosPtr
+020719C4 E8BD8038 pop     r3-r5,r15
+
+// ---- Event 0x96 Invalid(DisableTrack) (Address 0207191C) ----
+0207191C E3A01000 mov     r1,0h             
+02071920 E5C21002 strb    r1,[r2,2h]        //bTrackIsPlaying = false
+02071924 E12FFF1E bx      r14               //Return
+
+// ---- Event 0x97 Invalid(DisableTrack) (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0x98 EndOfTrack (Address 020719C8) ----
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+020719C8 E92D4010 push    r4,r14
+020719CC E592C020 ldr     r12,[r2,20h]          //R12 = LoopPosPtr
+020719D0 E1A04000 mov     r4,r0                 //Copy TrackPosPtr into R4
+020719D4 E35C0000 cmp     r12,0h                
+if( LoopPosPtr != 0 )                           //Is LoopPosPtr null ?
+    020719D8 1A000005 bne     20719F4h          ///GOTO LBL1
+020719DC E3A01000 mov     r1,0h                 //R1 = 0
+020719E0 E1A00003 mov     r0,r3                 //R0 = CurChanStruct
+020719E4 E5C21002 strb    r1,[r2,2h]            //Setting this to 0 causes the sequencer to stop playing!
+020719E8 E2444001 sub     r4,r4,1h              //Subtract 1 from the track pos pointer
+020719EC EB000827 bl      2073A90h              ///EXEC Fun_2073A90 ( R0=CurChanStruct, R1=0, R2=CurTrackStruct, R3=CurTrackStruct, R4=TrackPosPtr, R5=EventHandlerFunPtr )
+020719F0 EA000005 b       2071A0Ch              ///GOTO LBL2
+///LBL1
+020719F4 E1D230BA ldrh    r3,[r2,0Ah]
+020719F8 E3A00001 mov     r0,1h
+020719FC E2833001 add     r3,r3,1h
+02071A00 E1C230BA strh    r3,[r2,0Ah]
+02071A04 E5C10003 strb    r0,[r1,3h]
+02071A08 E5924020 ldr     r4,[r2,20h]           //Put LoopPosPtr into R4
+///LBL2
+02071A0C E1A00004 mov     r0,r4                 //Overwrite the TrackPosPtr
+02071A10 E8BD8010 pop     r4,r15
+
+// ---- Event 0x99 SetLoopPoint (Address 02071A14) ----
+02071A14 E5820020 str     r0,[r2,20h]           //Set current track pointer as loop pos
+02071A18 E12FFF1E bx      r14
+
+// ---- Event 0x9A Invalid(DisableTrack) (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0x9B Invalid(DisableTrack) (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0x9C (Address 02071A1C) ----
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+02071A1C E92D4010 push    r4,r14
+02071A20 E5D24006 ldrb    r4,[r2,6h]        //
+02071A24 E3A0100C mov     r1,0Ch
+02071A28 E4D0E001 ldrb    r14,[r0],1h       //Read Parameter byte and increment read ptr
+02071A2C E1610184 smulbb  r1,r4,r1          //R1 = R4 * 12
+02071A30 E2823024 add     r3,r2,24h
+02071A34 E7830001 str     r0,[r3,r1]
+02071A38 E083C001 add     r12,r3,r1
+02071A3C E3A01000 mov     r1,0h
+02071A40 E58C1004 str     r1,[r12,4h]
+02071A44 E5CCE008 strb    r14,[r12,8h]
+02071A48 E5D23004 ldrb    r3,[r2,4h]
+02071A4C E2841001 add     r1,r4,1h
+02071A50 E5CC3009 strb    r3,[r12,9h]
+02071A54 E5C21006 strb    r1,[r2,6h]
+02071A58 E8BD8010 pop     r4,r15
+
+// ---- Event 0x9D (Address 02071A5C) ----
+02071A5C E5D2C006 ldrb    r12,[r2,6h]
+02071A60 E2823024 add     r3,r2,24h
+02071A64 E3A0100C mov     r1,0Ch
+02071A68 E24CC001 sub     r12,r12,1h
+02071A6C E023319C mla     r3,r12,r1,r3
+02071A70 E5D31008 ldrb    r1,[r3,8h]
+02071A74 E2511001 subs    r1,r1,1h
+if( R1 == 0 )
+{
+    02071A78 05C2C006 streqb  r12,[r2,6h]
+    02071A7C 012FFF1E bxeq    r14
+}
+02071A80 E5830004 str     r0,[r3,4h]
+02071A84 E5C31008 strb    r1,[r3,8h]
+02071A88 E5D30009 ldrb    r0,[r3,9h]
+02071A8C E5C20004 strb    r0,[r2,4h]
+02071A90 E5930000 ldr     r0,[r3]
+02071A94 E12FFF1E bx      r14
+
+// ---- Event 0x9E (Address 02071A98) ----
+02071A98 E5D2C006 ldrb    r12,[r2,6h]
+02071A9C E2823024 add     r3,r2,24h
+02071AA0 E3A0100C mov     r1,0Ch
+02071AA4 E24CC001 sub     r12,r12,1h
+02071AA8 E023319C mla     r3,r12,r1,r3
+02071AAC E5D31008 ldrb    r1,[r3,8h]
+02071AB0 E2511001 subs    r1,r1,1h
+if( R1 == 0 )
+{
+    02071AB4 05930004 ldreq   r0,[r3,4h]
+    02071AB8 05C2C006 streqb  r12,[r2,6h]
+}
+02071ABC E12FFF1E bx      r14
+
+// ---- Event 0x9F (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xA0 SetOctave (Address 2071AC0) ----
+02071AC0 E4D01001 ldrb    r1,[r0],1h    //Reads the parameter byte. And increment read position.
+02071AC4 E5C21004 strb    r1,[r2,4h]    //Store TrackOctave at 0x2291D88 [2291D88]!?
+02071AC8 E12FFF1E bx      r14           //Return to main event handling function
+
+// ---- Event 0xA1 AddToOctave (Address 02071ACC) ----
+02071ACC E5D23004 ldrb    r3,[r2,4h]
+02071AD0 E0D010D1 ldrsb   r1,[r0],1h
+02071AD4 E0831001 add     r1,r3,r1
+02071AD8 E5C21004 strb    r1,[r2,4h]
+02071ADC E12FFF1E bx      r14
+
+// ---- Event 0xA2 (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xA3 (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xA4 SetTempo(Address 02071AE0) ----
+02071AE0 E92D4070 push    r4-r6,r14
+02071AE4 E1A06000 mov     r6,r0
+02071AE8 E1A05001 mov     r5,r1
+02071AEC E5950048 ldr     r0,[r5,48h]
+02071AF0 E5D64000 ldrb    r4,[r6]
+02071AF4 E1A00840 mov     r0,r0,asr 10h
+02071AF8 E0010490 mul     r1,r0,r4
+02071AFC E1B01421 movs    r1,r1,lsr 8h
+02071B00 E59F0014 ldr     r0,=3938700h
+if( R1 == 0 )
+    02071B04 03A01001 moveq   r1,1h
+02071B08 EB007968 bl      20900B0h
+02071B0C E5850044 str     r0,[r5,44h]
+02071B10 E5C54017 strb    r4,[r5,17h]
+02071B14 E2860001 add     r0,r6,1h
+02071B18 E8BD8070 pop     r4-r6,r15
+
+// ---- Event 0xA5 (Address 02071B20) ----
+02071B20 E92D4070 push    r4-r6,r14
+02071B24 E1A06000 mov     r6,r0
+02071B28 E1A05001 mov     r5,r1
+02071B2C E5950048 ldr     r0,[r5,48h]
+02071B30 E5D64000 ldrb    r4,[r6]
+02071B34 E1A00840 mov     r0,r0,asr 10h
+02071B38 E0010490 mul     r1,r0,r4
+02071B3C E1B01421 movs    r1,r1,lsr 8h
+02071B40 E59F0014 ldr     r0,=3938700h
+if( R1 == 0 )
+    02071B44 03A01001 moveq   r1,1h
+02071B48 EB007958 bl      20900B0h
+02071B4C E5850044 str     r0,[r5,44h]
+02071B50 E5C54017 strb    r4,[r5,17h]
+02071B54 E2860001 add     r0,r6,1h
+02071B58 E8BD8070 pop     r4-r6,r15
+
+// ---- Event 0xA6 (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xA7 (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xA8 (Address 02071B60) ----
+02071B60 E92D4010 push    r4,r14
+02071B64 E1A04000 mov     r4,r0             //r4 = param byte start
+02071B68 E5D42000 ldrb    r2,[r4]           //Read one param byte
+02071B6C E5D41001 ldrb    r1,[r4,1h]        //Read the second param byte
+02071B70 E1A00003 mov     r0,r3             //r0 = chanstructptr
+02071B74 E0811402 add     r1,r1,r2,lsl 8h   //r1 = SecParamByte + (FirstParamByte << 8)
+02071B78 E1A01801 mov     r1,r1,lsl 10h     //r1 = r1 << 16 (those two lines are a cast to uint16)
+02071B7C E1A01821 mov     r1,r1,lsr 10h     //r1 = r1 >> 16
+02071B80 EB000802 bl      2073B90h          ///02073B90 (r0 = chanstructptr, r1 = parameter)
+{
+    02073B90 E92D4010 push    r4,r14
+    02073B94 E1A04000 mov     r4,r0         //r4 = chanstructptr    
+    02073B98 E1A00001 mov     r0,r1         //r0 = AssembledParameter    
+    02073B9C E1C410BE strh    r1,[r4,0Eh]   //[chanstructptr + 0xE] = AssembledParameter
+    02073BA0 EBFFE6BE bl      206D6A0h
+    {
+        0206D6A0 E59F3040 ldr     r3,=4000208h          //Master interrupt ctrl
+        0206D6A4 E3A02000 mov     r2,0h                 //r2 = 0    
+        0206D6A8 E1D3C0B0 ldrh    r12,[r3]              //r12 = [4000208h]
+        0206D6AC E59F1038 ldr     r1,=22B7330h          //r1 = 22B7330h
+        0206D6B0 E1C320B0 strh    r2,[r3]               //[4000208h] = 0
+        0206D6B4 E5913660 ldr     r3,[r1,660h]          //r3 = [r1 + 0x660] //0x660 == 1632
+        0206D6B8 E3530000 cmp     r3,0h
+        if( r3 == 0 )
+            0206D6BC 0A000004 beq     206D6D4h          ///0206D6D4 v
+        ///0206D6C0 - LoopBeg
+        0206D6C0 E1D310B4 ldrh    r1,[r3,4h]            //r1 = [r3 + 4]
+        0206D6C4 E1510000 cmp     r1,r0
+        if( r1 != AssembledParameter )
+        {
+            0206D6C8 15933024 ldrne   r3,[r3,24h]       //r3 = [r3 + 0x24]
+            0206D6CC 13530000 cmpne   r3,0h
+            if( r3 != 0 )
+                0206D6D0 1AFFFFFA bne     206D6C0h      ///0206D6C0 - LoopBeg ^
+        }
+        ///if r3 == 0 or r1 == AssembledParameter
+        0206D6D4 E59F200C ldr     r2,=4000208h      //Master interrupt ctrl
+        0206D6D8 E1A00003 mov     r0,r3             //r0 = r3
+        0206D6DC E1D210B0 ldrh    r1,[r2]           //r1 = [4000208h]
+        0206D6E0 E1C2C0B0 strh    r12,[r2]          //[4000208h] = r12     //Basically restore previous interrupt state
+        0206D6E4 E12FFF1E bx      r14               //return 
+        0206D6E8 04000208 
+        0206D6EC 022B7330 
+    }
+    02073BA4 E58400BC str     r0,[r4,0BCh]  //[chanstructptr + 0xBBC] = returnval
+    02073BA8 E3500000 cmp     r0,0h
+    if( r0 == 0 )
+        02073BAC 03A00000 moveq   r0,0h             //r0 = 0
+        02073BB0 058400C0 streq   r0,[r4,0C0h]      //[r4 + 0xC0] = 0
+        02073BB4 08BD8010 popeq   r4,r15            //return
+    02073BB8 E1D411B0 ldrh    r1,[r4,10h]   //r1 = [chanstructptr + 0x10]
+    02073BBC E1A00004 mov     r0,r4         //r0 = chanstructptr
+    02073BC0 EB000000 bl      2073BC8h      
+    {
+        02073BC8 E92D41F0 push    r4-r8,r14
+        02073BCC E1A05000 mov     r5,r0         //r5 = chanstructptr
+        02073BD0 E59500BC ldr     r0,[r5,0BCh]  //r0 = [r5 + 0xBC]
+        02073BD4 E1A04001 mov     r4,r1         //r4 = [chanstructptr + 0x10]
+        02073BD8 E3500000 cmp     r0,0h     
+        if( r0 != 0 )
+            02073BDC 1A000003 bne     2073BF0h      ///02073BF0
+        else
+            02073BE0 E3A00000 mov     r0,0h         //r0 = 0
+            02073BE4 E58500C0 str     r0,[r5,0C0h]  //[chanstructptr + 0xC0] = 0
+            02073BE8 E1C501B0 strh    r0,[r5,10h]   //[chanstructptr + 0x10] = 0
+            02073BEC EA000016 b       2073C4Ch      //02073C4C v
+        ///02073BF0 - if r0 != 0
+        02073BF0 E1A00804 mov     r0,r4,lsl 10h     //r0 = r4 << 16                 //cast to int16
+        02073BF4 E1A01840 mov     r1,r0,asr 10h     //r1 = r0 >> 16 (signed shift)
+        02073BF8 E1C511B0 strh    r1,[r5,10h]       //[chanstructptr + 0x10] = r1
+        02073BFC E59500BC ldr     r0,[r5,0BCh]      //r0 = [chanstructptr, 0xBC]
+        02073C00 EBFFE662 bl      206D590h          //0206D590
+        02073C04 E1B0E000 movs    r14,r0
+        02073C08 0A00000E beq     2073C48h
+        02073C0C E3A06000 mov     r6,0h
+        02073C10 E5C56059 strb    r6,[r5,59h]
+        02073C14 E28E7010 add     r7,r14,10h
+        02073C18 E2858074 add     r8,r5,74h
+        02073C1C E1A0C006 mov     r12,r6
+        02073C20 E5D70001 ldrb    r0,[r7,1h]
+        02073C24 E2866001 add     r6,r6,1h
+        02073C28 E3500000 cmp     r0,0h
+        02073C2C 1897000F ldmneia [r7],r0-r3
+        02073C30 1888000F stmneia [r8],r0-r3
+        02073C34 05C8C001 streqb  r12,[r8,1h]
+        02073C38 E3560004 cmp     r6,4h
+        02073C3C E2877010 add     r7,r7,10h
+        02073C40 E2888010 add     r8,r8,10h
+        02073C44 BAFFFFF5 blt     2073C20h
+        02073C48 E585E0C0 str     r14,[r5,0C0h]
+        ///02073C4C - if r0 == 0
+        02073C4C E2850064 add     r0,r5,64h
+        02073C50 EB00040B bl      2074C84h
+        02073C54 E1A00004 mov     r0,r4
+        02073C58 E8BD81F0 pop     r4-r8,r15
+    }
+    02073BC4 E8BD8010 pop     r4,r15        //return
+}
+02071B84 E2840002 add     r0,r4,2h          //r0 = ReadPosPtr + 2
+02071B88 E8BD8010 pop     r4,r15            //return
+
+// ---- Event 0xA9 (Address 02071B8C) ----
+02071B8C E92D4010 push    r4,r14
+02071B90 E1A04000 mov     r4,r0             //r4 = ParamBytesPtr
+02071B94 E1D310BE ldrh    r1,[r3,0Eh]       //r1 = [chanstructptr + 0xE]
+02071B98 E5D42000 ldrb    r2,[r4]           //r2 = [ParamBytesPtr]
+02071B9C E1A00003 mov     r0,r3             //r0 = chanstructptr
+02071BA0 E20110FF and     r1,r1,0FFh        //r1 = r1 & 0xFF    
+02071BA4 E0811402 add     r1,r1,r2,lsl 8h   //r1 = r1 + (FirstParamByte << 8)
+02071BA8 E1A01801 mov     r1,r1,lsl 10h     // < (cast to int16)
+02071BAC E1A01821 mov     r1,r1,lsr 10h     // <  
+02071BB0 EB0007F6 bl      2073B90h          ///02073B90
+02071BB4 E2840001 add     r0,r4,1h          //r0 = ParamBytesPtr + 1
+02071BB8 E8BD8010 pop     r4,r15            //return
+
+// ---- Event 0xAA (Address 02071BBC) ----
+02071BBC E92D4010 push    r4,r14
+02071BC0 E1A04000 mov     r4,r0             //r4 = ParamBytesPtr
+02071BC4 E1D320BE ldrh    r2,[r3,0Eh]       //r2 = [chanstructptr + 0xE]
+02071BC8 E5D41000 ldrb    r1,[r4]           //r1 = [ParamBytesPtr]
+02071BCC E1A00003 mov     r0,r3             //r0 = chanstructptr
+02071BD0 E3C220FF bic     r2,r2,0FFh        //r2 = r2 & (!0xFF) //"the BIC instruction performs an Rd AND NOT Rm operation."
+02071BD4 E0821001 add     r1,r2,r1          //r1 = r2 + FirstParamByte
+02071BD8 E1A01801 mov     r1,r1,lsl 10h     // < (cast to int16)
+02071BDC E1A01821 mov     r1,r1,lsr 10h     // <
+02071BE0 EB0007EA bl      2073B90h          ///02073B90
+02071BE4 E2840001 add     r0,r4,1h          //r0 = ParamBytesPtr + 1
+02071BE8 E8BD8010 pop     r4,r15            //return
+
+// ---- Event 0xAB SkipOverNextByte (Address 02071BEC) ----
+02071BEC E2800001 add     r0,r0,1h
+02071BF0 E12FFF1E bx      r14
+
+// ---- Event 0xAC SetProgram(Address 02071BF4) ----
+02071BF4 E92D4070 push    r4-r6,r14
+02071BF8 E1A06000 mov     r6,r0
+02071BFC E1A05001 mov     r5,r1
+02071C00 E1A04003 mov     r4,r3
+02071C04 E5D61000 ldrb    r1,[r6]
+02071C08 E1A00004 mov     r0,r4
+02071C0C EB0007ED bl      2073BC8h
+02071C10 E1B02000 movs    r2,r0
+02071C14 5A000006 bpl     2071C34h
+02071C18 E1D410BE ldrh    r1,[r4,0Eh]
+02071C1C E5950028 ldr     r0,[r5,28h]
+02071C20 E59530A0 ldr     r3,[r5,0A0h]
+02071C24 E595C09C ldr     r12,[r5,9Ch]
+02071C28 E0622801 rsb     r2,r2,r1,lsl 10h
+02071C2C E3E010CB mvn     r1,0CBh
+02071C30 E12FFF3C blx     r12
+
+// ---- Event 0xAD (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xAE (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xAF (Address 02071C3C) ----
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+02071C3C E92D4070 push    r4-r6,r14
+02071C40 E1A05000 mov     r5,r0
+02071C44 E5D52000 ldrb    r2,[r5]
+02071C48 E5D50001 ldrb    r0,[r5,1h]
+02071C4C E1A04001 mov     r4,r1
+02071C50 E0820400 add     r0,r2,r0,lsl 8h
+02071C54 E1A00800 mov     r0,r0,lsl 10h
+02071C58 E1B01820 movs    r1,r0,lsr 10h
+if( R1 == 0 )
+{
+    02071C5C 03A06000 moveq   r6,0h
+    02071C60 0A000007 beq     2071C84h
+}
+02071C64 E3A00FFA mov     r0,3E8h
+02071C68 E0000091 mul     r0,r1,r0
+02071C6C E59F1050 ldr     r1,=22B7330h
+02071C70 E1D112F8 ldrsh   r1,[r1,28h]
+02071C74 EB00790D bl      20900B0h
+02071C78 E1A00800 mov     r0,r0,lsl 10h
+02071C7C E1B06820 movs    r6,r0,lsr 10h
+if( R6 == 0 )
+    02071C80 03A06001 moveq   r6,1h
+02071C84 E5D50002 ldrb    r0,[r5,2h]
+02071C88 E3560000 cmp     r6,0h
+02071C8C E1A01800 mov     r1,r0,lsl 10h
+02071C90 E5841070 str     r1,[r4,70h]
+if( R6 == 0 )
+{
+    02071C94 05841068 streq   r1,[r4,68h]
+    02071C98 0A000006 beq     2071CB8h
+}
+02071C9C E5940068 ldr     r0,[r4,68h]
+02071CA0 E0510000 subs    r0,r1,r0
+if( R0 == 0 ) 
+{
+    02071CA4 03A06000 moveq   r6,0h
+    02071CA8 0A000002 beq     2071CB8h
+}
+02071CAC E1A01006 mov     r1,r6
+02071CB0 EB00787B bl      208FEA4h
+02071CB4 E584006C str     r0,[r4,6Ch]
+02071CB8 E1C467B4 strh    r6,[r4,74h]
+02071CBC E2850003 add     r0,r5,3h
+02071CC0 E8BD8070 pop     r4-r6,r15
+
+// ---- Event 0xB0 (Address 02071CC8) ----
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+02071CC8 E92D4010 push    r4,r14
+02071CCC E1A04000 mov     r4,r0
+02071CD0 E2830064 add     r0,r3,64h
+02071CD4 EB000BEA bl      2074C84h      ///EXEC Fun_2074C84( R0 = CurChanStruct+0x64 )
+02071CD8 E1A00004 mov     r0,r4
+02071CDC E8BD8010 pop     r4,r15
+
+// ---- Event 0xB1 (Address 02071CE0) ----
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+02071CE0 E92D4010 push    r4,r14
+02071CE4 E1A04000 mov     r4,r0
+02071CE8 E5D41000 ldrb    r1,[r4]
+02071CEC E2830064 add     r0,r3,64h
+02071CF0 E5C3106C strb    r1,[r3,6Ch]  //Stores at a different location than 0xB2 and 0xB3
+02071CF4 EB000BE9 bl      2074CA0h
+02071CF8 E2840001 add     r0,r4,1h
+02071CFC E8BD8010 pop     r4,r15
+ 
+// ---- Event 0xB2 (Address 02071D00) ----
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+02071D00 E92D4010 push    r4,r14
+02071D04 E1A04000 mov     r4,r0
+02071D08 E5D41000 ldrb    r1,[r4]     //Read parameter
+02071D0C E2830064 add     r0,r3,64h
+02071D10 E5C3106D strb    r1,[r3,6Dh] //Stores at a different location than 0xB1 and 0xB3
+02071D14 EB000BE1 bl      2074CA0h
+02071D18 E2840001 add     r0,r4,1h
+02071D1C E8BD8010 pop     r4,r15
+
+
+    02074CA0 E3A01001 mov     r1,1h
+    02074CA4 E5C01000 strb    r1,[r0]
+    02074CA8 E5D01001 ldrb    r1,[r0,1h]
+    02074CAC E351007F cmp     r1,7Fh
+    02074CB0 85D01008 ldrhib  r1,[r0,8h]
+    02074CB4 8351007F cmphi   r1,7Fh
+    02074CB8 85D01009 ldrhib  r1,[r0,9h]
+    02074CBC 8351007F cmphi   r1,7Fh
+    02074CC0 85D0100A ldrhib  r1,[r0,0Ah]
+    02074CC4 8351007F cmphi   r1,7Fh
+    02074CC8 85D0100B ldrhib  r1,[r0,0Bh]
+    02074CCC 8351007F cmphi   r1,7Fh
+    02074CD0 85D0100C ldrhib  r1,[r0,0Ch]
+    02074CD4 8351007F cmphi   r1,7Fh
+    02074CD8 85D0100D ldrhib  r1,[r0,0Dh]
+    02074CDC 8351007F cmphi   r1,7Fh
+    02074CE0 85D0100E ldrhib  r1,[r0,0Eh]
+    02074CE4 8351007F cmphi   r1,7Fh
+    02074CE8 83A01000 movhi   r1,0h
+    02074CEC 85C01000 strhib  r1,[r0]
+    02074CF0 E12FFF1E bx      r14   
+
+
+// ---- Event 0xB3 (Address 02071D20) ----
+02071D20 E92D4010 push    r4,r14
+02071D24 E1A04000 mov     r4,r0
+02071D28 E5D41000 ldrb    r1,[r4]
+02071D2C E2830064 add     r0,r3,64h
+02071D30 E5C31070 strb    r1,[r3,70h] //Stores at a different location than 0xB1 and 0xB2
+02071D34 EB000BD9 bl      2074CA0h
+02071D38 E2840001 add     r0,r4,1h
+02071D3C E8BD8010 pop     r4,r15
+
+// ---- Event 0xB4 (Address 02071D40) ----
+02071D40 E92D4010 push    r4,r14
+02071D44 E1A04000 mov     r4,r0
+02071D48 E5D40000 ldrb    r0,[r4]
+02071D4C E35000FF cmp     r0,0FFh
+if( (R0 & 0xFF) != 0 )
+    02071D50 15C3006E strneb  r0,[r3,6Eh]
+02071D54 E5D40001 ldrb    r0,[r4,1h]
+02071D58 E35000FF cmp     r0,0FFh
+if( (R0 & 0xFF) != 0 )
+    02071D5C 15C3006F strneb  r0,[r3,6Fh]
+02071D60 E2830064 add     r0,r3,64h
+02071D64 EB000BCD bl      2074CA0h
+02071D68 E2840002 add     r0,r4,2h
+02071D6C E8BD8010 pop     r4,r15
+
+// ---- Event 0xB5 (Address 02071D70) ----
+02071D70 E92D4010 push    r4,r14
+02071D74 E1A04000 mov     r4,r0
+02071D78 E5D41000 ldrb    r1,[r4]
+02071D7C E2830064 add     r0,r3,64h
+02071D80 E5C31071 strb    r1,[r3,71h]
+02071D84 EB000BC5 bl      2074CA0h
+02071D88 E2840001 add     r0,r4,1h
+02071D8C E8BD8010 pop     r4,r15
+
+// ---- Event 0xB6 (Address 02071D90) ----
+02071D90 E92D4010 push    r4,r14
+02071D94 E1A04000 mov     r4,r0
+02071D98 E5D41000 ldrb    r1,[r4]
+02071D9C E2830064 add     r0,r3,64h
+02071DA0 E5C31072 strb    r1,[r3,72h]
+02071DA4 EB000BBD bl      2074CA0h
+02071DA8 E2840001 add     r0,r4,1h
+02071DAC E8BD8010 pop     r4,r15
+
+// ---- Event 0xB7 (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xB8 (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xB9 (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xBA (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xBB (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xBC (Address 02071DB0) ----
+02071DB0 E4D01001 ldrb    r1,[r0],1h
+02071DB4 E5C21005 strb    r1,[r2,5h]
+02071DB8 E12FFF1E bx      r14
+
+// ---- Event 0xBD (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xBE (Address 02071DBC) ----
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+02071DBC E92D4010 push    r4,r14
+02071DC0 E1A04000 mov     r4,r0
+02071DC4 E1D410D0 ldrsb   r1,[r4]       //Get parameter byte value
+02071DC8 E1A00003 mov     r0,r3
+02071DCC EB0007A2 bl      2073C5Ch      //R0 = CurChanStruct?, R1 = parameter, R2=CurTrackStruct, R3=CurChanStruct?, R4 = TrackPosPtr
+02071DD0 E2840001 add     r0,r4,1h
+02071DD4 E8BD8010 pop     r4,r15
+
+// ---- Event 0xBF (Address 02071DD8) ----
+02071DD8 E92D4010 push    r4,r14
+02071DDC E1A04000 mov     r4,r0
+02071DE0 E5D41000 ldrb    r1,[r4]
+02071DE4 E5920054 ldr     r0,[r2,54h]
+02071DE8 E3510040 cmp     r1,40h
+02071DEC E5D01004 ldrb    r1,[r0,4h]
+if( R1 >= 0x40 )//unsigned
+{
+    02071DF0 23811001 orrcs   r1,r1,1h
+    02071DF4 25C01004 strcsb  r1,[r0,4h]
+    02071DF8 2A000002 bcs     2071E08h
+}
+02071DFC E3C11001 bic     r1,r1,1h
+02071E00 E5C01004 strb    r1,[r0,4h]
+02071E04 EB000A74 bl      20747DCh
+02071E08 E2840001 add     r0,r4,1h
+02071E0C E8BD8010 pop     r4,r15
+
+// ---- Event 0xC0 (Address 02071E10) ----
+02071E10 E5D31004 ldrb    r1,[r3,4h]
+02071E14 E3811002 orr     r1,r1,2h
+02071E18 E5C31004 strb    r1,[r3,4h]
+02071E1C E12FFF1E bx      r14
+
+// ---- Event 0xC1 (Address 0207191C) ----
+//Same as 0x96
+
+// ---- Event 0xC2 (Address 0207191C) ----
+//Same as 0x96 
+ 
+// ---- Event 0xC3 (Address 02071E20) ----
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+02071E20 E4D01001 ldrb    r1,[r0],1h
+02071E24 E5C31058 strb    r1,[r3,58h]
+02071E28 E12FFF1E bx      r14
+
+// ---- Event 0xC4 (Address 0207191C) ----
+//Same as 0x96 
+
+// ---- Event 0xC5 (Address 0207191C) ----
+//Same as 0x96 
+
+// ---- Event 0xC6 (Address 0207191C) ----
+//Same as 0x96 
+
+// ---- Event 0xC7 (Address 0207191C) ----
+//Same as 0x96 
+
+// ---- Event 0xC8 (Address 0207191C) ----
+//Same as 0x96 
+
+// ---- Event 0xC9 (Address 0207191C) ----
+//Same as 0x96 
+
+// ---- Event 0xCA (Address 0207191C) ----
+//Same as 0x96 
+
+// ---- Event 0xCB SkipNext2Bytes (Address 02071E20) ----
+02071E2C E2800002 add     r0,r0,2h
+02071E30 E12FFF1E bx      r14
+
+// ---- Event 0xCC (Address 0207191C) ----
+//Same as 0x96 
+
+// ---- Event 0xCD (Address 0207191C) ----
+//Same as 0x96 
+
+// ---- Event 0xCE (Address 0207191C) ----
+//Same as 0x96 
+
+// ---- Event 0xCF (Address 0207191C) ----
+//Same as 0x96 
+
+
+// ---- Event 0xD0 (Address 02071E34) ----
+02071E34 E92D4010 push    r4,r14
+02071E38 E1D010D0 ldrsb   r1,[r0]
+02071E3C E59FC06C ldr     r12,=4000208h            ;//Master interrupt ctrl
+02071E40 E3A02000 mov     r2,0h
+02071E44 E1A01C01 mov     r1,r1,lsl 18h
+02071E48 E1A04841 mov     r4,r1,asr 10h
+02071E4C E1C345B4 strh    r4,[r3,54h]
+02071E50 E593E0C4 ldr     r14,[r3,0C4h]
+02071E54 E593101C ldr     r1,[r3,1Ch]
+02071E58 E1DEE0F4 ldrsh   r14,[r14,4h]
+02071E5C E1A01841 mov     r1,r1,asr 10h
+02071E60 E1A01801 mov     r1,r1,lsl 10h
+02071E64 E0841841 add     r1,r4,r1,asr 10h
+02071E68 E08E1001 add     r1,r14,r1
+02071E6C E1C311B6 strh    r1,[r3,16h]
+02071E70 E1DC40B0 ldrh    r4,[r12]
+02071E74 E1CC20B0 strh    r2,[r12]
+02071E78 E59320B4 ldr     r2,[r3,0B4h]
+02071E7C E3520000 cmp     r2,0h
+if( R2 == 0 )
+    02071E80 0A000005 beq     2071E9Ch
+02071E84 E1D210B6 ldrh    r1,[r2,6h]
+02071E88 E3811010 orr     r1,r1,10h
+02071E8C E1C210B6 strh    r1,[r2,6h]
+02071E90 E5922154 ldr     r2,[r2,154h]
+02071E94 E3520000 cmp     r2,0h
+if( R2 != 0 )
+    02071E98 1AFFFFF9 bne     2071E84h
+02071E9C E59F200C ldr     r2,=4000208h            ;//Master interrupt ctrl
+02071EA0 E2800001 add     r0,r0,1h
+02071EA4 E1D210B0 ldrh    r1,[r2]
+02071EA8 E1C240B0 strh    r4,[r2]
+02071EAC E8BD8010 pop     r4,r15
+
+
+// ---- Event 0xD1 (Address 02071EB4) ----
+02071EB4 E92D4010 push    r4,r14
+02071EB8 E1D040D0 ldrsb   r4,[r0]
+02071EBC E1D315F4 ldrsh   r1,[r3,54h]
+02071EC0 E59FC070 ldr     r12,=4000208h            ;//Master interrupt ctrl
+02071EC4 E3A02000 mov     r2,0h
+02071EC8 E0811404 add     r1,r1,r4,lsl 8h
+02071ECC E1A01801 mov     r1,r1,lsl 10h
+02071ED0 E1A04841 mov     r4,r1,asr 10h
+02071ED4 E1C345B4 strh    r4,[r3,54h]
+02071ED8 E593E0C4 ldr     r14,[r3,0C4h]
+02071EDC E593101C ldr     r1,[r3,1Ch]
+02071EE0 E1DEE0F4 ldrsh   r14,[r14,4h]
+02071EE4 E1A01841 mov     r1,r1,asr 10h
+02071EE8 E1A01801 mov     r1,r1,lsl 10h
+02071EEC E0841841 add     r1,r4,r1,asr 10h
+02071EF0 E08E1001 add     r1,r14,r1
+02071EF4 E1C311B6 strh    r1,[r3,16h]
+02071EF8 E1DC40B0 ldrh    r4,[r12]
+02071EFC E1CC20B0 strh    r2,[r12]
+02071F00 E59320B4 ldr     r2,[r3,0B4h]
+02071F04 E3520000 cmp     r2,0h
+if( R2 == 0 )
+    02071F08 0A000005 beq     2071F24h
+02071F0C E1D210B6 ldrh    r1,[r2,6h]
+02071F10 E3811010 orr     r1,r1,10h
+02071F14 E1C210B6 strh    r1,[r2,6h]
+02071F18 E5922154 ldr     r2,[r2,154h]
+02071F1C E3520000 cmp     r2,0h
+if( R2 != 0 )
+    02071F20 1AFFFFF9 bne     2071F0Ch
+02071F24 E59F200C ldr     r2,=4000208h            ;//Master interrupt ctrl
+02071F28 E2800001 add     r0,r0,1h
+02071F2C E1D210B0 ldrh    r1,[r2]
+02071F30 E1C240B0 strh    r4,[r2]
+02071F34 E8BD8010 pop     r4,r15
+
+
+// ---- Event 0xD2 (Address 02071F3C) ----
+02071F3C E92D4010 push    r4,r14
+02071F40 E1D040D0 ldrsb   r4,[r0]
+02071F44 E1D315F4 ldrsh   r1,[r3,54h]
+02071F48 E59FC070 ldr     r12,=4000208h            ;//Master interrupt ctrl
+02071F4C E3A02000 mov     r2,0h
+02071F50 E0811104 add     r1,r1,r4,lsl 2h
+02071F54 E1A01801 mov     r1,r1,lsl 10h
+02071F58 E1A04841 mov     r4,r1,asr 10h
+02071F5C E1C345B4 strh    r4,[r3,54h]
+02071F60 E593E0C4 ldr     r14,[r3,0C4h]
+02071F64 E593101C ldr     r1,[r3,1Ch]
+02071F68 E1DEE0F4 ldrsh   r14,[r14,4h]
+02071F6C E1A01841 mov     r1,r1,asr 10h
+02071F70 E1A01801 mov     r1,r1,lsl 10h
+02071F74 E0841841 add     r1,r4,r1,asr 10h
+02071F78 E08E1001 add     r1,r14,r1
+02071F7C E1C311B6 strh    r1,[r3,16h]
+02071F80 E1DC40B0 ldrh    r4,[r12]
+02071F84 E1CC20B0 strh    r2,[r12]
+02071F88 E59320B4 ldr     r2,[r3,0B4h]
+02071F8C E3520000 cmp     r2,0h
+if( R2 == 0 )
+    02071F90 0A000005 beq     2071FACh
+02071F94 E1D210B6 ldrh    r1,[r2,6h]
+02071F98 E3811010 orr     r1,r1,10h
+02071F9C E1C210B6 strh    r1,[r2,6h]
+02071FA0 E5922154 ldr     r2,[r2,154h]
+02071FA4 E3520000 cmp     r2,0h
+if( R2 != 0 )
+    02071FA8 1AFFFFF9 bne     2071F94h
+02071FAC E59F200C ldr     r2,=4000208h            ;//Master interrupt ctrl
+02071FB0 E2800001 add     r0,r0,1h
+02071FB4 E1D210B0 ldrh    r1,[r2]
+02071FB8 E1C240B0 strh    r4,[r2]
+02071FBC E8BD8010 pop     r4,r15
+
+
+// ---- Event 0xD3 (Address 02071FC4) ----
+02071FC4 E92D4008 push    r3,r14
+02071FC8 E5D0C000 ldrb    r12,[r0]
+02071FCC E5D01001 ldrb    r1,[r0,1h]
+02071FD0 E1D3E5F4 ldrsh   r14,[r3,54h]
+02071FD4 E59F2074 ldr     r2,=4000208h            ;//Master interrupt ctrl
+02071FD8 E08C1401 add     r1,r12,r1,lsl 8h
+02071FDC E08E1001 add     r1,r14,r1
+02071FE0 E1A01801 mov     r1,r1,lsl 10h
+02071FE4 E1A0E841 mov     r14,r1,asr 10h
+02071FE8 E1C3E5B4 strh    r14,[r3,54h]
+02071FEC E593C0C4 ldr     r12,[r3,0C4h]
+02071FF0 E593101C ldr     r1,[r3,1Ch]
+02071FF4 E1DCC0F4 ldrsh   r12,[r12,4h]
+02071FF8 E1A01841 mov     r1,r1,asr 10h
+02071FFC E1A01801 mov     r1,r1,lsl 10h
+02072000 E08E1841 add     r1,r14,r1,asr 10h
+02072004 E08C1001 add     r1,r12,r1
+02072008 E1C311B6 strh    r1,[r3,16h]
+0207200C E1D2C0B0 ldrh    r12,[r2]
+02072010 E3A01000 mov     r1,0h
+02072014 E1C210B0 strh    r1,[r2]
+02072018 E59320B4 ldr     r2,[r3,0B4h]
+0207201C E3520000 cmp     r2,0h
+if( R2 == 0 )
+    02072020 0A000005 beq     207203Ch
+02072024 E1D210B6 ldrh    r1,[r2,6h]
+02072028 E3811010 orr     r1,r1,10h
+0207202C E1C210B6 strh    r1,[r2,6h]
+02072030 E5922154 ldr     r2,[r2,154h]
+02072034 E3520000 cmp     r2,0h
+if( R2 != 0 )
+    02072038 1AFFFFF9 bne     2072024h
+0207203C E59F200C ldr     r2,=4000208h            ;//Master interrupt ctrl
+02072040 E2800002 add     r0,r0,2h
+02072044 E1D210B0 ldrh    r1,[r2]
+02072048 E1C2C0B0 strh    r12,[r2]
+0207204C E8BD8008 pop     r3,r15
+
+
+// ---- Event 0xD4 (Address 02072054) ----
+02072054 E92D40F8 push    r3-r7,r14
+02072058 E1A07000 mov     r7,r0
+0207205C E1A06003 mov     r6,r3
+02072060 E5D61004 ldrb    r1,[r6,4h]
+02072064 E5D74000 ldrb    r4,[r7]
+02072068 E5D70001 ldrb    r0,[r7,1h]
+0207206C E3110002 tst     r1,2h
+02072070 E5D72002 ldrb    r2,[r7,2h]
+02072074 E0840400 add     r0,r4,r0,lsl 8h
+02072078 E1A00800 mov     r0,r0,lsl 10h
+0207207C E1A05820 mov     r5,r0,lsr 10h
+02072080 E59640C4 ldr     r4,[r6,0C4h]
+if( (R1 & 2) == 0 )
+{
+    02072084 03A01000 moveq   r1,0h
+    02072088 0586101C streq   r1,[r6,1Ch]
+}
+0207208C E596101C ldr     r1,[r6,1Ch]
+02072090 E1A00C02 mov     r0,r2,lsl 18h
+02072094 E1A01841 mov     r1,r1,asr 10h
+02072098 E0810820 add     r0,r1,r0,lsr 10h
+0207209C E1A00800 mov     r0,r0,lsl 10h
+020720A0 E1A00820 mov     r0,r0,lsr 10h
+020720A4 E1A01800 mov     r1,r0,lsl 10h
+020720A8 E5861024 str     r1,[r6,24h]
+020720AC E3550000 cmp     r5,0h
+if( R5 == 0 )
+{
+    020720B0 0586101C streq   r1,[r6,1Ch]
+    020720B4 0A000006 beq     20720D4h
+}
+020720B8 E596001C ldr     r0,[r6,1Ch]
+020720BC E0510000 subs    r0,r1,r0
+if( R0 == 0  )
+{
+    020720C0 03A05000 moveq   r5,0h
+    020720C4 0A000002 beq     20720D4h
+}
+020720C8 E1A01005 mov     r1,r5
+020720CC EB007774 bl      208FEA4h
+020720D0 E5860020 str     r0,[r6,20h]
+020720D4 E1C652B8 strh    r5,[r6,28h]
+020720D8 E596001C ldr     r0,[r6,1Ch]
+020720DC E1D615F4 ldrsh   r1,[r6,54h]
+020720E0 E1A00840 mov     r0,r0,asr 10h
+020720E4 E1A00800 mov     r0,r0,lsl 10h
+020720E8 E1D420F4 ldrsh   r2,[r4,4h]
+020720EC E0810820 add     r0,r1,r0,lsr 10h
+020720F0 E59F1048 ldr     r1,=4000208h            ;//Master interrupt ctrl
+020720F4 E0820000 add     r0,r2,r0
+020720F8 E1C601B6 strh    r0,[r6,16h]
+020720FC E1D130B0 ldrh    r3,[r1]
+02072100 E3A00000 mov     r0,0h
+02072104 E1C100B0 strh    r0,[r1]
+02072108 E59610B4 ldr     r1,[r6,0B4h]
+0207210C E3510000 cmp     r1,0h
+if( R1 == 0 )
+    02072110 0A000005 beq     207212Ch
+02072114 E1D100B6 ldrh    r0,[r1,6h]
+02072118 E3800010 orr     r0,r0,10h
+0207211C E1C100B6 strh    r0,[r1,6h]
+02072120 E5911154 ldr     r1,[r1,154h]
+02072124 E3510000 cmp     r1,0h
+if( R1 == 0 )
+    02072128 1AFFFFF9 bne     2072114h
+0207212C E59F200C ldr     r2,=4000208h            ;//Master interrupt ctrl
+02072130 E2870003 add     r0,r7,3h
+02072134 E1D210B0 ldrh    r1,[r2]
+02072138 E1C230B0 strh    r3,[r2]
+0207213C E8BD80F8 pop     r3-r7,r15
+
+
+// ---- Event 0xD5 (Address 02072144) ----
+02072144 E5D01000 ldrb    r1,[r0]
+02072148 E5D0C001 ldrb    r12,[r0,1h]
+0207214C E2800002 add     r0,r0,2h
+02072150 E1A02001 mov     r2,r1
+02072154 E151000C cmp     r1,r12
+if( R1 <= R12 ) //unsigned
+{
+    02072158 81A0200C movhi   r2,r12
+    0207215C 81A0C001 movhi   r12,r1
+}
+02072160 E5C3200C strb    r2,[r3,0Ch]
+02072164 E5C3C00D strb    r12,[r3,0Dh]
+02072168 E12FFF1E bx      r14
+
+
+// ---- Event 0xD6 (Address 0207216C) ----
+0207216C E5D02000 ldrb    r2,[r0]
+02072170 E5D01001 ldrb    r1,[r0,1h]
+02072174 E2800002 add     r0,r0,2h
+02072178 E0821401 add     r1,r2,r1,lsl 8h
+0207217C E1C310BA strh    r1,[r3,0Ah]
+02072180 E12FFF1E bx      r14
+
+
+// ---- Event 0xD7 SetPitchBend (Address 02072184) ----
+02072184 E92D4010 push    r4,r14
+02072188 E1A04000 mov     r4,r0
+0207218C E5D42000 ldrb    r2,[r4]
+02072190 E5D41001 ldrb    r1,[r4,1h]
+02072194 E1A00003 mov     r0,r3
+02072198 E0811402 add     r1,r1,r2,lsl 8h
+0207219C E1A01801 mov     r1,r1,lsl 10h
+020721A0 E1A01841 mov     r1,r1,asr 10h
+020721A4 EB0006B9 bl      2073C90h
+020721A8 E2840002 add     r0,r4,2h
+020721AC E8BD8010 pop     r4,r15
+
+
+// ---- Event 0xD8 (Address 020721B0) ----
+020721B0 E5D02000 ldrb    r2,[r0]
+020721B4 E5D01001 ldrb    r1,[r0,1h]
+020721B8 E2800002 add     r0,r0,2h
+020721BC E0811402 add     r1,r1,r2,lsl 8h
+020721C0 E1C315B6 strh    r1,[r3,56h]
+020721C4 E12FFF1E bx      r14
+ 
+ // ---- Event 0xD9 (Address 0207191C) ----
+//Same as 0x96 
+
+// ---- Event 0xDA (Address 0207191C) ----
+//Same as 0x96 
+
+
+// ---- Event 0xDB (Address 020721C8) ----
+020721C8 E4D01001 ldrb    r1,[r0],1h        //Read Parameter, increment TrackPosPtr
+020721CC E5C31059 strb    r1,[r3,59h]
+020721D0 E12FFF1E bx      r14
+
+
+// ---- Event 0xDC (Address 020721D4) ----
+020721D4 E92D4038 push    r3-r5,r14
+020721D8 E5D05000 ldrb    r5,[r0]
+020721DC E5D04001 ldrb    r4,[r0,1h]
+020721E0 E5D0E002 ldrb    r14,[r0,2h]
+020721E4 E5D0C003 ldrb    r12,[r0,3h]
+020721E8 E5D02004 ldrb    r2,[r0,4h]
+020721EC E3A01001 mov     r1,1h
+020721F0 E0854404 add     r4,r5,r4,lsl 8h
+020721F4 E5C31075 strb    r1,[r3,75h]
+020721F8 E5C31076 strb    r1,[r3,76h]
+020721FC E1A01804 mov     r1,r4,lsl 10h
+02072200 E5C32077 strb    r2,[r3,77h]
+02072204 E1A01841 mov     r1,r1,asr 10h
+02072208 E5831078 str     r1,[r3,78h]
+0207220C E08E140C add     r1,r14,r12,lsl 8h
+02072210 E1C317BC strh    r1,[r3,7Ch]
+02072214 E3A01000 mov     r1,0h
+02072218 E1C317BE strh    r1,[r3,7Eh]
+0207221C E1C318B0 strh    r1,[r3,80h]
+02072220 E5C31082 strb    r1,[r3,82h]
+02072224 E2800005 add     r0,r0,5h
+02072228 E8BD8038 pop     r3-r5,r15
+
+
+// ---- Event 0xDD (Address 0207222C) ----
+0207222C E5D02000 ldrb    r2,[r0]
+02072230 E5D01001 ldrb    r1,[r0,1h]
+02072234 E0821401 add     r1,r2,r1,lsl 8h
+02072238 E1C317BE strh    r1,[r3,7Eh]
+0207223C E5D02002 ldrb    r2,[r0,2h]
+02072240 E5D01003 ldrb    r1,[r0,3h]
+02072244 E2800004 add     r0,r0,4h
+02072248 E0821401 add     r1,r2,r1,lsl 8h
+0207224C E1C318B0 strh    r1,[r3,80h]
+02072250 E12FFF1E bx      r14
+
+// ---- Event 0xDE (Address 0207191C) ----
+//Same as 0x96 
+
+
+// ---- Event 0xDF (Address 02072254) ----
+02072254 E5D01000 ldrb    r1,[r0]
+02072258 E2800001 add     r0,r0,1h
+0207225C E3510002 cmp     r1,2h
+if( R1 == 2 )
+    02072260 03A01001 moveq   r1,1h
+02072264 E5C31075 strb    r1,[r3,75h]
+02072268 E3510000 cmp     r1,0h
+if( R1 == 0 )
+    0207226C 03A01000 moveq   r1,0h
+else
+    02072270 13A01001 movne   r1,1h
+02072274 E5C31076 strb    r1,[r3,76h]
+02072278 E12FFF1E bx      r14
+
+
+// ---- Event 0xE0 SetTrackVol (Address 0207227C) ----
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+0207227C E92D4038 push    r3-r5,r14
+02072280 E1D040D0 ldrsb   r4,[r0]               //R4 = NewTrackVolume
+02072284 E3A05000 mov     r5,0h                 //R5 = 0
+02072288 E59F2078 ldr     r2,=82061029h         //
+0207228C E1A01804 mov     r1,r4,lsl 10h         //R1 = R4 << 16
+02072290 E5831034 str     r1,[r3,34h]           //
+02072294 E583102C str     r1,[r3,2Ch]           //
+02072298 E1C353B8 strh    r5,[r3,38h]           //
+0207229C E593C0C4 ldr     r12,[r3,0C4h]         //Get the pointer to the beginning of the mdev data
+020722A0 E5D31050 ldrb    r1,[r3,50h]           //Some volume value
+020722A4 E1DCE0D8 ldrsb   r14,[r12,8h]          //Get a volume value from the mdev master entry ?
+020722A8 E59FC05C ldr     r12,=4000208h         //Master interupt ctrl address
+020722AC E1610184 smulbb  r1,r4,r1              //Multiplies R4 and R1 as 2 signed int 16, and put the 32bits result in R1 ! 
+                                                //R1 = NewTrackVolume * R1
+020722B0 E004019E mul     r4,r14,r1             //R4 = R14 * R1
+020722B4 E0CE1492 smull   r1,r14,r2,r4          //R1 = ( 0x82061029 * R4 ) & 0xFFFFFFFF, R14 = 
+020722B8 E084E00E add     r14,r4,r14            //R14 = R4 + R14
+020722BC E1A01FA4 mov     r1,r4,lsr 1Fh         //
+020722C0 E081E6CE add     r14,r1,r14,asr 0Dh
+020722C4 E1C3E1B8 strh    r14,[r3,18h]          // The complete operation on R14 is R14 = (([r12,8h] * (NewTrackVolume * [r3,50h])) >> 31) + ( (0xFFFFFFFF00000000 & ( ([r12,8h] * (NewTrackVolume * [r3,50h])) * 0x82061029 ) + ([r12,8h] * (NewTrackVolume * [r3,50h]))) >> 13 )
+020722C8 E1DC40B0 ldrh    r4,[r12]
+020722CC E1CC50B0 strh    r5,[r12]
+020722D0 E59320B4 ldr     r2,[r3,0B4h]
+020722D4 E3520000 cmp     r2,0h
+if( R2 == 0 )
+    020722D8 0A000005 beq     20722F4h
+020722DC E1D210B6 ldrh    r1,[r2,6h]
+020722E0 E3811020 orr     r1,r1,20h
+020722E4 E1C210B6 strh    r1,[r2,6h]
+020722E8 E5922154 ldr     r2,[r2,154h]
+020722EC E3520000 cmp     r2,0h
+if( R2 != 0 )
+    020722F0 1AFFFFF9 bne     20722DCh
+020722F4 E59F2010 ldr     r2,=4000208h            ;//Master interrupt ctrl
+020722F8 E2800001 add     r0,r0,1h
+020722FC E1D210B0 ldrh    r1,[r2]
+02072300 E1C240B0 strh    r4,[r2]
+02072304 E8BD8038 pop     r3-r5,r15
+
+
+// ---- Event 0xE1 (Address 02072310) ----
+02072310 E92D4038 push    r3-r5,r14
+02072314 E1D020D0 ldrsb   r2,[r0]
+02072318 E593102C ldr     r1,[r3,2Ch]
+0207231C E0824841 add     r4,r2,r1,asr 10h
+02072320 E354007F cmp     r4,7Fh
+if( R4 > 0x7F ) //signed
+{
+    02072324 C3A0407F movgt   r4,7Fh
+    02072328 CA000001 bgt     2072334h
+}
+0207232C E3540000 cmp     r4,0h
+if( R4 < 0 ) //signed
+    02072330 B3A04000 movlt   r4,0h
+02072334 E1A01804 mov     r1,r4,lsl 10h
+02072338 E5831034 str     r1,[r3,34h]
+0207233C E583102C str     r1,[r3,2Ch]
+02072340 E3A05000 mov     r5,0h
+02072344 E1C353B8 strh    r5,[r3,38h]
+02072348 E5D31050 ldrb    r1,[r3,50h]
+0207234C E593C0C4 ldr     r12,[r3,0C4h]
+02072350 E59F2060 ldr     r2,=82061029h
+02072354 E0010194 mul     r1,r4,r1
+02072358 E1DCE0D8 ldrsb   r14,[r12,8h]
+0207235C E59FC058 ldr     r12,=4000208h            ;//Master interrupt ctrl
+02072360 E004019E mul     r4,r14,r1
+02072364 E0CE1492 smull   r1,r14,r2,r4
+02072368 E084E00E add     r14,r4,r14
+0207236C E1A01FA4 mov     r1,r4,lsr 1Fh
+02072370 E081E6CE add     r14,r1,r14,asr 0Dh
+02072374 E1C3E1B8 strh    r14,[r3,18h]
+02072378 E1DC40B0 ldrh    r4,[r12]
+0207237C E1CC50B0 strh    r5,[r12]
+02072380 E59320B4 ldr     r2,[r3,0B4h]
+02072384 E3520000 cmp     r2,0h
+if( R2 == 0 )
+    02072388 0A000005 beq     20723A4h
+0207238C E1D210B6 ldrh    r1,[r2,6h]
+02072390 E3811020 orr     r1,r1,20h
+02072394 E1C210B6 strh    r1,[r2,6h]
+02072398 E5922154 ldr     r2,[r2,154h]
+0207239C E3520000 cmp     r2,0h
+if( R2 != 0 )
+    020723A0 1AFFFFF9 bne     207238Ch
+020723A4 E59F2010 ldr     r2,=4000208h            ;//Master interrupt ctrl
+020723A8 E2800001 add     r0,r0,1h
+020723AC E1D210B0 ldrh    r1,[r2]
+020723B0 E1C240B0 strh    r4,[r2]
+020723B4 E8BD8038 pop     r3-r5,r15
+
+
+// ---- Event 0xE2 (Address 020723C0) ----
+020723C0 E92D4070 push    r4-r6,r14
+020723C4 E1A05000 mov     r5,r0
+020723C8 E1D510D2 ldrsb   r1,[r5,2h]
+020723CC E5D52000 ldrb    r2,[r5]
+020723D0 E5D50001 ldrb    r0,[r5,1h]
+020723D4 E1A04003 mov     r4,r3
+020723D8 E1A01801 mov     r1,r1,lsl 10h
+020723DC E0820400 add     r0,r2,r0,lsl 8h
+020723E0 E1A00800 mov     r0,r0,lsl 10h
+020723E4 E5841034 str     r1,[r4,34h]
+020723E8 E1B06820 movs    r6,r0,lsr 10h
+if( R6 == 0 )
+{
+    020723EC 0584102C streq   r1,[r4,2Ch]
+    020723F0 0A000006 beq     2072410h
+}
+020723F4 E594002C ldr     r0,[r4,2Ch]
+020723F8 E0510000 subs    r0,r1,r0
+if( R0 == 0 )
+{
+    020723FC 03A06000 moveq   r6,0h
+    02072400 0A000002 beq     2072410h
+}
+02072404 E1A01006 mov     r1,r6
+02072408 EB0076A5 bl      208FEA4h
+0207240C E5840030 str     r0,[r4,30h]
+02072410 E1C463B8 strh    r6,[r4,38h]
+02072414 E2850003 add     r0,r5,3h
+02072418 E8BD8070 pop     r4-r6,r15
+
+
+// ---- Event 0xE3 SetExpression (Address 0207241C) ----
+0207241C E92D4038 push    r3-r5,r14
+02072420 E5D04000 ldrb    r4,[r0]           //Read parameter
+02072424 E59F2074 ldr     r2,=82061029h     
+02072428 E59FE074 ldr     r14,=4000208h     //Master interupt control
+0207242C E5C34050 strb    r4,[r3,50h]       //Puts parameter there. Its most likely the current track's expression
+02072430 E593102C ldr     r1,[r3,2Ch]       //loaded 0x640000
+02072434 E593C0C4 ldr     r12,[r3,0C4h]     //read 0x2292360
+02072438 E1A01841 mov     r1,r1,asr 10h     //R1 = 0x64
+0207243C E0040491 mul     r4,r1,r4          //R4 = 0x64 * Expression (R4 = 0x64 * 0x73 = 0x2CEC)
+02072440 E1DC10D8 ldrsb   r1,[r12,8h]       //R1 = 0x7F
+02072444 E3A0C000 mov     r12,0h            //R12 = 0
+02072448 E0040491 mul     r4,r1,r4          //R4 = 0x7F * 0x2CEC = 0x164914
+0207244C E0C51492 smull   r1,r5,r2,r4       //R1 = 0xFFFFFFFF & (R2 * R4), R5 = (R2 * R4) >> 32.(signed) (R1= 0x469AF434, R5= 0xFFF5088F) 
+02072450 E0845005 add     r5,r4,r5          //R5 = 0x164914(1,460,500) + 0xFFF5088F(-718,705) = 0xB51A3(741,795)
+02072454 E1A01FA4 mov     r1,r4,lsr 1Fh     //R1 = 0x164914 >> 31 = 0
+02072458 E08156C5 add     r5,r1,r5,asr 0Dh  //R5 = 0 + 0xB51A3 >> 13 = 0x5A(90)
+0207245C E1C351B8 strh    r5,[r3,18h]       //0x2292370 + 0x18 2292388
+02072460 E1DE40B0 ldrh    r4,[r14]          //Get previous Master interrupt state
+02072464 E1CEC0B0 strh    r12,[r14]         //Turn interrupts off (Probably a critical section)
+02072468 E59320B4 ldr     r2,[r3,0B4h]      // This is a pointer
+0207246C E3520000 cmp     r2,0h             //Check if pointer is null
+if( R2 == 0 )
+    02072470 0A000005 beq     207248Ch  ///GOTO LBL1
+///LBL2
+02072474 E1D210B6 ldrh    r1,[r2,6h]
+02072478 E3811020 orr     r1,r1,20h
+0207247C E1C210B6 strh    r1,[r2,6h]
+02072480 E5922154 ldr     r2,[r2,154h]
+02072484 E3520000 cmp     r2,0h
+if( R2 != 0 )
+    02072488 1AFFFFF9 bne     2072474h  ///GOTO LBL2
+///LBL1
+0207248C E59F2010 ldr     r2,=4000208h      //Master interrupt control
+02072490 E2800001 add     r0,r0,1h          //Increment TrackPositionPtr
+02072494 E1D210B0 ldrh    r1,[r2]           //Load previous Master interupt control state
+02072498 E1C240B0 strh    r4,[r2]           //Restore previous Master Interrupt state
+0207249C E8BD8038 pop     r3-r5,r15
+
+
+// ---- Event 0xE4 (Address 020724A8) ----
+020724A8 E92D4038 push    r3-r5,r14
+020724AC E5D05000 ldrb    r5,[r0]
+020724B0 E5D01001 ldrb    r1,[r0,1h]
+020724B4 E5D04002 ldrb    r4,[r0,2h]
+020724B8 E5D0E003 ldrb    r14,[r0,3h]
+020724BC E5D0C004 ldrb    r12,[r0,4h]
+020724C0 E3A02001 mov     r2,1h
+020724C4 E0851401 add     r1,r5,r1,lsl 8h
+020724C8 E1A01801 mov     r1,r1,lsl 10h
+020724CC E5C32085 strb    r2,[r3,85h]
+020724D0 E3A02002 mov     r2,2h
+020724D4 E5C32086 strb    r2,[r3,86h]
+020724D8 E5C3C087 strb    r12,[r3,87h]
+020724DC E1A01841 mov     r1,r1,asr 10h
+020724E0 E5831088 str     r1,[r3,88h]
+020724E4 E084140E add     r1,r4,r14,lsl 8h
+020724E8 E1C318BC strh    r1,[r3,8Ch]
+020724EC E3A01000 mov     r1,0h
+020724F0 E1C318BE strh    r1,[r3,8Eh]
+020724F4 E1C319B0 strh    r1,[r3,90h]
+020724F8 E5C31092 strb    r1,[r3,92h]
+020724FC E2800005 add     r0,r0,5h
+02072500 E8BD8038 pop     r3-r5,r15
+
+
+// ---- Event 0xE5 (Address 02072504) ----
+02072504 E5D02000 ldrb    r2,[r0]
+02072508 E5D01001 ldrb    r1,[r0,1h]
+0207250C E0821401 add     r1,r2,r1,lsl 8h
+02072510 E1C318BE strh    r1,[r3,8Eh]
+02072514 E5D02002 ldrb    r2,[r0,2h]
+02072518 E5D01003 ldrb    r1,[r0,3h]
+0207251C E2800004 add     r0,r0,4h
+02072520 E0821401 add     r1,r2,r1,lsl 8h
+02072524 E1C319B0 strh    r1,[r3,90h]
+02072528 E12FFF1E bx      r14
+ 
+// ---- Event 0xE6 (Address 0207191C) ----
+//Same as 0x96
+
+
+// ---- Event 0xE7 (Address 0207252C) ----
+0207252C E5D01000 ldrb    r1,[r0]
+02072530 E2800001 add     r0,r0,1h
+02072534 E3510002 cmp     r1,2h
+if( R1 == 2 )
+    02072538 03A01001 moveq   r1,1h
+0207253C E5C31085 strb    r1,[r3,85h]
+02072540 E3510000 cmp     r1,0h
+if( R1 == 0 )
+    02072544 03A01000 moveq   r1,0h
+else
+    02072548 13A01002 movne   r1,2h
+0207254C E5C31086 strb    r1,[r3,86h]
+02072550 E12FFF1E bx      r14
+
+
+// ---- Event 0xE8 SetPan (Address 02072554) ----
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+02072554 E92D4008 push    r3,r14
+02072558 E5D0E000 ldrb    r14,[r0]          //Load PanValue
+0207255C E3A0C000 mov     r12,0h
+02072560 E35E007F cmp     r14,7Fh
+if( PanValue > 0x7F ) //signed
+    02072564 C3A0E07F movgt   r14,7Fh       //Clamp to 0x7F max
+02072568 E1A0180E mov     r1,r14,lsl 10h    //R1 = PanValue << 16
+0207256C E5831044 str     r1,[r3,44h]       //
+02072570 E583103C str     r1,[r3,3Ch]
+02072574 E1C3C4B8 strh    r12,[r3,48h]
+02072578 E59320C4 ldr     r2,[r3,0C4h]
+0207257C E59F104C ldr     r1,=4000208h            ;//Master interrupt ctrl
+02072580 E1D220D7 ldrsb   r2,[r2,7h]
+02072584 E2422040 sub     r2,r2,40h
+02072588 E08E2002 add     r2,r14,r2
+0207258C E1C321BA strh    r2,[r3,1Ah]
+02072590 E1D1E0B0 ldrh    r14,[r1]
+02072594 E1C1C0B0 strh    r12,[r1]
+02072598 E59320B4 ldr     r2,[r3,0B4h]
+0207259C E3520000 cmp     r2,0h
+if( R2 == 0 )
+    020725A0 0A000005 beq     20725BCh
+020725A4 E1D210B6 ldrh    r1,[r2,6h]
+020725A8 E3811040 orr     r1,r1,40h
+020725AC E1C210B6 strh    r1,[r2,6h]
+020725B0 E5922154 ldr     r2,[r2,154h]
+020725B4 E3520000 cmp     r2,0h
+if( R2 != 0 )
+    020725B8 1AFFFFF9 bne     20725A4h
+020725BC E59F200C ldr     r2,=4000208h            ;//Master interrupt ctrl
+020725C0 E2800001 add     r0,r0,1h
+020725C4 E1D210B0 ldrh    r1,[r2]
+020725C8 E1C2E0B0 strh    r14,[r2]
+020725CC E8BD8008 pop     r3,r15
+
+
+// ---- Event 0xE9 (Address 020725D4) ----
+//( R0=TrackPosPtr, R1=BegTrackStruct?, R2=CurTrackStruct, R3=CurChanStruct?, R4=CurChanStruct?, R5=EventHandlerFunPtr )
+020725D4 E92D4008 push    r3,r14
+020725D8 E1D020D0 ldrsb   r2,[r0]
+020725DC E593103C ldr     r1,[r3,3Ch]
+020725E0 E082E841 add     r14,r2,r1,asr 10h
+020725E4 E35E007F cmp     r14,7Fh
+if( R14 > 0x7F ) //signed
+    020725E8 C3A0E07F movgt   r14,7Fh
+020725EC CA000001 bgt     20725F8h
+020725F0 E35E0000 cmp     r14,0h
+if( R14 < 0 ) //signed
+    020725F4 B3A0E000 movlt   r14,0h
+020725F8 E1A0180E mov     r1,r14,lsl 10h
+020725FC E5831044 str     r1,[r3,44h]
+02072600 E583103C str     r1,[r3,3Ch]
+02072604 E3A0C000 mov     r12,0h
+02072608 E1C3C4B8 strh    r12,[r3,48h]
+0207260C E59320C4 ldr     r2,[r3,0C4h]
+02072610 E59F104C ldr     r1,=4000208h            ;//Master interrupt ctrl
+02072614 E1D220D7 ldrsb   r2,[r2,7h]
+02072618 E2422040 sub     r2,r2,40h
+0207261C E08E2002 add     r2,r14,r2
+02072620 E1C321BA strh    r2,[r3,1Ah]
+02072624 E1D1E0B0 ldrh    r14,[r1]
+02072628 E1C1C0B0 strh    r12,[r1]
+0207262C E59320B4 ldr     r2,[r3,0B4h]
+02072630 E3520000 cmp     r2,0h
+if( R2 == 0 )
+    02072634 0A000005 beq     2072650h
+02072638 E1D210B6 ldrh    r1,[r2,6h]
+0207263C E3811040 orr     r1,r1,40h
+02072640 E1C210B6 strh    r1,[r2,6h]
+02072644 E5922154 ldr     r2,[r2,154h]
+02072648 E3520000 cmp     r2,0h
+if( R2 != 0 )
+    0207264C 1AFFFFF9 bne     2072638h
+02072650 E59F200C ldr     r2,=4000208h            ;//Master interrupt ctrl
+02072654 E2800001 add     r0,r0,1h
+02072658 E1D210B0 ldrh    r1,[r2]
+0207265C E1C2E0B0 strh    r14,[r2]
+02072660 E8BD8008 pop     r3,r15
+
+
+// ---- Event 0xEA (Address 02072668) ----
+02072668 E92D4070 push    r4-r6,r14
+0207266C E1A05000 mov     r5,r0
+02072670 E1D510D2 ldrsb   r1,[r5,2h]
+02072674 E5D52000 ldrb    r2,[r5]
+02072678 E5D50001 ldrb    r0,[r5,1h]
+0207267C E1A04003 mov     r4,r3
+02072680 E1A01801 mov     r1,r1,lsl 10h
+02072684 E0820400 add     r0,r2,r0,lsl 8h
+02072688 E1A00800 mov     r0,r0,lsl 10h
+0207268C E5841044 str     r1,[r4,44h]
+02072690 E1B06820 movs    r6,r0,lsr 10h
+if( R6 == 0 )
+{
+    02072694 0584103C streq   r1,[r4,3Ch]
+    02072698 0A000006 beq     20726B8h
+}
+0207269C E594003C ldr     r0,[r4,3Ch]
+020726A0 E0510000 subs    r0,r1,r0
+if( R0 == 0 )
+{
+    020726A4 03A06000 moveq   r6,0h
+    020726A8 0A000002 beq     20726B8h
+}
+020726AC E1A01006 mov     r1,r6
+020726B0 EB0075FB bl      208FEA4h
+020726B4 E5840040 str     r0,[r4,40h]
+020726B8 E1C464B8 strh    r6,[r4,48h]
+020726BC E2850003 add     r0,r5,3h
+020726C0 E8BD8070 pop     r4-r6,r15
+
+
+// ---- Event 0xEB (Address 0207191C) ----
+//Same as 0x96
+
+
+// ---- Event 0xEC (Address 020726C4) ----
+020726C4 E92D4038 push    r3-r5,r14
+020726C8 E5D05000 ldrb    r5,[r0]
+020726CC E5D01001 ldrb    r1,[r0,1h]
+020726D0 E5D04002 ldrb    r4,[r0,2h]
+020726D4 E5D0E003 ldrb    r14,[r0,3h]
+020726D8 E5D0C004 ldrb    r12,[r0,4h]
+020726DC E3A02001 mov     r2,1h
+020726E0 E0851401 add     r1,r5,r1,lsl 8h
+020726E4 E1A01801 mov     r1,r1,lsl 10h
+020726E8 E5C32095 strb    r2,[r3,95h]
+020726EC E3A02003 mov     r2,3h
+020726F0 E5C32096 strb    r2,[r3,96h]
+020726F4 E5C3C097 strb    r12,[r3,97h]
+020726F8 E1A01841 mov     r1,r1,asr 10h
+020726FC E5831098 str     r1,[r3,98h]
+02072700 E084140E add     r1,r4,r14,lsl 8h
+02072704 E1C319BC strh    r1,[r3,9Ch]
+02072708 E3A01000 mov     r1,0h
+0207270C E1C319BE strh    r1,[r3,9Eh]
+02072710 E1C31AB0 strh    r1,[r3,0A0h]
+02072714 E5C310A2 strb    r1,[r3,0A2h]
+02072718 E2800005 add     r0,r0,5h
+0207271C E8BD8038 pop     r3-r5,r15
+
+
+// ---- Event 0xED (Address 02072720) ----
+02072720 E5D02000 ldrb    r2,[r0]
+02072724 E5D01001 ldrb    r1,[r0,1h]
+02072728 E0821401 add     r1,r2,r1,lsl 8h
+0207272C E1C319BE strh    r1,[r3,9Eh]
+02072730 E5D02002 ldrb    r2,[r0,2h]
+02072734 E5D01003 ldrb    r1,[r0,3h]
+02072738 E2800004 add     r0,r0,4h
+0207273C E0821401 add     r1,r2,r1,lsl 8h
+02072740 E1C31AB0 strh    r1,[r3,0A0h]
+02072744 E12FFF1E bx      r14
+
+
+// ---- Event 0xEE (Address 0207191C) ----
+//Same as 0x96
+0x0207191C, 
+
+
+// ---- Event 0xEF (Address 02072748) ----
+02072748 E5D01000 ldrb    r1,[r0]
+0207274C E2800001 add     r0,r0,1h
+02072750 E3510002 cmp     r1,2h
+if( R1 == 2 )
+    02072754 03A01001 moveq   r1,1h
+02072758 E5C31095 strb    r1,[r3,95h]
+0207275C E3510000 cmp     r1,0h
+if( R1 == 0 )
+    02072760 03A01000 moveq   r1,0h
+else
+    02072764 13A01003 movne   r1,3h
+02072768 E5C31096 strb    r1,[r3,96h]
+0207276C E12FFF1E bx      r14
+
+
+// ---- Event 0xF0 (Address 02072770) ----
+02072770 E92D4010 push    r4,r14
+02072774 E5D02000 ldrb    r2,[r0]
+02072778 E5D01001 ldrb    r1,[r0,1h]
+0207277C E5D3C061 ldrb    r12,[r3,61h]
+02072780 E2833074 add     r3,r3,74h
+02072784 E0821401 add     r1,r2,r1,lsl 8h
+02072788 E1A01801 mov     r1,r1,lsl 10h
+0207278C E5D04002 ldrb    r4,[r0,2h]
+02072790 E5D0E003 ldrb    r14,[r0,3h]
+02072794 E5D02004 ldrb    r2,[r0,4h]
+02072798 E083320C add     r3,r3,r12,lsl 4h
+0207279C E1A01841 mov     r1,r1,asr 10h
+020727A0 E5C32003 strb    r2,[r3,3h]
+020727A4 E5831004 str     r1,[r3,4h]
+020727A8 E084140E add     r1,r4,r14,lsl 8h
+020727AC E1C310B8 strh    r1,[r3,8h]
+020727B0 E3A01000 mov     r1,0h
+020727B4 E1C310BA strh    r1,[r3,0Ah]
+020727B8 E1C310BC strh    r1,[r3,0Ch]
+020727BC E5C3100E strb    r1,[r3,0Eh]
+020727C0 E2800005 add     r0,r0,5h
+020727C4 E8BD8010 pop     r4,r15
+
+ 
+ // ---- Event 0xF1 (Address 020727C8) ----
+020727C8 E5D3C061 ldrb    r12,[r3,61h]
+020727CC E5D02000 ldrb    r2,[r0]
+020727D0 E5D01001 ldrb    r1,[r0,1h]
+020727D4 E2833074 add     r3,r3,74h
+020727D8 E083320C add     r3,r3,r12,lsl 4h
+020727DC E0821401 add     r1,r2,r1,lsl 8h
+020727E0 E1C310BA strh    r1,[r3,0Ah]
+020727E4 E5D02002 ldrb    r2,[r0,2h]
+020727E8 E5D01003 ldrb    r1,[r0,3h]
+020727EC E2800004 add     r0,r0,4h
+020727F0 E0821401 add     r1,r2,r1,lsl 8h
+020727F4 E1C310BC strh    r1,[r3,0Ch]
+020727F8 E12FFF1E bx      r14
+
+
+// ---- Event 0xF2 (Address 020727FC) ----
+020727FC E5D31061 ldrb    r1,[r3,61h]
+02072800 E5D0C000 ldrb    r12,[r0]
+02072804 E2832074 add     r2,r3,74h
+02072808 E0821201 add     r1,r2,r1,lsl 4h
+0207280C E5D02001 ldrb    r2,[r0,1h]
+02072810 E35C000A cmp     r12,0Ah
+if( R12 <= 0xA ) //unsigned
+    02072814 908FF10C addls   r15,r15,r12,lsl 2h
+02072818 EA000044 b       2072930h
+0207281C EA000043 b       2072930h
+02072820 EA000008 b       2072848h
+02072824 EA000009 b       2072850h
+02072828 EA00000A b       2072858h
+0207282C EA00000B b       2072860h
+02072830 EA00000C b       2072868h
+02072834 EA000029 b       20728E0h
+02072838 EA00002B b       20728ECh
+0207283C EA00002E b       20728FCh
+02072840 EA000032 b       2072910h
+02072844 EA000036 b       2072924h
+02072848 E5C32061 strb    r2,[r3,61h]
+0207284C EA000037 b       2072930h
+02072850 E5C12001 strb    r2,[r1,1h]
+02072854 EA000035 b       2072930h
+02072858 E5C12002 strb    r2,[r1,2h]
+0207285C EA000033 b       2072930h
+02072860 E5C12003 strb    r2,[r1,3h]
+02072864 EA000031 b       2072930h
+02072868 E5D13002 ldrb    r3,[r1,2h]
+0207286C E3530004 cmp     r3,4h
+if( R3 <= 4 )
+    02072870 908FF103 addls   r15,r15,r3,lsl 2h
+02072874 EA000014 b       20728CCh
+02072878 EA000013 b       20728CCh
+0207287C EA000002 b       207288Ch
+02072880 EA000005 b       207289Ch
+02072884 EA000008 b       20728ACh
+02072888 EA00000B b       20728BCh
+0207288C E3A0300A mov     r3,0Ah
+02072890 E0030392 mul     r3,r2,r3
+02072894 E1A02003 mov     r2,r3
+02072898 EA00000E b       20728D8h
+0207289C E3E03013 mvn     r3,13h
+020728A0 E0030392 mul     r3,r2,r3
+020728A4 E1A02003 mov     r2,r3
+020728A8 EA00000A b       20728D8h
+020728AC E3A03014 mov     r3,14h
+020728B0 E0030392 mul     r3,r2,r3
+020728B4 E1A02003 mov     r2,r3
+020728B8 EA000006 b       20728D8h
+020728BC E3A0300A mov     r3,0Ah
+020728C0 E0030392 mul     r3,r2,r3
+020728C4 E1A02003 mov     r2,r3
+020728C8 EA000002 b       20728D8h
+020728CC E3A03014 mov     r3,14h
+020728D0 E0030392 mul     r3,r2,r3
+020728D4 E1A02003 mov     r2,r3
+020728D8 E5812004 str     r2,[r1,4h]
+020728DC EA000013 b       2072930h
+020728E0 E0822102 add     r2,r2,r2,lsl 2h
+020728E4 E1C120B8 strh    r2,[r1,8h]
+020728E8 EA000010 b       2072930h
+020728EC E3A03014 mov     r3,14h
+020728F0 E0030392 mul     r3,r2,r3
+020728F4 E1C130BA strh    r3,[r1,0Ah]
+020728F8 EA00000C b       2072930h
+020728FC E1D130BA ldrh    r3,[r1,0Ah]
+02072900 E2033CFF and     r3,r3,0FF00h
+02072904 E1832002 orr     r2,r3,r2
+02072908 E1C120BA strh    r2,[r1,0Ah]
+0207290C EA000007 b       2072930h
+02072910 E1D130BA ldrh    r3,[r1,0Ah]
+02072914 E20330FF and     r3,r3,0FFh
+02072918 E1832402 orr     r2,r3,r2,lsl 8h
+0207291C E1C120BA strh    r2,[r1,0Ah]
+02072920 EA000002 b       2072930h
+02072924 E3A03014 mov     r3,14h
+02072928 E0030392 mul     r3,r2,r3
+0207292C E1C130BC strh    r3,[r1,0Ch]
+02072930 E2800002 add     r0,r0,2h
+02072934 E12FFF1E bx      r14
+ 
+ 
+// ---- Event 0xF3 (Address 02072938) ----
+02072938 E92D4008 push    r3,r14
+0207293C E5D0C001 ldrb    r12,[r0,1h]
+02072940 E5D02000 ldrb    r2,[r0]
+02072944 E5D0E002 ldrb    r14,[r0,2h]
+02072948 E2831074 add     r1,r3,74h
+0207294C E35C0002 cmp     r12,2h
+02072950 E5C32061 strb    r2,[r3,61h]
+02072954 E0811202 add     r1,r1,r2,lsl 4h
+if( R12 == 2 )
+    02072958 03A0C001 moveq   r12,1h
+0207295C E5C1C001 strb    r12,[r1,1h]
+02072960 E5C1E002 strb    r14,[r1,2h]
+02072964 E2800003 add     r0,r0,3h
+02072968 E8BD8008 pop     r3,r15
+
+
+// ---- Event 0xF4 (Address 0207191C) ----
+//Same as 0x96
+
+
+// ---- Event 0xF5 (Address 0207191C) ----
+//Same as 0x96
+
+
+// ---- Event 0xF6 (Address 0207296C) ----
+0207296C E92D4010 push    r4,r14
+02072970 E1A04000 mov     r4,r0
+02072974 E5D42000 ldrb    r2,[r4]
+02072978 E1A0C001 mov     r12,r1
+0207297C E3A01008 mov     r1,8h
+02072980 E5CC2016 strb    r2,[r12,16h]
+02072984 E59C0028 ldr     r0,[r12,28h]
+02072988 E59C30A0 ldr     r3,[r12,0A0h]
+0207298C E59CC09C ldr     r12,[r12,9Ch]
+02072990 E12FFF3C blx     r12
+02072994 E2840001 add     r0,r4,1h
+02072998 E8BD8010 pop     r4,r15
+
+
+// ---- Event 0xF7 (Address 0207191C) ----
+//Same as 0x96
+
+
+// ---- Event 0xF8 SkipNext2Bytes2 (Address 0207299C) ----
+0207299C E2800002 add     r0,r0,2h  
+020729A0 E12FFF1E bx      r14
+
+
+// ---- Event 0xF9 (Address 0207191C) ----
+//Same as 0x96
+
+
+// ---- Event 0xFA (Address 0207191C) ----
+//Same as 0x96
+
+
+// ---- Event 0xFB (Address 0207191C) ----
+//Same as 0x96
+
+
+// ---- Event 0xFC (Address 0207191C) ----
+//Same as 0x96
+
+
+// ---- Event 0xFD (Address 0207191C) ----
+//Same as 0x96
+
+
+// ---- Event 0xFE (Address 0207191C) ----
+//Same as 0x96
+
+
+// ---- Event 0xFF (Address 0207191C) ----
+//Same as 0x96
+
+
+//=========================================================
+//  Functions Called By Events
+//=========================================================
+
+//Fun_2073A90( R0=CurChanStruct, R1=0, R2=CurTrackStruct, R3=CurTrackStruct, R4=TrackPosPtr, R5=EventHandlerFunPtr )
+Fun_2073A90()
+{
+    02073A90 E92D41F0 push    r4-r8,r14
+    02073A94 E59060B4 ldr     r6,[r0,0B4h]      //Load CurSmplInfoPtr
+    02073A98 E3A01000 mov     r1,0h
+    02073A9C E58010B4 str     r1,[r0,0B4h]      //Set CurSmplInfoPtr to 0 in memory
+    02073AA0 E3560000 cmp     r6,0h
+    if( CurSmplInfoPtr == 0 )                   //Is CurSmplInfoPtr null?
+        02073AA4 08BD81F0 popeq   r4-r8,r15     //Return
+    02073AA8 E59F8060 ldr     r8,=22B7A30h      //Ptr to a function 0x206C184 (Sets R12 to 0x207A7EC, Sets R0 to 0, Sets R2 to R1, Sets R1 to (0 - 1), and return to R12 ! )
+    02073AAC E1A05001 mov     r5,r1             //R5 = 0
+    02073AB0 E1A04001 mov     r4,r1             //R4 = 0
+    ///LBL1
+    02073AB4 E5967154 ldr     r7,[r6,154h]      //Load a pointer in R7 (was 0x22B8960) Seems to point to another sample data in memory
+    02073AB8 E286003C add     r0,r6,3Ch
+    02073ABC E1C650B4 strh    r5,[r6,4h]
+    02073AC0 E5865158 str     r5,[r6,158h]
+    02073AC4 E5865154 str     r5,[r6,154h]
+    02073AC8 EB00050D bl      2074F04h          ///EXEC Fun_02074F04
+    02073ACC E596014C ldr     r0,[r6,14Ch]
+    02073AD0 E3570000 cmp     r7,0h
+    02073AD4 E20000FF and     r0,r0,0FFh
+    02073AD8 E586014C str     r0,[r6,14Ch]
+    02073ADC E5864000 str     r4,[r6]
+    02073AE0 E1C641B8 strh    r4,[r6,18h]
+    02073AE4 E1D620BA ldrh    r2,[r6,0Ah]
+    02073AE8 E1D813B2 ldrh    r1,[r8,32h]
+    02073AEC E1A06007 mov     r6,r7
+    02073AF0 E1E00002 mvn     r0,r2
+    02073AF4 E0010000 and     r0,r1,r0
+    02073AF8 E1C803B2 strh    r0,[r8,32h]
+    02073AFC E1D803B6 ldrh    r0,[r8,36h]
+    02073B00 E1800002 orr     r0,r0,r2
+    02073B04 E1C803B6 strh    r0,[r8,36h]
+    if( R7 != 0 )
+        02073B08 1AFFFFE9 bne     2073AB4h      ///GOTO LBL1
+    02073B0C E8BD81F0 pop     r4-r8,r15         //Return
+}
+
+//Fun_02074A2C( R0 = CurChanStruct, R1=BegTrackStruct, R2=CurTrackStruct, R3=CurChanStruct, R4 = CurTrackStruct )
+//Possibly iterates in a queue of sample info to return the last entry.
+Fun_02074A2C()
+{
+    02074A2C E59020B4 ldr     r2,[r0,0B4h]      //R2 = CurSmplInfoPtr (Ex: 0x22B7D24) (Seems to be sample 0x270, or the merge between its sample info and split info parameters)
+    02074A30 E3A00000 mov     r0,0h             //R0 = 0
+    02074A34 E3520000 cmp     r2,0h             
+    if( CurSmplInfoPtr == null )
+        02074A38 012FFF1E bxeq    r14           //Return R0
+    ///LOOP_BEG
+    02074A3C E5D2114C ldrb    r1,[r2,14Ch]      //This value is also modified in the DSE chan+tracks update loop.R1 = 0x7B (Ex: R2 + 14Ch == 0x22B7E70. Value is 0x7B) It might have to do with the volume !
+    02074A40 E5922154 ldr     r2,[r2,154h]      //Put the pointer to the next element in the queue into R2. R2 = 0x22B7E80 (Ex: R2 + 154h == 0x22B7E78. Value is pointer : 0x22B7E80)
+    02074A44 E3510000 cmp     r1,0h             
+    if( R1 != 0 )
+        02074A48 12800001 addne   r0,r0,1h      //Sample info entries that do not contain 0 at 0x14C are counted in R0
+    02074A4C E3520000 cmp     r2,0h
+    if( R2 != null )
+        02074A50 1AFFFFF9 bne     2074A3Ch      ///GOTO LOOP_BEG
+    ///LOOP_END
+    02074A54 E12FFF1E bx      r14               //Return R0
+}
+
+Fun_02074C84( R0 = CurChanStruct+0x64 )
+{
+    02074C84 E3E010FF mvn     r1,0FFh
+    02074C88 E5801000 str     r1,[r0]
+    02074C8C E28110FF add     r1,r1,0FFh
+    02074C90 E5801004 str     r1,[r0,4h]
+    02074C94 E5801008 str     r1,[r0,8h]
+    02074C98 E580100C str     r1,[r0,0Ch]
+    02074C9C E12FFF1E bx      r14
+}
+
+
+Fun_02074CA0()
+{
+    02074CA0 E3A01001 mov     r1,1h
+    02074CA4 E5C01000 strb    r1,[r0]
+    02074CA8 E5D01001 ldrb    r1,[r0,1h]
+    02074CAC E351007F cmp     r1,7Fh
+    02074CB0 85D01008 ldrhib  r1,[r0,8h]
+    02074CB4 8351007F cmphi   r1,7Fh
+    02074CB8 85D01009 ldrhib  r1,[r0,9h]
+    02074CBC 8351007F cmphi   r1,7Fh
+    02074CC0 85D0100A ldrhib  r1,[r0,0Ah]
+    02074CC4 8351007F cmphi   r1,7Fh
+    02074CC8 85D0100B ldrhib  r1,[r0,0Bh]
+    02074CCC 8351007F cmphi   r1,7Fh
+    02074CD0 85D0100C ldrhib  r1,[r0,0Ch]
+    02074CD4 8351007F cmphi   r1,7Fh
+    02074CD8 85D0100D ldrhib  r1,[r0,0Dh]
+    02074CDC 8351007F cmphi   r1,7Fh
+    02074CE0 85D0100E ldrhib  r1,[r0,0Eh]
+    02074CE4 8351007F cmphi   r1,7Fh
+    02074CE8 83A01000 movhi   r1,0h
+    02074CEC 85C01000 strhib  r1,[r0]
+    02074CF0 E12FFF1E bx      r14   
+}
+
+/*
+Example Register state:
+R0: 0x2292890  //A struct under "mdev"
+R1: 0x28
+R2: 2292064
+R3: 2292890
+R4: 2280A5D
+
+*/
+Fun_02073C5C(R0 = CurChanStruct?, R1 = parameter, R2=CurTrackStruct, R3=CurChanStruct?, R4 = TrackPosPtr)
+{
+    02073C5C E92D4038 push    r3-r5,r14
+    02073C60 E1A05001 mov     r5,r1
+    02073C64 E5C05051 strb    r5,[r0,51h]       //put parameter into the channel struct
+    02073C68 E59040B4 ldr     r4,[r0,0B4h]      //Reads pointer to currently playing sample in queue
+    02073C6C E3540000 cmp     r4,0h             //Check if there's a sample playing
+    02073C70 08BD8038 popeq   r3-r5,r15         //If none are playing return.
+    ///BegLoop
+    02073C74 E1A01005 mov     r1,r5             //Put byte parameter into R1
+    02073C78 E284005C add     r0,r4,5Ch         //Add 0x5C to sample in queue pointer, place into R0
+    02073C7C EB00058A bl      20752ACh
+    02073C80 E5944154 ldr     r4,[r4,154h]      //Load pointer
+    02073C84 E3540000 cmp     r4,0h             //Check if pointer null
+    02073C88 1AFFFFF9 bne     2073C74h          //If Sample in queue, goto BegLoop
+    ///EndLoop
+    02073C8C E8BD8038 pop     r3-r5,r15
+}
+
+
+Fun_020752AC(  )
+{
+    020752AC E92D4008 push    r3,r14
+    020752B0 E590E00C ldr     r14,[r0,0Ch]
+    020752B4 E35E0000 cmp     r14,0h
+    020752B8 08BD8008 popeq   r3,r15
+    
+    020752BC E59F2030 ldr     r2,=81020409h
+    020752C0 E1A03401 mov     r3,r1,lsl 8h
+    020752C4 E0CC0392 smull   r0,r12,r2,r3
+    020752C8 E08CC401 add     r12,r12,r1,lsl 8h
+    020752CC E1A00FA3 mov     r0,r3,lsr 1Fh
+    020752D0 E080C34C add     r12,r0,r12,asr 6h
+    020752D4 E1A0180C mov     r1,r12,lsl 10h
+    020752D8 E5DE0001 ldrb    r0,[r14,1h]
+    020752DC E3500003 cmp     r0,3h
+    020752E0 058E1020 streq   r1,[r14,20h]
+    020752E4 E59EE030 ldr     r14,[r14,30h]
+    020752E8 E35E0000 cmp     r14,0h
+    020752EC 1AFFFFF9 bne     20752D8h
+    020752F0 E8BD8008 pop     r3,r15
+}

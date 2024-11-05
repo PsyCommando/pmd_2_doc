@@ -1,0 +1,582 @@
+//Here's a complete track listing thanks to evandixon 
+// http://projectpokemon.org/forums/showthread.php?40199-Pokemon-Mystery-Dungeon-2-Psy_commando-s-Tools-and-research-notes&p=191707&viewfull=1#post191707
+//And thanks to Coaster for filling some of the blanks 
+// http://pokemusicverse.freeforums.net/user/53
+//And also to Numberless: http://pokemusicverse.freeforums.net/user/43
+
+0000: Ambiance: Waves (high heavy)
+0001: Explorers of Time Opening
+0002: Menu
+0003: Marowack Dojo
+0004: Sentry Duty
+0005: Mission Success
+0006: Personality Test
+0007: Wigglytuff's Guild
+0008: Wigglytuff's Guild Remix
+0009: Treasure Town
+0010: Sharpedo Bluff
+0011: Monster House
+0012: Keckleon Shop in Dungeon
+0013: Thief
+0014: End of Dungeon
+0015: Boss Battle
+0016: Battle Against Dialga
+0017: Battle Against Dusknoir
+0018: Battle Vs. Regi's
+0019: SE: Failure
+0020: SE: Mission Success
+0021: Beach Cave
+0022: Drenched Bluff
+0023: Mt. Bristle
+0024: Waterfall Cave
+0025: Apple Woods
+0026: Craggy Coast
+0027: Side Path
+0028: Mt. Horn
+0029: Foggy Forrest
+0030: Steam Cave
+0031: Upper Steam Cave
+0032: Amp Plains
+0033: Far Amp Plains
+0034: Northern Desert
+0035: Quicksand Cave
+0036: Quicksand Pit
+0037: Crystal Cave
+0038: Crystal Crossing
+0039: Chasm Cave
+0040: Dark Hill
+0041: Sealed Ruin
+0042: Deep Sealed Ruin
+0043: Dusk Forest
+0044: Deep Dusk Forest
+0045: Random Dungeon Music #2/Former Marowack Dojo
+0046: Brine Cave
+0047: Deep Brine Cave
+0048: Hidden Land
+0049: Hidden Highland
+0050: Temporal Tower
+0051: Temporal Spire
+0052: Mystifying Forest
+0053: Blizzard Island Rescue Medley
+0054: Surrounded Sea
+0055: Random Dungeon Music #1
+0056: Aegis Cave
+0057: Concealed Ruins
+0058: Mt. Travail
+0059: The Nightmare
+0060: Miracle Sea
+0061: Treeshroud Forest
+0062: Dark Crater
+0063: Deep Dark Crater
+0064: Explorers of Time/Darkness Opening
+0065: SE: Sentry Duty "Perfect" + Spinda Cafe Win
+0066: SE: Sentry Duty "Well Done"
+0067: SE: Sentry Duty "Merely Adequate"
+0068: SE: Sentry Duty "Dreadful"
+0069: On the Beach at Dusk
+0070: Goodnight
+0071: Unused: Goodnight Remix
+0072: At the End of the Day (Goodbye Dusknoir)
+0073: Guildmaster Wigglytuff
+0074: Growing Anxiety
+0075: The Power of Darkness
+0076: Oh No!
+0077: Time Gear
+0078: Time Gear Remix
+0079: I Saw Something Again... (Dimensional Scream)
+0080: In the Future (Jail Cell)
+0081: Planet's Paralysis
+0082: Through the Sea of Time
+0083: In the Hands of Fate
+0084: Like a Fountain/Time Restored
+0085: Don't Ever Forget...
+0086: A Wish for Peace
+0087: On the Beach at Dusk (Again, but instruments sound minutely different, one of them is more echoey)
+0088: Memories Returned
+0089: Ending Theme Intro
+0090: Ending Theme (Staff Roll/Credits)
+0091: Epilogue Theme
+0092: Unused: Alternate Title Catch
+0093: Title Catch
+0094: Murky Forest (aka "Tiny Woods" from PMD1)
+0095: Sky Peak Cave (aka "Buried Relic" from PMD1)
+0096: Southern Jungle (aka "Friend Area - Wilds" from PMD1)
+0097: Sky Peak Coast (aka "Stormy Sea" from PMD1)
+0098: Spring Cave (aka "Magma Cavern" from PMD1...)
+0099: Lower Spring Cave
+0100: Ambiance: Waves (Mid heavy)
+0101: Ambiance: Heavy Thunderstorm
+0102: Ambiance: Light Thunderstorm
+0103: Ambiance: Heavy Tremors
+0104: Ambiance: Light Tremors
+0105: Ambiance: Heavy Tremors?
+0106: Ambiance: Bubbling Water
+0107: Ambiance: Temporal Pinnacle (Heavy Wind with Clock Ticking)
+0108: Temporal Pinnacle
+There is no 109 for some reason.
+0110: SE: Stomping?
+0111: SE: Constant Ringing (Unused maybe?)
+0112: Ambiance: Electricity
+0113: SE: "B_SE_MAIN19_HAD" (I have no idea what this is)
+0114: Ambiance: Light Electricity/Remains of Passage of Time?
+0115: Ambiance: Campfire
+0116: Ambiance: Lava/Bigger Fire?
+0117: Ambiance: Shimmer (Final Marowack Dojo/That shadow was Wigglytuff!)
+0118: Ambiance: Rainbow Stoneship?
+0119: Ambiance: Rainbow Stoneship Overload
+0120: Ambiance: "B_EVENT_JIKUU_0" Low Pulsating?
+0121: Have to Get Home
+0122: Further Away
+0123: Palkia's Onlslaught!
+0124: "B_DUN_HASSAM_01" (Silence)
+0125: Ambiance: Waterfall
+0126: Ambiance: Eating
+0127: The Dark Future Chord
+0128: Ambiance: Thunderstorm at Sea
+0129: Peliper Island
+0130: Cut to Title (After beach cave)
+0131: Heartwarming
+0132: Down a Dark Path
+0133: Growing Anxiety
+0134: Team Skull
+0135: Sympathy
+0136: Beyond the Dream
+0137: Air of Unease
+0138: One for All, All for One!
+0139: Boulder Quarry
+0140: Spring Cave Depths
+0141: Star Cave
+0142: Deep Star Cave
+0143: Limestone Cavern
+0144: Deep Limestone Cavern
+0145: Random Dungeon Theme #3
+0146: Fortune Ravine
+0147: Fortune Ravine Depths
+0148: Barren Valley
+0149: Dark Wasteland
+0150: Spacial Cliffs
+0151: Dark Ice Mountain
+0152: Icicle Forrest
+0153: Vast Ice Mountain
+0154: Vast Ice Mountain Peak
+0155: Sky Peak Forrest
+0156: Sky Peak Prarie
+0157: Sky Peak Snowfield
+0158: Sky Peak Final Pass
+0159: Spinda's Café
+0160: Ludicolo's Dance (Win big! Wynaut!)
+0161: Illusion Stone Chamber
+0162: It Can't Be...
+0163: Defend Globe
+0164: Defend Globe (Ending)
+0165: Team Charm's Theme (all the parts in sequence)
+0166: Here Comes Team Charm!
+0167: For a New Life
+0168: Living Spirit
+0169: Proud Accomplishment
+0170: In the Morning Sun
+0171: A New World
+0172: Thoughts for Friends
+0173: Life Goes On (Ending)
+0174: It's Not a Miracle
+0175: A Message on the Wind
+0176: A Fun Exploration
+0177: Shaymin Village
+0178: Team Charm's Theme (Part 1: Suspense)
+0179: Ambiance: Lava
+0180: Ambiance: Lava (lower pitch)
+0181: Ambiance: Waves
+0182: Ambiance: Grass
+0183: Ambiance: Wet Cave
+0184: Ambiance: Campfire (again?)
+0185: Ambiance: Campfire and Water
+0186: Ambiance: Rain
+0187: Ambiance: Wind
+0188: Ambiance: "Source"?
+0189: Ambiance: Ruins
+0190: Ambiance: Jungle
+0191: Ambiance: Crag
+0192: Ambiance: Memory (The shadow was Wigglytuff!)
+0193: Ambiance: Cave
+There are no files from 194 to 198 for some reason
+0199: Team Charm's Theme (Part 3: The Battle) [Redundant because of #201, although some instruments sound a little different]
+0200: Team Charm's Theme (Two notes apparently taken out of context)
+0201: Team Charm's Theme (Part 2-3: Lead AND The Battle
+
+//And their internal names:
+
+00: B_ENV_BEACH_01
+01: B_SYS_P3_OPENIN
+02: B_SYS_MENU.SMD
+03: B_SYS_TRAINING
+04: B_SYS_MINIGAME.
+05: B_SYS_EVENTCLEA
+06: B_SYS_SHINDAN_0
+07: B_MAP_GUILD_01.
+08: B_MAP_GUILD_02.
+09: B_MAP_TOWN_01.S
+10: B_MAP_HOME_01.S
+11: B_SYS_MONSTERHO
+12: B_SYS_SHOP.SMD 
+13: B_SYS_STEEL.SMD
+14: B_EVENT_BOSSFLO
+15: B_EVENT_BOSS_01
+16: B_EVENT_BOSS_02
+17: B_EVENT_BOSS_03
+18: B_EVENT_BOSS_04
+19: B_ME_GAMEOVER.S
+20: B_ME_GAMECLEAR.
+21: B_DUN_KAIGANNOD
+22: B_DUN_SHIMETTAI
+23: B_DUN_TOGETOGEY
+24: B_DUN_TAKITSUBO
+25: B_DUN_RINGONOMO
+26: B_DUN_ENGANNOIW
+27: B_DUN_YOKOANA_0
+28: B_DUN_TSUNOYAMA
+29: B_DUN_NOUMU_01.
+30: B_DUN_NESSUI_01
+31: B_DUN_NESSUI_02
+32: B_DUN_EREKIHEIG
+33: B_DUN_EREKIHEIG
+34: B_DUN_NISHINOSA
+35: B_DUN_RYUUSA_01
+36: B_DUN_RYUUSA_02
+37: B_DUN_SUISYOU_0
+38: B_DUN_DAISUISYO
+39: B_DUN_KUUKAN_01
+40: B_DUN_KURAYAMI_
+41: B_DUN_FUUINNOIW
+42: B_DUN_FUUINNOIW
+43: B_DUN_KURONOMOR
+44: B_DUN_MORINOTAK
+45: B_DUN_KIZAKINOM
+46: B_DUN_ISONODOUK
+47: B_DUN_ISONODOUK
+48: B_DUN_MABOROSHI
+49: B_DUN_MABOROSHI
+50: B_DUN_JIGENNOTO
+51: B_DUN_JIGENNOTO
+52: B_DUN_SHINPI_01
+53: B_DUN_HASSAM_01
+54: B_DUN_TOZASARET
+55: B_DUN_KISEKINOU
+56: B_DUN_BANNIN_01
+57: B_DUN_KAKUSARET
+58: B_DUN_SYUGYOUYA
+59: B_DUN_AKUMUNONA
+60: B_DUN_SORANOSAK
+61: B_DUN_SORANOSAK
+62: B_DUN_YAMINOKAK
+63: B_DUN_YAMINOKAK
+64: B_SYS_TITLE_02.
+65: B_ME_MINIGAME_0
+66: B_ME_MINIGAME_0
+67: B_ME_MINIGAME_0
+68: B_ME_MINIGAME_0
+69: B_EVENT_MEETING
+70: B_EVENT_CALMLY_
+71: B_EVENT_CALMLY_
+72: B_EVENT_CALMLY_
+73: B_EVENT_COMICAL
+74: B_EVENT_FEAR_01
+75: B_EVENT_FEAR_02
+76: B_EVENT_TENSION
+77: B_EVENT_TIMEWHE
+78: B_EVENT_TIMEWHE
+79: B_EVENT_JIKUU_0
+80: B_EVENT_ROUGOKU
+81: B_EVENT_ANKOKU_
+82: B_EVENT_SEPARAT
+83: B_EVENT_SEPARAT
+84: B_EVENT_PEACEFU
+85: B_EVENT_SEPARAT
+86: B_EVENT_SEPARAT
+87: B_EVENT_SEPARAT
+88: B_EVENT_SEPARAT
+89: B_EVENT_STAFFRO
+90: B_EVENT_STAFFRO
+91: B_EVENT_EPIROGU
+92: B_EVENT_TITLECA
+93: B_EVENT_TITLECA
+94: B_DUN_P3_P1_CHI
+95: B_DUN_P3_P1_GEN
+96: B_DUN_P3_P1_MYS
+97: B_DUN_P3_P1_GEN
+98: B_DUN_P3_P1_CHI
+99: B_DUN_P3_P1_CHI
+100: B_ENV_BEACH_01.
+101: B_ENV_STORM_01.
+102: B_ENV_STORM_02.
+103: B_ENV_QUAKE_01.
+104: B_ENV_QUAKE_02.
+105: B_ENV_QUAKE_03.
+106: B_ENV_MAGMA_01.
+107: B_ENV_LASTBOSS_
+108: B_ENV_LASTBOSS_
+110: B_SE_MAIN26_LIG
+111: B_SE_MAIN26_LIG
+112: B_EVENT_MIKARUG
+113: B_SE_MAIN19_HAD
+114: B_SE_MAIN19_ELE
+115: B_EVENT_TAKIBI.
+116: B_EVENT_TAKIGI.
+117: B_SE_MAIN23_KAK
+118: B_SE_MAIN25_ISH
+119: B_SE_MAIN25_ISH
+120: B_EVENT_JIKUU_0
+121: B_EVENT_SEPARAT
+122: B_EVENT_SEPARAT
+123: B_EVENT_BOSS_05
+124: B_DUN_HASSAM_01
+125: B_ENV_WATERFALL
+126: B_ENV_SYOKUJI_0
+127: B_ENV_DRONE_01.
+128: B_SE_MAIN05_DAK
+129: B_MAP_ISLAND.SM
+130: B_EVENT_TITLECA
+131: B_EVENT_CALMLY_
+132: B_EVENT_FEAR_03
+133: B_EVENT_FEAR_04
+134: B_EVENT_TENSION
+135: B_EVENT_P3_CALM
+136: B_EVENT_P3_IMAG
+137: B_EVENT_P3_MYST
+138: B_MAP_P3_GUILD_
+139: B_DUN_P3_GANSEK
+140: B_DUN_P3_GENSEN
+141: B_DUN_P3_HOSHI_
+142: B_DUN_P3_HOSHI_
+143: B_DUN_P3_SHONYU
+144: B_DUN_P3_SHONYU
+145: B_DUN_P3_ZAIHO_
+146: B_DUN_P3_ZAIHO_
+147: B_DUN_P3_ZAIHO_
+148: B_DUN_P3_KOKATS
+149: B_DUN_P3_KURAGA
+150: B_DUN_P3_KUUKAN
+151: B_DUN_P3_KURAYA
+152: B_DUN_P3_HYOCHU
+153: B_DUN_P3_HYOUZA
+154: B_DUN_P3_HYOUZA
+155: B_DUN_P3_SORA_0
+156: B_DUN_P3_SORA_0
+157: B_DUN_P3_SORA_0
+158: B_DUN_P3_SORA_0
+159: B_MAP_P3_CAFE.S
+160: B_EVENT_P3_DANC
+161: B_EVENT_P3_WICK
+162: B_EVENT_P3_PUPU
+163: B_EVENT_P3_PUPU
+164: B_EVENT_P3_PUPU
+165: B_EVENT_P3_CHAR
+166: B_EVENT_P3_CHAR
+167: B_EVENT_P3_NEWL
+168: B_EVENT_P3_SOUL
+169: B_EVENT_P3_PRID
+170: B_EVENT_P3_SUNR
+171: B_EVENT_P3_NEWW
+172: B_EVENT_P3_NOTM
+173: B_EVENT_P3_S09S
+174: B_EVENT_P3_DESI
+175: B_EVENT_P3_WIND
+176: B_EVENT_P3_ADVE
+177: B_EVENT_P3_SHAY
+178: B_EVENT_P3_CHAR
+179: B_ENV_P3_LAVA_0
+180: B_ENV_P3_LAVA_0
+181: B_ENV_P3_WAVE_0
+182: B_ENV_P3_GRASSY
+183: B_ENV_P3_CAVE_0
+184: B_ENV_P3_FIRESP
+185: B_ENV_P3_FIREWA
+186: B_ENV_P3_RAIN_0
+187: B_ENV_P3_TOP_01
+188: B_ENV_P3_SOURCE
+189: B_ENV_P3_RUINS_
+190: B_ENV_P3_JUNGLE
+191: B_ENV_P3_CRAG_0
+192: B_ENV_P3_MEMORY
+193: B_ENV_P3_CAVE_0
+199: B_EVENT_P3_CHAR
+200: B_EVENT_P3_CHAR
+201: B_EVENT_P3_CHAR
+
+
+
+This file contains information on some of the tracks in the PMD2 explorers of sky game.
+
+=========
+BGM0002:
+=========
+Title       : "B_SYS_MENU.SMD"
+Description : Main menu theme
+
+TrackNo     Main Instrument         Details
+-------     ---------------         ---------------------------------------
+0           -                       Reserved special track
+1           
+
+
+=========
+BGM0003:
+=========
+Title       : "B_SYS_TRAINING."
+Description : Music that plays in the Marowak training dojo dungeons.
+
+TrackNo     Main Instrument         Details
+-------     ---------------         ---------------------------------------
+0           -                       Reserved special track
+1          (0x1A)Synth Bass         Plays the main bass line
+2          (0x07)Glockenspiel?      Descending bells       
+3          (0x08)Glockenspiel?      Echo of track #2
+4          ()                       Echo of track #2
+5          (0x15)HawaiienGuitar?    Main accompaniement.
+6          (0x01)Crystal?           Alternating 4 notes
+7          (0x01)Crystal?           Same as track#6 but an octave lower, and with slightly different notes.
+8          (0x0E)Harpsichord        Plays accoompaniment
+9          (0x4B)Pizzicato          Rising pizzicato, and accompany the main melody a little.
+
+
+=========
+BGM0012:
+=========
+Title       : "B_SYS_SHOP.SMD"
+Description : Kecleon's Shop (inside dungeons)
+
+TrackNo     Main Instrument         Details
+-------     ---------------         ---------------------------------------
+0           -                       Reserved special track
+1           (0x4B)Accoustic Bass    Main Bassline
+2           
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+
+=========
+BGM0013:
+=========
+Title       : "B_SYS_STEEL.SMD"
+Description : ?
+
+TrackNo     Main Instrument         Details
+-------     ---------------         ---------------------------------------
+0           -                       Reserved special track
+
+
+
+=========
+BGM0064:
+=========
+Title       : "B_SYS_TITLE_02."
+Description : ?
+
+TrackNo     Main Instrument         Details
+-------     ---------------         ---------------------------------------
+0           -                       Reserved special track
+
+
+=========
+BGM0069:
+=========
+Title       : "B_EVENT_MEETING"
+Description : ?
+
+TrackNo     Main Instrument         Details
+-------     ---------------         ---------------------------------------
+0           -                       Reserved special track
+
+
+
+=========
+BGM0076:
+=========
+Title       : "B_EVENT_TENSION"
+Description : ?
+
+TrackNo     Main Instrument         Details
+-------     ---------------         ---------------------------------------
+0           -                       Reserved special track
+
+
+
+=========
+BGM0085:
+=========
+Title       : "B_EVENT_SEPARAT"
+Description : Don't ever forget (I don't want to say goodbye)
+
+TrackNo     Main Instrument         Details
+-------     ---------------         ---------------------------------------
+0           -                       Reserved special track
+1          (0x03)E.Piano            Plays part of the melody.
+2          (0x0A)MusicBox           Play part of the melody.
+3          (0x05)Strings            Intro Chords + Bass strings
+4          (0x07)FiddleStr          Intro Chords + backup main strings later on.
+5          (0x06)Strings            Intro Chords + Back Main Strings on second loop. 
+6          (0x06)Strings            Intro Chords + Another Backup string..
+7          (0x23)Choir              Choir Track
+8          (0x49)Strings/Fiddle     Play part of the main string melody, then only choir.
+            +(0x23) Choir
+9          (0x33)Flute/Piccolo      Plays the main flute + fiddle for the main track once.
+            +(0x49)Fiddle/String
+10         (0x48)Fiddle             Plays the main string Melody
+11         (0x49)Fiddle             Play main string melody, full pan to the left.
+12         (0x0B)Harp               Harp Intro + Main Bassline
+            +(0x08)Bass
+13         (0x0D)Synth              Accompaniment synth.. plays a single note with a harp sample oddly..
+14         (0x0E)Synth              Backup accompaniment synth.. plays a few notes with a harp sample oddly..
+
+
+=========
+BGM0091:
+=========
+Title       : "B_EVENT_EPIROGU"
+Description : ?
+
+TrackNo     Main Instrument         Details
+-------     ---------------         ---------------------------------------
+0           -                       Reserved special track
+
+
+
+=========
+BGM0107:
+=========
+Title       : "B_ENV_LASTBOSS_"
+Description : ?
+
+TrackNo     Main Instrument         Details
+-------     ---------------         ---------------------------------------
+0           -                       Reserved special track
+
+
+
+=========
+BGM0121:
+=========
+Title       : "B_EVENT_SEPARAT"
+Description : An alternate version of Don't ever forget (I don't want to say goodbye)
+
+
+
+=========
+BGM0159:
+=========
+Title       : "B_MAP_P3_CAFE.S"
+Description : ?
+
+TrackNo     Main Instrument         Details
+-------     ---------------         ---------------------------------------
+0           -                       Reserved special track
+

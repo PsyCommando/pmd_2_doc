@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE binary_file_format SYSTEM "BinaryFileFormat.dtd">
+<binary_file_format name="characterdata" type_name="" comment="" expr="">
+	<define_struct type_name="Character" comment="" expr="{this.charval;hex}"><data type="int" name="charval" format="unsigned" display="hex" len="2"/><data type="int" name="unk1" format="signed" display="hex" len="2"/><data type="none" name="chardata" len="24"/></define_struct><data type="int" name="nbchars" format="unsigned" len="4" display="dec"/><for name="CharEntrie" count="nbchars" stop_test="" type_name="" comment=""><use_struct name="TheChar" expr="" type_name="Character" comment=""/></for><data type="none" name="none"/>
+</binary_file_format>

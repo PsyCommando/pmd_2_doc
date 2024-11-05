@@ -1,0 +1,38 @@
+/BALANCE/m_level.bin
+---------------------
+m_level.bin is a pack file, with each of its sub-files compressed into PKDPX files, and then wrapped into SIR0 containers.
+The first sub-file index seems deliberately forced to 0x1200, given there is an extra unneeded row of 0xFF padding before the 
+first one.
+
+Its purpose is to indicate the total amount of experience required to reach a level, and indicate the stat increase for each 
+levels up until level 100, for every pokemon in the game!
+
+The structure of its sub-files, once decompressed, and after having been removed from its SIR0 container, 
+is exactly the same for each of them. 
+
+The first three entries are for Bulbasaur, Ivysaur and Venusaur. The 3 are identical though. 
+But if someone wanted it'd be possible to change each's stats growth individually!
+
+The format of a single entry goes as follow:
+
+Offset      Length      Type        Description
+------      ------      ----        -----------
+0x0         4           int32       The total amount of experience required to reach that level. The value is absolute, not relative to the last level!
+0x4         2           uint16      HP growth for this level.
+0x6         1           uint8       Attack growth for this level.
+0x7         1           uint8       Special attack growth for this level.
+0x8         1           uint8       Defense growth for this level.
+0x9         1           uint8       Special defense growth for this level.
+0xA         2           uint16      Null.
+------      ------      ----        -----------
+Total:      12 bytes
+
+
+NOTES:
+------
+- EoS     : 571 sub-files. 1 for each pokemons. And possibly a few that are used for special purpose, given there are less pokemon than that in gen 4?
+- EoT/EoD : 1,192 sub-files.
+- EoT/D has a few files that are compressed as AT4PX instead of PKDPX. Possibly a dev oversight as it was fixed in EoS !
+- Exactly 100, 12 bytes entries, one after the other.
+- The entry for level 1 is entirely null, given there is no level 0, and no exp requirements or stat growth needed. Base
+  stats must be stored somewhere else!

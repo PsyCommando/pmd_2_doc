@@ -1,0 +1,64 @@
+==========================================================================================
+                                        SIR0: 
+==========================================================================================
+
+!!-- NOTE --!!
+The SIR0 format is a generic container. Its not exclusively for sprites, or anything specifically!
+The pointer points to the content's header, and the second value is a pointer to the end of the file.
+
+Which means what the pointer in the header points at can be a completely different structure depending
+on the content!
+!!----------!!
+
+When SIR0 files are loaded and processed into memory, they get transformed into chunks of data
+with a similar header. Except that the magic number isn't SIR0 but SIRO (the zero is replaced by 
+the letter O). 
+Other than that, the SIRO header is exactly similar to the SIR0 header. In addition, all the pointers 
+in the entire header and the contained data are changed to be offset relative to the DS memory, 
+instead of the start of the SIR header ! 
+
+In order to do that, the game reads the encoded offsets list pointed at by PTR_B. Once decoded 
+the list contains the offsets of every single pointers in the entire file. The game then simply
+add up the base address of the file to every pointers.
+
+Here's the structure of the header in a file:
+
+offset:            length:            endian:       description:
+-------            -------            -------       ------------------------------------------------
+0x00               4                  Big           Magic Number "SIR0" (0x53 0x49 0x52 0x30)
+0x04               4                  Little        (PTR_A) to Content's Header
+0x08               4                  Little        (PTR_B) to Pointer Offset List
+0x0C               4                  -             Zeros
+-------            -------            -------       ------------------------------------------------
+Total              16 bytes
+
+Here's the structure of the header in memory:
+
+offset:            length:            endian:       description:
+-------            -------            -------       ------------------------------------------------
+0x00               4                  Big           Magic Number "SIRO" (0x53 0x49 0x52 0x4f)
+0x04               4                  Little        (PTR_A) to Content's Header. Offset 
+                                                     relative to beginning of DS memory
+0x08               4                  Little        (PTR_B) to Pointer Offset List. Offset relative 
+                                                     to beginning of DS memory
+0x0C               4                  -             Zeros
+-------            -------            -------       ------------------------------------------------
+Total              16 bytes
+
+
+-------------------
+End of file block:
+-------------------
+This block contains a null terminated encoded list of file offsets. Its also 
+followed with 0xAA padding bytes. Those file offsets are the exact location of 
+every pointers in the file. The game uses this to convert the addresses the 
+pointers points at from being relative to the beginning of the SIR0 header, 
+to being relative to the NDS memory.
+
+It always begins with 0x4 0x4, as those are the encoded form of the offsets 
+0x4 0x8, which correspond to the 2 pointers in the SIR0 header.
+
+The decoding is pretty straightforward:
+
+#TODO: finish this
+

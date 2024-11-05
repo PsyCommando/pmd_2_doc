@@ -1,0 +1,81 @@
+//Breakpoint
+[0x02089694]
+
+
+/*
+    Initial Register state:
+    R0  =
+    R1  =
+    R2  = 
+    R3  = 
+    R4  = 
+    R5  = 
+    R6  = 
+    R7  =
+    R8  = 
+    R9  = 
+    R10 =
+    R11 =
+    R12 =
+    R13 = 
+    R14 =
+    R15 =
+*/
+02089694 E92D4038 push    r3-r5,r14
+02089698 E2014003 and     r4,r1,3h
+0208969C E2003003 and     r3,r0,3h
+020896A0 E1A02000 mov     r2,r0
+020896A4 E1530004 cmp     r3,r4
+if( R3 != R4 )
+    020896A8 1A000020 bne     2089730h
+020896AC E3540000 cmp     r4,0h
+if( R4 == 0 )
+    020896B0 0A00000D beq     20896ECh
+020896B4 E5D13000 ldrb    r3,[r1]
+020896B8 E5C03000 strb    r3,[r0]
+020896BC E3530000 cmp     r3,0h
+if( R3 == 0 )
+    020896C0 08BD8038 popeq   r3-r5,r15
+020896C4 E2744003 rsbs    r4,r4,3h
+if( 3 - R4 == 0 )
+    020896C8 0A000005 beq     20896E4h
+020896CC E5F13001 ldrb    r3,[r1,1h]!
+020896D0 E3530000 cmp     r3,0h
+020896D4 E5E23001 strb    r3,[r2,1h]!
+if( R3 == 0 )
+    020896D8 08BD8038 popeq   r3-r5,r15
+020896DC E2544001 subs    r4,r4,1h
+if( R4 - 1 != 0 )
+    020896E0 1AFFFFF9 bne     20896CCh
+020896E4 E2822001 add     r2,r2,1h
+020896E8 E2811001 add     r1,r1,1h
+020896EC E5915000 ldr     r5,[r1]
+020896F0 E59F305C ldr     r3,=0FEFEFEFFh
+020896F4 E1E04005 mvn     r4,r5
+020896F8 E085E003 add     r14,r5,r3
+020896FC E59FC054 ldr     r12,=80808080h
+02089700 E00E4004 and     r4,r14,r4
+02089704 E114000C tst     r4,r12
+if( R4 & R12 != 0 )
+    02089708 1A000008 bne     2089730h
+0208970C E2422004 sub     r2,r2,4h
+02089710 E5A25004 str     r5,[r2,4h]!
+02089714 E5B15004 ldr     r5,[r1,4h]!
+02089718 E0854003 add     r4,r5,r3
+0208971C E1E0E005 mvn     r14,r5
+02089720 E004E00E and     r14,r4,r14
+02089724 E11E000C tst     r14,r12
+if( R14 & R12 == 0 )
+    02089728 0AFFFFF8 beq     2089710h
+0208972C E2822004 add     r2,r2,4h
+02089730 E5D13000 ldrb    r3,[r1]
+02089734 E5C23000 strb    r3,[r2]
+02089738 E3530000 cmp     r3,0h
+if( R3 == 0 )
+    0208973C 08BD8038 popeq   r3-r5,r15
+02089740 E5F13001 ldrb    r3,[r1,1h]!
+02089744 E3530000 cmp     r3,0h
+02089748 E5E23001 strb    r3,[r2,1h]!
+if( R3 != 0 )
+    0208974C 1AFFFFFB bne     2089740h
+02089750 E8BD8038 pop     r3-r5,r15

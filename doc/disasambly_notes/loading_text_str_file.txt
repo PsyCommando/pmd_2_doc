@@ -1,0 +1,94 @@
+20AFCF0h
+
+//fun_02025818(R0 = FileTableIndex) - Possibly loads data from filebuffer? Possibly a stdlib thing??
+02025818 E92D4010 push    r4,r14
+0202581C EBFFEB63 bl      20205B0h              ///020205B0 - fun_020205B0
+{
+    020205B0 E59F0004 ldr     r0,=20AFCE8h      //SomeStructA?
+    020205B4 E1D000D0 ldrsb   r0,[r0]           //R0 = [SomeStructA] as byte
+    020205B8 E12FFF1E bx      r14               //Return
+}
+02025820 E59F1054 ldr     r1,=20AFCECh          //20AFCEC - Static pointer
+02025824 E1A04000 mov     r4,r0                 //R0 = FileTableIndex
+02025828 E1D100D0 ldrsb   r0,[r1]               //R0 = [20AFCEC] as signed byte
+0202582C E1500004 cmp     r0,r4
+if(R0 == R4)
+    02025830 08BD8010 popeq   r4,r15                //Pop stack and Return if R0 == R4
+02025834 EBFF8A4B bl      2008168h              ///02008168 - fun_02008168
+{
+    02008168 E92D4008 push    r3,r14
+    0200816C E59F0018 ldr     r0,=20AF368h      //StaticBufferB?
+    02008170 EBFFEACF bl      2002CB4h
+    02008174 EBFFE901 bl      2002580h
+    02008178 E3A01013 mov     r1,13h
+    0200817C EBFFE99D bl      20027F8h
+    02008180 E59F1008 ldr     r1,=20AF360h
+    02008184 E5810004 str     r0,[r1,4h]
+    02008188 E8BD8008 pop     r3,r15
+    0200818C 020AF368 andeq   r15,r10,0A0000001h
+    02008190 020AF360 andeq   r15,r10,80000001h
+}
+02025838 E59F103C ldr     r1,=20AFCECh          //20AFCEC - Static pointer
+0202583C E3E00000 mvn     r0,0h                 //R0 = 0xFFFFFFFF
+02025840 E1D110D0 ldrsb   r1,[r1]               //R1 = 
+02025844 E1510000 cmp     r1,r0
+02025848 0A000001 beq     2025854h              ///02025854
+0202584C E59F002C ldr     r0,=22A59C0h          //22A59C0 - Text buffer??
+02025850 EBFF8A9B bl      20082C4h              ///020082C4 fun_020082C4
+{
+    020082C4 E92D4008 push    r3,r14
+    020082C8 EB01DD0F bl      207F70Ch
+    020082CC E3500000 cmp     r0,0h
+    020082D0 18BD8008 popne   r3,r15
+    020082D4 E3A00001 mov     r0,1h
+    020082D8 EBFFEE93 bl      2003D2Ch
+    020082DC E8BD8008 pop     r3,r15
+}
+02025854 E59F1020 ldr     r1,=20AFCECh          //20AFCEC - Static pointer
+02025858 E59F0020 ldr     r0,=22A59C0h          //22A59C0 - Text buffer??
+0202585C E5C14000 strb    r4,[r1]
+02025860 EBFF8A67 bl      2008204h              ///02008204 - fun_02008204
+{
+    02008204 E59FC000 ldr     r12,=207F3E4h
+    02008208 E12FFF1C bx      r12
+    0200820C 0207F3E4 andeq   r15,r7,90000003h
+}
+02025864 E59F1018 ldr     r1,=20AFCF0h          //FnameTable - Pointer to table of string ptr "text_e.str" 
+02025868 E59F0010 ldr     r0,=22A59C0h          //22A59C0 - Text buffer??
+0202586C E7911104 ldr     r1,[r1,r4,lsl 2h]     //R1 = [FnameTable + (R4 << 2)] 
+02025870 EBFF8A66 bl      2008210h              ///02008210 - fun_02008210
+{
+    02008210 E92D4070 push    r4-r6,r14
+    02008214 E1A06000 mov     r6,r0
+    02008218 E1A05001 mov     r5,r1
+    0200821C E3A04001 mov     r4,1h
+    02008220 E1A00006 mov     r0,r6
+    02008224 E1A01005 mov     r1,r5
+    02008228 EB01DD25 bl      207F6C4h
+    0200822C E3500000 cmp     r0,0h
+    02008230 18BD8070 popne   r4-r6,r15
+    02008234 E1A00004 mov     r0,r4
+    02008238 EBFFEEBB bl      2003D2Ch
+    0200823C EAFFFFF7 b       2008220h
+    02008240 E8BD8070 pop     r4-r6,r15
+}
+02025874 EBFF8A46 bl      2008194h              ///02008194 - fun_02008194
+{
+    02008194 E92D4010 push    r4,r14
+    02008198 E59F1020 ldr     r1,=20AF360h
+    0200819C E59F0020 ldr     r0,=20AF368h
+    020081A0 E5914004 ldr     r4,[r1,4h]
+    020081A4 E3A02000 mov     r2,0h
+    020081A8 E5812004 str     r2,[r1,4h]
+    020081AC EBFFEB39 bl      2002E98h
+    020081B0 EBFFE8F2 bl      2002580h
+    020081B4 E1A01004 mov     r1,r4
+    020081B8 EBFFE98E bl      20027F8h
+    020081BC E8BD8010 pop     r4,r15
+    020081C0 020AF360 andeq   r15,r10,80000001h
+    020081C4 020AF368 andeq   r15,r10,0A0000001h
+}
+02025878 E8BD8010 pop     r4,r15
+0202587C 020AFCEC andeq   r15,r10,0EC00h
+02025880 022A59C0 eoreq   r5,r10,300000h
+02025884 020AFCF0 andeq   r15,r10,0F000h

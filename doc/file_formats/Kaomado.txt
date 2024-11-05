@@ -1,0 +1,246 @@
+====================================================================================================
+Character Portraits
+====================================================================================================
+
+Character portraits are stored inside the container file "/FONT/kaomado.kao".
+
+Offset:            Length:            Endian:      Description:
+-------            -------            -------      -----------------------------------
+0x00               TOC_LEN                         A table listing all the 
+                                                    AT4PX portraits + palette groups for each 
+                                                    pokemon.
+[
+    0x0            160                             List of file offset where the palette + image  
+    [                                               groups for the same pokemon are stored at.
+        Pointer    4                  little       (signed)A file offset, for the current pokemon. 
+                                                    invalid if negative value.
+                                                    (more on this below)
+        ...
+    ]
+    ...
+]
+0xTOC_LEN          Varies                          Subfiles data with short mini-header appended.
+[
+    Portrait       varies                          A group of a palette + an AT4PX container
+    [
+        0x0        48                 -            16 colors palette, 3 bytes per color.
+        [
+            Color  3                  big          A RGB 24bits color.
+            ...
+        ]
+        0x30       varies             -            AT4PX container begins here. 
+        [
+            ...                                     (see AT4PX file format)
+        ]
+    ]
+    ...
+]
+-------            -------            -------      -----------------------------------
+
+NOTES:
+------
+- The first entry in the table is always completely filled with zeros.
+- The character portraits are stored as 4 bpp images. 
+- The portraits are ordered the exact same way as the pokemon inside the "monster.md" file! Which means that,
+   every pokemon has a second slot for its other gender, beginning at entry #600. Even in the case of a mono-gendered specie!(However for monogendered species, its unclear if the second pokemon entry is ever used)
+   Pokemons that have identical male and female genders have their second entry's ToC entry filled with null pointers, so the game must fall back to the "male" portraits in that case.
+
+Table of Content(ToC):
+----------------------
+This list at the beginning of the file lists all the portraits available per pokemon. A pokemon's
+portrait list is 0xA0 bytes long. Though, I suspect that the first zero filled entry is there to
+define the size of a pokemon's portrait list(Untested).
+
+Each sub-entry in those lists is made of a 4-bytes signed integer.
+Null entries are represented by using the end offset of the last valid portrait, and inverting its
+sign. The first dummy entry is 0 because -0 doesn't exist, and there is no portrait data for that entry.
+
+For example. Here are 3 entries that follow each-others:
+
+Here's a completely null entry:
+0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 
+0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 
+0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 
+0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 
+0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 
+0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 
+0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 
+0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 
+0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 
+0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, 0xFFE69A3B, <--- Notice how the value repeated is 0xFFE69A3B,
+                                                     and how it will change in the next entry.
+
+And here's the entry right after:
+0x001965C5, 0xFFE69740, 0xFFE69740, 0xFFE69740, <--- Notice how the first subentry is a valid pointer
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740,      and how the end offset for the portrait data is 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740,      repeated after as a negative value!
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+
+And the entry after:
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, <--- Notice how we're in another pokemon's entry,
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740,      and we're still using the end offset of the
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740,      last valid end offset !
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+0xFFE69740, 0xFFE69740, 0xFFE69740, 0xFFE69740, 
+
+
+Portrait:
+---------
+
+The portraits are stored as compressed AT4PX.
+
+The images are tiled 4 bpp, 40 x 40, 16 colors. 
+They seem to have their pixels ordered in big-endian order, but I can't be sure right now, too many 
+external factors!
+
+The slot each pointer is in determine what its purpose is. For example, the first slot in any
+pokemon's entry is the "standard" portrait for that pokemon, slot 3 is for the "grin" portrait,
+and etc..
+
+Some pokemon have non-standard slots though, and sometimes have the wrong portrait in the wrong slot.
+But more often than not those are for some specific cinematics, or just unused portraits from 
+red and blue rescue team!
+
+Here's a WIP list of the emotions/slots:
+(I suspect the odd numbered slots were meant for mirrored portraits, since the GBA game didn't 
+use image mirroring, and just used already mirrored image AFAIK! Plus, some pokemon, like clefairy,
+have a mirrored version of their standard from slot# 0 in their slot# 1 ! However I doubt those
+mirrored portraits are even used by the game, since it clearly already mirrors regular portraits ! )
+
+slot#                   Name:                Description:
+----------------------------------------------------------------------------------------------------
+0                       NORMAL               Default pokemon portrait (Blue-Green BG)
+1                       -                    -
+2                       HAPPY                Smiling pokemon portrait (Yellow-Orange BG)
+3                       -                    -
+4                       PAIN                 Pained/Discouraged pokemon portrait (Blue-LightBlue BG)
+5                       -                    -
+6                       ANGRY                Angry pokemon portrait (Read-Pink with sharp white line BG)
+7                       -                    -
+8                       THINK                Worried pokemon portrait (blue-lightblue BG)
+9                       -                    -
+10                      SAD                  Sad/Disapointed pokemon portrait (blue-lightblue BG)
+11                      -                    -
+12                      WEEP                 Crying pokemon portrait (blue-lightblue BG)
+13                      -                    -
+14                      SHOUT                Shouting pokemon portrait (Blue with light yellow "sunrays" BG)
+15                      -                    -
+16                      TEARS                Teary eyed pokemon portrait (Light pink-darker pink BG)
+17                      -                    -
+18                      DECIDE               Determined pokemon portrait (pink-red pink BG)
+19                      -                    -
+20                      GLADNESS             Joyous/Very Happy/Ecstatic pokemon portrait (light yellow-yellow BG)
+21                      -                    -
+22                      Inspired             Inspired/Admirative/Amazed pokemon portrait (light yellow-yellow BG)
+23                      -                    -
+24                      Surprised            Surprised/Shocked pokemon portrait (blue-light blue BG)
+25                      -                    -
+26                      Dizzy                Dizzy/(Spiral-Eyed) pokemon portrait (green to yellowish green BG)
+27                      -                    -
+28                      -                    -
+29                      -                    -
+30                      -                    -
+31                      -                    -
+32                      Sigh                Sigh/Embarassed/Relieved pokemon portrait (light yellow to yellow BG)
+33                      -                    -
+34                      Stunned             Stunned/Disheartened/Unnerved pokemon portrait (dark blue to light blue BG)
+35                      -                    -
+36                      -                    Wigglytuff YOM-TAH !
+37                      -                    -
+38                      -                    -
+39                      -                    -
+----------------------------------------------------------------------------------------------------
+
+Palette:
+--------
+The first color in the palette is used for transparency! So put a dummy color in there for portraits !
+
+The palettes are stored in raw, headerless form, right before the AT4PX header of the image data it 
+applies to.
+( According to Zhorken's notes, the palette's colors are really each on 15 bits, but each channels 
+has its own byte to itself, while they could all fit over 2 bytes easily.. )
+
+(Zhorken's script seems to shift each individual byte/channel to the left by 3, for some odd 
+reasons. I'm not sure why. But I've managed to use the value without needing to shift them at all!
+So take the next part with a grain of salt !!! )
+
+Example:
+//Here's Eevee's normal face palette from the kaomado.kao file, 3 bytes per color:
+    0x00, 0x00, 0x00, 0x47, 0x3F, 0x4F, 0x57, 0x37, 0x37, 0x67, 0x57, 0x47, 0x7F, 0x6F, 0x57, 0x97, 
+    0x57, 0x0F, 0xAF, 0x67, 0x17, 0x77, 0xAF, 0xB7, 0xC7, 0x77, 0x1F, 0x77, 0xC7, 0xD7, 0xDF, 0x87, 
+    0x1F, 0xD7, 0xBF, 0x67, 0xB7, 0xE7, 0xCF, 0xEF, 0xDF, 0x87, 0xFF, 0xF7, 0x9F, 0xF7, 0xF7, 0xBF, 
+
+//Here's the same palette, "decoded", in 2 bytes per color format, 15 bits RGB:
+    0x00, 0x00, 0xE8, 0x24, 0xCA, 0x18, 0x4C, 0x21, 0xAF, 0x29, 0x52, 0x05, 0x95, 0x09, 0xAE, 0x5A, 
+    0xD8, 0x0D, 0x0E, 0x6B, 0x1B, 0x0E, 0xFA, 0x32, 0x96, 0x67, 0x7D, 0x43, 0xDF, 0x4F, 0xDE, 0x5F, 
+
+
+//Now, lets take the first non-null color from the kaomado.kao palette:
+         0x47,      0x3F,      0x4F     //Values as hex
+    0100 0111, 0011 1111, 0100 1111     //Values as binary
+
+//Then, look at the first non-null color from the 2 bytes per color "decoded" palette
+(Don't forget its 2 bytes little endian! Order the bytes properly!):
+                 0x24E8     //Value as hex
+    0010 0100 1110 1000     //Value as binary
+
+//We can conclude here that if we divide this 2 bytes int in 15 bits, and they slice it into 3 parts,
+//we get the value of those 3 bytes we read from the palette in the kaomado.kao file. Here, let me 
+//show you:
+
+    //Here is the 2 bytes color from the decoded palette
+    0|010 0100 1110 1000  //Take only 15 bits
+   01001 | 00111 | 01000  //Split the 15 bits into 3 groups of 5 bits
+    Blue | Green | Red   // Those 3 groups correspond to those channels
+   
+    //Compare the value we just got to the values in the kaomado file
+           decoded palette  |   same color from kaomado.kao palette
+    Blue   0000 1001        |   0100 1111
+    Green  0000 0111        |   0011 1111
+    Red    0000 1000        |   0100 0111
+
+    //Notice how if I remove 3 bits at the end of the channels from the kaomado.kao palette, it 
+    // gives the exact same value as its counterpart in the decoded palette !?
+    
+    Blue:   0100 1[111] //Remove those 3 bits, and move the rest 3 to the right
+            0000 1001   //This works!
+    
+    Green:  0011 1[111] //Remove those 3 bits, and move the rest 3 to the right
+            0000 0111   //Yep
+            
+    Red:    0100 0[111] //Remove those 3 bits, and move the rest 3 to the right
+            0000 1000   //There you go ! The same as the highest 5 bits of the decoded 2 bytes color!
+            
+            
+//And thus if we want to "decode" the the kaomado.kao palette for eevee, we'd do something a little
+// like this:
+    
+    byte colorRead[3];
+
+    ... // Read the first color into colorRead { 0x47, 0x3F, 0x4F }; 
+    
+    colorRead[0] = colorRead[0] >> 3;   //Shift every channels by 3 to the right
+    colorRead[1] = colorRead[1] >> 3;
+    colorRead[2] = colorRead[2] >> 3;
+    
+    uint16_t 15bitscolor;
+    
+    15bitscolor = colorRead[0];
+    15bitscolor = 15bitscolor | (colorRead[1] << 5);  //bitwise OR on the second channel shifted left by 5
+    15bitscolor = 15bitscolor | (colorRead[2] << 10); //bitwise OR on the third channel shifted left by 10
+    
+    //And there we go, 15bitscolor contains the "decoded" first color as RGB 15bits !
+    
+(Take this last part with a grain of salt.. I was able to re-use the color as RGB24 right away.
+)

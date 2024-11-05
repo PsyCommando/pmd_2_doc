@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE binary_file_format SYSTEM "BinaryFileFormat.dtd">
+<binary_file_format name="rawfont" type_name="" comment="" expr="">
+	<define_struct type_name="FontDatEntry" comment="" expr="">
+		<jump offset="TableOfContent[CntFont]" comment="" origin="start">
+			<data type="none" name="imgdatbeg" len="1"/>
+		</jump>
+		<eval expr="CntFont = CntFont + 1" display_error="false" display_result="false" comment="Increment counter"/>
+	</define_struct>
+	<define_struct type_name="ToCEntry" comment="" expr="">
+		<data type="int" name="width" format="signed" len="1" display="dec"/>
+		<data type="int" name="height" format="signed" len="1" display="dec"/>
+		<data type="int" name="imgdatoffset" format="signed" len="2" display="hex"/>
+	</define_struct>
+	<use_struct name="FirstToCEntry" expr="" type_name="ToCEntry" comment="For the FOR loop to work, we need to know this beforehand !"/>
+	<eval expr="ToCNbEntries = (FirstToCEntry.imgdatoffset / 4) " display_error="false" display_result="false" comment=""/>
+	<eval expr="ToCNbToParse =(FirstToCEntry.imgdatoffset / 4) - 1" display_error="false" display_result="false" comment="The nb of entries left to parse from the Table of content!"/>
+	<for name="TableOfContent" count="ToCNbToParse" stop_test="" type_name="" comment="">
+		<use_struct name="Entry" expr="" type_name="ToCEntry" comment=""/>
+	</for>
+	<struct name="FontData" type_name="" comment="" expr="">
+		<eval expr="CntFont = 0" display_error="false" display_result="false" comment=""/>
+		<for name="fde" count="ToCNbEntries" stop_test="" type_name="" comment="">
+			<use_struct name="fontdataimpl" expr="" type_name="FontDatEntry" comment=""/>
+		</for>
+	</struct>
+	<data type="none" name="none"/>
+</binary_file_format>

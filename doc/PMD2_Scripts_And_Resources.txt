@@ -1,0 +1,453 @@
+
+====================================================================================================
+Details
+====================================================================================================
+
+ARM9 locations:
+-------------------------
+-> "Lives" entity data table : 
+                NTSC                    NTSC-J                  PAL                 Nb Entries
+EoS     0x0A7FF0 to 0x0A9208    0x0A9430 to 0x0AA650    0x0A8890 to 0x0A9AA8    =       386 
+EoT     0x09F790 to 0x0A033C    0x0A0B64 to 0x0A1710    0x09ED98 to 0x09F944    =       249
+EoD     0x09F6F4 to 0x0A02A0    0x0A0AC8 to 0x0A1674    0x09ECFC to 0x09F8A8    =       249
+
+Entries seems to be always 12 bytes.
+Entry
+{
+    
+}
+
+Overlays load offsets:
+----------------------
+-> overlay_0010 : 0x22BCA80 NTSC,
+-> overlay_0011 : 0x22DC240 NTSC, 0x22DD8E0 NTSC-J, 0x22DCB80 PAL
+-> overlay_0013 : 0x238A140 NTSC, 0x238B6A0 NTSC-J, 0x238AC80 PAL
+
+Opcodes data:
+--------------
+-> overlay_0011 : 0x03C3D0 to 0x3CFC8, Script OpCode lookup table. 383 entries.
+Overlay11 has a table located at 0x03C3D0, that contains the nb of parameters, and the name of every single opcode for the script engine. Each entry is 8 bytes! The table is 3,064 bytes long, or 0xBF8 bytes long. For a total of 383 entries.
+To translate the offsets to overlay relative offsets, subtract 0x22DC240 from each pointers.
+In the japanese version the table is at 0x3C294. Ends at 0x3CE8C.
+In the european version the table is at 0x3C470. Ends at 0x3D068.
+
+CommandInfo
+{
+    int8    nbparameters
+    int8    unk1
+    int8    unk2
+    int8    unk3
+    uint32  stringpointer
+}
+
+-> overlay_0010 : Runs dungeon play!
+
+
+Script related data:
+---------------------
+arm9.bin => 0x9D870 Table looked up for switch statements < 0x400? Entries are 16 bytes. Ends at 0x9DFA0, is 115 entries long.
+         => 0x9CECC Same as above but for parameters > 0x400. Ends at 0x9CF0C, is 4 entries long.
+
+ScriptGlobalsInfo 16 bytes
+{
+    int16  variabletype                     //0 to 9 (  bit, bool, uint8, int8, uint16, int16, uint32, int32, char*? )
+    int16  unk1
+    uint16 offsetinscriptglobalstable
+    uint16 bitshift                         //Mainly relevant for Type 1? Its the bit from the value that is relevant to this variable. (Aka, this value is used to make a bitmask to retrieve the value of the bit at that offset.)
+    uint16 unk3
+    uint16 unk4
+    uint32 stringpointer
+}
+
+
+====================================================================================================
+Notes on opcodes
+====================================================================================================
+* Some opcodes appear to be used for specifying a target to the next instruction.
+
+    For instance in /SCRIPT/S13P02A/t02a0201.ssb
+    You can see the command 0xC9 "object" followed with 0x3A "SetOutputAttribute".
+
+    Or there's also :
+    0xCB "performer" followed by 0x108 "SetPosition" or 0xBF "MovePosition".
+
+* Data words can be placed in-between instructions. They're always values larger than the last opcode. (0x17E in EoS)
+    And they can't be mistaken for parameters, because they're inserted where an opcode is expected.
+
+* Instruction groups of type 9 seems to be used by entity accessors (object,lives,performer) via 
+    the ExecuteCommon command to run several commands targeting all the same entity returned by an entity accessors.
+
+* The string ids in the instructions include the length of the const table if there's one!
+    
+    
+====================================================================================================
+Instructions Details
+====================================================================================================
+
+    * 0xFD SetAnimation 
+        - Params:
+            * AnimId: Has the function at 22E48ACh applied on its value!
+    
+    
+====================================================================================================
+Notes on how the script works and how resources works
+====================================================================================================
+
+- It seems each scenes and dungeons in the game have an id assigned to them. 
+    Each folders in the SCRIPT folder have this ID as name. And it seems any files related to the
+    scene have a derivative of the scene ID in their names. Like for example the file 
+
+----------------------------------------------------------------------------------------------------
+
+
+"[4:59:50 PM] Nerketur Kamachi: okay so there are a number of parts i've figured out so far.  using the overlsay itself, the "i believe" beginning starts at offset 0x11c0.  using no$ debugger its at 22D6CE0
+
+This function loops indefinitely, for as long as theres more scripts to read, and runs until script end. (knowsn by the check at offset 11CC (22D6CEC) and 11e8 (+ 22D5B20)
+
+assuming that timers are not running, (r6[3] >> 16 = 2), it will take the next script command and do some setup based on what the command was, then return to the loop. (line 121c + 22D5B20)
+[5:06:18 PM] Nerketur Kamachi: after that, the return value determines what to do next.  1, return 1. 6, return 6. , 3, 4, or 5, change a value, then continue.  etc"
+
+
+
+Difference between ROM data and cheat engine offset : 0xB3F8100
+Base address of 0x2000000 : 0xD3F8100
+
+--------------------
+Interesting memory offsets :
+0x20999AC : Tag strings for the special tags in the text begins here !
+
+0x02021ED0 : Address of the 0x20999AC text tags string table is mentionned here along with a lot of others.
+             This is actually an array of string pointers, to the text tags : 
+            {
+                0x020999AC, 0x020997E4, 0x020999B0, 0x020999C8, 
+                0x020999CC, 0x020999D0, 0x020999D4, 0x020999D8, 
+                0x020999E4, 0x020999F0, 0x020999F4, 0x020999F8, 
+                0x020999FC, 0x02099A00, 0x02099A04, 0x02099A08, 
+                0x020997E4, 0x02099A10, 0x02099A14, 0x02099A18, 
+                0x02099A1C, 0x02099A24, 0x02099A28, 0x02099A2C, 
+                0x02099A30, 0x02099A34, 0x02099A38, 0x02099A40, 
+                0x02099A44
+            }
+
+0x209CF0C : Seems like game state variable names !
+
+0x20A6910 : Actor Names.
+
+0x020B4BE8 : m01a0103.ssa mentioned
+
+0x02120380 : /SCRIPT/D01P11A/m01a0103.ssb begins here.
+
+[0x2120480..0x2120490]!?
+
+
+Broke at 0x2089730 while parsing a string from the second string of "/SCRIPT/D01P11A/m01a0103.ssb"!
+
+The function that called the above starts at 0x2034F20
+
+Function at 0200C240 is debugprintf. Its called whenever there's some debug strings to be printed!
+
+--------------------
+Intro SCRIPT
+
+022E5D94 : Break on read SSB header.
+
+Broke at 0x22DFFF4 Executing script data!
+ Then at 0x22DDD84
+ Then at 0x22E0378
+ Then at 0x22E2494, x3
+ Then at 0x22DDD84
+ Then at 0x22DFFC0
+ Then at 0x22DFFCC
+ Then at 0x22E2494, x3
+ ...Loops...
+ ..Eventually stops looping and writes "Waaaaah"..
+ 
+ 
+ Then breaks at 0x207C5F4
+    Copy data from 0x22BBF50 to 0x2120484.
+         (Overwrite some of the script opcodes ?)
+         
+ Then breaks at 0x22DE3B4 while readding script.
+ 
+ Breaks in several places then at 0x22E2A1C, 0x22E426C, 0x22DDD84
+ 
+ 
+-- Overwriting script data
+    Breaks at 0x207C5F4. Copy data from 0x22BBF50 to 0x2120480.
+    
+    //The 3 Breakpoints below appear to be in a very commonly used buffer for loading any kinds of game file from the catridge!
+    !! /SCRIPT/D01P11A/m01a0103.ssb 's header begins at 0x22BBE40 !!
+    [0x22BBE40..0x22BBE41]? : Nb Constants
+    [0x22BBE42..0x22BBE43]? : Nb Strings
+    [0x22BBE44..0x22BBE45]? : Offset Constants/Strings
+    
+    Read Nb Constants on line :
+        - 0x207C5F0, and wrote at 0x20BF0A4
+        
+    //Temp buffer for script :
+    [0x20BEFF0..0x20BEFF1]? : Nb Constants
+    [0x20BEFF2..0x20BEFF3]? : Nb Strings
+    [0x20BEFF4..0x20BEFF5]? : Offset Constants/Strings
+    
+///About the file copying function around 0x207C5F4
+//***Is probably system function to load file from the FAT table in the ROM ! *****
+
+[020B6F70..20B6F73]!!
+
+[20B72E4..20B72F3]! <= File name and extension to look for!!!
+
+
+    The buffer is always around 0x22BBE40. It loads files partially.
+    And very very often. It seems to also search or allow searching for specific bits of the file !
+    (Seems to search for file at path stored at 0x20B70E0. Path is copied from 0x20B71E4)
+    (Put breakpoint at 0x207C574 to see what file the file search function is iterating on. 0x206B6FA4 current fname )
+    
+    The string of bytes loaded from the file is written to 0x20B6F74, and its length is at 0x20B6F70
+    
+    0x22BB7E0 + 0x20 = 0x22BB800 : Bytes loaded pointer? (Changed to point to each bytes)
+    [0x22BB800..0x22BB803]! : Breakpoint to find out the source of the bytes string to find !
+    
+    
+    0x22A2DA0 : The first 12 bytes of /SCRIPT/D01P11A/m01a0103.ssb are being written there. Over the string pos ptr and etc..
+    
+    [0x22A2DA0..0x22A2DA1]? : nb consts
+    [0x22A2DA2..0x22A2DA3]? : nb strings 
+    [0x22A2DA4..0x22A2DA5]? : Offset Constants/Strings
+    
+    After copy, we BX back to 0x2083CDC.
+    
+    We increment the read counters at 0x22BB7FC, the write to pos 0x22BB800,
+    and the other read counter 0x22BB804. 
+    We put the updated write pose into R0. And etc..
+    
+    We load the string/const offset on line 0x22E5D98. And the size of the constant tbl on next line?
+    
+    There's a loop at 0x2089710 that writes the filename of the file to open! 
+    The function at 0x2089694 contains that loop.
+    Its called from line 0x2008058.
+    
+    0x27E1EAC
+    020B72D0 == Struct that contains the filename to load and etc?
+    
+    
+    0x27E1F18 == 0x42320 which is the file size of the mappa_s.bin file I was tracking down.
+    
+    So by line 0x20013AC, the file is loaded in memory and the SIR0 is translated to a SIRO!
+    
+    sort of resource allocation table. Several resource files tied to the level I guess have pointers and sizes in several entries around the one for mappa_s!
+    That table begins at 020B3380! Its a static pointer within the binary!
+    
+==================
+==================
+
+The script engine seems to load strings and use sprints on them. Here are the strings that the game uses:
+[02319694]? : script load file name [%s]
+
+[023196B0]? : SCRIPT/%s/%s.sss
+[023196C4]? : SCRIPT/%s/%s.ssa
+[023196D8]? : SCRIPT/%s/enter.sse
+[02319730]? : SCRIPT/%s/%s.ssb
+[02319744]? : SCRIPT/%s/%s02d.ssb
+[0231975C]? : SCRIPT/%s/enter%02d.ssb
+[02319774]? : SCRIPT/S00P01A/%s.ssb
+    
+The name of each commands seems to be stored starting at 02316AF8
+The table for looking up the pointers to those strings begins at 02318610. They're loaded after going in-game.
+[02318610..02318614]?
+[02318614..02318618]?
+
+The address of that table seems to be referred to at the ldr instruction at 022DDD74.
+  022DED08.
+    
+    
+The function at 022DDD64 seems to parse scripts opcodes!
+
+Took this from Overlay 11
+  3d454 script load  file name [%s]
+  3d470 SCRIPT/%s/%s.sss
+  3d484 SCRIPT/%s/%s.ssa
+ 
+  3d4ac station load hanger %d file name [%s]
+  3d4d4 script locate set %3d %3d
+  3d4f0 SCRIPT/%s/%s.ssb
+  3d504 SCRIPT/%s/%s%02d.ssb
+  
+  3d498 SCRIPT/%s/enter.sse
+  3d51c SCRIPT/%s/enter%02d.ssb
+  
+  3d534 SCRIPT/S00P01A/%s.ssb
+  
+  3D874 SCRIPT/COMMON/unionall.ssb
+  
+  4627C "SCRIPT/%s/%s.lsd"
+
+  
+  
+SCRIPT/%s/%s.sss
+SCRIPT/%s/%s.ssa
+SCRIPT/%s/enter.sse
+station load hanger %d file name [%s]
+script locate set %3d %3d
+SCRIPT/%s/%s.ssb
+SCRIPT/%s/%s%02d.ssb
+SCRIPT/%s/enter%02d.ssb
+SCRIPT/S00P01A/%s.ssb
+  
+Overlay11 has a table located at 0x03C3D0, that contains the nb of parameters, and the name of every single opcode for the script engine. Each entry is 8 bytes! The table is 3,064 bytes long, or 0xBF8 bytes long. For a total of 383 entries.
+To translate the offsets to overlay relative offsets, subtract 0x22DC240 from each pointers.
+
+====================================================
+====================================================
+0204B4EC <= Function handling parameter
+    0204B49C <= returned the pointer 0209DA30 via the top of the stack. (For opcode 0xAC and parameter value 0x42)
+    The value on the stack after the function was a pointer to 0x137
+    
+
+    
+======================================
+NOTES:
+======================================
+    * Apparently that the scipt engine checks for a enter.sse in every folders under the /SCRIPT/ directory. 
+      Even if it doesn't exist in some. 
+      For example, it searchs for /SCRIPT/S05P01A/enter.sse 
+      and /SCRIPT/S05P01A/enter00.ssb when loading the nintendo logo. But both do not exist.
+
+    * The memory around 020B71E4 seems to be used to store script engine/level related data, including script names, level name, background names, etc..
+
+    020B70E0 script resource name
+   020B4BF0 Resourcename again?
+   
+=======================================
+Script Details
+=======================================
+
+SCRIPT\S04P01A : Seems to contains introductions to main game + some episodes!
+    m01a0101.ssb
+        Intro scene (A storm at sea chapter intro + verbal exchange)
+    
+    
+0208972C <= Line that append file extension to script?
+    
+========================================
+Map Details Overlay_0011
+========================================
+0x44A04    MAP_BG/bg_list.dat
+0x44A18    rom0:/MAP_BG/%s.bpl
+0x44A2C    rom0:/MAP_BG/%s.bpc
+0x44A40    rom0:/MAP_BG/%s.bma
+0x44A54    rom0:/MAP_BG/%s.bpa
+0x44A88    ground_map.c
+
+/*45038:*/ "GroundWeatherControl size %04x\n"
+/*45058:*/ "/GROUND/t01p01t1.wte"
+/*45070:*/ "/GROUND/t01p01t2.wte"
+/*45088:*/ "/GROUND/t01p01t1.wtu"
+/*450A0:*/ "/GROUND/p03p01t1.wte"
+/*450B8:*/ "/GROUND/p03p01t1.wtu"
+/*450D0:*/ "/GROUND/d73p41t1.wte"
+/*450E8:*/ "/GROUND/d73p41t1.wtu"
+
+/*488CC:*/ "/GROUND/d04p31t1.wte"
+/*488E4:*/ "/GROUND/d04p31t1.wtu"
+/*488FC:*/ "/GROUND/v15p03t1.wte"
+/*48914:*/ "/GROUND/v15p03t1.wtu"
+/*4892C:*/ "/GROUND/p03p01t1.wte"
+/*48944:*/ "/GROUND/p03p01t1.wtu"
+/*4895C:*/ "/GROUND/s13p01t1.wte"
+/*48974:*/ "/GROUND/s13p01t1.wtu"
+
+
+/*45138:*/ "ground_sprite.c"
+/*45170:*/ "Memroy LocateSet [%p] buffer %8x size can't locate\n    atb %02x"
+/*451B0:*/ "GROUND/%s.wan"
+/*451C0:*/ "GROUND/a%03d.wan"
+
+
+/*45C0C:*/ "GroundObject Add id %3d  kind %3d[%3d]  type %3d  hanger %3d  sector %3d"
+/*45D18:*/ "GroundObject RequestExecute id %3d  kind %3d  hanger %3d  script %3d"
+/*45D60:*/ "GroundObject ScriptExecute hanger %3d  sector %3d  type STATION"
+/*45DB4:*/ "GroundObject ScriptExecute hanger %3d  sector %3d  type ACTING"
+/*45DF4:*/ "GroundObject ScriptSuspend hanger %3d  sector %3d  type STATION"
+/*45E34:*/ "GroundObject ScriptSuspend hanger %3d  sector %3d  type ACTING"
+
+/*45F20:*/ "GroundPerformer Add id %3d  kind %3d  type %3d  hanger %3d  sector %3d"
+/*45F68:*/ "GroundPerformer Remove hanger %3d sector %3d"
+/*46004:*/ "GroundPerformer ScriptExecute hanger %3d  sector %3d  type STATION"
+/*4605C:*/ "GroundPerformer ScriptExecute hanger %3d  sector %3d  type ACTING"
+
+/*46128:*/ "GroundEvent Add id %3d  kind %3d  hanger %3d  sector %3d"
+/*461D8:*/ "GroundEvent RequestExecute id %3d  kind %3d  hanger %3d  script %3d"
+
+----------------------
+----------------------
+-> BGPs loaded in buffer at 0x22BBE44
+    -> Parsing filename at 0x22DC080
+    
+    
+-> BPL loaded at around line 020008B0
+
+String of thing to load = 020B4BE8a
+
+-> 0208972C : Inside function that build path strings!! Possibly begins at 02089694
+
+-> [022A2F70..022A2F73]! Break on file name to search changed
+
+
+Script data file is copied to 0212C380, by function at line 0207C5F8.
+[0212C380..0212C38F]!?
+
+
+-----------------------
+Static Mem Location
+-----------------------
+022BBE00 - Just before the table below, apparently 4bytes pointer. Loaded at line 02084270.
+022BBE20 - Start of in-memory event string list, maybe? Is accessed at line 02084220.
+022BB7E0 - Heap allocated variable?? loaded at line 02084224.
+022BB760 - Heap allocated variable?? loaded at line 02083358.
+020A46E0 - Possibly a look up table for resources name strings.
+
+
+022E4A4C - Constructor ScriptEngine
+022E4B00 - Destructor ScriptEngine 
+
+MemAlloc        0x2001170     ;(r0 = SzAlloc, r1 = )
+MemFree         0x2001188     ;(r0 = BufToFree)
+
+----------------
+Debug scripts
+----------------
+D01P11A
+S02P01A
+T00P01, T00P02, T00P03
+
+"There's one in D01P11A in the "ADEBUG" script. That one I just copy pasted the first routine into the scene on the beach with the bubbles. And it straight up loaded the right scene.
+
+Then, there's the one which display the full list of levels and the personality test, its stored in S02P01A. And the EoTD debug version of pokemon square, T00P01, T00P02, T00P03.
+For these ones, I went to routine #111 in unionall (COMMON.xml) that routine runs the entire intro scene up until you enter beach cave. So I simply replaced the parameter of the execute acting command with either debug scenes and it worked XD
+
+Though, you have to replace all the debug switches statements in the S02P01A and T00P01 and etc scripts with jumps depending on the case. The first parameter is most likely true/false 0/1, and that's compared to the the internal state of the program to see if its a debug build. so a debug_switch with 0 as first parameter will jump to the label it has if debug is off, and its off. The opposite is true as well, if the debug_switch statement has 1 as first param, it won't jump to its label parameter if debug is off."
+
+
+----------------
+----------------
+Team charms sp ep begins in common at 				
+<!--*******************************************************-->
+<!--      Routine #545 - EVENT_N06_01_02-->
+<!--*******************************************************-->
+
+
+----------------
+
+----------------
+
+Function at line 022E469C seems to copy the Script/Resource ID strings into the script filename on the stack!
+
+
+-----------------
+-----------------
+Process Special 
+    * Param1 : is byte. Values is 0 to 0x3E.
+    
+    
+    
+    

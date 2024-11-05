@@ -1,0 +1,25 @@
+List of strings passed to the DebugPrintMethod!
+-----------------------------------------------
+Fun: 022F7188, Line: 022F7194, RefToString: 023214A0 - "GroundSupervision ExecuteCommon request %3d %d ================="
+Fun: 022F766C, Line: 022F790C, RefToString: 02321664 - "GroundSupervision execute A %d"
+Fun: 022E5148, Line: 022E5150, RefToString: 0231978C - "ScriptStation prepare load common %d"
+Fun: 022E544C, Line: 022E5458, RefToString: 0231984C - "ScriptStation load common %d"
+Fun: 022E5A68, Line: 022E5A6C, RefToString: 023198F0 - "ScriptStation_RemoveAll"
+Fun: 022F85C0, Line: 022F85D0, RefToString: 02321AA8 - "GroundLives Alternate hanger %3d sector %3d"
+Fun: 022FC494, Line: 022FC4A4, RefToString: 02321F2C - "GroundObject Altemate hanger %3d sector %3d"
+Fun: 022FDC34, Line: 022FDC44, RefToString: 023221A8 - "GroundPerformer Remove hanger %3d sector %3d"
+Fun: 022E4BD4, Line: 022E4C84, RefToString: 023196EC - "station load hanger %d file name [%s]" (EX parameters: 0x3, "SCRIPT/S05P01A/t02a0101.ssa")
+Fun: 022E5D50, Line: 022E5D60, RefToString: 02319908 - "script load  file name [%s]" (EX Params: "SCRIPT/S05P01A/t02a0101.ssb" )
+Fun: 022F766C, Line: 022F768C, RefToString: 02321644 - "GroundSupervision execute B %d" (Ex Param: 6)
+Fun: 022E7E84, Line: 022E7E8C, RefToString: 02319A98 - "script ground sub call %3d" (5,4,5)
+Fun: 022F12C0, Line: 022F12CC, RefToString: 02320FB4 - "GroundMap Select %3d" (0x114, )
+Fun: 022E4CD4, Line: 022E4CE8, RefToString: 02319714 - "script locate set %3d %3d" (3, 0)
+Fun: 022FD72C, Line: 022FD7E0, RefToString: 02322160 - "GroundPerformer Add id %3d  kind %3d  type %3d  hanger %3d  sector %3d"(0,0)
+Fun: 022F8C18, Line: 022F8D64, RefToString: 02321B94 - "GroundLives ScriptExecute hanger %3d  sector %3d  type ACTING" (3,0)
+Fun: 022FC8C4, Line: 022FC9D4, RefToString: 02321FF4 - "GroundObject ScriptExecute hanger %3d  sector %3d  type ACTING" (3,0)
+Fun: 022FDFD4, Line: 022FE0E4, RefToString: 0232229C - "GroundPerformer ScriptExecute hanger %3d  sector %3d  type ACTING" (3,0,0)
+Fun: 022FDFD4, Line: 022FE128, RefToString: 02322288 - "    [%3d]  kind %3d" (0,0,0)
+Fun: 022DDD64, Line: 022DE3FC, RefToString: 023193EC - "ScriptData_Command_MENU request %d" (0x3D, 0, )
+
+
+Fun: , Line: , RefToString:  -

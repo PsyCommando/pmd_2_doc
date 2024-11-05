@@ -1,0 +1,418 @@
+monster.md
+-----------
+
+Thanks to: 
+- TruePikachu for some of the details on the monster.md format! http://projectpokemon.org/forums/showthread.php?40199-Pokemon-Mystery-Dungeon-2-Psy_commando-s-Tools-and-research-notes&p=192560&viewfull=1#post192560
+- The WMS project  http://apointlessplace.net/wms
+- OgreGunner and nhahtdh for that huge thread on gamefaqs filled with tidbits or information! http://www.gamefaqs.com/boards/955859-pokemon-mystery-dungeon-explorers-of-sky/51698562
+- Kelvin Chung for the .grammar file containing much needed information ! http://fileformats.archiveteam.org/wiki/Pok%C3%A9mon_Mystery_Dungeon
+- Gracidea for figuring out the use of the value in the entity entry at offset 0x1A!
+- End for figuring out a few extra fields in the entries!
+- And to everyone I might have forgotten about ^^;
+
+This file contains the base data for every pokemon in the game.
+
+NOTES:
+- The first entry is a dummy entry, and its repeated in the secondary gender section.
+- The file contains 1,155 entries.
+
+The file is split into 3 Sections:
+Index#              NbOfEntries             Description
+-----------         ------------            -----------
+[0   -  537[        555                     Primary genders data for all regular Pokemon. (Somehow includes primal dialga)
+[537 -  600[        45                      Special unique Pokemon/entities entries.
+[600 - 1154]        555                     Secondary genders data for all regular Pokemon. (Somehow includes primal dialga)
+
+From entry #600 onward, the entries for each Pokemon/entities between index [0 - 537[ are repeated. 
+However, the repeated entries have their gender changed. For genderless and female or male only species, their gender is set to invalid(0) in the repeated data!
+
+
+================================================
+Explorers of Sky
+================================================
+
+Offset:                     Length:             Type:           Description:
+-------                     -------             -------         -----------------------------------
+0x0                         4                   char[4]         Magic number "MD\0\0" { 0x4D, 0x44, 0x0, 0x0 }
+0x4                         4                   uint32          NbEntries
+EntitiesData                (NbEntries * 68)                    This contains the data for all the entities in the game!
+[
+    PrimaryGenders          (555 * 68)                          This block contains the primary entries for the regular Pokemon's primary gender. 
+    [
+        EntityEntry             68                                  Entry for a single Pokemon/entity's form/gender.
+        [
+        0x00 PokemonID           2                   uint16          National pokedex number. (Can be null in some entries. Independent from the index.)
+        0x02 Unk#31              2                   uint16          Unknown. Pokemon with the same category string have the same value in here.
+        0x04 NatDexNb            2                   int16           The national pokedex number, as displayed in chimecho assembly.
+        0x06 BaseSpeed           2                   int16           (Previously Unk#1) Pokemon base movement speed? (Thanks End!)
+                                                                      ( smaller than 1 => Slowed down status, 1 = no status, bigger than 1 => Sped up status )
+        0x08 PreEvoIndex         2                   uint16          The INDEX of the pre-evolution inside the "monster.md" file. Not the dex number, or the pokemon ID! Is 0 if NA.
+        0x0A EvoMethod?          2                   uint16          The evolution method required to evolve to this pokemon. Null if unused. (See evolution methods below)
+        0x0C EvoParam#1          2                   uint16          The first parameter for the evolution method. Null if unused.
+        0x0E EvoParam#2          2                   uint16          The second parameter for the evolution method. Null if unused.
+        0x10 SpriteIndex         2                   uint16          The index of the pokemon's sprite. Its the index inside the three pokemon sprite files inside the "/MONSTER/" directory!
+        0x12 GenderType          1                   uint8           Determine the possible genders for the pokemon. (0 = Invalid,  1 = Male, 2 = Female, 3 = Genderless)
+        0x13 BodySize            1                   uint8           The body size of the pokemon. Used when determining how many pokemon fits in the party. 
+        0x14 PrimaryType         1                   uint8           The pokemon's primary type. (see pokemon types below)
+        0x15 SecondaryType       1                   uint8           The pokemon's secomdary type.
+        0x16 MobilityType        1                   uint8           (See Mobility)According to this http://fileformats.archiveteam.org/wiki/Pok%C3%A9mon_Mystery_Dungeon, this is the mobility type for this pokemon.
+        0x17 IQGroup             1                   uint8           The pokemon's IQ group (see IQ group below)
+        0x18 PrimaryAbility      1                   uint8           The pokemon's primary ability's ID. (see abilities below)
+        0x19 SecondaryAbility    1                   uint8           The pokemon's secondary ability's ID. (can be null)
+        0x1A BitFlag1            2                   uint16          Appears to be bits tied to evolution. ( More below )
+        0x1C ExpYield            2                   uint16          Possibly the Exp yield.
+        0x1E RecruitRate1        2                   int16           Often is the same value as Unk#14 ! Possibly another recruit rate, this one is usually closer to 0 when unk13 and unk14 are different!
+        0x20 BaseHp              2                   uint16          The HP the pokemon has at lvl 1.
+        0x22 RecruitRate2        2                   int16           Seems to often be the same value as Unk#13 ! Possibly recruit rate.
+        0x24 BaseAtk             1                   uint8           The attack stat of the pokemon at lvl 1.
+        0x25 BaseSpAtk           1                   uint8           The special attack stat of the pokemon at lvl 1.
+        0x26 BaseDef             1                   uint8           The defense stat of the pokemon at lvl 1.
+        0x27 BaseSpDef           1                   uint8           The base special defense of the pokemon at lvl 1.
+        0x28 Weight              2                   uint16          Probably the weight tier for weight based damages (according to http://fileformats.archiveteam.org/wiki/Pok%C3%A9mon_Mystery_Dungeon its the "low kick tier")
+        0x2A Size                2                   uint16          Probably the size tier for size based damages (according to http://fileformats.archiveteam.org/wiki/Pok%C3%A9mon_Mystery_Dungeon its for the "sizebust orb")
+        0x2C Unk#17              1                   uint8           Unknown. Always 0xA
+        0x2D Unk#18              1                   uint8           Unknown. Always 0xA
+        0x2E ShadowSz            1                   uint8           (Previously Unk#19)Size of the shadow blob appearing under the pokemon's sprite.
+        0x2F ChanceAsleep        1                   uint8           (Previously Unk#20) Possibly chance of a pokemon to spawn asleep.
+        0x30 RegenHP             1                   uint8           (Previously Unk#21) Percent of health regenerated at the end of a turn before modifier. Formula is (1/(RegenHP * 2)) (Thank you End!)
+		0x31 Unk#21B             1                   uint8           (Previously Unk#21) Unknown
+        0x32 BaseFormIndex       2                   uint16          Seems to match the index in the monster.md file of the pokemon's first form.. Its always the index of the pokemon's entry within the 0 to 600 range! Not the one between 600 and 1155 !
+        
+        ExclusiveItems           8                                   A small block that contains up to 4 item ids of the exclusive items that are meant for this particular pokemon.
+        [
+        0x34 ExItem#1            2                   uint16          The first 1-star exclusive item for this pokemon.
+        0x36 ExItem#2            2                   uint16          The second 1-star exclusive item for this pokemon.
+        0x38 ExItem#3            2                   uint16          The 2-star exclusive item for this pokemon.
+        0x3A ExItem#4            2                   uint16          The 3-star exclusive item for this pokemon.
+        ]
+        
+        0x3C Unk#27              2                   uint16          Unknown. Values so far : 0x2EE, 0x320
+        0x3E Unk#28              2                   uint16          Unknown. Often 0xF
+        0x40 Unk#29              2                   uint16          Unknown 
+        0x42 Unk#30              2                   uint16          Unknown 
+        ]
+        ...
+    ]
+    SpecialEntities         (45  * 68)                          This block contains unique entities that do not have a duplicate entry!
+    [
+        EntityEntry[]       68                                  Same format as the entry inside the "PrimaryGenders" block!
+        ...
+    ]
+    SecondaryGenders        (555 * 68)                          This block contains the duplicate entries for the regular Pokemon's secondary gender. 
+    [
+        EntityEntry[]       68                                  Same format as the entry inside the "PrimaryGenders" block!
+        ...
+    ]
+]
+-------                     -------             -------         -----------------------------------
+
+============================
+BitFlag1
+============================
+It seems the lower byte is used for determining evolution!
+
+
+Lower byte's bits:                   Hex:                       Purpose:
+-----------------------------------------------------------------------------------------------------
+1011 0000                            0xB0                       Disable evolution, and pre-evolution?
+
+0111 0000                            0x70                       Allow evolution as normal?
+0110 0000                            0x60                       Apparently used for sillicoon and cascoon's evolution?
+
+0011 0000                            0x30                       Pokemon has pre-evo, but won't evolve any further?
+
+0000 0111                            0x07                       Needs item in the bag for this pokemon to spawn? (Thanks End!)
+
+0000 0100                            0x04                       Pokemon cannot move in dungeons. (Thanks End!)
+
+
+===========================
+   Evolution Requirements
+===========================
+Here are the possible values for the evolution requirement, 
+and how the value of the parameter is used / split :
+
+*NOT 100% sure*
+
+Value       Method                  Parameter(s) ( 4 bytes available )
+-----       ------                  -------------------------------------------------
+0x00        None(Or shedinja's)
+0x01        Level(+Item)            (uint16)Level required to evolve,(uint16)Item ID
+0x02        IQ(+Item)               (uint16)IQ Req,                  (uint16)Additional Item ID?       
+0x03        Item(s)                 (uint16)Item ID ?                (uint16)Additional Item ID?
+0x04        Unknown
+0x05        Link Cable              (uint16)0x00,                    (uint16)0x01    
+
+Known Item IDs
+---------------
+0x8B - Up-Grade
+0x8C - King's Rock
+0x8D - Thunderstone
+0x8E - Deep Sea Scale
+0x8F - Deep Sea Tooth
+
+0x91 - Moonstone 
+0x92 - Fire Stone
+0x93 - Water Stone
+0x94 - Metal Coat
+
+0x96 - Dragon Scale
+
+0x98 - Dubious Disc
+
+0x9A - Reaper Cloth
+0x9B - Razor Fang
+0x9C - Razor Claw
+0x9D - Electirizer
+0x9E - Magmarizer
+
+0xA3 - Coronet Rock
+0xA4 - Mossy Rock
+0xA5 - Icy Rock
+
+Known Other Item IDs ?
+------------------
+0x01 - Link Cable ?
+0x02 - Unknown
+0x03 - Unknown
+0x04 - Unknown
+0x05 - Sun Ribbon
+0x06 - Lunar Ribbon
+0x07 - Beauty Scarf
+
+
+
+### NOTE TO SELF : 3 evo-related uint16 for the following evos
+
+IQ 
+    Togetic     0x02 0x96 0x00
+    Crobat      0x02 0x96 0x00
+    Pikachu     0x02 0xC8 0x00
+
+IQ + Item
+    Espeon      0x02 0x64 0x05
+    Umbreon     0x02 0x64 0x06
+    
+Link Cable
+    Gengar      0x05 0x00 0x01
+    
+Item + Link Cable
+    Slowing     0x03 0x8C 0x01
+    Steelix     0x03 0x94 0x01 
+    Kingdra     0x03 0x96 0x01
+    Electivire  0x03 0x9D 0x01
+    Magmortar   0x03 0x9E 0x01
+    Porygon2    0x03 0x8B 0x01
+    Porygon-Z   0x03 0x98 0x01
+    Dusknoir    0x03 0x9A 0x01
+    Gorebyss    0x03 0x8E 0x01 
+    Huntail     0x03 0x8F 0x01
+    
+###
+
+
+=======================
+    Pokemon Types
+=======================
+Here are the possible values for the pokemon type bytes :
+
+Value       Type
+-----       ----------
+0x00        None
+0x01        Normal
+0x02        Fire
+0x03        Water
+0x04        Grass
+0x05        Electric
+0x06        Ice
+0x07        Fighting
+0x08        Poison
+0x09        Ground
+0x0A        Flying
+0x0B        Psychic
+0x0C        Bug
+0x0D        Rock
+0x0E        Ghost
+0x0F        Dragon
+0x10        Dark
+0x11        Steel
+0x12        Neutral (Possibly not an actual type but a programming quirk..)
+
+
+==============
+   IQ Group
+==============
+Here are the possible values for a pokemon's IQ group:
+
+Value       IQ Group
+-----       ---------
+0x00        A
+0x01        B
+0x02        C
+0x03        D
+0x04        E
+0x05        F
+0x06        G
+0x07        H
+0x08        Unused   (Not sure why those two are skipped :/)
+0x09        Unused
+0x0A        I
+0x0B        J
+0x0C        Unused
+0x0D        Unused
+0x0E        Unused
+0x0F        Invalid (Used in the dummy first entry)
+
+=========================
+    Pokemon Abilities
+=========================
+(Thanks to Jellynater for the complete list of abilities! )
+Here are the possible abilities:
+
+Value   Ability
+-----   ------------
+0x1     Stench
+0x2     Thick Fat
+0x3     Rain Dish
+0x4     Drizzle
+0x5     Arena Trap
+0x6     Intimidate
+0x7     Rock Head
+0x8     Air Lock
+0x9     Hyper Cutter
+0xA     Shadow tag
+0xB     Speed Boost
+0xC     Battle Armor
+0xD     Sturdy
+0xE     Suction Cups
+0xF     Clear Body
+0x10    Torrent
+0x11    Guts
+0x12    Rough Skin
+0x13    Shell Armor
+0x14    Natural Cure
+0x15    Damp
+0x16    Limber
+0x17    Magnet Pull
+0x18    White Smoke
+0x19    Synchronize
+0x1A    Overgrow
+0x1B    Swift Swim
+0x1C    Sand Stream
+0x1D    Sand Veil
+0x1E    Keen Eye
+0x1F    Inner Focus
+0x20    Static
+0x21    Shed Skin
+0x22    Huge Power
+0x23    Volt Absorb
+0x24    Water Absorb
+0x25    Forecast
+0x26    Serene Grace
+0x27    Poison Point
+0x28    Trace
+0x29    Oblivious
+0x2A    Truant
+0x2B    Run Away
+0x2C    Sticky Hold
+0x2D    Cloud Nine
+0x2E    Illuminate
+0x2F    Early Bird
+0x30    Hustle
+0x31    Drought
+0x32    LightningRod
+0x33    CompoundEyes
+0x34    Marvel Scale
+0x35    Wonder Guard
+0x36    Insomnia
+0x37    Levitate
+0x38    Plus
+0x39    Pressure
+0x3A    Liquid Ooze
+0x3B    Color Change
+0x3C    Soundproof
+0x3D    Effect Spore
+0x3E    Flame Body
+0x3F    Minus
+0x40    Own Tempo
+0x41    Magma Armor
+0x42    Water Veil
+0x43    Swarm
+0x44    Cute Charm
+0x45    Immunity
+0x46    Blaze
+0x47    Pickup
+0x48    Flash Fire
+0x49    Vital Spirit
+0x4A    Chlorophyll
+0x4B    Pure Power
+0x4C    Shield Dust
+0x4D    Ice Body
+0x4E    Stall
+0x4F    Anger Point
+0x50    Tinted Lens
+0x51    Hydration
+0x52    Frisk
+0x53    Mold Breaker
+0x54    Unburden
+0x55    Dry Skin
+0x56    Anticipation
+0x57    Scrappy
+0x58    Super Luck
+0x59    Gluttony
+0x5A    Solar Power
+0x5B    Skill Link
+0x5C    Reckless
+0x5D    Sniper
+0x5E    Slow Start
+0x5F    Heatproof
+0x60    Download
+0x61    Simple
+0x62    Tangled Feet
+0x63    Adaptability
+0x64    Technician
+0x65    Iron Fist
+0x66    Motor Drive
+0x67    Unaware
+0x68    Rivalry
+0x69    Bad Dreams
+0x6A    No Guard
+0x6B    Normalize
+0x6C    Solid Rock
+0x6D    Quick Feet
+0x6E    Filter
+0x6F    Klutz
+0x70    Stedfast 
+0x71    Flower Gift
+0x72    Poision Heal
+0x73    Magic Guard
+0x74    $$$
+0x75    Honey Gather
+0x76    Aftermath
+0x77    Snow Cloak
+0x78    Snow Warning
+0x79    Forewarn
+0x7A    Storm Drain
+0x7B    Leaf Guard
+
+---------------------------
+        Mobility
+---------------------------
+Mobility data taken from the ".grammar" file from over there: http://fileformats.archiveteam.org/wiki/Pok%C3%A9mon_Mystery_Dungeon
+apparently made by someone named Kelvin Chung.
+
+Value       Mobility Type
+-----       -------------
+0x00        Normal (solid surfaces)
+0x01
+0x02        Hovering( solid surfaces + water + lava(gets burned) + holes )
+0x03
+0x04        Magma (solid surfaces + lava/magma)
+0x05        Water (solid surfaces + water)
+
+
+=======================================
+Explorers of Time/Darkness
+=======================================
+
+Each monster.md entries is 76 bytes long instead of 68!

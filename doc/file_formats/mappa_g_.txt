@@ -1,0 +1,69 @@
+mappa_gs.bin
+mappa_gt.bin
+mappa_gy.bin
+-------------
+SIR0 wrapped.
+
+
+==========================================================
+mappa_g*.bin
+==========================================================
+Seems to contain indices for each floors of each dungeons in the corresponding mappa_*.bin file, among other things.
+
+----------------------------------------------------------
+Structure 
+----------------------------------------------------------
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+SIR0Header                          16              -               The standard SIR0 header.
+[
+    0x00    magicn                  4               -               "SIR0"
+    0x04    ptrsubhdr               4               uint32          Pointer to the subheader.
+    0x08    ptrptrofftbl            4               uint32          Pointer to the encoded pointer offset table.
+    0x0C    null                    4               -               4 bytes of zeros.
+]
+DungeonDataIndices
+[
+    DungeonDatIndicesEntry			vary							List of floor indices (in FloorDataBlock) for this dungeon
+    [
+		nullfirstentry				4				uint32			Each table for a given dungeon starts with a null entry!
+		FloorIndices				vary							List of indices for each floor's entry for this dungeon!
+		[
+			flooridx                4               uint32          Indice in the floor data list
+			...
+		]
+    ]
+    ...
+]
+DungeonLUT
+[
+    ptrdungeon                      4               uint32          Ptr to a dungeon's entry in DungeonDataIndices.
+    ...
+]
+FloorDataBlock                                                      Shortened data for dungeon floors
+[
+	FloorEntry						4								Short entry with details on a floor.
+	{
+		tilesetid					1								Tileset used by the floor.
+		fixedfloorid				1								Id of the fixed floor entry in fixed.bin?
+		unk0						1								Unknown usually(0)
+		unk1						1								Unknown usually(0)
+	}
+    ...
+]
+Padding                            0-15             -               0xAA padding bytes to align the next part on 16 bytes.
+SubHeader							8
+[
+    0x00    ptrDungeonLUT           4               uint32          Pointer to DungeonLUT.
+    0x04    ptrFloorDataBlock       4               uint32          Pointer to FloorDataBlock.
+]
+Padding                            0-15             -               0xAA padding bytes to align the next part on 16 bytes.
+SIR0EncodedPtrList                  vary            -               The standard SIR0 encoded ptr list.
+[]
+Padding                            0-15             -               0xAA padding bytes to align the next part on 16 bytes.
+
+
+
+
+

@@ -1,0 +1,110 @@
+==========================
+        item_p.bin
+==========================
+SIR0 wrapped format. Contains the data for every items in the game. 
+
+Thanks to nhahtdh for making a wonderful excel sheet for the item_p and item_s_p files!
+And thanks to the people behind http://apointlessplace.net/wms for preserving a copy !
+
+- Explorers of Sky contains 1400 entries.
+- Explorers of Time/Darkness contains 1000 entries.
+
+---------------------------
+Explorers of Time/Darkness:
+---------------------------
+
+
+Offset:                     Length:             Type:           Description:
+-------                     -------             -------         -----------------------------------
+0x00                        4                   char[4]         Magic number 0x53495230 "SIR0"
+0x04                        4                   uint32          Beginning of item data.
+0x08                        4                   uint32          SIR0 encoded ptr list.
+0x0C                        4                   -               Null
+ItemData                                                        This block contains all the item data entries.
+[
+    Item                    24                                  Entry for a single item.
+    [
+
+    ]
+    ...
+]
+SIR0EncodedPtrList
+[
+    ...
+]
+PaddingBytes                0-15                    -           0xAA bytes used as padding so the file ends aligned on 16 bytes!
+-------                     -------             -------         -----------------------------------
+
+
+
+-------------------
+Explorers of Sky:
+-------------------
+
+Offset:                     Length:             Type:           Description:
+-------                     -------             -------         -----------------------------------
+0x00                        4                   char[4]         Magic number 0x53495230 "SIR0"
+0x04                        4                   uint32          Beginning of item data.
+0x08                        4                   uint32          SIR0 encoded ptr list.
+0x0C                        4                   -               Null
+ItemData                                                        This block contains all the item data entries.
+[
+    Item                    16                                  Entry for a single item.
+    [
+    0x00 BuyPrice           2                   uint16          Price to pay for the item when purchased from a shop.
+    0x02 SellPrice          2                   uint16          Price a shop will offer for the item.
+    0x04 Category           1                   uint8           Used for sorting items, and possibly to determine the way it works. (See category below)
+    0x05 SpriteID           1                   uint8           The sprite shown next to the item in the bag and on the ground.
+    0x06 ItemID             2                   uint16          The ID by which the game refers to this item !
+    0x08 ItemParm#1         2                   uint16          (See item param below)
+    0x0A ItemParam#2        1                   uint8           Another parameter for items. Unknown role.
+    0x0B ItemParam#3        1                   uint8           Another parameter for items. Unknown role.
+    0x0C Unknown#1          1                   uint8           Unknown
+    0x0D Unknown#2          1                   uint8           Unknown
+    0x0E Unknown#3          1                   uint8           Unknown
+    0x0F Unknown#4          1                   uint8           Unknown, usually is 0.
+    ]
+    ...
+]
+SIR0EncodedPtrList
+[
+    ...
+]
+PaddingBytes                0-15                    -           0xAA bytes used as padding so the file ends aligned on 16 bytes!
+-------                     -------             -------         -----------------------------------
+
+----------------------
+      Category
+----------------------
+Thanks to nhahtdh for the great excel sheet! 
+And thanks to the people behind http://apointlessplace.net/wms for preserving a copy !
+
+Value       Category
+-----       --------
+0x00        Projectile
+0x01        Arc
+0x02        Seed & Drink
+0x03        Food & Gummi
+0x04        Hold item
+0x05        TM & HM
+0x06        Poke
+0x07        N/A
+0x08        Evo. + Misc.
+0x09        Orb
+0x0A        Link Box
+0x0B        Used TM
+0x0C        Box 1
+0x0D        Box 2
+0x0E        Box 3
+0x0F        Specific Items
+
+
+----------------------
+     Item Param
+----------------------
+There are 3 parameters slots available for each items, their use depends on the item type.
+
+First param slot (offset 0x08)
+- If the item is an HM/TM, or an orb, this value is the move ID it refers to. Its also used the same way by some items, like orbs.
+- Otherwise, with items of any other category, its role is unknown !
+

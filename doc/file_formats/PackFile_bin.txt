@@ -1,0 +1,121 @@
+==========================================================================================
+                                    PMD2 Pack File (.bin): 
+==========================================================================================
+
+offset:         length:         endian:             description:
+-------         -------         -------             -----------------------------------
+0x0             4               -                   0x00000000
+0x4             4               little              Nb of files entries in the FOT.
+FOffsetTable    FOTLen = (NbOfFiles * 8) + 1        Table containing the offset and length or each 
+                                                     files in the pack file.
+[
+    FOTEntry    8
+    [
+        0x0     0x4             little              Offset of file
+        0x4     0x4             little              Length of file
+    ]
+    ...
+    NullFOTEntry 8                                  A null entry at the end of the FOT. Not counted 
+                                                     in the NbOfFiles.
+]
+Padding         varies          -                   Padding 0xFF bytes. Align on 256 bytes filedata. 
+FileDataBlock   varies                              Its basically all the packed files put one after 
+                                                     the other. With padding applied if needed !
+[
+    0x0         FileLen         -                   Entire data for a file.
+    M + O       0x0-0xE         -                   0xFF Padding characters inserted so a file
+                                                     aligns properly on 16 bytes.
+    ...
+]
+
+
+
+---------------------------
+*About post-header padding
+---------------------------
+The padding right after the filed offset table is special. 
+Its main purpose is to align the first file on 16 bytes :
+
+FirstFileOffset % 16 = 0
+
+But, it also seems to have another use..
+In the pokemon-related sprite data packs, like m_ground.bin, monster.bin, m_attack.bin, there are 3 EXTRA 
+rows(48 bytes) of 0xFFFFFFFF padding. They all have the same number of files, and all of their first files 
+begins on offset 0x1300.. 
+
+When I attempted re-packing the m_ground.bin file, I removed those extra lines. But the result was that
+the rebuilt ROM wouldn't display any pokemon in-game sprites, and would just crash after a while.
+Even re-packing all the files in the "MONSTER" folder to have the same padding lengths and have 
+their first files begin at the same offset didn't fix the issue. 
+
+Thus, I'm wondering if they didn't add those extra 48 bytes of padding for a reason. So that all those 
+files would have the same first file offset? Its probably a relic from re-using so much things from the 
+GBA games.. It might be an hard-coded value in the game's code.
+
+So far it seems rebuilding any other pack files with those 3 extra rows of padding causes no extra problems,
+and ensures all repacked files will work, in the case of PMD:EoS at least.. 
+
+****
+EX1
+****
+So for example, in m_ground.bin, the number of files is 0x257, and the starting offset for the first 
+file is 0x1300(4864). 
+
+0x1300 / 0x257 = 8
+
+file offset table only
+4792 / 599 = 8
+4792 % 599 = 0
+4792 / 16  = 299
+4792 % 16  = 8
+
+length whole header without padding or the 8 bytes of zeros
+4800 / 599 = 8
+4800 % 599 = 8
+4800 / 16  = 300
+4800 % 16  = 0
+
+length whole header without padding  BUT with the 8 bytes of zeros
+4808 / 599 = 8
+4808 % 599 = 16
+4808 / 16  = 300
+4808 % 16  = 8
+
+whole header
+4864 / 599 = 8
+4864 % 599 = 72
+4864 / 16  = 304
+4864 % 16  = 0
+
+
+****
+EX2
+****
+If we look at a pack file with a different number of files inside of it, like effect.bin, we have a
+number of files of 0x125, and a first file offset of 0x940.
+
+0x940 / 0x125  = 8
+
+file offset table only
+2344 / 293 = 8
+2344 % 293 = 0
+2344 / 16  = 146
+2344 % 16  = 8
+
+length whole header without padding or the 8 bytes of zeros
+2352 / 293 = 8
+2352 % 293 = 8 
+2352 / 16  = 147
+2352 % 16  = 0
+
+length whole header without padding  BUT with the 8 bytes of zeros
+2360 / 293 = 8
+2360 % 293 = 16
+2360 / 16  = 147
+2360 % 16  = 8
+
+whole header
+2368 / 293 = 8
+2368 % 293 = 24
+2368 / 16  = 148
+2368 % 16  = 0

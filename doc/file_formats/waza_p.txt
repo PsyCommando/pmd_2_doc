@@ -1,0 +1,176 @@
+Thanks to Zerea and End45 for helping with some of the unk values!
+
+waza_p.bin / waza_p2.bin files
+------------------------------
+"waza" or "わざ" or 技, means technique/art. It most likely refers to either moves or TMs.
+
+NOTE:
+    - LvlUpMovesBlock contains 1,659 entries. 3 pointers per pokemon. Which means 553 entries.
+    - MoveDataBlock contains 559 entries.
+    
+
+
+Offset                  Length      Type        Description:
+-------                 ------      ----        ------------
+0x0                     4           char[4]     SIR0 magic number
+0x4                     4           uint32      Pointer to WazaHeader
+0x8                     4           uint32      Pointer to SIR0 encoded ptr list
+0xC                     4           -           Null
+LearnSetMovesBlock                  -           Contains the level-up move sets for most pokemon!
+[
+    ListsForAPokemon                        Those 3 lists are linked together, but not physically grouped together. They're just one after the other in the file!
+    [
+        LvlUpMovesSet       varies                  List of all the level-up moves. Encoded using the same method as the SIR0 ptr list!
+        [
+            MoveEntry       2-4         -           
+            [
+                MoveID      1-3                     The moveID encoded using the same method as the SIR0 encoded ptr list! (see encoding below)
+                Level       1-3                     The level at which the move is learned! (Will always be stored as a byte, but is most likely handled by the decoding code!)
+            ]
+            ...
+            Null            1           uint8       Entry is terminated by a null byte!
+        ]
+        TMHMMovesSet        varies                  List of all the moves the pokemon can learn by HM/TMs. Encoded using the same method as the SIR0 ptr list!
+        [
+            MoveID          1-3                     The moveID encoded using the same method as the SIR0 encoded ptr list! (see encoding below)
+            ...
+            Null            1           uint8       Entry is terminated by a null byte!
+        ]
+        EggMovesSet        varies                  List of all the moves the pokemon can get when hatching from an egg. Encoded using the same method as the SIR0 ptr list!
+        [
+            MoveID          1-3                     The moveID encoded using the same method as the SIR0 encoded ptr list! (see encoding below)
+            ...
+            Null            1           uint8       Entry is terminated by a null byte!
+        ]
+    ]
+    ...
+]
+PaddingBytes            0-15        -           0xAA padding bytes to align the next block on 16 bytes.
+MoveDataBlock                       -           Seems to contain data for each moves. Has 559 entries of 26 bytes each!
+[
+    MoveData            26          -           Data for a move. Affects PP, accuracy, attack power, attack effect.
+    [
+    0x00 BasePower      2           int16       The base power of the move.
+    0x02 Type           1           uint8       The move's type. (see monster.md under Pokemon Types for a list of values)
+    0x03 Category       1           uint8       What kind of move is it ( 0 = Physical, 1 = Special, 2 = Status Move )
+    0x04 MoveRangeBits  2           uint16      (Unk#4) Bitfield for determining the range of a move.
+												{
+													Possible Bit Flags values:
+														 0000 0000(0)  = Hit directly in front
+														 0000 0010(2)  = Hit in front and adjacent
+														 0001 0000(16) = Hit everything next to the user on 180 degrees forward
+														 0010 0000(32) = Hit everything next to the user on 360 degrees
+														 0011 0000(48) = Hit all enemies in the same room
+														 0011 0001(49) = Hit all allies in the same room
+														 0011 0010(50) = Hit everything in the same room
+														 0011 0110(54) = Hit all allies but the user
+														 0100 0000(64) = Hit 2 tiles forward
+														 0101 0000(80) = "Movement Altering (Stops or changes how movement occurs, such as through Tactics or Cowering)"?
+														 0101 0000(82) = Hit everything in a forward line
+														 0110 0000(96) = Hit all enemies on FLOOR
+														 0110 0001(97) = Hit all allies on FLOOR
+														 0110 0010(98) = Hit everything on FLOOR
+														 0111 0011(115)= Hit user
+														 0111 0100(116)= Needs to charge then attacks (dig,fly,etc)
+														 1000 0000(128)= Cuts corners
+														 1000 0101(133)= Cuts corners + hits in front adjacent
+												}
+    0x06 BitField2      2           uint16      (Unk#5) It seems setting this to 0101 0000(80) makes the move a long range straight line attack 
+												{
+													Possible Bit Flags values:
+														0000 0000(0)  = Unknown
+														0101 0000(80) = makes the move a long range straight line attack 
+												}
+    0x08 PP             1           uint8       The move's base amount of PP.
+    0x09 AIWeight       1           uint8       (Unk#6) Possibly move weight to specify how likely the AI will use the move.
+    0x0A MissAccuracy   1           uint8       (Unk#7) Possibly secondary accuracy value.  A different message will be shown if this accuracy test fails.
+    0x0B Accuracy       1           uint8       The actual accuracy of the move. (Aka the move failed to impact )
+    0x0C Unk#9          1           uint8       unknown
+    0x0D NbChainedHits  1           uint8       (Unk#10) Possibly the number of times a move hits in a row
+    0x0E MaxUpgradeLvl  1           uint8       (Unk#11) Max number of time the move can be powered up.
+    0x0F CritChance     1           uint8       (Unk#12) Critical hit chance. 60 is apparently pretty much guaranteed crit 
+    0x10 IsMagicCoat    1           uint8       (Unk#13) Boolean, whether the move is affected by magic coat(1 means it is)
+    0x11 IsSnatchable   1           uint8       (Unk#14) Boolean, whether the move is affected by snatch(1 means it is)
+    0x12 DoesUseMouth   1           uint8       (Unk#15) Boolean, whether the move is disabled by the "muzzled" status
+    0x13 Unk#16         1           uint8       unknown
+    0x14 DoesUseTaunted 1           uint8       (Unk#17) Boolean, whether the move can be used while taunted.
+    0x15 Unk#18         1           uint8       unknown. Possibly a bitfield. the last 2 bits are usually on. 
+    0x16 MoveID         2           uint16      The move's ID. Probably used by the game to determine description and etc..
+    0x18 AtkMsgId       2           uint16      (Unk#19) Message ID offset that is displayed for the move. 0 = Is default, higher values are added as string offset from the default string.
+    ]
+    ...
+]
+PaddingBytes            0-15        -           0xAA padding bytes to align the next section  on 16 bytes.
+PtrTable                            -           A table of pointers to entries within LvlUpMovesBlock.
+[
+    LearnSetPtrs        12                      3 pointers to the lists containing a specific pokemon's learnable moves!
+    [
+        PtrLvlUpLst     4           uint32      The pointer to the pokemon's lvl-up moves list. Pointer can be null, and target entry can be empty!
+        PtrTmHmLst      4           uint32      The pointer to the pokemon's TM/HMs moves list. Pointer can be null, and target entry can be empty!
+        PtrEggLst       4           uint32      The pointer to the pokemon's egg moves list. Pointer can be null, and target entry can be empty!
+    ]
+    ...
+]
+PaddingBytes            0-15        -           0xAA padding bytes to align the next section  on 16 bytes.
+WazaHeader              8           -           The header the SIR0 refers to.
+[
+    PtrMoveDataBlock     4          uint32      A pointer to the beginning of MoveDataBlock.
+    PtrPtrTable          4           uint32      A pointer to the beginning of the PtrTable.
+]
+PaddingBytes            0-15        -           0xAA padding bytes to align the next section  on 16 bytes.
+SIR0EcodedPtrOffsets                -           The encoded ptr list for the SIR0 container.
+[
+    ...
+]
+
+===================
+    Encoding
+===================
+The encoding for integer is the same as the one used for the pointers offset in the SIR0 files. Except that
+we do not subtract or add the difference between each values.
+
+See SIR0.txt for details!
+
+
+=================
+Bitfield Stuff
+=================
+End found this out :
+
+End — 12/31/2020
+I've been researching how those two fields that looked like bitfields inside move data work (Unk4 and Unk5 in StatsUtil). It was known already that Unk4 determined the actual range of a move while Unk5 determined how and when the AI tried to use it. I've found out that those aren't bitfields, instead each one is treated as 3 separate values, one nibble each:
+Nibble 0: Targets
+    0: Enemies
+    1: Allies
+    2: Everyone
+    3: User
+    4: Two-turn move
+    5: Everyone except user
+    6: All allies except user
+    15: Special/Invalid
+Nibble 1: Range
+    0: In front
+    1: In front + tiles to the left and to the right (Wide slash)
+    2: 8 tiles around user
+    3: Room
+    4: Two tiles away (Also cuts corners, but the AI doesn't account for that)
+    5: Straight line
+    6: Floor
+    7: User
+    8: In front, cuts corners
+    9: Two tiles away, cuts corners
+    15: Special/Invalid
+Nibble 2: Condition 
+    This one is only used by the AI, seems like it doesn't have any effect in Unk4
+    The AI will only consider a pokémon a valid target for the move if it meets the condition
+    0: No condition
+    1: Random chance specified by Unk9 (75% for almost all moves)
+        Note that setting this to 100% won't make the AI use this move every turn since  it randomly picks a move to use first. This chance is applied after this move has been chosen already.
+    2: Current HP <= 25%
+    3: Has at least one negative status condition
+    4: Is asleep, in a nightmare or napping
+    5: Is a ghost-type pokémon and does not have the exposed status
+    6: Current HP <= 25% or has at least one negative status condition
+Nibble 3: Unused
+
+Note: Due to a bug, if Unk5 has a range value of 5, 8 or 9, it will basically overwrite the range value for Unk4. For example, a move with Unk4 = 0 and Unk5 = 0x50 will be a straight line move and will be treated by the AI as such.

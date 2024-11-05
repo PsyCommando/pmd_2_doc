@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!DOCTYPE binary_file_format SYSTEM "BinaryFileFormat.dtd">
+<binary_file_format name="SMD_File" type_name="" comment="" expr="">
+
+	<define_struct type_name="TrkChunk" comment="" expr="">
+		<data type="int" name="TrkMagicn" format="signed" byte_order="big" read_only="true" len="4" domain="this == 0x74726B20" display=""/>
+		<data type="int" name="unk1" format="unsigned" len="4" domain="this==0x01000000" display=""/>
+		<data type="int" name="unk2" format="unsigned" len="4" domain="this==0xFF04" display=""/>
+		<data type="int" name="chunklen" format="unsigned" len="4" domain="" display=""/>
+		<data type="int" name="trackid" format="unsigned" len="1" domain="" display="dec"/>
+		<data type="int" name="chanid" format="unsigned" len="1" domain="" display="dec"/>
+		<data type="int" name="null" format="unsigned" len="2" domain="this==0" display="dec"/>
+		<for name="TrackBytes" count="" stop_test="this.ID == 0x98" type_name="" comment="">
+			<use_struct name="anevent" expr="" type_name="TrkEvent" comment=""/>
+		</for>
+		<if test="((addressof(this)%4) &gt; 0)" comment="">
+			<data type="none" name="padbyte" len="4 - (addressof(this) % 4)" display=""/>
+		</if>
+	</define_struct>
+
+	<define_struct type_name="TrkEvent" comment="" expr="">
+		<data type="int" name="ID" format="unsigned" len="1" domain="" display="hex"/>
+		<if test="ID &lt; 0x80" comment="Handle note parameter length">
+			<struct name="note_event" type_name="" comment="" expr="">
+				<data type="int" name="noteparam" format="unsigned" len="1" domain="" display="hex"/>
+				<data type="int" name="hold_duration" format="unsigned" len="((noteparam &gt;&gt; 6) &amp; 3)" display="dec"/>
+			</struct>
+			<else />
+				<data type="none" name="parameters" len="EvPLen[ID]" display=""/>
+		</if>
+	</define_struct>
+	<define_struct type_name="SeqInfo" comment="" expr="">
+		<data type="int" name="unk30" format="unsigned" len="2" display="dec"/>
+		<data type="int" name="offnext" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="unk16" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="nbtracks" format="unsigned" len="1" display="dec"/>
+		<data type="int" name="nbchans" format="unsigned" len="1" display="dec"/>
+		<data type="int" name="unk19" format="unsigned" len="1" display="dec"/>
+		<data type="int" name="unk20" format="unsigned" len="1" display="dec"/>
+		<data type="int" name="unk21" format="unsigned" len="1" display="dec"/>
+		<data type="int" name="unk22" format="unsigned" len="1" display="dec"/>
+		<data type="int" name="unk23" format="unsigned" len="4" display="hex"/>
+		<data type="int" name="unk24" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="unk25" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="unk26" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="unk27" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="unk28" format="unsigned" len="2" display="hex"/>
+		<data type="int" name="unk29" format="unsigned" len="1" display="hex"/>
+		<data type="int" name="unk31" format="unsigned" len="1" display="dec"/>
+		<data type="int" name="unk12" format="unsigned" len="4" display="hex"/>
+	</define_struct>
+	<struct name="Header" type_name="" comment="" expr="FileLength={this.FileLength; %.d}">
+		<data type="int" name="MagicNumber" format="unsigned" byte_order="big" read_only="true" len="4" domain="this==0x736D646C" display=""/>
+		<data type="int" name="Null" format="unsigned" byte_order="big" read_only="true" len="4" domain="this==0x0" display=""/>
+		<data type="int" name="FileLength" format="unsigned" byte_order="little" len="4" domain="this&gt;0" display="FileLength=%d"/>
+		<data type="int" name="version" format="unsigned" byte_order="little" read_only="true" len="2" domain="this==0x0415" display="" comment="*MAYBE* version identifier for the file possibly."/>
+		<data type="int" name="unk1" format="unsigned" byte_order="little" read_only="true" len="2" display="" comment="unknown value, changes with each files."/>
+		<data type="none" name="null2" len="4"/>
+		<data type="none" name="null3" read_only="true" len="4"/>
+		<data type="int" name="unkbits1" format="unsigned" len="1" display=""/>
+		<data type="int" name="unkbits2" format="unsigned" len="1" display=""/>
+		<data type="int" name="unkbits3" format="unsigned" len="1" display=""/>
+		<data type="int" name="unkbits4" format="unsigned" len="1" display=""/>
+		<data type="int" name="unkbits5" format="unsigned" len="1" display=""/>
+		<data type="int" name="unkbits6" format="unsigned" len="1" display=""/>
+		<data type="int" name="unkbits7" format="unsigned" len="1" display=""/>
+		<data type="int" name="unkbits8" format="unsigned" len="1" display=""/>
+		<data type="string" name="FileName" format="ascii" len="16" display="" comment="The file's internal name"/>
+		<data type="int" name="unk2" format="unsigned" len="4" display="" comment="more often than not its == to 1"/>
+		<data type="int" name="unk3" format="unsigned" len="4" display="" comment="more often than not its == to 1"/>
+		<data type="none" name="padding" len="8" comment="padding bytes to align on 16 bytes" read_only="true"/>
+	</struct>
+	<eval expr="EvPLen[0x80]= 0, EvPLen[0x81]= 0, EvPLen[0x82]= 0, EvPLen[0x83]= 0, EvPLen[0x84]= 0, EvPLen[0x85]= 0, EvPLen[0x86]=0, EvPLen[0x87]=0, EvPLen[0x88]=0, EvPLen[0x89]=0, EvPLen[0x8A]=0, EvPLen[0x8B]=0, EvPLen[0x8C]= 0, EvPLen[0x8D]=0, EvPLen[0x8E]=0, EvPLen[0x8F]=0, EvPLen[0x90]= 0, EvPLen[0x91]= 1, EvPLen[0x92]= 1, EvPLen[0x93]= 2, EvPLen[0x94]= 3, EvPLen[0x95]= 1, EvPLen[0x96]=0, EvPLen[0x97]=0, EvPLen[0x98]=0, EvPLen[0x99]=0, EvPLen[0x9A]=0, EvPLen[0x9B]=0, EvPLen[0x9C]= 1, EvPLen[0x9D]=0, EvPLen[0x9E]=0, EvPLen[0x9F]=0, EvPLen[0xA0]= 1, EvPLen[0xA1]= 1, EvPLen[0xA2]=0, EvPLen[0xA3]=0, EvPLen[0xA4]= 1, EvPLen[0xA5]= 1, EvPLen[0xA6]=0, EvPLen[0xA7]=0, EvPLen[0xA8]= 2, EvPLen[0xA9]= 1, EvPLen[0xAA]= 1, EvPLen[0xAB]=0, EvPLen[0xAC]= 1, EvPLen[0xAD]=0, EvPLen[0xAE]=0, EvPLen[0xAF]= 3, EvPLen[0xB0]=0, EvPLen[0xB1]= 1, EvPLen[0xB2]= 1, EvPLen[0xB3]= 1, EvPLen[0xB4]= 2, EvPLen[0xB5]= 1, EvPLen[0xB6]= 1, EvPLen[0xB7]=0, EvPLen[0xB8]=0, EvPLen[0xB9]=0, EvPLen[0xBA]=0, EvPLen[0xBB]=0, EvPLen[0xBC]= 1, EvPLen[0xBE]= 1, EvPLen[0xBF]= 1, EvPLen[0xC0]=0, EvPLen[0xC1]=0, EvPLen[0xC2]=0, EvPLen[0xC3]= 1, EvPLen[0xC4]=0, EvPLen[0xC5]=0, EvPLen[0xC6]=0, EvPLen[0xC7]=0, EvPLen[0xC8]=0, EvPLen[0xC9]=0, EvPLen[0xCA]=0, EvPLen[0xCB]= 2, EvPLen[0xCC]=0, EvPLen[0xCD]=0, EvPLen[0xCE]=0, EvPLen[0xCF]=0, EvPLen[0xD0]= 1, EvPLen[0xD1]= 1, EvPLen[0xD2]= 1, EvPLen[0xD3]= 2, EvPLen[0xD4]= 3, EvPLen[0xD5]= 2, EvPLen[0xD6]= 2, EvPLen[0xD7]= 2, EvPLen[0xD8]= 2, EvPLen[0xD9]= 0, EvPLen[0xDA]= 0, EvPLen[0xDB]= 1, EvPLen[0xDC]= 5, EvPLen[0xDD]= 4, EvPLen[0xDE]= 0, EvPLen[0xDF]= 1, EvPLen[0xE0]= 1, EvPLen[0xE1]= 1, EvPLen[0xE2]= 3, EvPLen[0xE3]= 1, EvPLen[0xE4]= 5, EvPLen[0xE5]= 4, EvPLen[0xE6]= 0, EvPLen[0xE7]= 1, EvPLen[0xE8]= 1, EvPLen[0xE9]= 1, EvPLen[0xEA]= 3, EvPLen[0xEB]= 0, EvPLen[0xEC]= 5, EvPLen[0xED]= 4, EvPLen[0xEF]= 1, EvPLen[0xF0]= 5, EvPLen[0xF1]= 4, EvPLen[0xF2]= 2, EvPLen[0xF3]= 3, EvPLen[0xF4]= 0, EvPLen[0xF5]= 0, EvPLen[0xF6]= 1, EvPLen[0xF7]= 0, EvPLen[0xF8]= 2, EvPLen[0xF9]= 0, EvPLen[0xFA]= 0, EvPLen[0xFB]= 0, EvPLen[0xFC]= 0, EvPLen[0xFD]= 0, EvPLen[0xFE]= 0, EvPLen[0xFF]= 0" display_error="false" display_result="true" comment=""/>
+	<struct name="SongChunk" type_name="" comment="" expr="">
+		<data type="int" name="MagicNumber" format="unsigned" read_only="true" len="4" domain="this==0x736F6E67" display=""/>
+		<data type="int" name="Unk1" format="unsigned" len="4" domain="this==0x1" display=""/>
+		<data type="int" name="Unk2" format="unsigned" len="4" domain="this==0xFF10" display=""/>
+		<data type="int" name="Unk2" format="unsigned" len="4" domain="this==0xFFFFFFB0" display=""/>
+		<use_struct name="seqinfo" expr="" type_name="SeqInfo" comment=""/>
+	</struct>
+	<data type="none" name="padding" len="16" comment="padding bytes to align on 16 bytes" read_only="true"/>
+	<for name="TrackList" count="SongChunk.seqinfo.nbtracks">
+		<use_struct name="Track" expr="" type_name="TrkChunk" comment=""/>
+	</for>
+	<struct name="EoCChunk" type_name="" comment="" expr="">
+		<data type="int" name="MagicNumber" format="unsigned" read_only="true" len="4" domain="this==0x656F6320" display=""/>
+		<data type="int" name="Unk1" format="unsigned" len="4" domain="this==0x01000000" display=""/>
+		<data type="int" name="Unk2" format="unsigned" len="4" domain="this==0xFF04" display=""/>
+		<data type="int" name="Chunklen" format="unsigned" len="4" domain="this==0" display=""/>
+	</struct>
+	<data type="none" name="none"/>
+</binary_file_format>

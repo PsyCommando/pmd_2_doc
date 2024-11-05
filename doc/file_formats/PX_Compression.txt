@@ -1,0 +1,141 @@
+====================================================================================================
+                                      "PX" Compression Format
+====================================================================================================
+A custom compression method which appears to be a fancy version of an RLE algorithm, with some
+touches from LZ compression added in, I guess.. Just a very uneducated guess..
+
+Its used by both PKDPX and AT4PX file format. It relies on 9 nybble flags referred to as 
+"control flags" listed in the PKDPX and AT4PX headers for handling a couple of special cases, and 
+for the rest it basically works by decoding a "command byte" that indicates what to do until the 
+next "command byte". 
+
+Note that, those nybble flags are always "0n" where "n" is an hexadecimal value 
+from 0 to F. Also, note that, these flags are computed on a file by file basis! They're 
+"tailor-made" for each individual file.
+
+To make explaining things easier, you could imagine that the bytes we're decompressing come from
+a FIFO queue. And also imagine that we put the decompressed bytes into a Double Ended Queue or deque 
+for short. 
+(Even if in practice those are probably too slow to use in this case!)
+
+To decode the command byte, we simply look at the value of all of its 8 BITS, one at a time. 
+From the highest bit to the lowest. 
+So lets say we're in a loop that isolate the value of a particular bit each turn. Something like:
+
+    uint8 mask = 0x80
+    loop while( mask > 0 )
+    {
+        uint8 bitval = mask BitwiseAND cmdbyte
+        
+        if( ! inqueue.isempty() ) //Make sure our input data is not empty, because its not guaranteed we 
+        {                         // won't reach the end of file while handling a command byte!
+            ... // Handle the cases written below
+        }
+        else
+        {
+            break; //If we reach the end of file, stop the loop!
+        }
+        
+        mask = mask >> 1
+    }
+    
+On each turn of that loop, we'll take the value of the current bit, and depending on its state,
+we'll decide what to do based on these criteria:
+
+    1)  If the BIT we've isolated from the command byte is 1, then we pop the next BYTE from the  
+        input queue, and push it as-is at the back of the output deque!
+                           
+    2)  Otherwise if the BIT we've isolated is 0, we'll pop the next BYTE from the input queue.
+        Then, we'll try to find whether the high nybble of the BYTE we just read is the same value
+        as one of our control flags. 
+        *We also want to keep the value of the low nybble for later.*
+        *We'll refer to the high nybble and low nybble we got here as "nbhigh" and "nblow"
+        respectively.*
+       
+        2.1) If one of our control flag match the high nybble "nbhigh" of the BYTE we just read,
+             then it means we're inserting a pattern of 4 nybbles or 2 bytes into the 
+             output deque. 
+             *We'll refer to the index of the control flag we got as "ctrlflagindex".*
+            
+            2.1.1) If the index of the control flag "ctrlflagindex" is the first one in the control 
+                   flag table, at index 0, we calculate the value of the 2 bytes we'll push at the 
+                   back of the output deque this way:
+                   
+                       byte1 = nblow << 4 BitwiseOR nblow
+                       byte2 = byte1
+                       
+                   We just push those two bytes, and we're done! 
+           
+            2.1.2)  Otherwise, for any other "ctrlflagindex" flag index, we have a few other cases
+                    to take into account. They all have in common using the value of "nblow". 
+                    *We'll add a new variable called "basenybbleval" to make things easier to 
+                    understand. And we'll put the value of "nblow" into it right away.*
+                    
+                    A)  If "ctrlflagindex" is 1. We increment the value of all 4 nybbles. Or in our
+                        example, the value we use to store the base value of all nybble 
+                        "basenybbleval".
+                            
+                            basenybbleval = basenybbleval + 1
+                    
+                    B)  Otherwise, if "ctrlflagindex" is 5. We decrement the value of all 4 nybbles. 
+                        Or in our case, the value we use to store the base value of all nybble 
+                        "basenybbleval".
+                            
+                            basenybbleval = basenybbleval - 1
+                            
+                    From this point forward, lets put the value of "basenybbleval" into 4 separate
+                    variables, each holding the value of the individual 4 nybbles.
+                    Lets just name them, "nybble0", "nybble1", "nybble2", "nybble3", and put the 
+                    current value of "basenybbleval" into all of them.
+                    (You should use an array or something, as they're only named like this for 
+                    clarity's sake)
+                    
+                    A)  If "ctrlflagindex" is between 1 and 4 inclusively. Then substract 1 from 
+                        the nybble corresponding to the value of (ctrlflagindex - 1). 
+                        For example, if (ctrlflagindex - 1) is 0, we subtract 1 from "nybble0". If its
+                        3, we subtract 1 from "nybble3", and so on!
+                    
+                    B)  Otherwise, we add 1 to the nybble corresponding with the value of 
+                        (ctrlflagindex - 5). If (ctrlflagindex - 5) is 0 we add one to "nybble0" 
+                         and so on!
+                    
+                    Now, all that is left to do is to assemble the 4 nybbles into 2 bytes, and push
+                    those 2 bytes to the back of the output deque!
+                    
+                        byte1 = nybble0 << 4 BitwiseOR nybble1
+                        byte2 = nybble2 << 4 BitwiseOR nybble3
+                    
+                    We just push those two to the back of the output stack, and we're done !
+            
+        2.2) If none of our control flags match the high nybble "nbhigh" of the BYTE we just read, 
+             it means we're copying a sequence of bytes from our decompressed output so far.
+             
+             To figure out the offset from the end of our output deque where we begin reading 
+             the bytes sequence to copy, we'll need to pop the next byte from the input queue 
+             and do the following operations:
+             
+                int16 offset = (((-0x1000) + nblow) << 8) BitwiseOR inqueue.pop()
+             
+             "offset" will contain a negative integer value smaller than the current size of the 
+             output queue. 
+             Just go from the end of the output deque towards the beginning of it, 
+             by the absolute value of "offset". This will get you the beginning position of the 
+             sequence of bytes to append to the output later on. 
+             We'll call this position "seqbeg".
+             
+             Then, to get the amount of bytes to copy starting from "seqbeg", we take the value
+             of "nbhigh" and add 3. 
+             
+             Knowing this, we can now copy the sequence and push it into the back of the output 
+             deque.
+
+
+After going through those conditions, we know that the next BYTE we pop from the input queue will be
+a new command byte guaranteed! So we just have to repeat this loop using this new command byte!
+
+This sums it pretty much!
+
+#TODO write examples for the rest
+
+A big thanks to Zhorken who figured out the compression !: 
+https://github.com/Zhorken

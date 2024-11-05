@@ -1,0 +1,41 @@
+==========================================================================================
+                                    AT4PX:
+==========================================================================================
+AT4PX containers seems to contain image data in a compressed form. Namely, character portraits, 
+map tiles, backgrounds. They usually don't contain their image's color palette however, as those
+are often stored outside of the AT4PX container, either alongside, elsewhere, or not stored at all
+in the case of a non-indexed bitmap image. 
+(I haven't seen any bitmap/raster non-indexed images yet though, just speculating)
+
+
+Offset:            Length:            Endian:      Description:
+-------            -------            -------      -----------------------------------
+0x00               5                  big          Magic Number "AT4PX" {0x41, 0x54, 0x34, 0x50, 0x58}
+0x05               2                  little       (FLEN)Total compressed file length, including header!
+0x07               9                  -            List of control flags (more on these below)
+0x10               2                  little       Byte size of the decompressed data.
+0x12               (FLEN - 0x12)                   Compressed image data.
+[
+    0x0                                             "PX" compressed data here.
+    ...
+]
+-------            -------            -------      -----------------------------------
+Total:             (FLEN)
+
+NOTES:
+------
+- Most of the format has been reversed by Zhorken(Now CatTrinket https://github.com/CatTrinket). I just confirmed a few things and added / tweaked
+   a few things as well, then wrote this!
+
+
+Control Flags:
+---------------
+Those tend to change with each files. They're 4 bits values stored in the lower nybble of each 
+individual 9 bytes that are used to handle some special cases while decoding some "Command Byte".
+The high nybble is always 0.
+They're picked on a per-file basis.
+
+
+Image Data Details :
+---------------------
+The data is compressed using "PX" compression.(see more in PX compression documentation!)

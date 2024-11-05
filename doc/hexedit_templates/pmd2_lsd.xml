@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE binary_file_format SYSTEM "BinaryFileFormat.dtd">
+<binary_file_format name="LSD" type_name="" comment="" expr="">
+	<data type="int" name="nbEntries" format="signed" len="2" display="{dec}" units="bytes"/><for name="String" count="nbEntries" stop_test="" type_name="" comment=""><data type="string" name="Name" format="ascii" len="8" display=""/></for><data type="none" name="none"/>
+</binary_file_format>

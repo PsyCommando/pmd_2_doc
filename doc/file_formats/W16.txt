@@ -1,0 +1,43 @@
+====================================================================================================
+                                            W16:
+====================================================================================================
+It seems this file format is highly similar to the Kaomado format. It uses a different Table of
+content however.
+It should be noted that it contains AT4PN containers instead of AT4PX ones.. 
+
+
+Offset:            Length:            Endian:      Description:
+-------            -------            -------      -----------------------------------
+ToC                Varies                          Table of content
+[
+    AToCEntry      8
+    [
+        Pointer    4                   little      Pointer to a "DataBlock" in the "FILE_DATA" section.
+        width      1                               Width of the image.
+        height     1                               Height of the image.
+        Index      1                               Some kind of index.
+        Null       1                               0x00 Always null!
+    ]
+    ...
+    LastToCEntry   8
+    [
+        eofPtr     4                   little      A pointer to the very last byte in the whole file.
+        Null       4                   -           A completely null 4 byte integer.
+    ]
+]
+FILE_DATA          Varies                  
+[
+    DataBlock
+    [
+        PAL                                            Palette RGB 24 bits, 16 colors.
+		{
+		}
+        AT4PN                                          AT4PN Compressed data. Sometimes is actually not compressed at all.
+		{
+		}
+        ...
+    ]
+    ...
+]
+-------            -------            -------      -----------------------------------
+Total:             

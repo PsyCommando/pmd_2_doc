@@ -1,0 +1,2039 @@
+====================================================================================================
+Research Notes: The Music And Sound Files Formats Used In Pokemon Mystery Dungeon Explorers of Sky
+====================================================================================================
+
+*WIP*
+Nothing in here is final !
+
+===============================================
+Thanks and Credits:
+===============================================
+- Thanks to Evandixon from the ProjectPokemon forums for the help!
+- Thanks to TruePikachu from the ProjectPokemon forums for figuring out a lot about the 
+  SMD format and event codes!
+- Thanks to CodaHighland for a few more in-depth details about the structure, events and some corrections.
+  
+These notes are a collaborative effort! :)
+
+===============================================
+General Observations:
+===============================================
+
+Link for MIDI related stuff : http://cs.fit.edu/~ryan/cse4051/projects/midi/midi.html
+
+The SWDL and SMDL files, along with SEDL and etc can be stored in several different manners.
+In some games like Zombie Daizuki(Hope I spelt that right), the SMDL and SWDL are stored together within SIR0 containers.
+In others like Shiren2, the SMDL and SWDL are stored each in their own directory.
+
+In PMD2, the layout is a bit different. SMDL and SWDL are all in the same folder, in each their own file.
+But the SWDL for each tracks do not contain the samples, like in Shiren2 or Zombie Daizuki.
+Instead a special value is put as the pcmd chunk's length in the SWDL header, to indicate that the SWDL accompanying a song is merely refering to a main sample bank.
+The main sample bank in pmd2 is name bgm.swd, and it contains only a wavi and pcmd chunk. And thus only sample data.
+
+NOTES:
+------
+- Internal structure of most files very similar to the MIDI or RIFF format in several ways.
+- It looks like its based off MIDI format 1, given the first track seems to be the tempo setting track.
+
+===============================================
+Folder Structure:
+===============================================
+All the data related to sound and music is located in the /SOUND/ folder within the ROM image's 
+file system.
+
+It contains no loose files, but 5 sub-folders:
+- BGM
+- ME
+- SE
+- SWD
+- SYSTEM
+
+BGM Folder:
+-----------
+This folder seems to contain the actual sample bank, in the bgm.swd file. The rest seems to be
+SMD files containing the actual data for each songs. Each SMD files for each song is 
+matched by a similarly named SWD file. 
+The SWD file contains data about the playback of the samples. 
+It also probably lists the samples to be loaded in memory for playing this particular song to avoid 
+loading the entire bank at all time.
+
+SWD Folder:
+-----------
+Contains some instrument samples, possibly unused, and a bunch of sound effects.. 
+They're numbered from 0 to 127, a little like a midi instrument bank. However, the ordering of the 
+instruments isn't General Midi standard..
+
+Folder Content:
+---------------------------------------------
+FileNo - Internal Name - Description
+---------------------------------------------
+000 - B_000_TIMPANI_S   - Timpani drum sample
+001 - B_001_NOISE_A.S   - Data for sampling noise
+002 - S_002_PSG_DUTY_   - Data for sampling that sound
+003 - S_003_PSG_DUTY_   - Data for sampling that sound
+004 - S_004_PSG_DUTY_   - Data for sampling that sound
+005 - B_005_ARP_LEAD_   - Synth lead sample
+006 - B_006_CHOIR_AHH   - Choir sample
+007 - B_007_CLARINET_   - Clarinet sample
+008 - B_008_CONCERTIN   - ??? sample
+009 - B_009_MARIMBA_C   - Marimba sample
+010 - B_010_MUSICBOX_   - Music box sample
+011 - B_011_PAN_FLUTE   - Pan flute sample
+012 - B_012_PRO53_LEA   - Synth lead sample
+013 - B_013_SYNTH_BEL   - Synth bell sample
+014 - B_014_SYNTH_BRI   - Very harsh sounding synth sample
+015 - S_015_ATTACK_01   - Attack/damage sample
+016 - S_016_ATTACK_02   - Bubble like sound sample
+017 - S_017_BITE_M_A    - sample
+018 - S_018_CARTOON_0   - Preparing to attack sample
+019 - S_019_EARTHQUAK   - sample
+020 - S_020_ESP_M_A.S   - sample
+021 - S_021_EVENT_FEA   - sample
+022 - S_022_EVENT_FLY   - sample
+023 - S_023_FIRE_M_A.   - sample
+024 - S_024_FIRE_S_A.   - sample
+025 - S_025_FOOTSTEP_   - sample
+026 - S_026_FORCE_A.S   - sample
+027 - S_027_HANDCLAP_   - sample
+028 - S_028_ICE_01_A.   - sample
+029 - S_029_ICE_02_A.   - sample
+030 - S_030_ICE_03_A.   - sample
+031 - S_031_ICE_04_A.   - sample
+032 - S_032_ICE_05_A.   - sample
+033 - S_033_ICE_06_A.   - sample
+034 - S_034_KIRARA_01   - sample
+035 - S_035_LASER_M_A   - sample
+036 - S_036_LIGHT_01_   - sample
+037 - S_037_LIGHT_02_   - sample 
+038 - S_038_LIGHT_03_   - sample 
+039 - S_039_LIGHT_04_   - sample
+040 - S_040_METAL_01_   - sample
+041 - S_041_MONEY_A.S   - sample
+042 - S_042_MONSTER_A   - sample
+043 - S_043_MOTION_ST   - sample
+044 - S_044_PIYO_A.SW   - sample
+045 - S_045_PON_A.SWD   - sample
+046 - S_046_POST_A.SW   - sample
+047 - S_047_PULLUP_A.   - sample
+048 - S_048_QUACK_01_   - sample
+049 - S_049_RAIN_A.SW   - sample
+050 - S_050_SEAL_A.SW   - sample
+051 - S_051_SHINE_A.S   - sample
+052 - S_052_SHOOT_01_   - sample
+053 - S_053_SPLASH_A.   - sample
+054 - S_054_STONE_01_   - sample
+055 - S_055_SWORD_A.S   - sample
+056 - S_056_SYNTH_BEL   - Synth bell chord sample
+057 - S_057_TAIATARI_   - Punching sound sample
+058 - S_058_THUNDER_0   - sample
+059 - S_059_THUNDER_M   - sample
+060 - S_060_TRANSCEIV   - sample
+061 - S_061_TUBULAR_B   - Tubular bell sample 
+062 - S_062_VOICE_01_   - some high pitched talking / laughter
+063 - S_063_WATER_02_   - sample
+064 - S_064_WATER_M_A   - sample
+065 - S_065_WHISTLE_0   - Cartoony  sample. Maybe from warping out of dungeon ?
+066 - S_066_WHITE_NOI   - sample
+067 - S_067_WHITE_NOI   - sample
+068 - S_068_WIND_M_A.   - sample
+069 - S_069_NOISE.SWD   - sample
+070 - S_070_ROAR.SWD    - sample
+071 - S_071_PAPER_NOI   - sample
+072 - S_072_CLAPS01.S   - sample
+073 - S_073_CLAPS02.S   - sample
+074 - S_074_OP_PAD01.   - sample
+075 - S_075_OP_PAD03.   - sample some kind of pad
+076 - S_076_OP_PAD04.   - sample
+077 - S_077_WOOD_IMP.   - sample
+078 - S_078_STONE01.S   - sample
+079 - S_079_STONE02.S   - sample
+080 - S_080_STONE03.S   - sample
+081 - S_081_STONE04.S   - sample
+082 - S_082_GLASS.SWD   - sample
+083 - S_083_METAL.SWD   - sample
+084 - S_084_GROWL.SWD   - sample
+085 - S_085_ROAR.SWD    - sample
+086 - S_086_M_NOISE.S   - sample
+087 - S_087_O_HIT.SWD   - sample
+088 - S_088_D_HIT.SWD   - sample
+089 - S_089_V_SLAP.SW   - sample
+090 - S_090_ONIGOORI.   - sample
+091 - S_091_MANMUU.SW   - sample
+092 - S_092_ROAR_LOW.   - sample
+093 - S_093_HEART_BEA   - sample
+094 - S_094_HEART_BEA   - sample
+095 - S_095_PIII.SWD    - sample
+096 - S_096_PIII.SWD    - sample
+... Samples 097 to 121 are missing in the game files! ...
+122 - S_122_B_BAGPIPE   - sample
+123 - S_123_BROWN_NOI   - sample
+124 - S_124_TRI_WAVE_   - sample
+125 - S_125_PUNCH_NO.   - sample
+126 - S_126_EXPLOSION   - sample
+127 - S_127_ELECTRICI   - sample
+
+
+***TODO*** ADD THE OTHER MISSING DESCRIPTIONS HERE
+
+
+===============================================
+Runtime Details:
+===============================================
+
+For PMD2:EoS the audio system is always loaded at the same place in memory. 
+
+From looking at registers, here are some interesting static locations:
+    * 0x22B7330 : Beginning of a large table containing runtime data about the sound system.
+        - 0x22B735C : DSE Tick counter? This increases as the song plays, at a steady rate.
+
+
+===========================================================================================================================================================
+===========================================================================================================================================================
+===========================================================================================================================================================
+
+====================================================================================================
+SWD Files:
+====================================================================================================
+The SWD files can come in a pair with an SMD file with the same name. 
+But they can also be found without a corresponding SMD file. Namely the "/SOUND/BGM/bgm.swd" file has no
+corresponding SMD file. Same with the "/SOUND/ME/me.swd", and every single ones within "/SOUND/SWD/".
+
+*TODO* write summary of findings on its inner workings here
+
+This file format, much like the SMD files, seems to be made up of several chunks :
+- The header        "swdl"
+- The wavi chunk    "wavi"
+- The prgi chunk    "prgi"
+- The kgrp chunk    "kgrp"
+- The pcmd chunk    "pcmd"
+- The eod chunk     "eod\0x20"
+
+Some SWD files used as musical sample may have their prgi chunk filled with info, and not have
+a single byte of audio data in their pcmd chunk.
+
+**TODO** Summarize what all the chunks do! 
+
+NOTES:
+    - The swd file accompanying a smd file may have different instruments in a preset slot, when compared to the other
+      music sequences in the same folder ! 
+
+
+-----------------------
+  SWDL HEADER v0x415 :
+-----------------------
+
+Offset:            Length:            Type:                 Description:
+-------            -------            -------               -----------------------------------
+0x00 magicn        4                  char[4]               Magic number "swdl" {0x73, 0x77, 0x64, 0x6C}
+0x04 unk18         4                  uint32                Null
+0x08 flen          4                  uint32                File length
+0x0C version       2                  uint16                So far 0x0415( For most games like PMD2, Zombi Daisuki, Prof Layton, etc.. ), or 0x0402 for Luminous Arc
+0x0E bankid        1                  uint8                 Bank id for this swdl
+0x0F swdlid        1                  uint8                 SWDL id for this swdl.. So far 0x7F and 0x64 
+0x10 unk3          4                  uint32                Null
+0x14 unk4          4                  uint32                Null
+0x18 createtime    8                  -                     The file's creation date + time.
+[
+    0x00 year          2                  uint16                Possibly the year the file was made ?
+    0x02 month         1                  uint8                 Possibly the month the file was made. (0x0 to 0xB)
+    0x03 day           1                  uint8                 Possibly the day the file was made.   (0x0 to 0x1E)
+    0x04 hour          1                  uint8                 Possibly the hour the file was made.  (0x0 to 0x17)
+    0x05 minute        1                  uint8                 Possibly the minute the file was made.(0x0 to 0x3B)
+    0x06 second        1                  uint8                 Possibly the second the file was made.(0x0 to 0x3B)
+    0x07 centisecond   1                  uint8                 Possibly the 100th of a second the file was made.(0x0 to 0x64) ?
+]
+0x20 fname         16                 char[16]              Null terminated string, for internal filename. 
+                                                             Unused char after 0x0 are padded with 0xAA     
+0x30 unk10         4                  uint32                Always 0xAAAA AA00
+0x34 unk11         4                  uint32                Null
+0x38 unk12         4                  uint32                Null
+0x3C unk13         4                  uint32                So far always 0x10
+0x40 pcmdlen       4                  uint32                Length of "pcmd" chunk if there is one. 
+                                                             If not, is null! If set to 0xAAAA0000, the file refers to samples inside an external "pcmd" chunk, inside another SWDL !
+0x44 unk14         2                  uint16                Null
+0x46 nbwavislots   2                  uint16                Numbers of sample pointer slots, empty or not, 
+                                                             in the "wavi" chunk's "WavTable".
+0x48 nbprgislots   2                  uint16                Numbers of presets pointer slots , empty or not, in the 
+                                                             "prgi" chunk's "TablA"
+0x4A unk17         2                  uint16                Unknown  Count of something. In small swd files it can go as low as 0x2.
+0x4C wavilen       4                  uint32                Length of "wavi" chunk.
+-------            -------            -------               -----------------------------------
+Total:             80(0x50) bytes
+
+
+-----------------------
+  SWDL HEADER v0x402 :
+-----------------------
+0x00 magicn        4                  char[4]               Magic number "swdl" {0x73, 0x77, 0x64, 0x6C}
+0x04 unk18         4                  uint32                Null
+0x08 flen          4                  uint32                File length
+0x0C version       2                  uint16                0x0402
+0x0E unk1          1                  uint8                 Unknown
+0x0F unk2          1                  uint8                 Unknown.. So far 0x7F and 0x64 
+0x10 unk3          4                  uint32                Null
+0x14 unk4          4                  uint32                Null
+0x18 createtime    8                  -                     The file's creation date + time.
+[
+    0x00 year          2                  uint16                Possibly the year the file was made ?
+    0x02 month         1                  uint8                 Possibly the month the file was made. (0x0 to 0xB)
+    0x03 day           1                  uint8                 Possibly the day the file was made.   (0x0 to 0x1E)
+    0x04 hour          1                  uint8                 Possibly the hour the file was made.  (0x0 to 0x17)
+    0x05 minute        1                  uint8                 Possibly the minute the file was made.(0x0 to 0x3B)
+    0x06 second        1                  uint8                 Possibly the second the file was made.(0x0 to 0x3B)
+    0x07 centisecond   1                  uint8                 Possibly the 100th of a second the file was made.(0x0 to 0x64) ?
+]
+0x20 fname         16                 char[16]              Null terminated string, for internal filename. 
+                                                             Unused char after 0x0 are padded with 0xAA     
+0x30 unk10         4                  uint32                Always 0xAAAA AA00 or 0xFFFF FF00
+0x34 unk11         4                  uint32                Null
+0x38 unk12         4                  uint32                Null
+0x3C unk13         4                  uint32                So far always 0x10
+0x40 unk15         4                  -                     So far, always 4 bytes of 0.
+0x40 unk16         2                  -                     So far, always 2 bytes of 0.
+0x46 nbwavislots   1                  uint8                 Numbers of sample pointer slots, empty or not, 
+                                                             in the "wavi" chunk's "WavTable".
+0x47 nbprgislots   1                  uint8                 Numbers of presets pointer slots , empty or not, in the 
+                                                             "prgi" chunk's "TablA". (NOTE: If the swdl is a master bank, it has to have the same amount of prgi slot in here as all sub-swdls, even if there's no prgi chunks in the file.)
+0x48 nbkeygroups   1                  uint8                 Number of keygroups in the keygroup chunk!
+0x49 Padding       7                  -                     7 bytes of 0xFF padding bytes.
+-------            -------            -------               -----------------------------------
+Total:             80(0x50) bytes
+
+
+------------------
+  DSE Chunks:
+------------------
+Most DSE chunks have a similar header. Usually on 16 bytes. The meaning of those bytes can change between some of them however.
+Some chunks have a special value as their chunk size. Such as 0xFFFFFFB0 for a "song" chunk for example.
+
+Offset:            Length:            Type:                 Description:
+-------            -------            -------               -----------------------------------
+0x00               4                  -                     Label (the chunk's 4 byte label "wavi","prgi","kgrp","pcmd","eod\0x20")
+0x04               2                  -                     null
+0x06 version       2                  uint16                The DSE version, 0x415 or 0x402 so far.
+0x08               4                  uint32                Seems to always be 0x10
+0x0C               4                  uint32                (ChunkSize) Begins counting right after this field
+0x10               ChunkSize          -                     A block containing unknown data
+[
+    ...
+]                   
+
+
+------------------
+   wavi Chunk:
+------------------
+Chunk label : "wavi" {0x77, 0x61, 0x76, 0x69}
+
+The "wavi" chunk lists the sound samples used in the file, and contains data on how to play them.
+Its divided in 2 parts. The first part is a pointer array where each entries correspond to a sample, and the second contains data for each of those.
+
+The way this chunk is used depends on the kind of file its in. If its part of a bank, such as "bgm.swd" it contains all the reference samples that all other bgm files refers to in their own swd files. 
+If its a swd file accompanying a bgm file, the sample in here are just a list of the samples to be loaded in order to play the track.
+
+Indexes for wav samples are consistent between all bgm music files ! Indexes for presets, and the presets themselves are not!
+
+In the bgm.swd file for EoS, the samples #182,183,184,185,350,521, and 621 are PCM 16 bits, while the rest are ADPCM.
+
+
+NOTE:
+    * When a wavi sample entry refers to a sample not in the same SWDL file as it is, the "smplpos" field contains 
+      the position of the samples as if only the samples refered to in that wavi chunk had been put one after the 
+      other in an imaginary pcmd chunk. Or so it seems. It might not be accurate, but that's something.
+
+
+Offset:            Length:            Type:                 Description:
+-------            -------            -------               -----------------------------------
+label              4                  -                     "wavi" {0x77, 0x61, 0x76, 0x69}
+0x04               2                  -                     null
+0x06               2                  uint16                Always 0x1504( 0x0415 when interpreted from little endian )
+chunkbeg           4                  uint32                Seems to always be 0x10, possibly the start of the chunk data.
+chunklen           4                  uint32                Length of the chunk data. Begins counting right after this field
+WavTable           Varies                                   Array containing 2 bytes offsets from the beginning offset of WavTable to an entry in the
+                                                             SampleInfoTbl table! It allows to quickly lookup entries by matching indexes and sample numbers, regardless of the amount of actual samples in the file.
+[
+    PtrWavInfo     2                  uint16                Offset from the beginning of "WavTable" to an entry in "SampleInfoTbl"
+    ...
+]
+PaddingBytes        0-15                                    Padding bytes to align the next part on 16 bytes. (Depends on game, but pmd2 is 0xAA)
+SampleInfoTbl      varies                                   This table contains details on each sample entries in the "WavTable". 
+[
+//-------------------------
+//   Entry for DSE v415
+//-------------------------
+    Entry           64                                      An entry. Usually 64(0x40) bytes long.
+    [
+     0x00 unk1      2                 uint16                Entry marker? Always 0xAA01.
+     0x02 ID        2                 uint16                Index number from WavTable. Empty entries in WavTable are counted!
+     0x04 ftune     1                 int8                  Fine tune. The pitch fine tuning in cents.
+     0x05 ctune     1                 int8                  Coarse tuning. Default is -7?
+	 0x06 rootkey   1                 uint8                 The MIDI note associated to the sample. (The note that the instrument sampled is playing) 
+     0x07 ktps      1                 int8                  Key Transpose. Is basically the difference between rootkey and 60. 
+     
+     0x08 vol       1                 int8                  Volume of the sample.
+     0x09 pan       1                 int8                  Pan of the sample.
+     0x0A unk5      1                 uint8                 Usually 00
+     0x0B unk58     1                 uint8                 Usually 02
+     0x0C unk6      2                 uint16                Usually 0000
+     0x0E unk7      2                 -                     0xAA padding
+     0x10 version   2                 uint16                Usually 0x415(1045) (was unk59)
+     0x12 smplfmt   2                 uint16                Sample format. ( 0x0000 => Possibly 8 bits PCM, 0x0100 => 16 bits PCM, 0x0200 => 4 bits ADPCM, 0x0300 => Possibly PSG ? )
+     0x14 unk9      1                 uint8                 Usually 0x09. Seen 0x1 for PCM16 samples for the sine, triangle, square, saw wave samples.
+     0x15 smplloop  1                 uint8                 flag indicating whether the sample should be looped or not ! 1 = looped, 0 = not looped
+     0x16 unk10     1                 uint8                 Usually 0x1.
+     0x15 smplblk   1                 uint8                 Possibly the nb of samples per int32 / block ! The console reads and calculates loop points and etc based on int32. Usually 0x8. Seen 0x2 for the PCM16 samples used for the sine, triangle, square, saw wave samples.
+     0x18 unk11     1                 uint8                 Usually 0.
+     0x19 bitdepth  1                 uint8                 Usually 0x4. Seen 0x10 for the PCM16 samples used for the sine, triangle, square, saw wave samples.
+     0x1A unk12     1                 uint8                 Usually 0x1. Seen 0x2 for the PCM16 samples used for the sine, triangle, square, saw wave samples.
+     0x1B unk62     1                 uint8                 Usually 0x1. Seen 0x2 for the PCM16 samples used for the sine, triangle, square, saw wave samples.
+     0x1C unk13     4                 -                     Usually 0x0000 0000. Seen 0x1 in "SOUND/SWD/002.swd" was 0x1 in bgm0000.swd as well.
+     0x20 smplrate  4                 uint32                Sample rate in hertz. 
+     0x24 smplpos   4                 uint32                The offset of the sound sample in the "pcmd" chunk when there is one. 
+                                                             Otherwise, possibly offset of the exact sample among all the sample data loaded in memory. Or those that are in the wavi chunk.. 
+     0x28 loopbeg   4                 uint32                The position in int32 the loop begins at. ( multiply by 4 to get size in bytes ) Adding loopbeg + looplen gives the sample's length !
+     0x2C looplen   4                 uint32                The length of the loop as 32 bits integers. ( multiply by 4 to get size in bytes ) Adding loopbeg + looplen gives the sample's length !
+     0x30 envon     1                 uint8                 If not == 0, the volume envelope is processed. Otherwise its ignored.
+     0x31 envmult   1                 uint8                 If not == 0, is used as multiplier for envelope paramters, and the 16bits lookup table is used for parameter durations.  
+                                                             If 0, the 32bits duration lookup table is used instead. This value has no effects on volume parameters, like sustain, and atkvol.
+     0x32 unk19     1                 uint8                 Unknown. Usually 0x1
+     0x33 unk20     1                 uint8                 Unknown. Usually 0x3
+     0x34 unk21     2                 uint16                Unknown. Usually 0xFF03
+     0x36 unk22     2                 uint16                Unknown. Usually 0xFFFF
+     0x38 atkvol    1                 int8                  Sample volume envelope Attack Level.(0 to 127) Higher values towards 0x7F means the volume at which the attack phase begins at is louder. Doesn't shorten the attack time.
+     0x39 attack    1                 int8                  Sample volume envelope Attack.(0 to 127) Higher values towards 0x7F means the attack phase takes longer to reach full volume! 126 is ~10 seconds.
+     0x3A decay     1                 int8                  Sample volume envelope Decay. (0 to 127) The duration the note has to be held until the volume is smoothly decreased to the value of "Sustain Volume". Higher values towards 0x7F means it takes longer before the held note's volume changes to "Sustain Volume". 
+     0x3B sustain   1                 int8                  Sample volume envelope Sustain.(0 to 127) The volume at which the held note will stay at. (Default 0x7F)
+     0x3C hold      1                 int8                  Sample volume envelope Hold (0 to 127). Higher values towards 0x7F means the note is held at full volume longer after the attack phase. 126 is ~10 seconds.
+                                                             0x7F, does the same as 0.
+     0x3D decay2    1                 int8                  Sample volume envelope Decay2 (0 to 127). Higher values towards 0x7F means longer fade-out. 0x7F means never fade-out. (Default 0x7F)
+                                                             At 0x7E, it takes ~8 seconds for the volume to reach 0. 
+     0x3E release   1                 int8                  Sample volume envelope Release parameter(0 to 127). Higher values towards 0x7F means longer release. Negative values mirror positive range. (Default is 0x28(40))
+     0x3F unk57     1                 int8                  Usually 0xFF. 
+    ]
+//-------------------------
+//   Entry for DSE v402
+//-------------------------
+    Entry           64                                      An entry. Usually 64(0x40) bytes long.
+    [
+     0x00 unk1      1                 uint8                 Entry marker? Always 0x01.
+     0x01 ID        1                 uint8                 Index number from WavTable. Empty entries in WavTable are counted!
+     0x02 unk2      1                 uint8                 Unknown. Usually 0.
+     0x03 unk6      1                 uint8                 Unknown. Usually 0.
+     0x04 rootkey   1                 uint8                 The MIDI note associated to the sample. (The note that the instrument sampled is playing) 
+     0x05 ktps?     1                 int8                  Possibly the key transpose?
+     0x06 vol       1                 int8                  Volume of the sample.
+     0x07 pan       1                 int8                  Pan of the sample.
+     0x08 smplfmt   2                 uint16                Sample format. ( 0x0000 => Possibly 8 bits PCM, 0x0100 => 16 bits PCM, 0x0200 => 4 bits ADPCM, 0x0300 => Possibly PSG ? )
+     0x0A unk3      2                 -                     Unknown. Usually 0.
+     0x0C unk4      4                 -                     Unknown. Usually 0.
+     0x10 unk5      1                 uint8                 Unknown, usually 2.
+     0x11 loopflag  1                 bool                  1 == loop, 0 == dont loop.
+     0x12 smplrate  2                 uint16                Sample rate in hertz of the sample.
+     0x14 smplpos   4                 uint32                The offset(in bytes) of the sound sample in the "pcmd" chunk when there is one. 
+     0x18 loopbeg   4                 uint32                The position in int32 the loop begins at. ( multiply by 4 to get size in bytes ) Adding loopbeg + looplen gives the sample's length !
+     0x1C looplen   4                 uint32                The length of the loop as 32 bits integers. ( multiply by 4 to get size in bytes ) Adding loopbeg + looplen gives the sample's length !
+     
+     Optional! (The padding appears only in some entries.. Its unclear what indicates that it's used or not)
+     ##0x20 paddjunk  16                -                     16 bytes of padding. Most of the time zeroes, but junk values may end up there too. 
+     
+     0x30 envon     1                 uint8                 If not == 0, the volume envelope is processed. Otherwise its ignored.
+     0x31 envmult   1                 uint8                 If not == 0, is used as multiplier for envelope paramters, and the 16bits lookup table is used for parameter durations.  
+                                                             If 0, the 32bits duration lookup table is used instead. This value has no effects on volume parameters, like sustain, and atkvol.
+     0x32 unk19     1                 uint8                 Unknown. Usually 0x1
+     0x33 unk20     1                 uint8                 Unknown. Usually 0x3
+     0x34 unk21     2                 uint16                Unknown. Usually 0x03FF
+     0x36 unk22     2                 uint16                Unknown. Usually 0xFFFF
+     0x38 atkvol    1                 int8                  Sample volume envelope Attack Level.(0 to 127) Higher values towards 0x7F means the volume at which the attack phase begins at is louder. Doesn't shorten the attack time.
+     0x39 attack    1                 int8                  Sample volume envelope Attack.(0 to 127) Higher values towards 0x7F means the attack phase takes longer to reach full volume! 126 is ~10 seconds.
+     0x3A decay     1                 int8                  Sample volume envelope Decay. (0 to 127) The duration the note has to be held until the volume is smoothly decreased to the value of "Sustain Volume". Higher values towards 0x7F means it takes longer before the held note's volume changes to "Sustain Volume". 
+     0x3B sustain   1                 int8                  Sample volume envelope Sustain.(0 to 127) The volume at which the held note will stay at. (Default 0x7F)
+     0x3C hold      1                 int8                  Sample volume envelope Hold (0 to 127). Higher values towards 0x7F means the note is held at full volume longer after the attack phase. 126 is ~10 seconds.
+                                                             0x7F, does the same as 0.
+     0x3D decay2    1                 int8                  Sample volume envelope Decay2 (0 to 127). Higher values towards 0x7F means longer fade-out. 0x7F means never fade-out. (Default 0x7F)
+                                                             At 0x7E, it takes ~8 seconds for the volume to reach 0. 
+     0x3E release   1                 int8                  Sample volume envelope Release parameter(0 to 127). Higher values towards 0x7F means longer release. Negative values mirror positive range. (Default is 0x28(40))
+     0x3F unk57     1                 int8                  Usually 0xFF. 
+    ]
+    ...
+]
+
+About the Sample Type (v415):
+----------------------
+Samples can have different formats. And there appears to be information on the formats stored within their wavi entry.
+
+
+
+
+                                     |  A  |  B  |  C  |  D  |  E  |  F  |  G  |  H  |
+                                     |-----|-----|-----|-----|-----|-----|-----|-----|
+PCM 8(00)                            |     |     |     |     |     |     |     |     |
+    Type Info ( field 0x14 to 0x1C ):| 01  | 01  | 01  | 04  | 00  | 08  | 01  | 01  |
+                                     |     |     |     |     |     |     |     |     |
+PCM 16s(01)                          |     |     |     |     |     |     |     |     |
+    Type Info ( field 0x14 to 0x1C ):| 01  | 01  | 01  | 02  | 00  | 10  | 02  | 02  |
+                                     |     |     |     |     |     |     |     |     |
+ADPCM 4(02)                          |     |     |     |     |     |     |     |     |
+    Type Info ( field 0x14 to 0x1C ):| 09  | 01  | 01  | 08  | 00  | 04  | 01  | 01  |
+                                     |     |     |     |     |     |     |     |     |
+ADPCM 3?(03)                         |     |     |     |     |     |     |     |     |
+    Type Info ( field 0x14 to 0x1C ):| 14  | 00  | 01  | 08  | 00  | 03  | 01  | 01  | 
+                                     |     |     |     |     |     |     |     |     |
+PSG                                  |     |     |     |     |     |     |     |     |
+    Type Info ( field 0x14 to 0x1C ):| 14  | 00  | 01  | 08  | 00  | 00  | 01  | 01  |
+                                     |     |     |     |     |     |     |     |     |
+    
+Columns:
+ -> A : unk9     - Some enum value?
+ -> B : smplloop - Loop flag
+ -> C : unk10    - Some Flag?
+ -> D : smplblk  - Nb samples per block (32 bits)
+ -> E : unk11    - null
+ -> F : bitdepth - Sample Bit depth 
+ -> G : bps1     - Bytes per sample?
+ -> H : bps2     - Bytes per sample?
+
+------------------
+  prgi Chunk:
+------------------
+Chunk label : "prgi" {0x70, 0x72, 0x67, 0x69}
+
+Program Info, aka presets.
+Contains entries for each instrument presets used in the associated .smd file!
+
+Offset:            Length:             Type:           Description:
+-------            -------             -------         -----------------------------------
+label              4                  -                "prgi" {0x70, 0x72, 0x67, 0x69}
+0x04               2                  -                 null
+0x06               2                  uint16            Always 0x1504( 0x0415 when interpreted from little endian )
+chunkbeg           4                  uint32            Seems to always be 0x10, possibly the start of the chunk data.
+chunklen           4                  uint32            Length of the chunk data. Begins counting right after this field
+
+ProgramPtrTbl      usually 256                          A list of offsets to entries in TableB. This table has many empty/null slots.
+                                                         Thus the position of a pointer in this table must have a meaning. It usually has 128 slots. Like General Midi.
+[
+    Ptr            2                   uint16           Offset from the beginning of ProgramPtrTbl to an entry inside TableB!
+    ...
+]
+Padding            0-13                -                Padding bytes to align the next section on 16 bytes. (Usually 0xAA padding in pmd2)
+ProgramInfoTbl     vary                                 A table containing information on all the presets available in the current SWDL.     
+[
+//-------------------------
+//   Entry for DSE v415
+//-------------------------
+    ProgramInfo   144 and up                           An entry that's referred to by a pointer inside ProgramPtrTbl! The entry has a variable length.
+    [
+    0x00 ID        2                   uint16           Index of the pointer in "ProgramPtrTbl" that points to this entry. Also correspond to 
+                                                         instrument ID used in the corresponding smd file!
+    0x02 nbsplits  2                   uint16           Nb of samples in the sample map table below.
+    0x04 prgvol    1                   int8             Volume of the entire program.
+    0x05 prgpan    1                   int8             Pan of the entire program. (0-127, 64 is middle, 127 is full right, 0 is full left )
+    0x06 unk3      1                   uint8            Most of the time 0x00
+    0x07 unkpoly   1                   uint8            Most of the time 0x0F. Possibly the nb of voices/notes that can be played simultaneously.
+    0x08 unk4      2                   uint16           Most of the time is 0x200
+    0x0A unk5      1                   uint8            Most of the time is 0x00
+    0x0B nblfos    1                   uint8            Nb of entries in the "LFOTbl"
+    0x0C PadByte   1                   uint8            Most of the time is 0xAA, or 0x0. The value here is used as the delimiter and padding !
+    0x0D unk7      1                   uint8            Most of the time is 0x0
+    0x0E unk8      1                   uint8            Most of the time is 0x0
+    0x0F unk9      1                   uint8            Most of the time is 0x0
+    0x10 LFOTbl   64 (usually)                          Table that contains details on how to use the 4 LFOs with this preset. #TODO: Check and write here if the table is always 4 lfo?
+         [
+             LFOEntry    16                             The settings for a single LFO.
+             [
+             0x00 unk34   1              uint8           Unknown, usually 0x00
+             0x00 unk52   1              uint8           Unknown, usually 0x00 (Posibly boolean to confirm its enabled)
+             0x02 dest    1              uint8           Unknown, usually 0x00 (Destination of modulation. 0x0 = none, 0x1 = pitch, 0x2 = volume, 0x3 = pan, 0x4 = ??? )
+             0x03 wshape  1              uint8           Unknown, usually 0x01 (WaveForm 1=Square, 2=Triangle?, 3=Sinus?, 4=?, 5=Saw?, 6=Noise?, 7=Random )
+             
+             0x04 rate    2              uint16          Rate at which the LFO "oscillate".
+             0x06 unk29   2              uint16          Unknown, usually 0x0000
+             
+             0x08 depth   2              uint16          The depth parameter of the LFO.
+             0x0A delay   2              uint16          Delay in milliseconds before the LFO effect is applied after the sample begins playing.
+             
+             0x0C sfade   2              int16           (Previously unk32)Fade-in/fade-out. If negative fades out, positive fades-in.
+             0x0E unk33   2              uint16          Unknown, usually 0x0000. Possibly an extra parameter? Or a cutoff/lowpass filter's frequency cutoff?
+             ]
+             ...
+         ]
+    0x-- Delimiter  16                                  Either 16 bytes of padding bytes, possibly to delimit the start of the section below. 
+                                                         Uses the value of PadByte as padding value!
+    0x-- SplitsTbl    (nbsplits * 48)                    List of samples/splits used by this program.
+         [
+            SplitEntry 48                               An entry for a single sample/split.
+            [
+            0x00 id       2             uint16          The Index of the sample in the SplitsTbl!
+            0x02 bndrng   1             uint8           (previously unk11)Bend range parameter. (Possibly labelled "B.Rn" on the DSE screenshots)
+            0x03 unk25    1             uint8           Unknown. Possibly a boolean. 
+            
+            0x04 lowkey   1             int8            Usually 0x00. Lowest MIDI Key this sample can play on.
+            0x05 hikey    1             int8            Usually 0x7F. Highest MIDI Key this sample can play on.
+            0x06 lowkey2  1             int8            A copy of lowkey, for unknown purpose.
+            0x07 hikey2   1             int8            A copy of hikey, for unknown purpose.
+            
+            0x08 lovel    1             int8            Lowest note velocity the sample is played on.(0 - 127)
+            0x09 hivel    1             int8            Highest note velocity the sample is played on.(0 - 127)
+            0x0A lovel2   1             int8            A copy of lovel, for unknown purpose. Usually 0x00.
+            0x0B hivel2   1             int8            A copy of hivel, for unknown purpose. Usually 0x7F.
+            
+            0x0C unk16    4             -               Usually the same value as "PadByte", or 0. Possibly padding ?
+            0x10 unk17    2             -               Usually the same value as "PadByte", or 0. Possibly padding ?
+            0x12 SmplID   2             uint16          The ID/index of sample in the "wavi" chunk's lookup table.
+
+    //The 4 pitch values below overrides the sample's from the "wavi" table sample info entry!
+            0x14 ftune    1             uint8           Fine tune. Is possibly a proportion of a semitone. (255 == 100 cents) 
+            0x15 ctune    1             int8            Coarse tuning. Default is -7. 
+                                                         
+            0x16 rootkey  1             int8            Note at which the sample is played !        
+            0x17 ktps     1             int8            Key Transpose. Is basically the difference between rootkey and 60.
+            
+            0x18 smplvol  1             int8            Volume of the sample.
+            0x19 smplpan  1             int8            Pan of the sample.
+            
+            #0x1A kgrpid   1             uint8           Keygroup ID of the keygroup this split belongs to! (used to be smplgain)
+            0x1B unk22    1             uint8           Unknown, possibly a flag. Usually 0x02.
+            0x1C unk23    2             uint16          Unknown, usually 0000.
+            0x1E unk24    2             -               Usually the same value as "PadByte", or 0. Possibly padding ?
+        //Those last 16 bytes are a perfect copy of last 16 bytes of the sample's entry in the "wavi" chunk.
+            0x20 envon    1             uint8           If not == 0, the volume envelope is processed. Otherwise its ignored.
+            0x21 envmult  1             uint8           If not == 0, is used as multiplier for envelope paramters, and the 16bits lookup table is used for parameter durations.  
+                                                         If 0, the 32bits duration lookup table is used instead. This value has no effects on volume parameters, like sustain, and atkvol.
+            0x22 unk37    1             uint8           Unknown. Usually 1.
+            0x23 unk38    1             uint8           Unknown. Usually 3.
+            0x24 unk39    2             uint16          Unknown. Usually 0xFF03.
+            0x26 unk40    2             uint16          Unknown. Usually 0xFFFF.
+            
+             0x28 atkvol  1             int8            Sample volume envelope Attack Level.(0 to 127) Higher values towards 0x7F means the volume at which the attack phase begins at is louder. Doesn't shorten the attack time.
+             0x29 attack  1             int8            Sample volume envelope Attack.(0 to 127) Higher values towards 0x7F means the attack phase takes longer to reach full volume! 126 is ~10 seconds.
+            
+             0x2A decay   1             int8            Sample volume envelope Decay. (0 to 127) The duration the note has to be held until the volume is smoothly decreased to the value of "Sustain Volume". Higher values towards 0x7F means it takes longer before the held note's volume changes to "Sustain Volume". 
+             0x2B sustain 1             int8            Sample volume envelope Sustain.(0 to 127) The volume at which the held note will stay at. (Default 0x7F)
+            
+             0x2C hold    1             int8            Sample volume envelope Hold (0 to 127). Higher values towards 0x7F means the note is held at full volume longer after the attack phase. 126 is ~10 seconds.
+                                                         0x7F, does the same as 0.
+             0x2D decay2  1             int8            Sample volume envelope Decay2 (0 to 127). Higher values towards 0x7F means longer fade-out. 0x7F means never fade-out. (Default 0x7F)
+                                                            At 0x7E, it takes ~8 seconds for the volume to reach 0. 
+             0x2E release 1             int8            Sample volume envelope Release parameter(0 to 127). Higher values towards 0x7F means longer release. Negative values mirror positive range. (Default is 0x28(40))
+             0x2F unk56   1             int8            Usually 0xFF. Possibly the "RX" parameter mentioned on the DSE promo page ?
+            ]
+            ...
+         ]
+    ]
+//-------------------------
+//   Entry for DSE v402
+//-------------------------
+    ProgramInfo   144 and up                           An entry that's referred to by a pointer inside ProgramPtrTbl! The entry has a variable length.
+    [
+    0x00 ID        1                   uint8            Index of the pointer in "ProgramPtrTbl" that points to this entry. Also correspond to 
+                                                         instrument ID used in the corresponding smd file!
+    0x01 nbsplits  1                   uint8            Nb of samples in the sample map table below.
+    0x02 unk99     2                   -                Usually 0.
+    0x04 prgvol    1                   int8             Volume of the entire program.
+    0x05 prgpan    1                   int8             Pan of the entire program. (0-127, 64 is middle, 127 is full right, 0 is full left )
+    0x06 unk3      1                   uint8            Most of the time 0x00
+    0x07 unkpoly   1                   uint8            Most of the time 0x0F. Possibly the nb of voices/notes that can be played simultaneously.
+    0x08 unk4      2                   uint16           Most of the time is 0x200
+    0x0A unk5      1                   uint8            Most of the time is 0x00
+    0x0B nblfos    1                   uint8            Nb of entries in the "LFOTbl"
+    0x0C PadByte   1                   uint8            Most of the time is 0x0, or another random value. It doesn't seem to do anything in this version!
+    0x0D unk7      1                   uint8            Most of the time is 0x0
+    0x0E unk8      1                   uint8            Most of the time is 0x0
+    0x0F unk9      1                   uint8            Most of the time is 0x0 
+    0x10 TableA    128                                  #This table is present only in version 0x402. It looks very similar to a keygroup list!
+    [
+         TableAEntry 8                                  
+         [
+            id?        2                   uint16          Index/ID of the keygroup. 
+            poly?      1                   uint8           Polyphony. AKA max number of simultaneous voices. 0 to 255.
+            priority?  1                   uint8           Priority. A value from 0 to possibly 99. Default is 8.
+            vclow?     1                   uint8           Lowest Vc possible ? Usually between 0 to 15.
+            vchigh?    1                   uint8           Highest Vc possible ? Usually between 0 to 15.
+            unk50?     1                   uint8           Unknown. Seems to contain the default volume value sometimes.
+            unk51?     1                   uint8           Unknown. Seems to contain the default pan value sometimes.
+         ]
+         ...
+    ]
+    0x90 LFOTbl   64 (usually)                          Table that contains details on how to use the 4 LFOs with this preset.
+         [
+             LFOEntry    16                             The settings for a single LFO.
+             [
+             0x00 unk34   1              uint8           Unknown, usually 0x00
+             0x00 unk52   1              uint8           Unknown, usually 0x00 (Posibly boolean to confirm its enabled)
+             0x02 dest    1              uint8           Unknown, usually 0x00 (Destination of modulation. 0x0 = none, 0x1 = pitch, 0x2 = volume, 0x3 = pan, 0x4 = ??? )
+             0x03 wshape  1              uint8           Unknown, usually 0x01 (WaveForm 1=Square, 2=Triangle?, 3=Sinus?, 4=?, 5=Saw?, 6=Noise?, 7=Random )
+             
+             0x04 rate    2              uint16          Rate at which the LFO "oscillate".
+             0x06 unk29   2              uint16          Unknown, usually 0x0000
+             
+             0x08 depth   2              uint16          The depth parameter of the LFO.
+             0x0A delay   2              uint16          Delay in milliseconds before the LFO effect is applied after the sample begins playing.
+             
+             0x0C unk32   2              uint16          Unknown, usually 0x0000. Possibly fade-out in milliseconds. 
+             0x0E unk33   2              uint16          Unknown, usually 0x0000. Possibly an extra parameter? Or a cutoff/lowpass filter's frequency cutoff?
+             ]
+             ...
+         ]
+    0xD0 SplitsTbl    (nbsplits * 48)                    List of samples/splits used by this program.
+         [
+            SplitEntry 48                               An entry for a single sample/split.
+            [
+            0x00 id       2             uint16          The Index of the sample in the SplitsTbl!
+            0x02 unk11    1             uint8           Unknown. *
+            0x03 unk25    1             uint8           Unknown. Possibly a boolean. 
+            0x04 lowkey   1             int8            Usually 0x00. Lowest MIDI Key this sample can play on.
+            0x05 hikey    1             int8            Usually 0x7F. Highest MIDI Key this sample can play on.
+            0x06 lowkey2  1             int8            A copy of lowkey, for unknown purpose.
+            0x07 hikey2   1             int8            A copy of hikey, for unknown purpose.
+            
+            0x08 lovel    1             int8            Lowest note velocity the sample is played on.(0 - 127)
+            0x09 hivel    1             int8            Highest note velocity the sample is played on.(0 - 127)
+            0x0A lovel2   1             int8            A copy of lovel, for unknown purpose. Usually 0x00.
+            0x0B hivel2   1             int8            A copy of hivel, for unknown purpose. Usually 0x7F.
+            
+            0x0C unk16    4             -               Usually 0, or padding.*
+            0x10 unk17    1*            uint8*          Varies between 0,1,2 so far.*
+            0x11*SmplID   1*            uint8*          The ID/index of sample in the "wavi" chunk's lookup table.
+
+    //The 4 pitch values below overrides the sample's from the "wavi" table sample info entry!
+           *0x12 ftune    1             uint8           Fine tune. Is possibly a proportion of a semitone. (255 == 100 cents) 
+           *0x13 ctune    1             int8            Coarse tuning. A value in semitone, either positive or negative to apply to the sample root note possibly?
+                                                         
+           *0x14 rootkey  1             int8            Note at which the sample is played !        
+           *0x15 ktps     1             int8            Key Transpose. Is basically the difference between the sample's rootkey and the split's rootkey.
+            
+           *0x16 smplvol  1             int8            Volume of the sample.
+           *0x17 smplpan  1             int8            Pan of the sample.
+            
+           *0x18 kgrpid   1             uint8           Keygroup ID of the keygroup this split belongs to! (used to be smplgain)
+           *0x19 unk22    1             uint8           Unknown, possibly a flag. Usually 0x02.
+           *0x1A unk23    2             uint16          Unknown, usually 0000.
+           *0x1C unk24    4*            -               Usually the same value as "PadByte", or 0. Possibly padding ?
+        //Those last 16 bytes are a perfect copy of last 16 bytes of the sample's entry in the "wavi" chunk.
+            0x20 envon    1             uint8           If not == 0, the volume envelope is processed. Otherwise its ignored.
+            0x21 envmult  1             uint8           If not == 0, is used as multiplier for envelope paramters, and the 16bits lookup table is used for parameter durations.  
+                                                         If 0, the 32bits duration lookup table is used instead. This value has no effects on volume parameters, like sustain, and atkvol.
+            0x22 unk37    1             uint8           Unknown.
+            0x23 unk38    1             uint8           Unknown.
+            0x24 unk39    2             uint16          Unknown.
+            0x26 unk40    2             uint16          Unknown.
+            
+             0x28 atkvol  1             int8            Sample volume envelope Attack Level.(0 to 127) Higher values towards 0x7F means the volume at which the attack phase begins at is louder. Doesn't shorten the attack time.
+             0x29 attack  1             int8            Sample volume envelope Attack.(0 to 127) Higher values towards 0x7F means the attack phase takes longer to reach full volume! 126 is ~10 seconds.
+            
+             0x2A decay   1             int8            Sample volume envelope Decay. (0 to 127) The duration the note has to be held until the volume is smoothly decreased to the value of "Sustain Volume". Higher values towards 0x7F means it takes longer before the held note's volume changes to "Sustain Volume". 
+             0x2B sustain 1             int8            Sample volume envelope Sustain.(0 to 127) The volume at which the held note will stay at. (Default 0x7F)
+            
+             0x2C hold    1             int8            Sample volume envelope Hold (0 to 127). Higher values towards 0x7F means the note is held at full volume longer after the attack phase. 126 is ~10 seconds.
+                                                         0x7F, does the same as 0.
+             0x2D decay2  1             int8            Sample volume envelope Decay2 (0 to 127). Higher values towards 0x7F means longer fade-out. 0x7F means never fade-out. (Default 0x7F)
+                                                            At 0x7E, it takes ~8 seconds for the volume to reach 0. 
+             0x2E release 1             int8            Sample volume envelope Release parameter(0 to 127). Higher values towards 0x7F means longer release. Negative values mirror positive range. (Default is 0x28(40))
+             0x2F unk56   1             int8            Usually 0xFF. Possibly the "RX" parameter mentioned on the DSE promo page ?
+            ]
+            ...
+         ]
+    ]
+    ...
+]
+
+    DSE Screenshots Notes:
+    -----------------------
+    - The B.Rn parameter could mean "Bend Range" ? Its value was set to 2 in the screenshot, which is midi's default.
+    - The K.Tps parameter could mean "Key Transpose" ? Was set to 0 in the screenshots.
+
+    
+    
+    Volume Envelope:
+    ----------------
+    
+        The envelope is a typical AHDSR volume envelope. 
+        However, it has 2 particularities 
+        
+        First, there are 2 possible decay phases.
+        
+        If the Decay parameter is 0x7F there is no decay. Unless Decay2 is not 0x7F.
+        If the Sustain and Decay values are both 0, and there is a Decay2, there is no decay!
+        
+        If the Decay parameter is bigger than 1 and smaller than 0x7F, it works like 
+        the usual Decay phase of a volume envelope, and decreases over time the volume from
+        maximum toward the Sustain volume. 
+        
+        If the Decay parameter is 0, or if the Decay phase ended, the Decay2 phase then begins. 
+        The Decay2 phase is the duration it takes to linearly decrease the Sustain volume down to 0, 
+        according to the rate specified in the Decay2 parameter. While the key is still held, just like
+        the regular Decay.
+        
+        Secondly, its possible to set at what volume the attack phase begins at through the Atkvol parameter.
+        So instead of begining in complete silence, the attack phase will begin at the volume set by Atkvol and
+        climb towards max volume.
+        
+        Envelope phase durations are obtained using one of 2 static tables stored in the game's memory. 
+        
+        The value of the envelope phase's duration act as an index into one of those table. If the value of
+        the envelope multiplier is 0, the 32 bits value table is used, otherwise the 16 bits value table is 
+        used. The 32 bits and 16 bits table both contains 128 durations in milliseconds, the 32 bits table
+        only contains larger values.
+        
+        After getting the value from the 16 bits table, the duration is multiplied by the envelope multiplier.
+        Since the multiplier is 0 when using the 32 bits table, the value obtained from that table is never 
+        multiplied by the envelope multiplier and simply used as-is.
+    
+    
+        atklvl   The volume at which the attack phase begins. Lower values is quieter, higher values is louder. This doesn't affect the attack's peak time. 
+        atkrte   At 0x7E, 22 BPM, it takes ~10 seconds for the volume to reach the peak from the beginning of the attack phase. If set to 0x7F, the delay is infinite.
+        decay    At 0x7E, 22 BPM, it takes  ~9 seconds for the volume to reach the sustain volume.
+        sustain  The volume at which the note is held.
+        hold     At 0x7E, 22 BPM, it takes 10 seconds before entering the decay phase.
+        decay2   At 0x7F this is disabled, and the volume is maintained at sustain level, until the key is released. At 0x7E, it takes a little more than ~8 seconds for the volume to reach 0!
+                  When the value isn't 0x7F, this control does the same as if we'd just adds up to its value to the decay, and set sustain to 0 !
+        release  At 0x7E, 22 BPM, it takes a bit more than ~8 seconds for the volume to reach 0. 
+
+        
+        The game code process envelope states in this order :
+        -----------------------
+        Phase       Condition
+        -----------------------
+        Attack      != 0
+        Hold        != 0
+        Decay       != 0
+        Decay2      != 0
+        Release     != 0
+        
+
+    SplitsTbl:
+    ---------
+    The sample map basically maps samples to instruments and possibly key groups.
+
+    //Tests
+    
+    //bytes 0x14 and 0x15
+    0x14 | 0x15
+    -----|------
+    0x40 | 0x00 -> Slightly higher pitch than usual.
+    0x40 | 0x40 -> Extremely low-pitched sound.
+    0x40 | 0x7F -> Slightly higher pitch than usual.
+    0x40 | 0x81 -> Slightly higher pitch than usual.
+    
+    //Byte 0x18 and 0x19
+    0x18 | 0x19
+    -----|------
+    0x10 | 0x40 -> No sound.
+    0x7F | 0x40 -> Default. Full volume.
+    0x64 | 0x40 -> Less loud than usual.
+    0x7F | 0x20 -> Pan mostly left. Full volume.
+    0x7F | 0x7F -> Pan full right. Full volume.
+    
+    //Byte 0x29 and 0x28
+    0x28 | 0x29
+    -----|------
+    0x40 | 0x40 -> Sound gets to normal loudness after attack ramp up.
+    0x40 | 0x7F -> means sound gets less loud after attack ramp up.  
+    0x40 | 0x81 -> Nothing different. 
+    0x40 | 0x00 -> Apparently nothing different.
+    
+    0x7F | 0x00 -> Nothing different.
+    0x7F | 0x40 -> Apparently nothing different.
+    0x7F | 0x7F -> Apparently nothing different.
+    0x7F | 0x81 -> Apparently nothing different.
+    
+    0x81 | 0x00 -> Nothing different.
+    0x81 | 0x40 -> Apparently nothing different.
+    0x81 | 0x7F -> Apparently nothing different.
+    0x81 | 0x81 -> Apparently nothing different.
+
+
+------------------
+   kgrp Chunk:
+------------------
+Chunk label : "kgrp" {0x6B, 0x67, 0x72, 0x70}
+
+Its used to assign voice channel priorities and stealing, along with maximum polyphony for whatever split is assigned to that group.
+
+** If there's a keygroup slot that is meant to be ignored/unused, since keygroups are always sequential,  the key group entry may be replaced with 8 bytes of 0xAA padding.
+
+Offset:            Length:             Type:           Description:
+-------            -------             -------         -----------------------------------
+label              4                   -                "kgrp" {0x6B, 0x67, 0x72, 0x70}
+0x04               2                   -                 null
+0x06               2                   uint16            Always 0x1504( 0x0415 when interpreted from little endian )
+chunkbeg           4                   uint32            Seems to always be 0x10, possibly the start of the chunk data.
+chunklen           4                   uint32            Length of the chunk data. Begins counting right after this field
+Keygroups          (chunklen)                            Several keygroup entries ordered by ID. It's a sequential list, so you cannot skip an id between entries. 
+                                                          Replace the skipped entry with 8bytes of 0xAA when you must skip an id number. (Seen in 999)
+[
+    Entry          8                                   And entry representing a key group. Or 8 bytes of 0xAA bytes when a keygroup id is meant to be skipped.
+    [
+        id         2                   uint16          Index/ID of the keygroup. 
+        poly       1                   uint8           Polyphony. AKA max number of simultaneous voices. 0 to 255.
+        priority   1                   uint8           Priority. A value from 0 to possibly 99. Default is 8.
+        vclow      1                   uint8           Lowest Vc possible ? Usually between 0 to 15.
+        vchigh     1                   uint8           Highest Vc possible ? Usually between 0 to 15.
+        unk50      1                   uint8           Unknown.
+        unk51      1                   uint8           Unknown.
+    ]
+    ...
+]
+Padding            0-8                                 Possibly 8 bytes of padding to align the start of the next part on 16 bytes.
+                                                        (NOTE: For some reasons, it seems the padding here is either random garbage bytes, or possibly the numbers have a meaning??)
+
+It seems DSE allows 16 voices in total for all instruments.
+
+- vchigh and vclow (Voice High, and Voice Low) are you used to decide which of the 16 a certain keygroup may use.
+- Polyphony defines the amount of of those a group may use.
+- Priority determine when to replace notes from another group. 
+  If a note from another group with a lower priority is playing, 
+  and another group with a higher priority plays a new note, and there is a shortage of voices, the high priority note will replace the lower priority one, and cut it instantly!
+
+
+------------------
+   pcmd Chunk:
+------------------
+Chunk label : "pcmd" {0x70, 0x63, 0x6D, 0x64}
+This chunk contains all the samples one after the other with no obvious starting points or ending points.
+
+The way the samples are stored and their individual position is stored within that sample's entry in the "wavi" chunk.
+
+So far, it seem to be containing either mono 16 bits PCM, or mono 4 bits ADPCM. 
+The actual implementation of the ADPCM compression format used is the standard IMA one. 
+
+NOTE:
+    - This chunk must end on an offset divisible by 16 !!!
+
+ADPCM Format:
+-------------
+Big endian, 4 bits IMA ADPCM.
+
+NOTE:
+    Each ADPCM sample begins with the initial value of the "predictor" on 16 bits. 
+    Then the "step index", also on 16 bits. Afterwards, comes the actual sample data. 
+
+    The ADPCM preamble is included in the value of the "loopbeg" parameter of the sample!
+    
+PCM Format:
+--------------
+
+
+------------------
+   eod Chunk:
+------------------
+Chunk label : "eod\20" {0x65, 0x6F, 0x64, 0x20}
+
+Always has 0 length. Marks the end of the file.
+
+
+====================================================================================================
+SMD Files:
+====================================================================================================
+
+The SMD files are highly similar to MIDI files, more precisely MIDI format 1, with the multiple
+simultaneous tracks, and the first track being there only for tempo events, or some sort of 
+controller event. 
+Some songs however have 2 of such track, such as bgm0008. Its not clear what the second track 
+accomplishes given it doesn't seem to do much besides waiting..
+
+Like MIDI files, they're made of several chunks. 
+While MIDI files have only 2 chunks, MThd and MTrk, SMD files have 4 :
+- The header       "smdl"
+- The song chunk   "song"
+- The track chunks "trk\0x20"
+- The end marker   "eoc\0x20"
+
+The header chunk however is unique, in that its structure is different from other chunks.
+The 3 others however are always followed with 0x0100 0000 and a sort of identifier.
+
+Only the song chunk differs between the two known version of DSE in use ! 0x415 and 0x402.
+
+------------------
+ SMDL HEADER
+------------------
+Header of the file, contains the name, version, size and several other details relative to the file itself.
+
+Offset:            Length:            Type:                 Description:
+-------            -------            -------               -----------------------------------
+0x00 magicn        4                  uint32                Magic Number "smdl" {0x73,0x6D,0x64,0x6C}
+0x04 unk7          4                  uint32                Null
+0x08 flen          4                  uint32                File length in bytes.
+0x0C version       2                  uint16                Version number ? (0x415)
+0x0E bankid_low    1                  uint8                 Lower byte of the bank id used in this smdl. Appears after event code 0xAA at the start of each tracks..
+0x0F bankid_high   1                  uint8                 Higher byte of the bank id used by this smdl. Appears after event code 0xA9 at the start of each tracks..
+                                                             (usually ranges from 0x70 to 0x7F)
+0x10 unk3          4                  uint32                Null
+0x14 unk4          4                  uint32                Null
+0x18 createtime    8                  -                     The file's creation date + time.
+[
+    0x00 year          2                  uint16                Possibly the year the file was made ?
+    0x02 month         1                  uint8                 Possibly the month the file was made. (0x0 to 0xB)
+    0x03 day           1                  uint8                 Possibly the day the file was made.   (0x0 to 0x1E)
+    0x04 hour          1                  uint8                 Possibly the hour the file was made.  (0x0 to 0x17)
+    0x05 minute        1                  uint8                 Possibly the minute the file was made.(0x0 to 0x3B)
+    0x06 second        1                  uint8                 Possibly the second the file was made.(0x0 to 0x3B)
+    0x07 centisecond   1                  uint8                 Possibly the 100th of a second the file was made.(0x0 to 0x64)
+]
+0x20 fname         16                 char[16]              Filename, ASCII null terminated string. 
+                                                             Any extra space after the 0 on the total 16 bytes, is padded with 0xAA. 
+0x30 unk5          4                  uint32                0x1
+0x34 unk6          4                  uint32                0x1
+0x38 unk8          4                  -                     Possibly filler, or often -1.
+0x38 unk9          4                  -                     Possibly filler, or often -1.
+-------            -------            -------               -----------------------------------
+Total:             64 (0x40)
+
+------------------
+    SONG v0x415
+------------------
+Chunk holding data that applies to the entire song.
+
+NOTE:
+    Looking at sample SMDL files from 3 different games, all from Chunsoft, the only thing that
+    changes is the nb of tracks and nb of channels. So its hard to determine what the rest is for
+    or in what format it is..
+
+Offset:            Length:            Type:               Description:
+-------            -------            -------               -----------------------------------
+0x00 label         4                  char[4]               Song chunk marker "song" {0x73,0x6F,0x6E,0x67}
+0x04 unk1          4                  uint32                So far 0x1000000
+0x08 unk2          4                  uint32                So far 0xFF10
+0x0C unk3          4                  uint32                So far 0xFFFFFFB0
+
+(The song chunk is followed by a "seqinfo" structure with details on the song. See details below)
+
+
+------------------
+    SONG v0x402
+------------------
+Half the length of the version 0x415 song chunk header. 
+The first 20 bytes are identical between versions.
+
+Offset:            Length:            Type:               Description:
+-------            -------            -------               -----------------------------------
+0x00 label         4                  char[4]               Song chunk marker "song" {0x73,0x6F,0x6E,0x67}
+0x04 unk1          4                  uint32                So far 0x1000000
+0x08 unk2          4                  uint32                So far 0xFF10
+0x0C unk3          4                  uint32                So far 0xFFFFFFB0
+
+(The song chunk is followed by a "seqinfo" structure with details on the song. See details below)
+
+------------------------
+    seqinfo v0x415
+------------------------
+Data about how the sequencer should play the following tracks. 
+In the sedl files this chunk is repeated several times in the file before a set of tracks. Its also used in the SMDL files right after the song chunk header.
+
+Offset:            Length:            Type:               Description:
+-------            -------            -------               -----------------------------------
+0x00 unk30     2                  uint16                Unknown. usually 0x0001
+0x02 offnext   2                  uint16                Offset from the seq info chunk's begining to the sequence's first trk chunk. Or could also be tpqn
+0x04 unk16     2                  uint16                (old unk5)Usually 0xFF01
+0x06 nbtrks    1                  uint8                 Nb of track chunks in the sequence.
+0x07 nbchans   1                  uint8                 Possibly number of midi/output tracks.
+0x08 unk19     1?                 uint8?                Usually 0x00
+0x08 unk20     1?                 uint8?                Usually 0x00
+0x09 unk21     1?                 uint8?                Usually 0x00
+0x0A unk22     1?                 uint8?                Usually 0x0F
+0x0C unk23     4?                 uint32                Usually 0xFFFFFFFF
+0x10 unk24     2?                 uint16                Usually 0x0000
+0x12 unk25     2?                 uint16                Usually 0x4000
+0x14 unk26     2?                 uint16                Usually 0x4000
+0x16 unk27     2?                 uint16                Usually 0x0040
+0x18 unk28     2?                 uint16                Usually 0x0400 also seen 0x0200
+0x1A unk29     1                  uint8                 Usually 0x00
+0x1C unk31     1                  uint8                 0x0E or 0x08
+0x2C unk12     4                  uint32                So far 0xFFFFFF00
+0x30 padbytes  16                 -                     0xFF padding bytes to align the next part on 16 bytes.
+--------------------------------------------------------------------------
+Total          48 bytes
+
+------------------------
+     seqinfon v0x402
+------------------------
+Offset:            Length:            Type:               Description:
+-------            -------            -------               -----------------------------------
+0x10 unk30         2                  uint16                So far 0x1
+0x12 offnext       2                  uint16                Offset from the seq info chunk's begining to the sequence's first trk chunk. Or could also be tpqn 
+0x14 nbtrks        1                  uint8                 Number of track chunks.
+0x16 nbchans       1                  uint8                 Possibly number of midi/output tracks.
+0x17 unk5          1                  uint8                 Unknown, usually 1.
+0x18 unk6          1                  uint8                 Unknown, usually 2.
+0x19 unk7          2                  uint16                Unknown, usually 0x0008.
+0x1A mainvol       1                  int8                  Possibly the track-wide volume.
+0x1B mainpan       1                  int8                  Possibly the track-wide pan.
+0x1C unk8          4                  uint32                Unknown usually 0x0F00 0000.
+------------------------------------------------------------------------------------------------
+Total              16 bytes
+
+------------------
+    TRACK:
+------------------
+Chunk with a short header containing a list of almost MIDI-like events. Events are read from left to
+right, from top to bottom.
+
+
+Offset:            Length:            Types:               Description:
+-------            -------            -------               -----------------------------------
+0x00 label         4                  char[4]               Track chunk marker "trk\0x20" {0x74,0x72,0x6B,0x20}
+0x04 param1        4                  uint32                Always 0x0000 0001 (Little endian)
+0x08 param2        4                  uint32                Always 0x04FF 0000 (Little endian)
+0x0C chunklen      4                  uint32                Length of track data, starting after this field, in bytes.
+0x10 track         chunklen-1         -                     Events and data for the track.
+[
+    0x0 trkid           1                   -               Track ID number [0x0-0x11]
+    0x1 chanid          1                   -               Other ID number [0x0-0x0F], Midi channel maybe ?  
+                                                             Having several tracks with the same channel # result in the same thing as if 
+                                                             they were sharing a midi channel. Instruments and parameters affects eachothers.
+    0x2 unk1            1                   -               Unknown, almost always 0x00
+    0x3 unk2            1                   -               Unknown, almost always 0x00
+    0x4 events          Varies              -               List of events for the current track.
+    [
+        ...                                                             See TRACK EVENTS for details on what goes in here.
+    ]
+]
+chunklen           1                  -                     0x98 End marker for a track. Included in the chunklen.
+chunklen+1         ((chunklen % 4)!=0)?(4-(chunklen%4)):0   (PADDING_LEN) Padding/Trash bytes. 0x98 repeated as many 
+                                                             times as needed to fill up the remaining bytes of 
+                                                             the current aligned 32 bits integer. 
+                                                             See Track Padding section for more details.
+-------            -------            -------               -----------------------------------
+Total:             16 + chunklen + PADDING_LEN
+
+------------------
+TRACK EVENTS:
+------------------
+Each tracks contains its own list of events to play. Much like midi files. Except that, events can
+only affect the current track, they're also much shorter than midi events.
+
+Each events type can have its own length, and it length can vary depending if a parameter was omitted.
+The play note event is special, in that its code varies.
+And the 0x80-0x8F events are special in that, the parameter is the lower nybble of the event code itself!
+
+Structure:
+----------
+Events follow this structure:
+┌────────────┬────────────────────────┬────────────────────────┐
+│ 1 Byte     │ 1 Byte                 │ ...                    │
+├────────────┼────────────────────────┼────────────────────────┤
+│ Event Code │ (Optional)Parameter #1 │ ...                    │
+└────────────┴────────────────────────┴────────────────────────┘
+They may have any number of parameter bytes, depending on the event type, or on info stored in the first parameter.
+
+
+Examples:
+    0xA0 0x05           - Set pitch to fifth octave immediately
+
+
+
+NOTES:
+- bgm0007.smd has the two events 0xAA and 0xA9 repeated in the first real track. With the exact same value as at the beginning! But with
+- bgm0003.smd's 0x0B track seems to have its play note code change as the track goes. it goes from 0x78 to 0x4E, and maybe even more..
+- bgm0034.smd has a lot of 0xE3 events, and a lot of tempo changes.
+
+
+
+Event Code:  DataLength(bytes):  Parameters:              Descriptions:
+|----------|--------------------|------------------------|------------------------------------------
+|0x01-0x7F | 1-4                | 1.(uint8)Pitch param   | Play a note at specified pitch.
+|          |                    | 2.(uint8-24)KD Duration| The code is actually the 
+|          |                    |                        | Velocity, more details below.
+|          |                    |                        | Second param is optional depending on value
+|          |                    |                        | of param 1(see below). Its the duration in ticks to 
+|          |                    |                        | hold the key down. 
+|----------|--------------------|------------------------|------------------------------------------
+|0x80-0x8F | -                  | -                      | Basically, a pause, but based on a musical time interval.
+|          |                    |                        | 0x80-0x8F is a single event, with its lower nybble being the parameter.
+|          |                    |                        | It counts as a pause, so all events dealing with the last pause will 
+|          |                    |                        | count the last 0x80-0x8F event as a pause if it was the last!
+|----------|--------------------|------------------------|------------------------------------------
+|0x90      | 0                  | none                   | Pause processing events for duration of last
+|          |                    |                        | pause(include Fixed duration pauses). Doesn't silence the track.
+|----------|--------------------|------------------------|------------------------------------------
+|0x91      | 1                  | (int8) Ticks           | Pause for duration of last pause(include Fixed duration pauses) + a signed nb Ticks 
+|          |                    |                        | Doesn't silence the track.(seen in bgm0021)
+|----------|--------------------|------------------------|------------------------------------------
+|0x92      | 1                  | (uint8) Ticks          | Pause processing events for nb Ticks
+|          |                    |                        | Doesn't silence the track.
+|----------|--------------------|------------------------|------------------------------------------
+|0x93      | 2                  | (uint16) Ticks         | Pause processing events for specified
+|          |                    |                        | amount of ticks. (little endian)
+|          |                    |                        | Doesn't silence the track.
+|----------|--------------------|------------------------|------------------------------------------
+|0x94      | 3                  | (uint24) Ticks         | Pause processing events for specified
+|          |                    |                        | amount of ticks. (little endian)
+|          |                    |                        | Doesn't silence the track.
+|----------|--------------------|------------------------|------------------------------------------
+|#0x95     | 1                  | (uint8) tick_interval  | Pause until all notes are released! 
+|          |                    |                        | It re-checks at the rate specified as param in ticks!
+|          |                    |                        | So it will always pause at least "tick_interval" ticks.
+|----------|--------------------|------------------------|------------------------------------------
+|#0x96     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0x97     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|0x98      | 0                  | none                   | End of track terminator + Filler
+|          |                    |                        | Can have a delta-time prefixed.
+|----------|--------------------|------------------------|------------------------------------------
+|0x99      | 0                  | none                   | Sets the looping point for the 
+|          |                    |                        | track.
+|----------|--------------------|------------------------|------------------------------------------
+|#0x9A     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0x9B     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0x9C     | 1                  | (uint8) nb_repeats     | Repeat mark (Segno): (Seen in bgm0113.smd)
+|          |                    |                        | Start of the segment to repeat, when the next event 0x9D is processed. (confirmed ?)
+|----------|--------------------|------------------------|------------------------------------------
+|#0x9D     | 0                  | none                   | Repeat from mark (DalSegno):
+|          |                    |                        | Repeats the segment starting at the previous event 0x9C, the amount of times specified in event 0x9C. (confirmed ?)
+|----------|--------------------|------------------------|------------------------------------------
+|#0x9E     | 0                  | none                   | After repeat mark (to coda):
+|          |                    |                        | After the segment has been repeated enough times, it will then jumps to us from the last 0x9D event.(confirmed ?)
+|----------|--------------------|------------------------|------------------------------------------
+|#0x9F     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|0xA0      | 1                  | (uint8) Pitch Octave   | Reset the current pitch to the 
+|          |                    |                        | octave specified. 
+|          |                    |                        |( Ex: To play C6, you'd set this 
+|          |                    |                        | to 6, for C4, you'd set it to 4, 
+|          |                    |                        | and so on! )
+|----------|--------------------|------------------------|------------------------------------------
+|#0xA1     | 1                  | (uint8) Octave         | Adds the value specified to the current track octave.
+|----------|--------------------|------------------------|------------------------------------------
+|#0xA2     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xA3     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|0xA4      | 1                  | (uint8) Tempo          | Sets the tempo in BPM. Only on Track#0
+|----------|--------------------|------------------------|------------------------------------------
+|0xA5      | 1                  | (uint8) Tempo          | Sets the tempo in BPM. Only on Track#0 ?
+|----------|--------------------|------------------------|------------------------------------------
+|#0xA6     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xA7     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xA8     | 2                  | (uint8)swdl            | SetSwdlAndBank (Seen in ev_e09b.sed)
+|          |                    | (uint8)bank            | 
+|----------|--------------------|------------------------|------------------------------------------
+|0xA9      | 1                  | (byte) bankhi          | SetBankHi Sets the bank id high byte 
+|          |                    |                        | (Value from the file's header at offset 0xF)
+|----------|--------------------|------------------------|------------------------------------------
+|0xAA      | 1                  | (uint8) banklo         | SetBankLo Sets the bank id low byte
+|          |                    |                        | (Value from the file's header at offset 0xE)
+|----------|--------------------|------------------------|------------------------------------------
+|0xAB      | 1                  | (uint8) Skipped        | Skips processing the next byte.
+|----------|--------------------|------------------------|------------------------------------------
+|0xAC      | 1                  | (uint8) Program ID     | Set the current instrument/program. 
+|          |                    |                        | Program/Instrument IDs are from the 
+|          |                    |                        | associated SWD file.
+|----------|--------------------|------------------------|------------------------------------------
+|#0xAD     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xAE     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xAF     | 3                  | (uint16)sweep rate     | SweepSongVolume
+|          |                    | (uint8) target volume  |
+|----------|--------------------|------------------------|------------------------------------------
+|#0xB0     | 0                  | none                   | DisableEnvelope
+|----------|--------------------|------------------------|------------------------------------------
+|#0xB1     | 1                  | (uint8) attack         | SetEnvelopeAttack
+|----------|--------------------|------------------------|------------------------------------------
+|#0xB2     | 1                  | (uint8) time           | SetEnvelopeAttackTime (Seen in ev_e09b.sed)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xB3     | 1                  | (uint8) hold           | SetEnvelopeHold 
+|----------|--------------------|------------------------|------------------------------------------
+|#0xB4     | 2                  | (uint8) decay          | SetEnvelopeDecaySustain (Seen in ev_e09b.sed)
+|          |                    | (uint8) sustain        | (setting either to 0xFF means it won't change it)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xB5     | 1                  | (uint8) fade           | SetEnvelopeFade (Seen in bgm0100.smd)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xB6     | 1                  | (uint8) release        | SetEnvelopeRelease
+|----------|--------------------|------------------------|------------------------------------------
+|#0xB7     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xB8     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xB9     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xBA     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xBB     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xBC     | 1                  | (uint8) note volume    | SetNoteVolume (? Does he means velocity, aftertouch, or something else?)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xBD     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|0xBE      | 1                  | (uint8) channel pan    | SetChannelPan: Set the pan at the CHANNEL level.
+|          |                    |                        | (seen in last 3 tracks of bgm0048.smd)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xBF     | 1                  | ???                    | Unknown (Seen in bgm0151.smd) (note by coda : sets or clears flag bit 0)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xC0     | 0                  | none                   | Unknown. (note by coda: sets flag bit 1)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xC1     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xC2     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xC3     | 1                  | (uint8) channel volume | SetChannelVolume: Set the volume at the CHANNEL level(used in inazuma eleven a lot)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xC4     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xC5     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xC6     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xC7     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xC8     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xC9     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xCA     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xCB     | 2                  | (uint16) Skipped       | Skip Next 2 bytes. Seen in Professor Layton and the Last Specter, BGM_10.SMD
+|----------|--------------------|------------------------|------------------------------------------
+|#0xCC     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xCD     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xCE     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xCF     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xD0     | 1                  | (uint8) fine tune      | SetFineTune (Seen in bgm0100.smd)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xD1     | 1                  | (uint8) tune change    | AddToFineTune (Seen in bgm0113.smd)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xD2     | 1                  | (uint8) coarse tune    | SetCoarseTune (Seen in bgm0116.smd)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xD3     | 2                  | (uint16) tune change   | AddToCoarseTune (Seen in bgm0116.smd) (That seems wrong because setcoarsetune param is smaller than this one)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xD4     | 3                  | (uint16) sweep rate    | SweepTune (Seen in ev_e09b.sed)
+|          |                    | (uint8) target tune    |
+|----------|--------------------|------------------------|------------------------------------------
+|#0xD5     | 2                  | (uint8) min range      | SetRandomNoteRange
+|          |                    | (uint8) max range      |
+|----------|--------------------|------------------------|------------------------------------------
+|#0xD6     | 2                  | (uint16) maximum detune| SetDetuneRange: random detune (Seen in bgm0101.smd)
+|----------|--------------------|------------------------|------------------------------------------
+|0xD7      | 2                  | (int16) PitchBend      | Pitch bend. Works the same as the MIDI 
+|          |                    |                        | event 0xE0 Pitch Wheel. The uint16 is 
+|          |                    |                        | stored in big endian order. 
+|          |                    |                        | 500 == 1 semitone. Negative val, means increase pitch, positive the opposite.
+|----------|--------------------|------------------------|------------------------------------------
+|#0xD8     | 2                  | ???                    | Unknown (note by coda: modifies an unused parameter)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xD9     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xDA     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xDB     | 1                  | (uint8) max bend       | SetPitchBendRange: In semitones (Used in bgm0000, and bgm0134 (Value usually range between 0,2,4,7,12,24))
+|----------|--------------------|------------------------|------------------------------------------
+|#0xDC     | 5                  | ???                    | ReplaceLFO1AsPitch (Seen in ev_e09b.sed)
+|          |                    | ???                    |
+|          |                    | ???                    |
+|          |                    | ???                    |
+|          |                    | ???                    |
+|----------|--------------------|------------------------|------------------------------------------
+|#0xDD     | 4                  | ???                    | SetLFO1DelayFade (Seen in ev_e09b.sed)
+|          |                    | ???                    |
+|          |                    | ???                    |
+|          |                    | ???                    |
+|----------|--------------------|------------------------|------------------------------------------
+|#0xDE     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|0xDF      | 1                  | (byte) enabled         | SetLFO1ToPitchEnabled: (Used in bgm0000)
+|          |                    |                        | If true, turns on LFO1 and connects it to pitch. If false, disables LFO1
+|----------|--------------------|------------------------|------------------------------------------
+|0xE0      | 1                  | (int8) Track Volume    | Track volume, similar to GM CC#7.
+|          |                    |                        | 
+|----------|--------------------|------------------------|------------------------------------------
+|#0xE1     | 1                  | (uint8) volume change  | AddToTrackVol:
+|----------|--------------------|------------------------|------------------------------------------
+|#0xE2     | 3                  | (uint16) sweep rate    | SweepTrackVol (Seen in ev_e09b.sed)
+|          |                    | (uint8) target volume  | 
+|----------|--------------------|------------------------|------------------------------------------
+|0xE3      | 1                  | (int8)Track Expression | Similar to the GM CC#11.
+|          |                    |                        | Its a secondary volume control
+|          |                    |                        | there to avoid messing with the
+|          |                    |                        | dynamic range of instruments
+|          |                    |                        | when changing track volume!
+|----------|--------------------|------------------------|------------------------------------------
+|#0xE4     | 5                  | ???                    | ReplaceLFO2AsVolume
+|          |                    | ???                    |
+|          |                    | ???                    |
+|          |                    | ???                    |
+|          |                    | ???                    |
+|----------|--------------------|------------------------|------------------------------------------
+|#0xE5     | 4                  | ???                    | SetLFO2DelayFade
+|          |                    | ???                    |
+|          |                    | ???                    |
+|          |                    | ???                    |
+|----------|--------------------|------------------------|------------------------------------------
+|#0xE6     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xE7     | 1                  | (byte) enabled         | SetLFO2ToVolumeEnabled:
+|          |                    |                        | If true, turns on LFO2 and connects it to volume. If false, disables LFO2.
+|----------|--------------------|------------------------|------------------------------------------
+|0xE8      | 1                  | (int8)Pan L/R          | 0x00 == Full Left
+|          |                    |                        | 0x40 == Middle
+|          |                    |                        | 0x80 == Full Right 
+|----------|--------------------|------------------------|------------------------------------------
+|#0xE9     | 1                  | (uint8) pan            | AddToPan
+|----------|--------------------|------------------------|------------------------------------------
+|#0xEA     | 3                  | (uint16) sweep rate    | SweepPan (Seen in bgm0100.smd)
+|          |                    | (uint8) target pan     |
+|----------|--------------------|------------------------|------------------------------------------
+|#0xEB     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xEC     | 5                  | ???                    | ReplaceLFO3AsPan (Seen in ev_e09b.sed)
+|          |                    | ???                    |
+|          |                    | ???                    |
+|          |                    | ???                    |
+|          |                    | ???                    |
+|----------|--------------------|------------------------|------------------------------------------
+|#0xED     | 4                  | ???                    | SetLFO3DelayFade (Seen in ev_e09b.sed)
+|          |                    | ???                    |
+|          |                    | ???                    |
+|          |                    | ???                    |
+|----------|--------------------|------------------------|------------------------------------------
+|#0xEE     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xEF     | 1                  | (byte) enabled         | SetLFO3ToPanEnabled: (Seen in ev_e09b.sed)
+|          |                    |                        | If true, turns on LFO3 and connects it to pan. If false, disables LFO3.
+|----------|--------------------|------------------------|------------------------------------------
+|#0xF0     | 5                  | (uint16) LFO rate      | ReplaceLFO: (Seen in ev_e09b.sed)
+|          |                    | (uint16) LFO depth     | Rate is in Hertz.
+|          |                    | (uint8) waveform       | LFO delay and LFO fade time are set to 0.
+|          |                    |                        | *For waveform ids see "LFO Waveforms IDs" below
+|----------|--------------------|------------------------|------------------------------------------
+|#0xF1     | 4                  | (uint16) LFO delay     | SetLFODelayFade: (Seen in ev_e09b.sed)
+|          |                    | (uint16) LFO fade time |
+|----------|--------------------|------------------------|------------------------------------------
+|#0xF2     | 2                  | (uint8) parameterid    | SetLFOParam: (Seen in ev_e09b.sed)
+|          |                    | (uint8) value          | 
+|          |                    |                        | *For parameter ids see "LFO Parameter IDs" below
+|          |                    |                        | *For waveform ids see "LFO Waveforms IDs" below
+|----------|--------------------|------------------------|------------------------------------------
+|#0xF3     | 3                  | (uint8) target LFO     | SetLFORoute (Seen in ev_e09b.sed)
+|          |                    | (uint8) enabled        |
+|          |                    | (uint8) targetid       | *For target ids see "LFO Target IDs" below
+|----------|--------------------|------------------------|------------------------------------------
+|#0xF4     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xF5     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xF6     | 1                  | (uint8)???             | Unknown(Seen in bgm0001.smd) param value is usually between 0x0-0xf Seems to be used to sync music and script engine scene!
+|----------|--------------------|------------------------|------------------------------------------
+|#0xF7     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xF8     | 2                  | (uint16) Skipped       | Skips processing next 2 bytes.
+|----------|--------------------|------------------------|------------------------------------------
+|#0xF9     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xFA     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xFB     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xFC     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xFD     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xFE     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+|#0xFF     | -                  | -                      | Invalid (Disable track)
+|----------|--------------------|------------------------|------------------------------------------
+
+(Some LFO info thanks to Coda)
+LFO Parameter IDs:
+------------------
+	0x01: target LFO
+	0x02: enabled
+	0x03: route (see 0xf3)
+	0x04: waveform selection
+	0x05: LFO rate (units depend on waveform)
+	0x06: LFO depth
+	0x07: LFO delay / 20
+	0x08: LFO delay fine
+	0x09: LFO delay coarse
+	0x0A: LFO fade / 20
+
+LFO Waveforms IDs:
+------------------
+	0x00: none
+	0x01: square
+	0x02: triangle
+	0x03: sine
+	0x04: unknown
+	0x05: saw
+	0x06: noise
+	0x07: random
+
+LFO Target IDs:
+---------------
+	0x0: disconnected
+	0x1: pitch
+	0x2: volume
+	0x3: pan
+	0x4: filter
+
+LFO Misc Notes:
+----------------
+(From Coda's notes):
+	"LFO delay specifies a time in seconds before the LFO takes effect.
+	It currently appears that combining a nonzero delay with a fade-out may
+	result in the LFO suddenly jumping from 0 to its full depth immediately
+	after the delay period before fading out again.
+
+	LFO fade specifies a fade in/out time in seconds after the LFO delay time.
+	A negative value means that the LFO's depth starts at 0 and increases to
+	its full value over the fade time. A positive value means that the LFO's
+	depth starts at its full value and decreases to 0 over the fade time."
+
+
+Duration Values:
+----------------
+All values of durations used for pauses or as PlayNote event extra param are in ticks.
+The faster the tempo, the more ticks. Thus  
+
+Play Note Events:
+-----------------
+Event codes for playing notes are highly different than others.
+Because the event code is the velocity of the note to play..
+
+The only way to tell its a play note code, is by knowing that play note event codes have their value
+ranging between 0x00 and 0x7F. Any other codes above that are reserved codes with special functions
+listed above in the table.
+
+The play note events can have up to 2 parameters, the second one may be an integer stored on 1 to 3 bytes, 
+but usually only one is used.
+
+The parameters:
+    --------------------------------------------
+    1. Note, Pitch, and Event Length (1 byte) :
+    --------------------------------------------
+        * High nybble of the byte ( 1111 0000 ):
+        ----------------------------------------
+            * 2 lowest bits of the nybble (0011):
+                A value from 0 to 3 that is used to modify the track's current octave.
+                The value is subtracted 2, and the result is signed. This is then
+                added to the track's current octave like so:
+                
+                    CurrentOctave = CurrentOctave + ( (Highnybble & 3) - 2 )
+                
+            * 2 highest bits of the nybble (1100):
+                A value from 0 to 3 that indicates how many bytes of parameters follow the play note event.
+                Add one to the value to get the length. Ex: 0 + 1 = 1 byte parameter.
+                - 0x0 (00) : The play note event has a single byte parameter.
+                - 0x1 (01) : The play note event has 2 bytes of parameters.
+                - 0x2 (10) : The play note event has 3 bytes of parameters.
+                - 0x3 (11) : The play note event has 4 bytes of parameters.
+        
+        * Low nybble of the byte( 0000 1111 ):
+        --------------------------------------
+            This is simply a value from 0x0 to 0xB that indicate which of the 12 notes to play at 
+            the pitch indicated by the high part !
+            
+            The notes are :
+                0xF = Unknown. Used sometimes in some sound effect tracks.
+            
+                0xB = B
+                0xA = A#
+                0x9 = A
+                0x8 = G#
+                0x7 = G
+                0x6 = F#
+                0x5 = F
+                0x4 = E
+                0x3 = D#
+                0x2 = D
+                0x1 = C#
+                0x0 = C
+    
+    --------------------------------------------------
+    2.(Optional)Note Key Down Duration (1-3 byte(s)) :
+    --------------------------------------------------
+        The duration the note is to be held in ticks. 
+        
+        This duration is re-used by the notes that follow. So all notes that do not have this parameter
+        that follows will use the same key down duration value, until another note event with a different duration
+        comes up!
+        
+        This duration can be held on 1 to 3 bytes depending on the value of the first parameter's high nybble.
+
+        If any extra bytes are present, they're appended to the previous one via bit shift, into a uint32. 
+        The bytes are stored in big endian order in the event track.
+        
+        Ex:
+            uint32_t lastholddur = 0;
+            //...
+            
+            uint32_t FunctionToGetHoldDuration( uint8_t param1 )
+            {
+                const unsigned int lenparam2 = (param1 >> 6);
+            
+                if( lenparam2 > 0 )
+                {
+                    uint32_t newholddur = 0;
+                    for( int i = 0; i < lenparam2; ++i )
+                    {
+                        newholddur = newholddur << 8;
+                        newholddur |= GetByte();
+                    }
+                    lastholddur = newholddur;
+                }
+                
+                return lastholddur;
+            }
+    
+    
+    
+Pause in-between events:
+------------------------
+    Most events have a short pause event just before them. The event is a value
+    going from 0x80 to 0x8F. Which allows us to differentiate it from play note codes
+    and other event codes. Thanks to its high nybble always being 8([1000] 0000).
+    
+    The sound engine's tick rate is set on a per file basis. But pause durations always last the same amount of ticks.
+
+    0x83 == duration of a 1/4 note or beat.
+    Higher values mean shorter pauses. Durations begin at a 1/2 note.
+    
+    Just isolate the lower nybble of the pause even, and use it as index in the table!:
+    
+    (The table containing the durations in ticks is stored in the game's RAM at run time at this address for EoS: 
+    0x20B0B7C)
+    const std::array<uint8_t, 16> delays
+    {
+        96,  72,  64,  48, 
+        36,  32,  24,  18,  
+        16,  12,   9,   8,   
+         6,   4,   3,   2 
+    };
+    
+    
+
+    **Disclaimer: Note durations names may make no sense..**
+    |======|==================================|========================|======================|
+    | Code | Duration                         | Midi Ticks at 960 PPQN | Engine ticks 48 PPQN |
+    |======|==================================|========================|======================|
+    | NA   | Whole note                       | 3840                   | 192                  |*Whole note included as reference only !
+    |------|----------------------------------|------------------------|----------------------|
+    | 0x80 | half note                        | 1920                   | 96                   | 
+    | 0x81 | dotted quarter note              | 1440                   | 72                   |
+    | 0x82 | 2/3 of a half note               | 1240                   | 64                   |
+    | 0x83 | quarter note                     | 960                    | 48                   |
+    | 0x84 | dotted 8th note                  | 720                    | 36                   |
+    | 0x85 | 2/3 of a quarter note            | 600                    | 32                   |
+    | 0x86 | 8th note                         | 480                    | 24                   |
+    | 0x87 | dotted 16th note                 | 360                    | 18                   |
+    | 0x88 | 2/3 of a 8th note                | 320                    | 16                   |
+    | 0x89 | 16th note                        | 240                    | 12                   |
+    | 0x8A | dotted 32nd note                 | 180                    | 9                    |
+    | 0x8B | 2/3 of a 16th note               | 160                    | 8                    |
+    | 0x8C | 32nd note                        | 120                    | 6                    |
+    | 0x8D | dotted 64th note                 | 90                     | 4                    |
+    | 0x8E | 2/3 of a 32nd note               | 80                     | 3                    |
+    | 0x8F | 64th note                        | 60                     | 2                    |
+    |======|==================================|========================|======================|
+
+
+End of Track Padding:
+---------------------
+End of track padding can make or break the whole thing. If the padding is wrong, the game will just 
+black screen.
+
+It mainly consists in repeating the end of track marker from 1 to 3 times depending on the context.
+Here are the 4 possible cases :
+
+1. The track ends on the first byte of a group of 4 :
+
+        00  01  02  03      04  05  06  07      08  09  0A  0B      0C  0D  0E  0F
+        ----------------   -----------------   -----------------   ----------------
+        7F  37  86  7F      19  86  7F  24      98  98  98  98     74   72  6B  20 
+                                                ^  |__________|   
+                                                |       └ Padding bytes
+                                                |
+                                                End marker
+                                                            
+    Padding needed here, to fill up the rest of the group of 4 bytes
+
+
+2. The track ends on the second byte of a group of 4 :
+
+        00  01  02  03      04  05  06  07      08  09  0A  0B      0C  0D  0E  0F
+        ----------------   -----------------   -----------------   ----------------
+        37 7F  37  86       7F  19  86  7F      24  98  98  98      74   72  6B  20 
+                                                    ^   |_____|   
+                                                    |      └ Padding bytes
+                                                    |
+                                                    End marker
+                                                            
+    Padding needed here, to fill up the rest of the group of 4 bytes
+
+
+3. The track ends on the third byte of a group of 4 :
+
+        00  01  02  03      04  05  06  07      08  09  0A  0B      0C  0D  0E  0F
+        ----------------   -----------------   -----------------   ----------------
+        37 7F  37  86       7F  19  86  7F      24  86  98  98      74   72  6B  20 
+                                                        ^  |__|   
+                                                        |   └ Padding byte
+                                                        |
+                                                        End marker
+                                                            
+    Padding needed here, to fill up the rest of the group of 4 bytes
+
+4. The track ends on the last byte of a group of 4 :
+
+        00  01  02  03      04  05  06  07      08  09  0A  0B      0C  0D  0E  0F
+        ----------------   -----------------   -----------------   ----------------
+        7F  37  86  7F      19  86  7F  24      93  C0  0C  98     74   72  6B  20 
+                                                            ^      ^ No padding
+                                                            |
+                                                            End marker
+                                                            
+    No padding needed, because the end marker is the last of a group of 4 !
+            
+
+
+            
+------------------
+    END OF CHUNK:
+------------------
+A simple chunk indicating the end of the file.
+
+Offset:            Length:            Endian:               Description:
+-------            -------            -------               -----------------------------------
+0x00               4                  Big                   End of chunks marker "eoc\20" {0x65, 0x6F, 0x63, 0x20}
+0x04               4                  Little?               Always 0x0000 0001 (Little endian)
+0x08               4                  Little?               Always 0x04FF 0000 (Little endian)
+0x0C               4                  -                     Null
+(!!- The below part is entirely optional and only there inside SEDL files, and never in SMDL files. It may also be completely omitted in some chunks inside SEDL. -!!)
+0x10 unktable1     varies             -                     In some cases the eoc chunk may have a table right after its header. That's never the case in SMDL files.
+[
+	entry?
+	[
+		0x00 entry?    2?                 uint16?               Unknown.
+		0x02 offset    2?                 uint16?               Seems to be the offset from the header end to the next chunk including "padbytes"?
+	]
+	...
+]
+padbytes           (0-14)             -                     0xFF padding to align the next table on 16 bytes.
+unktable2          varies             -                     In some cases the eoc chunk may have a table here. That's never the case in SMDL files.
+[
+	0x00 entry?    2?                 uint16                Unknown.
+	...
+]
+padbytes           (0-14)             -                     0xFF padding to align the next section on 16 bytes
+padbytes           16                 -                     0xFF padding to align the next section on 16 bytes
+-------            -------            -------               -----------------------------------
+Total:             16 (0x10) for SMDL
+                   varies in SEDL (goes from 16 to more)
+
+------------------
+  Track Padding:
+------------------
+
+
+====================================================================================================
+SED Files:
+====================================================================================================
+
+Header:
+"sedl"     {0x73, 0x65, 0x64, 0x6C}
+
+Chunks :
+- "seq\0x20" {0x73, 0x65, 0x71, 0x20}
+- "trk\0x20" {0x74, 0x72, 0x6B, 0x20}
+- "bnkl"     {0x62, 0x6E, 0x6B, 0x6C}
+- "mcrl"     {0x6D, 0x63, 0x72, 0x6C}
+- "eoc\0x20" {0x65, 0x6F, 0x63, 0x20}
+- "eod\0x20" {0x65, 0x6F, 0x64, 0x20}
+
+
+SEDL files contain event tracks used for elaborate sound effects.
+
+------------------
+    Overview
+------------------
+Offset + Name         Size            Type            Description
+--------------        ----            ----            -----------
+0x00 Header           64
+0x40 Seq Chunk        varies
+Tracks
+[
+	seqinfo           varies                          seqinfo structure that contains details on the sequence who'se  trk chunks come next.
+	tracks                                            A number of tracks from 1 to more. Followed by track padding and a eoc chunk.
+	[
+		trkChunk          varies
+		...
+	]
+	eocChunk          varies                           The eoc chunk inside a SEDL has an extra table and padding appended.
+	...
+]
+padding?              varies                           0x00 bytes padding the next chunk on 16 bytes
+mctrlchunk            varies
+padding?
+bnklchunk             varies
+eodchunk              16
+
+
+------------------------
+    SEDL Header v0x415
+------------------------
+
+Offset + Name         Size            Type            Description
+--------------        ----            ----            -----------
+0x00 magicn            4               char[4]         "sedl"     {0x73, 0x65, 0x64, 0x6C}
+0x04 null              4               -               4 bytes of zeros
+0x08 flen              4               uint32          The total filesize.
+0x0C version           2               uint16          Dse engine version. Usually 0x415.
+0x0E bankid_low        1               uint8           Low byte of the bank id used in this sedl. (0x2C)
+0x0F bankid_high       1               uint8           High byte of the bank id used in this sedl. (0x0)
+0x10 unk3              4               uint32          4 bytes of zeros
+0x14 unk4              4               uint32          4 bytes of zeros
+0x18 createtime        8                  -            The file's creation date + time.
+[
+    0x00 year          2               uint16          The year the file was made ?
+    0x02 month         1               uint8           The month the file was made. (0x0 to 0xB)
+    0x03 day           1               uint8           The day the file was made.   (0x0 to 0x1E)
+    0x04 hour          1               uint8           The hour the file was made.  (0x0 to 0x17)
+    0x05 minute        1               uint8           The minute the file was made.(0x0 to 0x3B)
+    0x06 second        1               uint8           The second the file was made.(0x0 to 0x3B)
+    0x07 centisecond   1               uint8           The 100th of a second the file was made?(0x0 to 0x64)
+]
+0x20 fname            16               char[16]        Null terminated string, for internal filename. Unused char after 0x0 are padded with 0xAA.
+0x30 unk5              2               uint16          Unknown (0xC)
+0x32 unk6              2               uint16          Unknown (0x1)
+0x34 unk7              2               uint16          Unknown (0x100)
+0x36 unk8              2               uint16          Unknown (0x0)
+0x38 padbytes          8               -               8 bytes of 0xFF padding bytes.
+-----------------------------------------------------------
+Total 64 bytes
+
+
+------------------------
+    SEDL Header v0x415 (Variant Shiren DS)
+------------------------
+Some games, like shiren DS append the seqtable directly to the sedl header. It's a bit tricky to tell. 
+
+Offset + Name         Size            Type            Description
+--------------        ----            ----            -----------
+0x00 magicn            4               char[4]         "sedl"     {0x73, 0x65, 0x64, 0x6C}
+0x04 null              4               -               4 bytes of zeros
+0x08 flen              4               uint32          The total filesize.
+0x0C version           2               uint16          Dse engine version. Usually 0x415.
+0x0E bankid_low        1               uint8           Low byte of the bank id used in this sedl. (0x2C)
+0x0F bankid_high       1               uint8           High byte of the bank id used in this sedl. (0x0)
+0x10 unk3              4               uint32          4 bytes of zeros
+0x14 unk4              4               uint32          4 bytes of zeros
+0x18 createtime        8                  -            The file's creation date + time.
+[
+    0x00 year          2               uint16          The year the file was made ?
+    0x02 month         1               uint8           The month the file was made. (0x0 to 0xB)
+    0x03 day           1               uint8           The day the file was made.   (0x0 to 0x1E)
+    0x04 hour          1               uint8           The hour the file was made.  (0x0 to 0x17)
+    0x05 minute        1               uint8           The minute the file was made.(0x0 to 0x3B)
+    0x06 second        1               uint8           The second the file was made.(0x0 to 0x3B)
+    0x07 centisecond   1               uint8           The 100th of a second the file was made?(0x0 to 0x64)
+]
+0x20 fname            16               char[16]        Null terminated string, for internal filename. Unused char after 0x0 are padded with 0xAA.
+0x30 unk5              2               uint16          Unknown (0xC)
+0x32 unk6              2               uint16          Unknown (0x1)
+0x34 unk7              2               uint16          Unknown (0x100)
+0x36 unk8              2               uint16          Unknown (0x0)
+0x38 padbytes          8               -               8 bytes of 0xFF padding bytes.
+(This is where the header differs for shiren2 DS)
+0x40 seqtable          varies          -               Offsets to seqinfo tables for each sequences made up of one or more tracks. Relative to start of sedl header.
+[
+	0x00 seqptr    2                  uint16                An offset from the end of the sedl header to a seqinfo struct before a group of trk chunks! (The first entry in the table is always 0x0000)
+	...
+]
+padbytes          (varies)            -                     zero padding bytes to align the next section on 16 bytes.
+
+
+------------------------
+    Seq Chunk
+------------------------
+This chunk is not always present. In some games like shiren DS the chunk is omitted and the seqtable is appended directly to the sedl header, and its offsets are made relative to the sedl header.
+
+Offset:            Length:            Type:               Description:
+-------            -------            -------               -----------------------------------
+0x00 label         4                  char[4]               "seq\0x20" {0x73, 0x65, 0x71, 0x20}
+0x04 unk9          2                  -                     2 bytes of 0
+0x06 version       2                  uint16                The DSE version number again.
+0x08 offtblbeg     4                  uint32                The begining of some table
+0x0C chunklen      4                  uint32                ?? The length of the chunk, OR the position of the mctrl chunk?
+0x10 seqtable      varies                                   Offsets to seqinfo tables for each sequences made up of one or more tracks. Offset relative to the start of this table.
+[
+	0x00 seqptr    2                  uint16                An offset from the end of the seq header to a seqinfo struct before a group of trk chunks! (The first entry in the table is always 0x0000)
+	...
+]
+padbytes          (varies)            -                     zero padding bytes to align the next section on 16 bytes.
+-------            -------            -------               -----------------------------------
+Total:             varies
+
+
+------------------------
+    seqinfo v0x415
+------------------------
+Data about how the sequencer should play the following tracks. 
+In the sedl files this chunk is repeated several times in the file before a set of tracks. Its also used in the SMDL files right after the song chunk header.
+
+(See definition in the SMDL file for the seqinfo for more details.)
+
+------------------------
+     seqinfon v0x402
+------------------------
+(See definition in the SMDL file for the seqinfo for more details.)
+
+------------------------
+    trk Chunk
+------------------------
+Identical to the trk chunk from SMDL files!
+(See "track" chunk above)
+
+------------------------
+    eoc Chunk
+------------------------
+Similar to the one from SMDL files. Except the tables and extra padding that are added after it.
+(See "end of chunk" chunk above)
+
+------------------------
+    mcrl Chunk
+------------------------
+This chunk may be omitted completely.
+
+Offset:            Length:            Type:               Description:
+-------            -------            -------             -----------------------------------
+0x00 label         4                  char[4]             "mcrl"     {0x6D, 0x63, 0x72, 0x6C}
+0x04 unk10         2                  -                   2 bytes of 0?
+0x06 version       2                  uint16              DSE version again.
+0x08 unk11         4                  uint32              Header length?
+0x0C chunklen      4                  uint32              Length of the entire chunk (not sure if includes header yet, seems to end at padding start)
+0x10 pointertbl    varies             -                   A table of pointer to entries inside entrytable.
+[
+	pointer        2                  uint16              A 16 bits offset indicating the position of an entry inside the entrytable. The offset is calculated starting from the end of the mcrl header.
+	...
+]
+entrytable         varies             -                   A table made up of variable length entries.
+[
+	entry          (2 to more)        -                   An entry pointed to by a pointer in the pointertbl table
+	[
+	 unk12         2                  uint16              A 16 bits value. If 0xFFFF there is no data following the value.
+	 (The following values are omited if unk12 was 0xFFFF)
+	  entrylen     2                  uint16              The length in bytes of the entry .
+	  effectname?  1 or more          char *              A null terminated character string.
+	  padding      0-1                -                   0x0 padding char to align the end of the string on 2 bytes.
+	  padding      2 or more          -                   0xFFFF padding to align the next entry on 4 bytes 
+	]
+	...
+]
+
+
+------------------------
+    bnkl Chunk
+------------------------
+This chunk may be omitted completely.
+
+Offset:            Length:            Type:               Description:
+-------            -------            -------             -----------------------------------
+0x00 label         4                  char[4]             "bnkl"     {0x62, 0x6E, 0x6B, 0x6C}
+0x04 unk14         2                  -                   2 bytes of 0?
+0x06 version       2                  uint16              DSE version again.
+0x08 unk15         4                  uint32              Header length?
+0x0C chunklen      4                  uint32              Length of the chunk.
+0x10 offsettbl     varies             -                   A table of 16 bits offsets to entries in entrytbl
+[
+	offset         2                  uint16              A 16 bits offset from the end of the bnkl header to an entry in the entrytbl
+	...
+]
+padding            0-14               -                   0x00 padding bytes to align the next section on 16 bytes
+entrytbl           varies             -                   
+[
+	entry          4 to more          -                   An entry pointed to by a pointer in the offsettbl.
+	[
+		entrylen   2                  uint16              Nb of entries in the "bankidlst"
+		unk17      2                  uint16              Unknown usually 0.
+		bankidlst  0 to more                              Probably a list of bank ids.
+		[
+			bankid 2                  uint16              Most likely a bank id. usually begins with 0x64..
+			...
+		]
+	]
+	...
+]
+(chunklen) padding 0-14               -                   0x00 padding bytes to align the next section on 16 bytes. The start of the padding is indicated by the "chunklen".
+
+------------------------
+    eod Chunk
+------------------------
+
+The eod chunk marks the end of the SEDL file. It should be only preset if there was a "seq" chunk. Some games omit it completely, like shiren DS
+
+Offset:            Length:            Type:               Description:
+-------            -------            -------             -----------------------------------
+0x00 label         4                  char[4]             "eod\0x20" {0x65, 0x6F, 0x64, 0x20}
+0x04 unk14         2                  -                   2 bytes of 0?
+0x06 version       2                  uint16              DSE version again.
+0x08 unk15         4                  uint32              Header length?
+0x0C chunklen      4                  uint32              Length of the chunk. Always 0.
+
+
+====================================================================================================
+SAD Files:
+====================================================================================================
+Not used in PMD2. But part of DSE.
+
+**A few important details about the header, like loop flag, content type, channel count, sample rate,  comes from vgmstream's implementation for parsing the SADL in professor layton.**
+
+Offset      Name                    Size            Type            Description
+----------  ----                    ----            ----            -----------
+0x0000        magicn                  4               char[4]         "sadl" { 0x73, 0x61 0x64 0x6C }
+0x0004        unk1                    4               -               zeros.
+0x0008        fsize                   4               uint32          The total filesize.
+0x000C        unk2                    2               uint16          unknown. Always 0x415.
+0x000E        unk3                    2               uint16          unknown.
+0x0010        unk4                    4               uint32          unknown.
+0x0014        unk5                    4               uint32          unknown.
+0x0018        createtime              8               -               The file's creation date + time.
+[
+    0x00 year                       2               uint16          Possibly the year the file was made ?
+    0x02 month                      1               uint8           Possibly the month the file was made. (0x0 to 0xB)
+    0x03 day                        1               uint8           Possibly the day the file was made.   (0x0 to 0x1E)
+    0x04 hour                       1               uint8           Possibly the hour the file was made.  (0x0 to 0x17)
+    0x05 minute                     1               uint8           Possibly the minute the file was made.(0x0 to 0x3B)
+    0x06 second                     1               uint8           Possibly the second the file was made.(0x0 to 0x3B)
+    0x07 centisecond                1               uint8           Possibly the 100th of a second the file was made?(0x0 to 0x64)
+]
+0x0020 fname                          16              char[16]        Filename, ASCII null terminated string. 
+                                                                     Any extra space after the 0 on the total 16 bytes, is padded.
+0x0030 unk6                           1               uint8           unknown
+0x0031 loopflag                       1               uint8           If non-zero, loop.
+0x0032 nbchan                         1               uint8           The number of channel on the streamed audio contained in the file.
+0x0033 audiofmt                       1               uint8           High nybble is encoding type (0xB0 == procyon ADPCM, 0x70 == IMA ADPCM) Low 6 bits is sample rate ( 0x2 == 16364hz, 0x4 == 32728hz )
+0x0034 unk7                           1               uint8           unknown.
+0x0035 unk8                           1               uint8           unknown
+0x0036 unk9                           1               uint8           unknown
+0x0037 unk10                          1               uint8           unknown
+0x0038 unk11                          2               uint16          unknown. Always 0x415.
+0x003A unk12                          2               uint16          unknown. Always 0x10.
+0x003C unk13                          2               uint16          unknown.
+0x003E unk14                          2               uint16          unknown.
+0x0040 unk15                          4               uint32          Stream data end ? File end ?
+0x0044 unk16                          4               uint32          unknown.
+0x0048 unk17                          4               uint32          unknown.
+0x004C unk18                          4               uint32          unknown.
+0x0050 unk19                          4               uint32          unknown.
+0x0054 loopstart                      4               uint32          Apparently loop beginning.
+0x0058 unk20                          4               uint32          unknown.
+0x005C unk21                          4               uint32          unknown.
+0x0060 volume                         1               int8            Playback volume of the stream. (0-127)
+0x0061 pan                            1               int8            Playback pan of the stream. (0-64-127)
+0x0062 unk22                          1               uint8           unknonw.
+0x0063 unk23                          1               uint8           unknonw.
+0x0064 unk24                          4               uint32          unknonw.
+0x0068 unk25                          4               uint32          unknonw. Always 0x0BB8.
+0x006C unk26                          4               uint32          unknown.
+0x0070 Padding                        144             -               144 bytes of zeros.
+0x0100 DataStream                     vary            -               Contains the encoded sample point data for the audio stream.
+[
+    ...
+]
+----------

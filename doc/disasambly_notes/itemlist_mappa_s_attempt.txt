@@ -1,0 +1,106 @@
+020A2AFC -- Table of sort
+
+0204ED10
+0204EE88
+02087CF0
+0284ED10
+02887A80
+02887CF0
+02888D94 -- bad
+
+
+
+=> Moving hit breakpoint line 02088D94
+    -> That's probably tied to movement, or collisions?
+    -> Also hit the breakpoint when the menu popped after not moving for a few seconds!
+    
+=> Was probably something time critical, because the game got stuck in a weird state with the music still playing but all values on the upper screen hud are unreplaced strings "%s".. Music is still playing, but very garbled and slow. Was walking into a wall, while walking over an oran berry.
+
+=> Broke at line 0x2087A80
+   027E3640 : "MemoryLocate buffer address 0x020b4bc0[0x020b4bc0] size" Maybe where debug strings are printed?
+   
+   
+   
+   0DC5F5F0 - 27E34F0 = B47C100 conversion between nds mem and no$emul mem 
+   
+   
+   B1D8100 diff
+   
+   0D301A24 - B1D8100 = 2129924 location sir0 mappa was loaded!
+   2132544 = dungeon lut
+   
+   2389DA8 = possible static location where a pointer to the mappa data is stored
+   
+   0D28F318 - B1D8100 = 20B7218 pointer on the stack to the mappa SIRO header!
+   0D28B55C - B1D8100 = 20B345C pointer to the mappa SIRO header.
+                        20B3460 => location file length of the mappa_s.bin file!
+                        
+                        
+                        
+    20B345C is inside a sort of resource allocation table. Several resource files tied to the level I guess have pointers and sizes in several entries around the one for mappa_s!
+    That table begins at 020B3380! Its a static pointer within the binary!
+    020EAB70 == default resource instead of mappa_s.bin
+    
+    027E1F14 == Address of another pointer that now points at the SIRO header of mappa_s!
+    
+    DungeonLUT
+    [02132544..021326D4]?
+    
+    
+    The function at 02007BCC might be handling level transition in dungeon?
+    
+    At line 02007890 the code is parsing the SIRO header!!
+    
+    At line 020078C4 the code compares the file size of the mappa file, to 0x40000, if its bigger, it sets the file size to 0x40000. Probably because that's all that's allocated for it?
+    
+    At line 020080C0 the code seems to dd something else with the sir0
+    
+    At line 02007934 the code finished copying the full mappa_s file.
+    At line 02007C50 we're back in the main loading function, after the fuction call to 02007878 to load the mappa file!
+    At line 020087E0 we're out of the funtion that loaded mappa_s to memory!
+    
+    
+    At line 02008900 the address to the debug strings 02092978 is loaded in a register.
+    
+    
+    Around line 0201F578, the pointers in the SIR0 are translated! The function begins at 0201F534.
+    
+    The line that calls the pointer translation function is at 0201F4F4 !
+    At 0201F524 we read the first pointer in the SIRO header. Its then stored at 027E1EF4.
+    The afterwards, we return to 022E70B0.
+    At line 022E70B4 we put the pointer to the subheader of mappa_s.bin into r9, and call the function at 022E9FE0.
+    We put this address to a function 0234BBE8..
+    
+    We returned to 0234C1FC. And we'll run 022E9F9C
+    At line 0234C7F0 we have a switch case depending on a value obtained from something heap allocated.
+    
+    
+    Parsing mappa_s
+    -----------------
+    (NOTE!! It seems that, before entering a dungeon, the code in those location is different. So it probably loads an overlay and overwrite stuff!)
+    At line 022E70C0, we loaded the address of the DungeonLUT into R6 !
+    At line 022E70DC, we navigate to the proper dungeon entry in the table!
+    At line 022E70E4, we call function 0204F5B4.
+    At line 022E713C, we load the first value in the floor entry as a signed int16 into r2.
+    Then we get the second pointer in the subheader, we take the first index we read, multiply it by 32 (left shift by 5), add that to the pointer we read.
+    At line 022E7158, we begin a loop to copy the entire floor entry to another position.
+    Then at 022E7174 we read the "enemy IQ" and write it to 021B9D34 + 02CB08.
+    We subtract 0x0286CE from 0x55000. 
+    At line 022E7184, we read unk1 from the dungeon's floor.
+    Then we read the last subheader pointer ptrLUTC.
+    We multiply unk1 by 4, and add the pointer to the LUTC to get the index of the pointer into r8.
+    We copy the entry's 50 bytes in a loop as a series of uint16 to (0x021B9D64 - 0x32).
+    
+    Afterwards, we bx to the routine at 022DEBBC.
+    
+    At line 0205144C, we load data from a static table..
+    
+    
+    In the function 0204B678, we do some stuff and we have a switch case at 0204B6A8.
+        The line at 0204B6D8 loads an entry from the table in the binaries starting at 0209D870.
+    
+    After a lot of messing around, at line 022E729C we load idpkspwn.
+    
+    
+    The entire function parsing the mappa file begins at 022E6FBC.
+    

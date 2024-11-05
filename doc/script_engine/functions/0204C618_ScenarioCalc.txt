@@ -1,0 +1,188 @@
+
+
+/*
+    
+*/
+0204C618 E92D41F8 push    r3-r8,r14
+0204C61C E24DD00C sub     r13,r13,0Ch       //Move stack to get access to the parameters I guess?
+0204C620 E1A08000 mov     r8,r0
+0204C624 E1A07001 mov     r7,r1
+0204C628 E3A00000 mov     r0,0h
+0204C62C E1A06002 mov     r6,r2
+0204C630 E1A01008 mov     r1,r8
+0204C634 E1A02000 mov     r2,r0
+0204C638 EBFFFC0E bl      204B678h
+0204C63C E1A05000 mov     r5,r0
+0204C640 E1A01008 mov     r1,r8
+0204C644 E3A00000 mov     r0,0h
+0204C648 E3A02001 mov     r2,1h
+0204C64C EBFFFC09 bl      204B678h
+0204C650 E1A04000 mov     r4,r0
+0204C654 E88D0090 stmea   [r13],r4,r7
+0204C658 E59F1064 ldr     r1,=209DFA0h      //"SCENARIO CALC [%3d] %4d %4 -> %4d %4d"
+0204C65C E3A00009 mov     r0,9h
+0204C660 E1A02008 mov     r2,r8
+0204C664 E1A03005 mov     r3,r5
+0204C668 E58D6008 str     r6,[r13,8h]
+0204C66C EBFEFEF3 bl      200C240h          //Call debug print
+0204C670 E3580003 cmp     r8,3h
+if( R8 != 3 )
+    0204C674 1A000006 bne     204C694h      ///0204C694 LBL1
+0204C678 E1570005 cmp     r7,r5
+if( R7 == R5 )
+    0204C67C 01560004 cmpeq   r6,r4
+    if( R6 == R4 )
+        0204C680 0A000003 beq     204C694h  ///0204C694 LBL1
+0204C684 E3A00000 mov     r0,0h
+0204C688 E1A02000 mov     r2,r0
+0204C68C E3A01033 mov     r1,33h
+0204C690 EBFFFC62 bl      204B820h          ///
+///0204C694 LBL1
+0204C694 E3A00000 mov     r0,0h
+0204C698 E1A01008 mov     r1,r8
+0204C69C E1A02000 mov     r2,r0
+0204C6A0 E1A03007 mov     r3,r7
+0204C6A4 EBFFFCB7 bl      204B988h          ///fun_0204B988
+0204C6A8 E1A01008 mov     r1,r8
+0204C6AC E1A03006 mov     r3,r6
+0204C6B0 E3A00000 mov     r0,0h
+0204C6B4 E3A02001 mov     r2,1h
+0204C6B8 EBFFFCB2 bl      204B988h
+0204C6BC E28DD00C add     r13,r13,0Ch
+0204C6C0 E8BD81F8 pop     r3-r8,r15
+0204C6C4 0209DFA0 
+
+
+/*
+    fun_0204B988
+*/
+0204B988 E92D4070 push    r4-r6,r14
+0204B98C E24DD008 sub     r13,r13,8h
+0204B990 E1A04000 mov     r4,r0
+0204B994 E1A06001 mov     r6,r1
+0204B998 E1A05002 mov     r5,r2
+0204B99C E1A01004 mov     r1,r4
+0204B9A0 E28D0000 add     r0,r13,0h
+0204B9A4 E1A02006 mov     r2,r6
+0204B9A8 E1A04003 mov     r4,r3
+0204B9AC EBFFFEBA bl      204B49Ch                //GetScriptVariableInfo( ptrvarinfoentry, ptrvartablebeg, variableid )
+0204B9B0 E59D1000 ldr     r1,[r13]
+0204B9B4 E1D100F0 ldrsh   r0,[r1]
+0204B9B8 E3500009 cmp     r0,9h
+0204B9BC 908FF100 addls   r15,r15,r0,lsl 2h
+0204B9C0 EA00004C b       204BAF8h
+0204B9C4 EA00004B b       204BAF8h
+0204B9C8 EA000007 b       204B9ECh
+0204B9CC EA000017 b       204BA30h
+0204B9D0 EA000016 b       204BA30h
+0204B9D4 EA000018 b       204BA3Ch
+0204B9D8 EA00001A b       204BA48h
+0204B9DC EA00001D b       204BA58h
+0204B9E0 EA000020 b       204BA68h
+0204B9E4 EA00001F b       204BA68h
+0204B9E8 EA000021 b       204BA74h
+0204B9EC E1D100F6 ldrsh   r0,[r1,6h]
+0204B9F0 E3A01001 mov     r1,1h
+0204B9F4 E59D2004 ldr     r2,[r13,4h]
+0204B9F8 E0850000 add     r0,r5,r0
+0204B9FC E1A00800 mov     r0,r0,lsl 10h
+0204BA00 E1A03820 mov     r3,r0,lsr 10h
+0204BA04 E2030007 and     r0,r3,7h
+0204BA08 E1A00011 mov     r0,r1,lsl r0
+0204BA0C E20010FF and     r1,r0,0FFh
+0204BA10 E7D201A3 ldrb    r0,[r2,r3,lsr 3h]
+0204BA14 E3540000 cmp     r4,0h
+0204BA18 11800001 orrne   r0,r0,r1
+0204BA1C 17C201A3 strneb  r0,[r2,r3,lsr 3h]
+0204BA20 01800001 orreq   r0,r0,r1
+0204BA24 00210000 eoreq   r0,r1,r0
+0204BA28 07C201A3 streqb  r0,[r2,r3,lsr 3h]
+0204BA2C EA000031 b       204BAF8h
+0204BA30 E59D0004 ldr     r0,[r13,4h]
+0204BA34 E7C04005 strb    r4,[r0,r5]
+0204BA38 EA00002E b       204BAF8h
+0204BA3C E59D0004 ldr     r0,[r13,4h]
+0204BA40 E7C04005 strb    r4,[r0,r5]
+0204BA44 EA00002B b       204BAF8h
+0204BA48 E59D1004 ldr     r1,[r13,4h]
+0204BA4C E1A00085 mov     r0,r5,lsl 1h
+0204BA50 E18140B0 strh    r4,[r1,r0]
+0204BA54 EA000027 b       204BAF8h
+0204BA58 E59D1004 ldr     r1,[r13,4h]
+0204BA5C E1A00085 mov     r0,r5,lsl 1h
+0204BA60 E18140B0 strh    r4,[r1,r0]
+0204BA64 EA000023 b       204BAF8h
+0204BA68 E59D0004 ldr     r0,[r13,4h]
+0204BA6C E7804105 str     r4,[r0,r5,lsl 2h]
+0204BA70 EA000020 b       204BAF8h
+0204BA74 E3560049 cmp     r6,49h
+0204BA78 CA000008 bgt     204BAA0h
+0204BA7C AA000012 bge     204BACCh
+0204BA80 E356003D cmp     r6,3Dh
+0204BA84 CA00001B bgt     204BAF8h
+0204BA88 E356003C cmp     r6,3Ch
+0204BA8C BA000019 blt     204BAF8h
+0204BA90 0A000005 beq     204BAACh
+0204BA94 E356003D cmp     r6,3Dh
+0204BA98 0A000008 beq     204BAC0h
+0204BA9C EA000015 b       204BAF8h
+0204BAA0 E3560070 cmp     r6,70h
+0204BAA4 0A00000E beq     204BAE4h
+0204BAA8 EA000012 b       204BAF8h
+0204BAAC E1A00004 mov     r0,r4
+0204BAB0 EBFF0C99 bl      200ED1Ch
+0204BAB4 E3A00000 mov     r0,0h
+0204BAB8 EBFF0CA6 bl      200ED58h
+0204BABC EA00000D b       204BAF8h
+0204BAC0 E1A00004 mov     r0,r4
+0204BAC4 EBFF1316 bl      2010724h
+0204BAC8 EA00000A b       204BAF8h
+0204BACC EBFFFD3B bl      204AFC0h
+0204BAD0 E3500001 cmp     r0,1h
+0204BAD4 1A000007 bne     204BAF8h
+0204BAD8 E1A00004 mov     r0,r4
+0204BADC EB000391 bl      204C928h
+0204BAE0 EA000004 b       204BAF8h
+0204BAE4 E3540000 cmp     r4,0h
+0204BAE8 13A00001 movne   r0,1h
+0204BAEC 03A00000 moveq   r0,0h
+0204BAF0 E20000FF and     r0,r0,0FFh
+0204BAF4 EBFFF26D bl      20484B0h
+0204BAF8 E28DD008 add     r13,r13,8h
+0204BAFC E8BD8070 pop     r4-r6,r15
+
+
+/*
+    fun_0204B49C GetScriptVariableInfo
+
+*/
+//R0 = DestinationStringPointer, R1 =(ScriptEngineStruct+108), R2 = Parameter14b
+0204B49C E3520B01 cmp     r2,400h           //
+if( Parameter14b >= 0x400  )
+    //0204B4A0 AA000006 bge     204B4C0h      ///0204B4C0 LBL1
+    0204B4C0 E59F3020 ldr     r3,=209CECCh      //Seems to be a table of possible in-game variables?
+    0204B4C4 E2422B01 sub     r2,r2,400h
+    0204B4C8 E0832202 add     r2,r3,r2,lsl 4h
+    0204B4CC E5802000 str     r2,[r0]
+    0204B4D0 E1D220F4 ldrsh   r2,[r2,4h]
+    0204B4D4 E0811102 add     r1,r1,r2,lsl 2h
+else
+    0204B4A4 E59F1034 ldr     r1,=209D870h      //Seems to be a table of possible in-game variables info?
+    0204B4A8 E59F3034 ldr     r3,=22AB0ACh      //Seems to be where some of the game runtime variables are stored!
+    0204B4AC E0811202 add     r1,r1,r2,lsl 4h   //R1 = 0x209D870 + (Parameter14b * 16)
+    0204B4B0 E5801000 str     r1,[r0]           //Put Address to variable info address on the stack
+    0204B4B4 E1D110F4 ldrsh   r1,[r1,4h]        //R1 = OffsetVariableValue? (Gets the value 4 bytes in the variable info table.)
+    0204B4B8 E0831001 add     r1,r3,r1          //R1 = 22AB0ACh + OffsetVariableValue
+    //0204B4BC EA000005 b       204B4D8h          //0204B4D8
+///0204B4C0 LBL1
+//0204B4C0 E59F3020 ldr     r3,=209CECCh
+//0204B4C4 E2422B01 sub     r2,r2,400h
+//0204B4C8 E0832202 add     r2,r3,r2,lsl 4h
+//0204B4CC E5802000 str     r2,[r0]
+//0204B4D0 E1D220F4 ldrsh   r2,[r2,4h]
+//0204B4D4 E0811102 add     r1,r1,r2,lsl 2h
+0204B4D8 E5801004 str     r1,[r0,4h]            //PlaceAddress to ScriptGlobal at stack+4
+0204B4DC E12FFF1E bx      r14
+0204B4E0 0209D870
+0204B4E4 022AB0AC
+0204B4E8 0209CECC

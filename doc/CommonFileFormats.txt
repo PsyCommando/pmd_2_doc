@@ -1,0 +1,845 @@
+Common File types:
+------------------
+
+==========================================================================================
+                                        SIR0: 
+==========================================================================================
+
+!!-- NOTE --!!
+The SIR0 format is a generic container. Its not exclusively for sprites, or anything specifically!
+The pointer points to the content's header, and the second value is a pointer to the end of the file.
+
+Which means what the pointer in the header points at can be a completely different structure depending
+on the content!
+!!----------!!
+
+When SIR0 files are loaded and processed into memory, they get transformed into chunks of data
+with a similar header. Except that the magic number isn't SIR0 but SIRO (the zero is replaced by 
+the letter O). 
+Other than that, the SIRO header is exactly similar to the SIR0 header. In addition, all the pointers 
+in the entire header and the contained data are changed to be offset relative to the DS memory, 
+instead of the start of the SIR header !
+
+This format is commonly used to contain sprite data in PMD2. But it can really contain anything. 
+Basically the first pointer points to the actual "specific header" for the content.
+
+It was spotted wrapping a PKDPX file several times, but the reverse is also true. PKDPX files
+wrapping SIR0 files were seen. It seems that files contained inside PKDPX containers are compressed
+in some fashion.
+
+Here's the structure of the header in a file:
+
+offset:            length:            endian:       description:
+-------            -------            -------       ------------------------------------------------
+0x00               4                  Big           Magic Number "SIR0" (0x53 0x49 0x52 0x30)
+0x04               4                  Little        Pointer A to Content's Header
+0x08               4                  Little        Pointer to end of file (confirmed by 
+                                                     looking at the file in NDS memory, 
+                                                     having a memory offset here, not a 
+                                                     length!)
+0x0C               4                  -             Zeros
+-------            -------            -------       ------------------------------------------------
+
+Here's the structure of the header in memory:
+
+offset:            length:            endian:       description:
+-------            -------            -------       ------------------------------------------------
+0x00               4                  Big           Magic Number "SIRO" (0x53 0x49 0x52 0x4f)
+0x04               4                  Little        Pointer A to Content's Header, offset 
+                                                     relative to beginning of DS memory
+0x08               4                  Little        Pointer to end of file, offset relative 
+                                                     to beginning of DS memory
+0x0C               4                  -             Zeros
+-------            -------            -------       ------------------------------------------------
+
+==========================================================================================
+                                    SIR0 + Sprite: 
+==========================================================================================
+
+------------------------
+Legend
+------------------------
+[]  : This indicates a data structure model, like an array or a struct. Basically a bunch of variables 
+      together. If there nothing in between, content is either unknown or obvious, or described later 
+      on in detail.
+       
+... : This means that there is a gap filled with data between the element above and below this symbol. 
+      When used inside square brackets, it implies that elements based on the model of the element
+      above the symbol are repeated for the length of the data structure containing it. Or, if there 
+      is an element after this symbol, repeated until the element below the symbol!
+
+------------------------
+Quick Overview
+------------------------
+A quick list of all the various blocks usually found in a file.
+
+Offset/Name:                 Length:                    Info:
+------------                 -------                    ---------------------
+0x0                          4                          Magic Number { 0x53, 0x49, 0x52, 0x30 }
+0x4                          4                          Pointer A to Sprite Sub-Header
+0x8                          4                          Pointer to end of file (confirmed by looking 
+                                                         at the file in NDS memory, having a memory 
+                                                         offset here, not a length!)
+0xC                          4                          0x0000 0000
+DataBlock_S                  Varies                     Unknown chunk of data. Length varies.
+[]
+DataBlock_I                  Varies                     (OFF_I) Unknown
+[]
+FrameBlocks                  Varies                     Containing the frame blocks(compr. frames)
+[]
+Palette                      Varies                     Colors RGBX-8888 Palette for the sprite!
+[]
+OFF_E                        Varies                     Pointer Table. All pointers points to position 
+[]                                                       within Datablock_S
+OFF_F                        Varies                     Unknown
+[]
+DataBlockH                   Varies                     Bunch of pointers arrays. 
+[]
+DataBlockG                   Varies                     Entries pointing to every arrays in 
+                                                         DataBlockH.
+[]
+FrameTable                   Varies                    (OFF_J)Pointers to every single frame blocks
+[]
+Sprite Info Block            24                        (OFF_A-0x28) Part containing 
+[]
+Sprite Frame Block           16                        (OFF_A-0x10) Part containing pointers to the 
+                                                        frameblocks + palette
+[]
+Sprite Sub-Header            12                        First part of the sprite header.
+[]
+0xAA Padding                 Varies
+[]
+Random bytes padding?        Varies
+[]
+------------                 -------                    ---------------------
+
+------------------------
+Detailed Overview
+------------------------
+(Used the files inside the m_ground.bin file as reference for building this !)
+
+Offset:            Length:            Endian:               Description:
+-------            -------            -------               -----------------------------------
+0x00                   4                big                 Magic Number "SIR0" (0x53 0x49 0x52 0x30)
+0x04                   4                little              Pointer A to offset OFF_A
+0x08                   4                little              Pointer B to offset OFF_B (End of file) 
+                                                             (In NDS memory, its a memory offset 
+                                                             here, not a length! Thus its a ptr! )
+0x0C                   4                -                   Padding Zeros?
+DataBlock_S            Varies                               Block of entries seemingly assigning 
+                                                             indexes to a bunch of values maybe ?
+[
+    Block              10 bytes
+    [
+        Index          4                little              A value referring to an index maybe?
+                                                             Doesn't correspond to the index of the 
+                                                             entry.
+        val0           1                little              Unknown
+        val1           1                little              Unknown
+        val2           1                little              Unknown
+        val3           1                little              Unknown
+        val4           2                little              Unknown
+    ]
+    ...
+]
+DataBlock_I                                                (OFF_I)No ideas..
+[
+    BlockForArray   varies                                  A block of sub-blocks referred to by the 
+                                                             same pointer from the same POINTER ARRAY 
+                                                             in DataBlock_H. 
+    [
+        BlockForPtr  varies                                 Block pointed towards by an 
+                                                             array in DataBlock_H. Contains several 
+                                                             entries. 
+        [
+            Entry           12 bytes                        A single entry
+            [
+                Unk1        2           little              Unknown
+                Index       2           little              Unknown
+                Val0        2           little              Signed int16. Unknown purpose.
+                Val1        2           little              Signed int16. Unknown purpose.
+                Val2        2           little              Signed int16. Unknown purpose.
+                Val3        2           little              Signed int16. Unknown purpose.
+            ]
+            ...
+            NullEntry       12 bytes                        A single entry that is always 12 
+                                                             null bytes. To indicate the end of a 
+                                                             ptr block.
+        ]
+        ...
+    ]
+    ...
+]
+Frames Blocks          Varies                               A frame block contains image data for a 
+                                                             single frame. The image data is 
+                                                             compressed using a form of very simple 
+                                                             RLE compression.
+[
+    FRM_BEG            Varies
+    [
+        FRM_BEG        1                little              2 pixels per bytes(4 bits per pixel) 
+                                                             the endianness is at a bit level, so, 
+                                                             for example the high bits are for  
+                                                             the right pixel, while the 4 low bits 
+                                                             are  for the left one, even though 
+                                                             logically it would have been the 
+                                                             opposite. 
+        ...
+    ]
+    FRM_IN(OFF_M)      Varies           little              First frame's FRM_IN is here ! 
+                                                             (Pointer to frame data beginning. 
+                                                             See PointerBlockJ and FrameBlock 
+                                                             sections for details on structure!)
+    []
+]
+PaletteBlock(PAL_BEG)  Varies
+[
+    Color1             4                big                 (PAL_BEG)Color format RGBX 8888.
+    ...
+]
+PaletteEnd
+[
+    PAL_IN             4                little              Pointer to PAL_BEG!
+    Unknown0           2                little              boolean?
+    Unknown1           2                little              Always 0x10 so far.. 16 colors ?
+    Unknown2           2                little              0x0 or 0xF0 this far..
+    Unknown3           2                little              Always 0xFF this far!
+    EndofPalData       4                -                   4 bytes of 0, always at the end..
+]
+OFF_E                  length==(OFF_F-OFF_E)                Pointer Table To Values in Block S
+[
+    Pointer            4                little              Pointer to an entry in Datablock_S
+    ...
+]
+OFF_F                  Varies                               A list of pairs of signed int16.
+[
+    FPair              4
+    [
+        Val0           2                little              Signed int16. No ideas what its for.
+        Val1           2                little              Signed int16. No ideas what its for.
+    ]
+    ...
+]
+DataBlockH      length == ( OFF_G - OFF_H )                 Is filed with several arrays of 4 bytes 
+                                                             pointers. Each of those tables are 
+                                                             pointed to by entries in DataBlockG !
+[
+    PtrArrayDBI     (in DB_G entry for this array)          An array of 4 bytes pointers to 
+                                                             DataBlock_I entries. Size is 
+                                                             specified in DataBlockG's entry 
+                                                             for each array.
+    [
+        PtrDatTable    4                little              (OFF_H)Pointer to a table within DatablockI
+        ...
+    ]
+    ...
+]
+DataBlockG             NbEntriesOffG * 8                    This is some kind of table of references.
+[
+    Entry              8                                    A single entry in the table!
+    [
+        PtrToTable     4                little              (OFF_G)Pointer to a table of pointers 
+                                                             located inside offset H.
+        TableLen       4                little              Length of the table pointed to by 
+                                                             the preceding pointer! Is usually 0x8!
+    ]
+    ...
+}
+FrmPtrsTable           NbFrames * 4                         Points to every single frames! 
+                                                             Its length is the difference between 
+                                                             OFF_A-0x28 and OFF_J
+[
+    FrmPtr1            4                little              (OFF_J)Pointer to first frame's FRM_IN.
+    ...
+]
+Sprite Info Block      24 bytes                             Contains info on the sprite.
+[
+    PtrOffE            4                little              (OFF_A-0x28) Pointer to offset OFF_E
+    PtrOffF            4                little              Pointer to offset OFF_F
+    PtrOffG            4                little              Pointer to offset OFF_G(Interesting)
+    NbEntriesOffG      2                little              NB 8 bytes blocks stored in DataBlockG
+    UnknownInt1        2                little              Multi-purpose value?
+                                                              Sometimes matches the Nb pointers 
+                                                              in Table at OFF_E. But most of the 
+                                                              time, it doesn't..
+    UnknownBool3       2                -                   unknown
+    UnknownBool4       2                -                   unknown
+    UnknownBool5       2                -                   unknown
+    UnknownBool6       2                -                   unknown
+]
+Sprite Frame Block     16 bytes                             Contains details on the actual images in 
+                                                             the sprite file.
+[
+    PtrFrmTable        4                little              (OFF_A-0x10) Pointer to offset OFF_J,
+                                                             or the frame ptrs table in other words.
+    PtrPalette         4                little              Pointer to offset PAL_IN(OFF_K), 
+                                                             where the palette is stores at.
+    UnknownBool7       2                little              unknown
+    UnknownBool8       2                little              unknown
+    UnknownInt         2                little              This far 0, 1, 3(d79p41a1.wan), 4(as001.wan)..
+    NbFrames           2                little              NB of pointers in the frame ptrs table.
+]
+Sprite Sub-Header      12 bytes                             First part of the sprite header. 
+                                                             Contains ptr to the 2 other parts of it.
+[
+    PtrInfBlock        4                little              (OFF_A) Pointer to "Sprite Info Block"
+    PtrFrmBlock        4                little              Pointer to "Sprite Frame Block"
+    UnknownBool1       2                little              Seems to be some kind of boolean maybe?
+                                                             Its value is 1 in files not containing
+                                                             character sprites. While 0 otherwise.
+                                                             Maybe its linked to the file type too.
+    UnknownBool2       2                little              Not sure if its even a value on its own, 
+                                                             and not part of the previous one.
+                                                             Never found an instance of it being
+                                                             non-null...
+]
+EoFPadding             0-12 bytes        -                  Padding to align the next section on 
+                                                             16 bytes!(0xAAAA) *(About Padding)
+Unknown                                                     This seems to be random noise/filler..
+                                                             But its hard to explain why its not just
+                                                             simply filled with padding then..
+-------            -------            -------               -----------------------------------
+
+
+----------------
+*DataBlockI
+----------------
+Contains a bunch of arrays of 12 bytes entries. Each array ends with a null entry.
+This datablock may not be aligned on 4 bytes, just like Datablock S, but, if an array doesn't end 
+on an offset divisible by 4, some 0xAA padding is appended between the end of the array, and the 
+beginning of the next datablock!
+
+Entries in Datablock H point to the beginning of each arrays in this datablock!
+
+
+----------------
+*DataBlockF
+----------------
+Notes:  1) I actually Zeroed out the entirety of the datablock F, and the game didn't give a damn.
+           No obvious change whatsoever in how the Eevee partner moved in battle, in cutscenes, or
+           moved around on maps..
+           
+This section seems to contain a long list of pairs of signed int16.. 
+
+----------------
+*DataBlockH
+----------------
+This datablock contains several arrays of 4 bytes pointers. The total length of this datablock is 
+(OFF_G - OFF_H). The length of this table is not stored, but is somewhat linked to the size of 
+DataBlockG.
+
+Each arrays in this datablock are pointed to by pointers within the subdatablocks of DataBlockG.
+Each arrays in DataBlockH have a length, in bytes, of 4 times the "length" value stored in the 
+subdatablocks of DataBlockG.
+
+Most of the time, this length is 8, so most arrays have 8 pointers of 4 bytes each. 
+Thus in most cases, each array has a length of 32 bytes.
+
+The 4 bytes gaps filled with zeros between some arrays occurs proportionally to the amount of 8 
+bytes gaps in-between the corresponding subdatablocks in DataBlockG. So for each 8 bytes gaps 
+between subdatablocks in DataBlockG, we have one 4 bytes gap between corresponding arrays in 
+DataBlockH ! 
+Its explained in much more details below in the subsection for DataBlockG.
+
+It should be noted that this block is used to hold references to sometimes the same offset..
+
+
+----------------
+*DataBlockG
+----------------
+This block of data contains several smaller 8 bytes subdatablocks. The amount of "slots" for those 
+subdatablocks is stored at OFF_A-0x1C. The length is simply the number of bytes between OFF_G and 
+OFF_J, divided by 4. And thus it doesn't take into account the actual number of subdatablocks within 
+DataBlockG, just the distance between OFF_G and OFF_J.
+
+Each of those subdatablocks has the following structure:
+(little-endian)
+C4C70000 08000000 
+|      | |      |
+-------- --------
+   |         |
+Pointer     0x8 (array size ?)
+
+The first value, the pointer points to a location in DataBlockH. This location is a array 
+of 4 bytes pointers. The second value, is the length of that array.
+So with the values used above, 8 pointers of 4 bytes are in an array beginning at offset 0xC7C4.
+
+However, there can be several 8 bytes gaps between OFF_G and OFF_J filled completely with zeros. 
+
+For example, here's Poochyena's DataBlockG (big endian):
+ 0x00004D6C, 0x00000008, 0x00000000, 0x00000000, <--- 1 subdatablock, then 8 bytes Gap
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 16 bytes Gap
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 16 bytes Gap
+ 0x00004DA0, 0x00000008, 0x00004DC0, 0x00000008, <--- 2 subdatablocks
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 16 bytes Gap
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 16 bytes Gap
+ 0x00004DF0, 0x00000008,                          <--- 1 subdatablock
+ 
+ 
+ And here's Eevee's(big endian):
+ 0x0000C694, 0x00000008, 0x0000C6B4, 0x00000008, <--- 2 subdatablocks
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 16 bytes Gap
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 16 bytes Gap
+ 0x0000C6E4, 0x00000008, 0x0000C704, 0x00000008, <--- 2 subdatablocks
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 16 bytes Gap
+ 0x00000000, 0x00000000, 0x0000C730, 0x00000008, <--- 1 8 bytes gap, then a subdatablock
+ 0x0000C750, 0x00000008, 0x0000C770, 0x00000008, <--- 2 subdatablocks
+ 0x0000C790, 0x00000008, 0x0000C7B0, 0x00000008, <--- 2 subdatablocks
+ 0x0000C7D0, 0x00000008, 0x0000C7F0, 0x00000008, <--- 2 subdatablocks
+ 0x0000C810, 0x00000008, 0x0000C830, 0x00000008, <--- 2 subdatablocks
+ 0x0000C850, 0x00000008, 0x0000C870, 0x00000008, <--- 2 subdatablocks
+ 0x0000C890, 0x00000008, 0x0000C8B0, 0x00000008, <--- 2 subdatablocks
+ 0x0000C8D0, 0x00000008, 0x0000C8F0, 0x00000008, <--- 2 subdatablocks
+ 0x0000C910, 0x00000008, 0x0000C930, 0x00000008, <--- 2 subdatablocks
+ 0x0000C950, 0x00000008, 0x0000C970, 0x00000008, <--- 2 subdatablocks
+ 0x0000C990, 0x00000008, 0x0000C9B0, 0x00000008, <--- 2 subdatablocks
+ 0x0000C9D0, 0x00000008, 0x0000C9F0, 0x00000008, <--- 2 subdatablocks
+ 0x0000CA10, 0x00000008,                          <--- 1 subdatablock
+
+
+Those gaps have probably a significance of some sort. Maybe its linked to assigning an animation 
+table for several animations in the game. But the table varies in length between pokemons..
+
+The length seems to be linked with whether they're starter pokemons or not. Or whether they have 
+extra animations or not.
+
+For example, poochyena's DatablockG is 104(0x68) bytes long and has 13(0xD) slots for subdatablocks 
+while Eevee's is 280(0x118) bytes long and has 35(0x23) subdatablocks slots.
+
+So far, here are how many slots and how big the tables are:
+
+- Regular Pokemon, no extra animations : 104(0x68) bytes long, and 13(0xD) subdatablock slots.
+- Starter Pokemon, extra plot animations: 280(0x118) bytes long, and 35(0x23) subdatablock slots.
+- Pokemons with extra plot anims have a varying length.
+
+
+DataBlockG shares an intimate link with DataBlockH!
+For one, the amount of 4 bytes gaps between the tables of pointers in DataBlockH, is proportional 
+to the amount of 8 bytes gaps between the subdatablocks in DataBlockG. Let me explain with an 
+example:
+
+So, for example, if we take Poochyena's DataBlockG (big endian) :
+ 0x00004D6C, 0x00000008, 0x00000000, 0x00000000, <--- first subdatablock, then one 8 bytes Gap
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 2 gaps
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 2 gaps
+ 0x00004DA0, 0x00000008, 0x00004DC0, 0x00000008, <--- Next 2 subdatablocks after 5 gaps. Note how those two don't have a gap between eachothers !
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 2 gaps
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 2 gaps
+ 0x00004DF0, 0x00000008,                          <--- 1 subdatablock after 4 gaps !
+ 
+ 
+ And compare it to Poochyena's DataBlockH (big endian):
+                                     0x00000330, <--- Beginning of first array at offset 0x4D6C
+ 0x00000378, 0x000003C0, 0x00000408, 0x00000450, 
+ 0x00000498, 0x000004E0, 0x00000528, 0x00000000, <--- End of array, then one 4 bytes gap 
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 4 gaps
+ 0x00000570, 0x00000594, 0x000005B8, 0x000005DC, <--- Beginning of next array at offset 0x4DA0
+ 0x00000600, 0x00000624, 0x00000648, 0x0000066C, <--- End of array, notice how there is no gap between this and the next array, just like where in DataBlockG, there is no gap between both ! 
+ 0x00000690, 0x000006E4, 0x00000738, 0x0000078C, <--- Beginning of next array at offset 0x4DC0
+ 0x000007E0, 0x00000834, 0x00000888, 0x000008DC, <--- End of array
+ 0x00000000, 0x00000000, 0x00000000, 0x00000000, <--- 4 gaps, just like the 4 gaps in DataBlockG between the last entry, and the one before !
+ 0x00000930, 0x000009A8, 0x00000A20, 0x00000A98, <--- Beginning of next array at offset 0x4DF0
+ 0x00000B10, 0x00000B88, 0x00000C00, 0x00000C78, <--- End of array
+
+This means that the 8 bytes gaps in DataBlockG translates directly to 4 bytes gaps in DataBlockH !
+----------------
+*PointerBlockJ
+----------------
+This block of 4 bytes pointer has a variable length. As an example, Eevee has a table of 376 bytes, 
+while poochyena's is 160 bytes, and ratatta's is 84 bytes. Its length is stored at OFF_A-0x2, or 
+should I say, its length in bytes divided by 4 is stored there.
+
+Its actually a list of pointers to every individual frames in the file !
+It points at the last few bytes of the frame, and in those last few bytes lies the RLE compression
+table, containing pointers to various parts of the frame's image data.
+
+The format for those frames is described below:
+
+---------------------
+*Frame Blocks Format
+---------------------
+The length of each blocks can vary, so far I've seen 0x120(288), 0xC0(192), 
+and 0x180(384) bytes between FRM_IN and the beginning of the block ! This is basically the part of
+the data that can't be compressed via RLE, using the simple table starting at FRM_IN.
+
+What begins at FRM_IN is a small table, located right after the actual image data. 
+It contains one to several groups, made of each:
+4 bytes Pointer + 4 bytes Length + 4 bytes of extra data  
+
+The pointers can be null, and still have a length attached to them. Those represents empty 
+pixels. The length may never be null.
+
+Basically, this is a form of Run Length Encoding or RLE compression. The table at FRM_IN is read 
+from its first entry to its last, and the image is rebuilt using the data from this table. 
+
+So, if we have a null entry first, with a length of 0x60 we'll fill our target image with 96 null 
+colored pixels. Then we have a pointer to a part of the image data starting a FRM_BEG with a length 
+of 0x60, we'll add 96 pixels read from FRM_BEG to our image. 
+
+And its possible to have another bunch of null pixels, then another bunch of pixels from the image 
+data contained between FRM_BEG and FRM_IN. 
+
+Consider this table for Eevee's first frame(converted to big endian):
+                                0x31D8, 0x0000, 0x0060, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0020, 0x0000, 0x0000, 0x0000, 
+0x3238, 0x0000, 0x0060, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
+0x0020, 0x0000, 0x0000, 0x0000, 0x3298, 0x0000, 0x0060, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x00A0, 0x0000, 0x0000, 0x0000, 
+0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000
+
+If we interpret each 12 bytes entries from the data, here's what we get:
+┌──────────────┬───────────┬─────────┬─────────────────────────────────────────────────────────────┐
+│ Pixel Source │ Length    │ Unk Val │ Meaning                                                     │
+├──────────────┼───────────┼─────────┼─────────────────────────────────────────────────────────────┤
+│ 0x31D8       │ 0x60(96)  │ 0x0     │ Take 96 bytes from offset 0x31D8                            │
+├──────────────┼───────────┼─────────┼─────────────────────────────────────────────────────────────┤
+│ 0x0          │ 0x20(32)  │ 0x0     │ Add 32 bytes of null colored pixels.                        │
+├──────────────┼───────────┼─────────┼─────────────────────────────────────────────────────────────┤
+│ 0x3238       │ 0x60(96)  │ 0x0     │ Add 96 bytes from offset 0x3238                             │
+├──────────────┼───────────┼─────────┼─────────────────────────────────────────────────────────────┤
+│ 0x0          │ 0x20(32)  │ 0x0     │ Add 32 bytes of null colored pixels.                        │
+├──────────────┼───────────┼─────────┼─────────────────────────────────────────────────────────────┤
+│ 0x3298       │ 0x60(96)  │ 0x0     │ Add 96 bytes from offset 0x3298                             │
+├──────────────┼───────────┼─────────┼─────────────────────────────────────────────────────────────┤
+│ 0x0          │ 0xA0(160) │ 0x0     │ Add 160 bytes of null colored pixels.                       │
+├──────────────┼───────────┼─────────┼─────────────────────────────────────────────────────────────┤
+│ 0x0          │ 0x0       │ 0x0     │ Null entry. End of Image!                                   │
+└──────────────┴───────────┴─────────┴─────────────────────────────────────────────────────────────┘
+
+
+Offset/Name         Length                       Description
+-----------         -------                      -------------
+ImageData          (FRM_IN - FRM_BEG)           Beginning of frame block ! (begins at FRM_BEG)
+[
+    FRM_BEG         1                           The image data is stored as 4 bits per pixels, thus 
+                                                 a bytes contain 2 pixels. 
+                                                 The bits are read as little endian.
+    ...
+}
+RLETable            Varies                      RLE table for decoding the image data.
+[
+    Entry           12 bytes                    (FRM_IN) A single entry in the RLE Table
+    [
+        PixelSrc    4                           Pixel Source. Pointer to an offset within the frame 
+                                                 block. The first one in the table always points to 
+                                                 FRM_BEG IF non-null ! It can be a null value, and 
+                                                 thus, describe a serie of null colored pixels.
+        ByteLen     4                           The amount of bytes to read at the offset pointed 
+                                                 to, or the amount of zeros to push back. Each
+                                                 byte is equal to 2 pixels in 4bpp !
+        UnknwonInt  4                           Most of the time is 0, but sometimes has a 
+                                                 different value ! Especially for the last few 
+                                                 frames.
+    ]
+    ...
+    NullEntry       12 bytes                    12 bytes of zeros to signify the end of the RLE Table.
+]
+
+
+About the resolution:
+---------------------
+Its hard to tell the resolution at this time. 
+In general, most images have a squared resolution, but many others do not.. And we can't just guess 
+reliably from the total amount of pixels, because some images can be either wider than higher, 
+or higher than wider.
+
+
+----------------------------------------
+*PaletteDataBlock
+----------------------------------------
+This block contains a list of colors used by the sprite. It contains a variable amount of bytes, and 
+each colors is 4 bytes, in the format RGBX - 8888, stored as big endian. 
+
+The length of the palette may vary.
+
+offset            length         description
+------            -------        -------------
+PAL_Data          Varies         Palette data
+[
+    PAL_BEG       4              Color entry, RGB-8888, Big endian last byte is unused.
+    [
+        Red       1              Red channel value
+        Green     1              Green channel value
+        Blue      1              Blue channel value
+        Unused    1              Always 0x80
+    ]
+    ...
+]
+PaletteEnd        16 bytes
+[
+    PAL_IN        4              Pointer to PAL_BEG!
+    Unknown0      2              boolean?
+    Unknown1      2              Always 0x10 so far..
+    Unknown2      2              Either 0x0 or 0xF0 this far..
+    Unknown3      2              Always 0xFF this far!
+    EndofPalData  4              4 bytes of 0, always at the end..
+]      
+
+
+
+
+----------------
+*Pointer Chains: 
+----------------
+This is a list of what usually points to what in this pointer jungle that are SIRO files..  
+
+PointerA-> OFF_A        -> PtrOffsetE -> OFF_E (entry) -> OFF_S
+        |               |> PtrOffsetF -> OFF_F 
+        |               |> PtrOffsetG -> OFF_G (entry) -> OFF_H (entry) -> OFF_I
+        |
+        \> OFF_A+0x4    -> PtrFrmTable -> FrmTable(OFF_J)
+                        |> PtrPalette  -> PAL_IN
+
+PointerB->OFF_B
+
+----------------
+*About Padding:
+----------------
+It seems everything after offset OFF_A+0xB is padding to align the next section on 16 bytes. 
+It can be omitted completely if the value at OFF_A+0x8 ends exactly on the last byte before an 
+offset divisible by 16.
+
+Example:
+
+-- With Padding --
+#       00 01 02 03  04 05 06 07  08 09 0A 0B  0C 0D 0E 0F
+---------------------------------------------------------------
+OFF_A   D4 41 00 00  EC 41 00 00  01 00 00 00  AA AA AA AA <- Here are the padding bytes
+OFF_B   04 04 9D 08  18 18 82 44  18 18 82 44  18 18 82 44 
+        ^
+        And here's where the next section begins. The padding ensures its aligned on an offset 
+        divisible by 16.
+
+    
+-- Where no padding is used because its already aligned (ASSUMING OFF_A = 0x8004) --
+#       00 01 02 03  04 05 06 07  08 09 0A 0B  0C 0D 0E 0F
+------------------------------------------------------------
+0x8000  00 00 00 00  D4 41 00 00  EC 41 00 00  01 00 00 00  <- Notice how not even one Byte of 
+OFF_B   04 04 9D 08  18 18 82 44  18 18 82 44  18 18 82 44     0xAA padding was used !
+        ^
+        Its because the next line starts exactly on an offset divisible by 16, thus no need for 
+        padding.
+    
+
+====================================================================================================
+                                            PKDPX:
+====================================================================================================
+Generic compressed data container. 
+Uses "PX" compression, just like the AT4PX format, except that PKDPX can contain another
+file/container as its compressed data.
+Identical to AT4PX besides the magic number, and the extra 2 bytes for the header!
+
+
+Offset:            Length:            Endian:      Description:
+-------            -------            -------      -----------------------------------
+0x0                5                  big          Magic Number {0x50, 0x4B, 0x44, 0x50, 0x58} "PKDPX"
+0x05               2                  little       (FLEN)Total compressed file length
+0x07               9                  -            List of control flags (more on these below)
+0x10               4                  little       Byte size of the decompressed data.
+0x14               (FLEN - 0x14)                   Compressed image data.
+[
+    0x0                                             "PX" compressed data here.
+    ...
+]
+-------            -------            -------      -----------------------------------
+Total:             (FLEN)
+
+Control Flags:
+---------------
+Those tend to change with each files. They're 4 bits values stored in the lower nybble of each 
+individual 9 bytes that are used to handle some special cases while decoding some "Command Byte".
+The high nybble is always 0.
+They're picked on a per-file basis.
+
+
+==========================================================================================
+                                    AT4PX:
+==========================================================================================
+AT4PX containers seems to contain image data in a compressed form. Namely, character portraits, 
+map tiles, backgrounds. They usually don't contain their image's color palette however, as those
+are often stored outside of the AT4PX container, either alongside, elsewhere, or not stored at all
+in the case of a non-indexed bitmap image. 
+(I haven't seen any bitmap/raster non-indexed images yet though, just speculating)
+
+
+Offset:            Length:            Endian:      Description:
+-------            -------            -------      -----------------------------------
+0x00               5                  big          Magic Number "AT4PX" {0x41, 0x54, 0x34, 0x50, 0x58}
+0x05               2                  little       (FLEN)Total compressed file length
+0x07               9                  -            List of control flags (more on these below)
+0x10               2                  little       Byte size of the decompressed data.
+0x12               (FLEN - 0x12)                   Compressed image data.
+[
+    0x0                                             "PX" compressed data here.
+    ...
+]
+-------            -------            -------      -----------------------------------
+Total:             (FLEN)
+
+NOTES:
+------
+- Most of the format has been reversed by Zhorken. I just confirmed a few things and added / tweaked
+   a few things as well, then wrote this!
+
+
+Control Flags:
+---------------
+Those tend to change with each files. They're 4 bits values stored in the lower nybble of each 
+individual 9 bytes that are used to handle some special cases while decoding some "Command Byte".
+The high nybble is always 0.
+They're picked on a per-file basis.
+
+
+Image Data Details :
+---------------------
+The data is compressed using "PX" compression.(see more below!)
+
+====================================================================================================
+                                      "PX" Compression Format
+====================================================================================================
+A custom compression method which appears to be a fancy version of an RLE algorithm, with some
+touches from LZ compression added in, I guess.. Just a very uneducated guess..
+
+Its used by both PKDPX and AT4PX file format. It relies on 9 nybble flags referred to as 
+"control flags" listed in the PKDPX and AT4PX headers for handling a couple of special cases, and 
+for the rest it basically works by decoding a "command byte" that indicates what to do until the 
+next "command byte". 
+
+Note that, those nybble flags are always "0x" where "x" is an hexadecimal value 
+from 0 to F. Also, note that, these flags are computed on a file by file basis! They're 
+"tailor-made" for each individual file.
+
+To make explaining things easier, you could imagine that the bytes we're decompressing come from
+a FIFO queue. And also imagine that we put the decompressed bytes into a Double Ended Queue or deque 
+for short. 
+(Even if in practice those are probably too slow to use in this case!)
+
+To decode the command byte, we simply look at the value of all of its 8 BITS, one at a time. 
+From the highest bit to the lowest. 
+So lets say we're in a loop that isolate the value of a particular bit each turn. Something like:
+
+    uint8 mask = 0x80
+    loop while( mask > 0 )
+    {
+        uint8 bitval = mask BitwiseAND cmdbyte
+        
+        ... // Handle the cases written below
+        
+        mask = mask >> 1
+    }
+    
+On each turn of that loop, we'll take the value of the current bit, and depending on its state,
+we'll decide what to do based on these criteria:
+
+    1)  If the BIT we've isolated from the command byte is 1, then we pop the next BYTE from the  
+        input queue, and push it as-is at the back of the output deque!
+                           
+    2)  Otherwise if the BIT we've isolated is 0, we'll pop the next BYTE from the input queue.
+        Then, we'll try to find whether the high nybble of the BYTE we just read is the same value
+        as one of our control flags. 
+        *We also want to keep the value of the low nybble for later.*
+        *We'll refer to the high nybble and low nybble we got here as "nbhigh" and "nblow"
+        respectively.*
+       
+        2.1) If one of our control flag match the high nybble "nbhigh" of the BYTE we just read,
+             then it means we're inserting a pattern of 4 nybbles or 2 bytes into the 
+             output deque. 
+             *We'll refer to the index of the control flag we got as "ctrlflagindex".*
+            
+            2.1.1) If the index of the control flag "ctrlflagindex" is the first one in the control 
+                   flag table, at index 0, we calculate the value of the 2 bytes we'll push at the 
+                   back of the output deque this way:
+                   
+                       byte1 = nblow << 4 BitwiseOR nblow
+                       byte2 = byte1
+                       
+                   We just push those two bytes, and we're done! 
+           
+            2.1.2)  Otherwise, for any other "ctrlflagindex" flag index, we have a few other cases
+                    to take into account. They all have in common using the value of "nblow". 
+                    *We'll add a new variable called "basenybbleval" to make things easier to 
+                    understand. And we'll put the value of "nblow" into it right away.*
+                    
+                    A)  If "ctrlflagindex" is 1. We increment the value of all 4 nybbles. Or in our
+                        example, the value we use to store the base value of all nybble 
+                        "basenybbleval".
+                            
+                            basenybbleval = basenybbleval + 1
+                    
+                    B)  Otherwise, if "ctrlflagindex" is 5. We decrement the value of all 4 nybbles. 
+                        Or in our case, the value we use to store the base value of all nybble 
+                        "basenybbleval".
+                            
+                            basenybbleval = basenybbleval - 1
+                            
+                    From this point forward, lets put the value of "basenybbleval" into 4 separate
+                    variables, each holding the value of the individual 4 nybbles.
+                    Lets just name them, "nybble0", "nybble1", "nybble2", "nybble3", and put the 
+                    current value of "basenybbleval" into all of them.
+                    (You should use an array or something, as they're only named like this for 
+                    clarity's sake)
+                    
+                    A)  If "ctrlflagindex" is between 1 and 4 inclusively. Then substract 1 from 
+                        the nybble corresponding to the value of (ctrlflagindex - 1). 
+                        For example, if (ctrlflagindex - 1) is 0, we subtract 1 from "nybble0". If its
+                        3, we subtract 1 from "nybble3", and so on!
+                    
+                    B)  Otherwise, we add 1 to the nybble corresponding with the value of 
+                        (ctrlflagindex - 5). If (ctrlflagindex - 5) is 0 we add one to "nybble0" 
+                         and so on!
+                    
+                    Now, all that is left to do is to assemble the 4 nybbles into 2 bytes, and push
+                    those 2 bytes to the back of the output deque!
+                    
+                        byte1 = nybble0 << 4 BitwiseOR nybble1
+                        byte2 = nybble2 << 4 BitwiseOR nybble3
+                    
+                    We just push those two to the back of the output stack, and we're done !
+            
+        2.2) If none of our control flags match the high nybble "nbhigh" of the BYTE we just read, 
+             it means we're copying a sequence of bytes from our decompressed output so far.
+             
+             To figure out the offset from the end of our output deque where we begin reading 
+             the bytes sequence to copy, we'll need to pop the next byte from the input queue 
+             and do the following operations:
+             
+                int16 offset = -0x1000 + nblow << 8 BitwiseOR inqueue.pop()
+             
+             "offset" will contain a negative integer value smaller than the current size of the 
+             output queue. 
+             Just go from the end of the output deque towards the beginning of it, 
+             by the absolute value of "offset". This will get you the beginning position of the 
+             sequence of bytes to append to the output later on. 
+             We'll call this position "seqbeg".
+             
+             Then, to get the amount of bytes to copy starting from "seqbeg", we take the value
+             of "nbhigh" and add 3. 
+             
+             Knowing this, we can now copy the sequence and push it into the back of the output 
+             deque.
+
+
+After going through those conditions, we know that the next BYTE we pop from the input queue will be
+a new command byte guaranteed! So we just have to repeat this loop using this new command byte!
+
+This sums it pretty much!
+
+#TODO write examples for the rest
+
+A big thanks to Zhorken who figured out the compression !: 
+https://github.com/Zhorken
+
+
+====================================================================================================
+                                        Palette types
+====================================================================================================
+It turns out many palettes are actually not part of a file structure, and just left on their own.
+Namely in Kaomado.kao, 15bits, 16 colors palettes in raw/headerless form are placed before all AT4PX
+"sub-files".
+
+Also, in some other files, like pack files, larger palettes have an entire file index in the ToC for
+themselves, resulting in large chunks of 32 bits per color, 192 colors, RGBX 8888 palettes. 
+Those are similar to the palettes found inside the character sprites contained inside SIR0 files, 
+and the "X" byte is always 0x80. 
+
+

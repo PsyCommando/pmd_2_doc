@@ -1,0 +1,6 @@
+"/FONT/font.dat"
+-----------------
+
+This contains the image data for all characters used to print text, and some of the parts of the UI, like the 
+HP bar, and current dungeon floor. 
+The image is tiled by 8x8 tiles, and the data begins at offset 0x4. Its resolution is possibly 128 x 72 pixels.

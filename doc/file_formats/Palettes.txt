@@ -1,0 +1,11 @@
+====================================================================================================
+                                        Palette types
+====================================================================================================
+It turns out many palettes are actually not part of a file structure, and just left on their own.
+Namely in Kaomado.kao, 15bits, 16 colors palettes in raw/headerless form are placed before all AT4PX
+"sub-files".
+
+Also, in some other files, like pack files, larger palettes have an entire file index in the ToC for
+themselves, resulting in large chunks of 32 bits per color, 192 colors, RGBX 8888 palettes. 
+Those are similar to the palettes found inside the character sprites contained inside SIR0 files, 
+and the "X" byte is always 0x80. 

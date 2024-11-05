@@ -1,0 +1,390 @@
+text_e.str
+-----------
+Text strings for the English game.
+
+NOTES:
+    - The file contains 18,452 strings in Explorers of Sky.
+    - The text_j.str file in the Japanese version contains 19,010 strings in Explorers of Sky.
+    - In EoS, the category strings begin at entry nb 9,334 (0x2476), and seems to end at entry nb 9,871(0x268F). Which is 537 entries.
+      (There are empty entries for several more bytes afterwards. And even a random "Temporal". Those bring up the count up to 600 ! The last entry is at 9,934(0x26CE))
+     
+      
+    
+
+Offset:                     Length:             Type:           Description:
+-------                     -------             -------         -----------------------------------
+PtrsTable                   varies                              A table with pointers to every c strings in the StringsBlock.
+[
+    APtr                    4                   uint32          A pointer to a c string
+    ...
+    LastPtr                 4                   uint32          The last pointer must point to the end of the file!
+]
+StringsBlock                varies                              A block containing all the c strings pointed to by the pointers in the ptrs table.
+[
+    AString                 varies              const char[]    A null terminated string of characters. 
+    ...
+]
+
+===============================================
+String Indexes of Interests (Explorers of Sky):
+===============================================
+
+
+      * Explorer Ranks Names            [   374 to   387[
+      * Default Team Names ?            [   562 to   567[
+      
+      * Job Debriefing Related Strings  Begins at 606
+      * Member Joined Menu              [   676 to   682 or 680[
+      * Some Item Menu Strings          [   682 to   696[
+      * Gummi Eating Strings            [   696 to   708[
+      
+      * Items and Pokemon Menu Strings  [   711 to   777[
+      
+      * Kangaskhan Storage Strings      [   783 to   812[
+      
+      * Evolution Strings               [  1068 to  1097[
+      
+      * Music tracks names              [  1276 to  1418[
+      * Personality Quizz Questions     [  1418 to  1485[
+      * Personality Quizz Answers       [  1485 to  1660[
+      * Personality Quiz result strings [  1660 to  1708[
+      
+      * Personality string natures      [  1737 to  1741[
+      
+      * Weather Change Feedback         [  2628 to  2636[
+      * Weather Names                   [  2636 to  2644[
+      * Floor-Wide Status Names+Desc    [  2644 to  2674[
+      * IQ Skills Menu                  [  2674 to  2679[
+      * Test Dungeon                    [  2679  ]
+      * Mission Objectives              [  2680 to  2862[ 
+      * Mission Failure/Faint Strings   [  2862 to  2878[
+      * Speed Change Feedback           [  2878 to  2883[
+      * Potential Recruit Strings       [  2883 to  2886[
+      * Gummi Feedback                  [  2886 to  2897[
+      * Traps Feedback..                [  2897 to  2922[
+      * More Dungeon Feedback           [  2922 to  3068[
+      * Something's Stirring String     [  3068 to  3076[   (2 variations of it ?)
+      * More Dungeon Feedback           [  3076 to  3171[
+      * Some Fake items Dialogue        [  3171 to  3184[
+      * Shaymin Form Change Strings     [  3184 to  3190[
+      * Recruited A Pokemon Strings     [  3190 to  3201[
+      * Battle Feedback Messages        [  3201 to  3589[
+      * Misson Feedback                 [  3589 to  3656[
+      * Kecleon Dungeon Shop Strings    [  3656 to  3668[
+      * Misc Battle Events Strings      [  3668 to  3388[
+      * Secret Bazaar Stairs Found      [  3888  ]
+      * Kirila Secret Bazaar Greeting   [  3889  ]
+      * Grab Bags Shop Strings          [  3890 to  3902[
+      * Shedinja Shop Strings           [  3902 to  3913[
+      * Mime Jr. Spa Strings            [  3913 to  3923[
+      * Swalot's Shop Strings           [  3923 to  3933[
+      * Team Tactics Menu strings       [  3933 to  3937[
+      * Item Became Sticky              [  3937  ]
+      * Pokemon LEVEL_UP Dialogue       [  3938 to  4283[
+      * Pokemon WAIT Dialogue           [  4283 to  4628[
+      * Pokemon HEALTHY Dialogue        [  4628 to  5738[
+      * Pokemon HALF_LIFE Dialogue      [  5738 to  6083[
+      * Pokemon PINCH Dialogue          [  6083 to  6428[
+      * Pokemon GROUND_WAIT Dialogue    [  6428 to  6773[
+      * Items Names                     [  6773 to  8173[
+      * Move Names                      [  8173 to  8734[
+      * Pokemon Names                   [  8734 to  9334[
+      * Pokemon Categories              [  9334 to  9934[
+      * Tactics Names                   [  9934 to  9945[
+      * Tactics Descriptions            [  9945 to  9957[
+      * IQ Skills Names                 [  9957 to 10025[
+      * IQ Skills Descriptions          [ 10025 to 10094[
+      * Move Targets Strings            [ 10094 to 10126[
+      * Accuracy/Power Stars Ratings    [ 10126 to 10145[
+      * Move Descriptions               [ 10145 to 10704]
+      * Items Long Descriptions         [ 10704 to 12104[
+      * Items Short Descriptions        [ 12104 to 13504[       
+      * Trap Names                      [ 13504 to 13530[
+      * Trap Descriptions               [ 13530 to 13554[
+      * Statuses Names and Descriptions [ 13554 to 13761[
+      * Types Names                     [ 13770 to 13989[
+      * Abilities Names                 [ 13789 to 13913[
+      * Abilities Descriptions          [ 13913 to 14037[
+      ...
+      * Debug Menu Strings              [ 15459 to 15971[
+      
+      * Portraits Names                 [ 16076 to 16108[
+      ...
+      * Spinda's Juice Bar Strings      [ 17800 to 17900[
+      * Recycle Shop Strings            [ 17900 to 17960[
+      * Staff Roll                      [ 17960 to 18451[
+
+      
+      
+===============================================
+String Indexes of Interests (Explorers of Time):
+===============================================
+      * Items Names                     [  4927 to  5927[
+      * Move Names                      [  5927 to  6488[
+
+      * Pokemon Names                   [  6488 to  7088[
+      * Pokemon Categories              [  7088 to  7688[
+      
+      * Move Descriptions               [  7897 to  8456[
+      * Items Long Descriptions         [  8456 to  9456[
+      * Items Short Descriptions        [  9456 to 10456[ 
+      
+      * Types Names                     [ 10713 to 10732[
+      * Abilities Names                 [ 10732 to 10856[
+      * Abilities Descriptions          [ 10856 to 10980[
+      
+      * Portraits Names                 [ [
+      
+===========================
+    Special Characters
+===========================
+In Explorers of Sky, special character codes are stored as-is, and appear in the text_*.str file as unprintable, or unexpected characters.
+
+In Explorers of Time/Darkness, some characters are represented as a sequence that begins with a tilde followed with an hexadecimal number. For example, the apostrophe "'" is represented by the sequence "~27". 
+And a comma "," is represented as "~2c".
+
+      
+===========================
+            Tags
+===========================
+
+Here are a few tags found in the game script:
+#        => Replace with a number.
+%letter% => Replace with a letter. 
+%value%  => Replace with a value. (used for combinations of letters and numbers)
+
+Tag                 Description
+---                 ------------
+A
+--
+[area:#]
+
+B
+--
+[bank_left:#]       Bank balance
+[BAR]
+
+C
+--
+[C]
+[c_i:#]             (Has to do with a Pokemon's ability string)
+[CLUM_SET:#]        Set column to write the text after the tag at.
+[CN]
+[CR]
+[CS:%letter%]
+
+D
+--
+[digits:#]
+[digits_c:#]
+[dungeon:#]
+
+E
+--
+[experience:#]      Experience points. (1 => Current experience total, 0 => Experience to next level?)
+
+F
+-- 
+[FT:#]
+
+G
+--
+[gadget_bag]        Item bag.
+[gold:#]
+[gold_left:]
+[gold_left:#]
+
+H
+--
+[hero]              Main character's name.
+
+I 
+--
+[item:]
+[item:#]
+
+J 
+--
+
+K
+--
+[K]
+[kind:#]
+[kind:]             Specie name of the speaker.
+
+L
+--
+[LE]                (Link End?)Marks the end of the text to be linked by a preceding [LS:#] tag.
+[LS:#]              (Link Set?)Tells the game to load and display the entry at index # in the text_*.str file when the text is "clicked" on in a menu, using the glossary function.
+                    The first entry appears to begin at 1, and not 0!
+
+M
+--
+[M:%value%]         Display pictogram corresponding to %value%
+                    [M:R8] == wifi icon
+                    [M:R9] == e-mail icon
+                    
+[me_play:#]         Plays jingle number #.
+[move:]
+[move:#]
+[move_hit_ratio]
+[move_power]
+
+N
+--
+[name:#]
+[now_team]
+
+O
+--
+
+P
+--
+[P]    
+[partner]           Nickname of the partner Pokemon.
+
+Q
+--
+
+R
+--
+[R]
+[rank:#]            Display the name of the explorer rank number #.
+
+S
+--
+[S:#]
+[se_play:#]         Plays sound effect number #.
+[string:#]
+[string0]
+[STE]               Appears after [STS].
+[STS]               
+
+T
+--
+[tactics:#]
+[team:]
+[time:#]
+[trap:#]
+
+U
+--
+
+V
+--
+[value:#:#]    
+
+W
+--
+[W:#]               Pauses for specified time, then print the text after.
+[weather:#]
+[wiseness:]         (IQ skills related) Display next IQ skill a Pokemon will learn.
+[wiseness:#]        (IQ skills related)
+
+X
+--
+
+Y
+--
+
+Z
+--
+
+
+
+
+
+
+/*999AC:*/ "BAR"
+/*999B0:*/ "tag code error [%s][%s]"
+/*999C8:*/ "CS"
+/*999CC:*/ "CR"
+/*999D0:*/ "CN"
+/*999D4:*/ "C"
+/*999D8:*/ "CLUM_SET"
+/*999E4:*/ "CLUM_OFFSET"
+/*999F0:*/ "HR"
+/*999F4:*/ "F"
+/*999F8:*/ "FT"
+/*999FC:*/ "K"
+/*99A00:*/ "LS"
+/*99A04:*/ "LE"
+/*99A08:*/ "LINE"
+/*99A10:*/ "M"
+/*99A14:*/ "MS"
+/*99A18:*/ "MP"
+/*99A1C:*/ "ME_PLAY"
+/*99A24:*/ "P"
+/*99A28:*/ "R"
+/*99A2C:*/ "S"
+/*99A30:*/ "STS"
+/*99A34:*/ "STE"
+/*99A38:*/ "SE_PLAY"
+/*99A40:*/ "W"
+/*99A44:*/ "analyze error [%s][%s]"
+/*99A5C:*/ "[STS]"
+/*99A64:*/ "[M:T0][STE]"
+
+/*99A74:*/ "area"
+/*99A7C:*/ "adverb"
+/*99A84:*/ "bank"
+/*99A8C:*/ "bank_left"
+/*99A98:*/ "c_kind"
+/*99AA0:*/ "c_i"
+/*99AA4:*/ "c_name"
+/*99AAC:*/ "c_stammer"
+/*99AB8:*/ "class"
+/*99AC0:*/ "\x83N\x83\x89\x83X"
+/*99AC8:*/ "digits"
+/*99AD0:*/ "%d"
+/*99AD4:*/ "digits_c"
+/*99AE0:*/ "[CS:V]%d[CR]"
+/*99AF0:*/ "dungeon\x00" "equip_list"
+/*99B04:*/ "experience"
+/*99B10:*/ "floor"
+/*99B18:*/ "gadget_bag"
+/*99B24:*/ "gender"
+/*99B2C:*/ "gold"
+/*99B34:*/ "gold_left"
+/*99B40:*/ "hero"
+/*99B48:*/ "item"
+/*99B50:*/ "kind"
+/*99B58:*/ "name"
+/*99B60:*/ "now_team"
+/*99B6C:*/ "move"
+/*99B74:*/ "me_play"
+/*99B7C:*/ "[ME_PLAY:%d]"
+/*99B8C:*/ "move_hit_ratio"
+/*99B9C:*/ "move_power"
+/*99BA8:*/ "partner"
+/*99BB0:*/ "partner2"
+/*99BBC:*/ "player"
+/*99BC4:*/ "purpose"
+/*99BCC:*/ "rank"
+/*99BD4:*/ "range"
+/*99BDC:*/ "s_item"
+/*99BE4:*/ "string0"
+/*99BEC:*/ "string"
+/*99BF4:*/ "se_play"
+/*99BFC:*/ "[SE_PLAY:%d]"
+/*99C0C:*/ "type"
+/*99C14:*/ "trap"
+/*99C1C:*/ "tactics"
+/*99C24:*/ "team"
+/*99C2C:*/ "time"
+/*99C34:*/ "%d:%02d:%02d"
+/*99C44:*/ "value"
+/*99C4C:*/ "value0"
+/*99C54:*/ "%0*d"
+/*99C5C:*/ "[S:00]%s"
+/*99C68:*/ "value_i"
+/*99C70:*/ "weather"
+/*99C78:*/ "wiseness"
+/*99C84:*/ "tag code error %02x %c [%s]"
+
+/*9AAB0:*/ "/MESSAGE/text_e.str"
+/*9AAC4:*/ "/MESSAGE/text_j.str"
+/*9AAD8:*/ "/MESSAGE/tbl_talk.tlk"
+
+
+

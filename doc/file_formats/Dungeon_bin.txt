@@ -1,0 +1,99 @@
+Dungeon.bin
+-------------
+
+
+Content:
+--------
+* Files   0 to 169 seems to be **weird palette files**. (See below)
+* Files 170 to 339 are SIR0-wrapped AT4PX compressed images.
+* Files 340 to 679 are AT4PX compressed images.
+* Files 680 to 849 are raw RGBX32 color palettes.
+* Files 850 to 878 seems to be **weird palette files**, again. (See below)
+* Files 879 to 936 are AT4PX compressed images.
+* Files 937 to 965 are SIR0 wrapped PKDPX files.
+* Files 966 to 994 are raw RGBX32 color palettes.
+* File  995 is a raw image... possibly 4 bpp
+* File  996 is some strange, SIR0 contained headerless data file..
+* File  997 is a raw RGBX32 color palettes.
+* File  998 is big headerless file with mainly zeros in it..
+* File  999 is a raw RGBX32 color palettes.
+* File 1000 is a SIR0 wrapped **weird data file**(see format below).
+* File 1001 is a WTE file!
+* File 1002 is a WTU file!
+* File 1003 is a WTE file!
+* File 1004 is a WTU file!
+* File 1005 is a WTE file!
+* File 1006 is a WTU file!
+* Files 1007 to 1012 are WTE files!
+* File 1013 is WTU file.
+* Files 1014 to 1021 are WTE + WTU combos
+* File 1022 is some kind of image file. It looks like a format I've seen before! No magic number, but has a header with a pointer to a bunch of sub-sections!
+* File 1023 is a SIR0 wrapped file containing 2048 times the value 0xFF000000 !
+* Files 1024 and 1025 are WTE files.
+* Files 1026 and 1027 are BGP compressed images.
+* File 1028 is a WAN sprite!
+* File 1029 is a headerless file, with a lot of repeating values, and possibly image data near the end.
+* File 1030 contains a raw RGBX32 color palette.
+* File 1031 is a WTE file.
+* File 1032 is a WTU file.
+* File 1033 familiar format SIR0 wrapped, could contain image. not sure.
+* File 1034 SIR0 wrapped image data ? Possibly raw RGBA pixels ?
+* File 1035 SIR0 wrapped file.. Has a short header, made of 2 pointers. Has a pointer table at the end, and what seems to be a color palette ?
+
+Formats:
+--------
+
+** Weird palette file **:
+
+Offset              Length      Type        Description
+-------             -------     -----       ------------
+0x0                 4           char[4]     SIR0 magic number.
+0x4                 4           uint32      Pointer to a table of pointers PtrTable.
+0x8                 4           uint32      Pointer to the list of encoded ptrs SIR0PtrOffsetsList.
+0xC                 4           -           Null
+ColorEntryBlock     varies                  Color entry list
+[
+    Entry
+    [
+        0x0         2           uint16      (NbColors) The amount of colors in this entry.
+        0x2         2           uint16      unknown
+        0x4         (NbColors * 4)          A list of colors. Always at least 4 bytes even when empty! Is completely 0 if nb of color == 0 !
+        [
+            0x0     4           RGBX32      A color. 
+            ...
+        ]
+    ]
+    ...
+]
+PtrTable                                    Table of pointers to entries.
+[
+    0x0             4           uint32      A pointer.
+    ...
+]
+SIR0PtrOffsetsList                          SIR0 encoded pointer list.
+[
+    ...
+]
+
+** Weird data file **:
+Offset              Length      Type        Description
+-------             -------     -----       ------------
+0x0                 4           char[4]     SIR0 magic number.
+0x4                 4           uint32      (PtrToPtrTable)Pointer to a table of pointers.
+0x8                 4           uint32      (EncodedPtrList) Pointer to the list of encoded ptrs.
+0xC                 4           -           Null
+DataBlock     (PtrToPtrTable - 0x10)        A datablock containing all the data the ptr table points to!
+[
+    Entry
+    [
+        #TODO
+    ]
+    ...
+]
+PaddingBytes        0-3         -           If necessary some 0xAA padding bytes are placed here, to align the next section on an offset divisible by 4 !
+PtrTable            varies                  A table of pointers to various entries in "DataBlock". (PtrToPtrTable) points to this!
+[
+    0x0             4           uint32      A pointer to an entry in "DataBlock"
+    ...
+]
+

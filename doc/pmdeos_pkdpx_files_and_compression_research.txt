@@ -1,0 +1,44 @@
+================================================
+		Notes on PKDPX files and compression
+================================================
+
+1) The NDS7/NDS9 can only execute code in the WRAM, thus, they need to load data to it from the cart.
+
+2) The most interesting command so far for us is "B7aaaaaaaa000000h", its "..for reading 
+   data (usually 200h bytes) from address aaaaaaaah (which should be usually aligned by 200h)."
+   Its entered into the Gamecart command register at 0x40001A8 in memory. The byte order for that
+   register is reversed though.
+   
+   From the romhacking pdf guide from GBATemp : 
+   ""
+   
+3) Compression used is probably LZ10, LZ11, LZ77, LZM, LZSS, or some other variants of LZ.. Its still
+   possibly something else though. But LZ10 can be handled by the DMA and SWI, if I remember correctly.
+   It seems that LZ77 is handled by the SWI "LZ77 function (swi)" according to "DS Encryption by Gamecode/Idcode (KEY1)"
+   http://problemkaputt.de/gbatek.htm
+   
+4) monster.bin is stored in the ROM at offset 0x3634600, length is 5688128
+   m_attack.bin is stored at 0x21B4800, length 8683952
+   m_ground.bin is stored at 0x29FCA00, length 12810784
+   m_level.bin is stored at 0x372400, length 359696
+   
+-------------------
+Interesting quotes:
+-------------------
+"..However, the DS hardware, BIOS, and Firmware do NOT contain any built-in filesystem functions. The ARM9/ARM7 boot code (together max 3903KB), and Icon/Title information are automatically loaded on power-up.
+Programs that require to load additional data from cartridge ROM may do that either by implementing whatever functions to translate filenames to ROM addresses, or by reading from ROM directly." -- http://problemkaputt.de/gbatek.htm (under  "DS Cartridge NitroROM File System" )
+
+"40001A8h - NDS7/NDS9 - Gamecard bus 8-byte Command Out
+The separate commands are described in the Cartridge Protocol chapter, however, once when the BIOS boot procedure has completed, one would usually only need command "B7aaaaaaaa000000h", for reading data (usually 200h bytes) from address aaaaaaaah (which should be usually aligned by 200h).
+
+  0-7   1st Command Byte (at 40001A8h) (eg. B7h) (MSB)
+  8-15  2nd Command Byte (at 40001A9h) (eg. addr bit 24-31)
+  16-23 3rd Command Byte (at 40001AAh) (eg. addr bit 16-23)
+  24-31 4th Command Byte (at 40001ABh) (eg. addr bit 8-15) (when aligned=even)
+  32-39 5th Command Byte (at 40001ACh) (eg. addr bit 0-7)  (when aligned=00h)
+  40-47 6th Command Byte (at 40001ADh) (eg. 00h)
+  48-57 7th Command Byte (at 40001AEh) (eg. 00h)
+  56-63 8th Command Byte (at 40001AFh) (eg. 00h) (LSB)
+
+Observe that the command/parameter MSB is located at the smallest memory location (40001A8h), ie. compared with the CPU, the byte-order is reversed."
+-- http://problemkaputt.de/gbatek.htm under "DS Cartridge I/O Ports"

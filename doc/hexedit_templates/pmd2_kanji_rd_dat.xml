@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!DOCTYPE binary_file_format SYSTEM "BinaryFileFormat.dtd">
+<binary_file_format name="kanjirddat" type_name="" comment="" expr="">
+	<define_struct type_name="Entry" comment="" expr="{this.Charcode;hex} = {this.Charcode;%c}"><data type="char" name="Charcode" format="unicode" display=""/><data type="none" name="unk" len="26"/></define_struct><data type="int" name="nbentries" format="signed" len="4" display=""/><for name="entrie" count="nbentries" stop_test="" type_name="" comment=""><use_struct name="" expr="" type_name="Entry" comment=""/></for><data type="none" name="none"/>
+</binary_file_format>
